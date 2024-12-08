@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class GameFactory : IService
@@ -17,6 +18,7 @@ public class GameFactory : IService
 
     public GameFactory(IAssets assets, PersistantStaticData staticData, PersistantPlayerStaticData playerStaticData)
     {
+        _assets = assets;
         _staticData = staticData;
         _playerStaticData = playerStaticData;
     }

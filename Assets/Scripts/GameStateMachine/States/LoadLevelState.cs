@@ -14,13 +14,13 @@ public class LoadLevelState : IPayloadedState<string>
     private GameObject _playerObj;
 
     public LoadLevelState(StateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain,
-        GameFactory gameFactory, IInputService input, IPersistantProgressService progressService)
+        GameFactory gameFactory, /*IInputService input,*/ IPersistantProgressService progressService)
     {
         _stateMachine = stateMachine;
         _sceneLoader = sceneLoader;
         _curtain = curtain;
         _gameFactory = gameFactory;
-        _input = input;
+        //_input = input;
         _progressService = progressService;
     }
 
@@ -50,7 +50,7 @@ public class LoadLevelState : IPayloadedState<string>
 
     private void InitGameWorld()
     {
-        _playerObj = InitPlayer();
+        //_playerObj = InitPlayer();
         InitHud(_playerObj);//??
 
         InitSpawners();
@@ -72,8 +72,8 @@ public class LoadLevelState : IPayloadedState<string>
         }
     }
 
-    private GameObject InitPlayer() =>
-        _gameFactory.CreatePlayerAt(GameObject.FindWithTag(InitialPointTag), _input);
+    //private GameObject InitPlayer() =>
+    //    _gameFactory.CreatePlayerAt(GameObject.FindWithTag(InitialPointTag), _input);
 
     private void InitHud(GameObject player) =>
         _gameFactory.CreateHud().GetComponentInChildren<ActorUI>();//.Construct(player.GetComponent<PlayerHealth>());
