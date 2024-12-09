@@ -5,4 +5,6 @@ public abstract class InputService : IInputService // parent class for different
     public abstract Vector2 Axis { get; }
 
     public abstract Vector3 Position { get; }
+
+
 }

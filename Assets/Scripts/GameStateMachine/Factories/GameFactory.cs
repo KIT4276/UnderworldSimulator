@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class GameFactory : IService
@@ -26,7 +25,7 @@ public class GameFactory : IService
     public GameObject CreatePlayerAt(GameObject at, IInputService input)
     {
         PlayerGameObject = InstantiateRegistered(AssetPath.HeroPath, at.transform.position);
-        PlayerGameObject.GetComponent<PlayerMove>().Init(input);
+        PlayerGameObject.GetComponent<HeroMove>().Init(input);
         PlayerCreated?.Invoke();
         return PlayerGameObject;
     }
