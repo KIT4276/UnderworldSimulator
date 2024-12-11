@@ -5,12 +5,14 @@ public class HeroMove : MonoBehaviour
 {
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private Rigidbody2D _rigidbody;
-    [SerializeField] private CapsuleCollider2D _collider;
+    //[SerializeField] private CapsuleCollider2D _collider;
     [Space]
     [SerializeField] private float _moveSpeed = 2;
 
     private bool _facingRight;
     private Vector2 _moveVector;
+
+    public bool IsMoving { get; private set; }
 
     private void Awake()
     {
@@ -36,6 +38,10 @@ public class HeroMove : MonoBehaviour
                 {
                     case InputActionPhase.Canceled:
                         _rigidbody.linearVelocity = Vector2.zero;
+                        IsMoving = false;
+                        break;
+                        case InputActionPhase.Performed:
+                        IsMoving = true;
                         break;
                 }
                 break;
