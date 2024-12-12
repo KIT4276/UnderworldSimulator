@@ -1,101 +1,47 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class HeroMove : MonoBehaviour
 {
     [SerializeField] private PlayerInput _playerInput;
-    [SerializeField] private Rigidbody2D _rigidbody;
-    //[SerializeField] private CharacterController _characterController;
-    [Space]
-    [SerializeField] private float _moveSpeed = 2;
+    [SerializeField] private float _moveSpeed = 4;
 
-    private bool _facingRight;
-    private Vector2 _moveVector;
+    private InputAction _moveAction;
 
-    public bool IsMoving { get; private set; }
+    private Rigidbody2D _rigidbody2d;
+    private Vector2 _inputVector2;
+
+    private const string MoveActionName = "Move";
+
     public float MoveSpeed { get => _moveSpeed; }
 
-    public void ChangeMoveSpeed(float speed)
+    private void Start()
     {
-        _moveSpeed = speed;
-    }
+        _rigidbody2d = GetComponent<Rigidbody2D>();
+        _rigidbody2d.gravityScale = 0;
+        _rigidbody2d.freezeRotation = true;
 
-    private void Awake()
-    {
-        _playerInput.onActionTriggered += OnPlayerInputActionTriggered;
-        _facingRight = transform.localScale.x > 0;
+        _moveAction = _playerInput.currentActionMap.FindAction(MoveActionName);
+        _moveAction.Enable();
     }
 
     private void Update()
     {
-        Flip();
+        _inputVector2 = _moveAction.ReadValue<Vector2>();
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        if (_moveVector == Vector2.zero)
-            IsMoving = false;
+        Vector2 position = _rigidbody2d.position;
 
-        if (!IsMoving)
-            _rigidbody.linearVelocity = Vector2.zero;
+        position = position + _inputVector2 * _moveSpeed * Time.deltaTime;
 
-        Debug.Log(_rigidbody.linearVelocity);
+        _rigidbody2d.MovePosition(position);
     }
 
-    private void OnPlayerInputActionTriggered(InputAction.CallbackContext context)
+    public void ChangeMoveSpeed(float value)
     {
-        InputAction action = context.action;
-
-        switch (action.name)
-        {
-            case "Move":
-
-                Vector2 moveCommand = action.ReadValue<Vector2>();
-                HandleMoveCommand(moveCommand);
-
-                switch (action.phase)
-                {
-                    case InputActionPhase.Canceled:
-                        //Debug.Log("Canceled " + moveCommand);
-                        _rigidbody.linearVelocity = Vector2.zero;
-                        IsMoving = false;
-                        break;
-
-                    case InputActionPhase.Performed:
-                       // Debug.Log("Performed " + moveCommand);
-                        if (moveCommand.x == 0 || moveCommand.y == 0)
-                            _rigidbody.linearVelocity = Vector2.zero;
-                        IsMoving = true;
-                        break;
-                }
-                break;
-
-        }
+        _moveSpeed = value;
     }
-
-    private void HandleMoveCommand(Vector2 moveCommand)
-    {
-        _moveVector = moveCommand;
-        _rigidbody.AddForce(_moveVector * _moveSpeed);
-        
-    }
-
-    private void Flip()
-    {
-        if (_moveVector.x != 0)
-        {
-            if (_moveVector.x > 0 && !_facingRight)
-            {
-                _facingRight = true;
-                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-            }
-            if (_moveVector.x < 0 && _facingRight)
-            {
-                _facingRight = false;
-                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-            }
-        }
-
-    }
-
 }
