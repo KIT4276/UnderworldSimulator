@@ -13,7 +13,7 @@ public class HeroMove : MonoBehaviour
     private Vector2 _moveVector;
 
     public bool IsMoving { get; private set; }
-    public float MoveSpeed { get => _moveSpeed;  }
+    public float MoveSpeed { get => _moveSpeed; }
 
     public void ChangeMoveSpeed(float speed)
     {
@@ -23,9 +23,6 @@ public class HeroMove : MonoBehaviour
     private void Awake()
     {
         _playerInput.onActionTriggered += OnPlayerInputActionTriggered;
-
-        //_rigidbody.freezeRotation = true;
-        //_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         _facingRight = transform.localScale.x > 0;
     }
 
@@ -36,7 +33,13 @@ public class HeroMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ToMove();
+        if (_moveVector == Vector2.zero)
+            IsMoving = false;
+
+        if (!IsMoving)
+            _rigidbody.linearVelocity = Vector2.zero;
+
+        Debug.Log(_rigidbody.linearVelocity);
     }
 
     private void OnPlayerInputActionTriggered(InputAction.CallbackContext context)
@@ -53,11 +56,15 @@ public class HeroMove : MonoBehaviour
                 switch (action.phase)
                 {
                     case InputActionPhase.Canceled:
+                        //Debug.Log("Canceled " + moveCommand);
                         _rigidbody.linearVelocity = Vector2.zero;
                         IsMoving = false;
                         break;
 
                     case InputActionPhase.Performed:
+                       // Debug.Log("Performed " + moveCommand);
+                        if (moveCommand.x == 0 || moveCommand.y == 0)
+                            _rigidbody.linearVelocity = Vector2.zero;
                         IsMoving = true;
                         break;
                 }
@@ -70,7 +77,7 @@ public class HeroMove : MonoBehaviour
     {
         _moveVector = moveCommand;
         _rigidbody.AddForce(_moveVector * _moveSpeed);
-
+        
     }
 
     private void Flip()
@@ -91,12 +98,4 @@ public class HeroMove : MonoBehaviour
 
     }
 
-    private void ToMove()
-    {
-        //_rigidbody.AddForce(_moveVector * _moveSpeed);
-        //_rigidbody.linearVelocity = Vector2.zero;
-        if (!IsMoving)
-            _rigidbody.linearVelocity = Vector2.zero;
-
-    }
 }
