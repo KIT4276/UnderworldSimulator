@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameFactory : IService
 {
@@ -22,7 +23,7 @@ public class GameFactory : IService
         _playerStaticData = playerStaticData;
     }
 
-    public GameObject CreatePlayerAt(GameObject at, IInputService input)
+    public GameObject CreatePlayerAt(GameObject at, PlayerInput input)
     {
         PlayerGameObject = InstantiateRegistered(AssetPath.HeroPath, at.transform.position);
         PlayerGameObject.GetComponent<HeroMove>().Init(input);
@@ -30,11 +31,11 @@ public class GameFactory : IService
         return PlayerGameObject;
     }
 
-    public GameObject CreateHud()
-    {
-        var hud = InstantiateRegistered(AssetPath.HUDPath);
-        return hud;
-    }
+    //public GameObject CreateHud()
+    //{
+    //    var hud = InstantiateRegistered(AssetPath.HUDPath);
+    //    return hud;
+    //}
 
     public StartMenu CreateStartMenu() =>
         _assets.Instantiate(AssetPath.StartMenuPath).GetComponent<StartMenu>();

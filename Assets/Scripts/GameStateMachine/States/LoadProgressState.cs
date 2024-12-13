@@ -1,4 +1,6 @@
-﻿public class LoadProgressState : IState
+﻿using UnityEngine;
+
+public class LoadProgressState : IState
 {
     private const string Main = "Main";
 
@@ -30,7 +32,6 @@
     private PlayerProgress NewProgress()
     {
         var progress = new PlayerProgress(initialLevel: Main);
-
         return progress;
     }
 }

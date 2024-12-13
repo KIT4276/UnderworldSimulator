@@ -9,7 +9,6 @@ public class StartMenu : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
-
         ContinueGame();
     }
 
