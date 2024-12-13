@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,10 +15,8 @@ public class HeroMove : MonoBehaviour
 
     public float MoveSpeed { get => _moveSpeed; }
 
-    public void Init(PlayerInput input)
+    public void Init()
     {
-        //_playerInput = input;
-
         _rigidbody2d.gravityScale = 0;
         _rigidbody2d.freezeRotation = true;
 

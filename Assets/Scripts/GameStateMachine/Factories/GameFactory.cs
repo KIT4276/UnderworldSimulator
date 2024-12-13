@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class GameFactory : IService
 {
@@ -13,8 +12,8 @@ public class GameFactory : IService
     public List<ISavedProgress> ProgressWriters { get; } = new List<ISavedProgress>();
 
     private readonly IAssets _assets;
-    private readonly PersistantStaticData _staticData;
-    private readonly PersistantPlayerStaticData _playerStaticData;
+    private readonly PersistantStaticData _staticData;//will be used later
+    private readonly PersistantPlayerStaticData _playerStaticData;//will be used later
 
     public GameFactory(IAssets assets, PersistantStaticData staticData, PersistantPlayerStaticData playerStaticData)
     {
@@ -23,19 +22,13 @@ public class GameFactory : IService
         _playerStaticData = playerStaticData;
     }
 
-    public GameObject CreatePlayerAt(GameObject at, PlayerInput input)
+    public GameObject CreatePlayerAt(GameObject at)
     {
         PlayerGameObject = InstantiateRegistered(AssetPath.HeroPath, at.transform.position);
-        PlayerGameObject.GetComponent<HeroMove>().Init(input);
+        PlayerGameObject.GetComponent<HeroMove>().Init();
         PlayerCreated?.Invoke();
         return PlayerGameObject;
     }
-
-    //public GameObject CreateHud()
-    //{
-    //    var hud = InstantiateRegistered(AssetPath.HUDPath);
-    //    return hud;
-    //}
 
     public StartMenu CreateStartMenu() =>
         _assets.Instantiate(AssetPath.StartMenuPath).GetComponent<StartMenu>();
