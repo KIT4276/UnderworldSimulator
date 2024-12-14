@@ -7,7 +7,6 @@ public class HeroMove : MonoBehaviour
     [SerializeField] private Rigidbody2D _rigidbody2d;
     [SerializeField] private PlayerInput _playerInput;
 
-
     private InputAction _moveAction;
     private Vector2 _inputVector2;
 
@@ -21,9 +20,7 @@ public class HeroMove : MonoBehaviour
         _rigidbody2d.freezeRotation = true;
 
         _moveAction = _playerInput.currentActionMap.FindAction(MoveActionName);
-        _moveAction.Enable();
     }
-
 
     private void Update()
     {
@@ -34,14 +31,15 @@ public class HeroMove : MonoBehaviour
     void FixedUpdate()
     {
         Vector2 position = _rigidbody2d.position;
-
-        position = position + _inputVector2 * _moveSpeed * Time.deltaTime;
+        position += _inputVector2 * _moveSpeed * Time.fixedDeltaTime;
 
         _rigidbody2d.MovePosition(position);
     }
 
-    public void ChangeMoveSpeed(float value)
+    public void ChangeMoveSpeed(float value)//for the future
     {
         _moveSpeed = value;
+        //or _moveSpeed += value;
+        //or _moveSpeed *= value;
     }
 }
