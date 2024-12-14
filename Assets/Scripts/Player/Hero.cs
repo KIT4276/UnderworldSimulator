@@ -32,7 +32,7 @@ public class Hero : MonoBehaviour
         HideReaction();
     }
 
-    private void HideReaction()
+    public void HideReaction()
     {
         _panel.SetActive(false);
     }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7941279325455126807}
   - component: {fileID: 5641243866336939163}
   m_Layer: 5
-  m_Name: EImage
+  m_Name: Sign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 5993938153272087287}
   - component: {fileID: 2107631855151337997}
   m_Layer: 0
-  m_Name: Spr
+  m_Name: PassableZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 671024064319279458}
   - component: {fileID: 3427387057841566896}
   - component: {fileID: 5545442411085623488}
-  - component: {fileID: 4624415668741048909}
+  - component: {fileID: 4762474800887389247}
   m_Layer: 0
   m_Name: InteractableZone
   m_TagString: Untagged
@@ -543,7 +543,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.99999994, y: 0.99999994}
   m_Direction: 0
---- !u!114 &4624415668741048909
+--- !u!114 &4762474800887389247
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -552,10 +552,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5225672359233402884}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b72cbd63e4116d74f8d69a4aefbc690e, type: 3}
+  m_Script: {fileID: 11500000, guid: b62a46b09c65bde4d9088b70abb44b17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 1084685604128481094}
+  _sign: {fileID: 1084685604128481094}
 --- !u!1 &5435615119927239802
 GameObject:
   m_ObjectHideFlags: 0
