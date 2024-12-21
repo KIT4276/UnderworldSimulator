@@ -6,13 +6,16 @@ public class ObstacleTransparent : BaseObstacle
     [SerializeField] private float _transparencyValue = 0.5f;
     [SerializeField] private float _transparencyTime = 1.0f;
 
+    private Tween _fadeInAnimation;
+    private Tween _fadeOutAnimation;
+
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
 
-        if (CanFade())
+        if (_canFade)
         {
-            _spriteRenderer.DOFade(_transparencyValue, _transparencyTime);
+            _fadeInAnimation = _spriteRenderer.DOFade(_transparencyValue, _transparencyTime);
         }
     }
 
@@ -21,12 +24,18 @@ public class ObstacleTransparent : BaseObstacle
     {
         base.OnTriggerExit2D(collision);
 
-        if (this.gameObject.activeSelf && _hero != null)
+        if (_canFade)
         {
             _spriteRenderer.DOFade(1, _transparencyTime);
         }
     }
 
-    private bool CanFade() =>
-        this.gameObject.activeSelf && _hero != null;
+    private void OnDestroy()
+    {
+        if(_fadeInAnimation != null)
+            _fadeInAnimation.Kill();
+
+        if (_fadeInAnimation != null)
+            _fadeOutAnimation.Kill();
+    }
 }

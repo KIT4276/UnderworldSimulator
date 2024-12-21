@@ -7,6 +7,7 @@ public class BaseObstacle : MonoBehaviour
 
     protected SpriteRenderer _spriteRenderer;
     protected HeroMove _hero;
+    protected bool _canFade;
 
     private void Start()
     {
@@ -18,15 +19,22 @@ public class BaseObstacle : MonoBehaviour
         if (collision.TryGetComponent<HeroMove>(out HeroMove hero))
         {
             _hero = hero;
+            _canFade = true;
             _spriteRenderer.sortingOrder = _sortingOrderFront;
         }
-
+        else
+            _canFade = false;
     }
 
 
     protected virtual void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.GetComponent<HeroMove>() != null)
+        {
             _spriteRenderer.sortingOrder = _sortingOrderBehind;
+            _canFade = true;
+        }
+        else 
+            _canFade = false;
     }
 }
