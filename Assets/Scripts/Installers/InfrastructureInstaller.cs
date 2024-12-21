@@ -6,7 +6,7 @@ public class InfrastructureInstaller : MonoInstaller, ICoroutineRunner
     [SerializeField] private GameObject _entryPointPrefab;
     [SerializeField] private GameObject _curtainPrefab;
 
-    private const string Curtain = "Curtain";
+    private const string Curtain = "_curtain";
     private const string Infrastructure = "Infrastructure";
     private const string EntryPoint = "EntryPoint";
 
