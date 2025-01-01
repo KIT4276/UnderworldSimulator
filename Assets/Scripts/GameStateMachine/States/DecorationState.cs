@@ -16,13 +16,13 @@ public class DecorationState : IState
 
     public void Enter()
     {
-        _workbench.Activate();
+        _workbench.ActivateDecoration();
         //Debug.Log("DecorationState Enter");
     }
 
     public void Exit()
     {
-        _workbench.DeActivate();
+        _workbench.DeActivateDecoration();
         _stateMachine.Enter<GameLoopState>();
     }
 }

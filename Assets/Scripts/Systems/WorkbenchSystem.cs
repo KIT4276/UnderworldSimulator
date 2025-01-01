@@ -8,13 +8,13 @@ public class WorkbenchSystem : MonoBehaviour
     [Inject]
     public void  construct()
     {
-        //Debug.Log("WorkbenchSystem started");
+       //todo
     }
 
     /// <summary>
     /// Should be called when activating a workbench
     /// </summary>
-    public void Activate() 
+    public void ActivateDecoration() 
     {
         _panel.SetActive(true); 
         Debug.Log("WorkbenchSystem Activate");
@@ -24,7 +24,7 @@ public class WorkbenchSystem : MonoBehaviour
     ///  /// <summary>
     /// Should be called when deactivating a workbench
     /// </summary>
-    public void DeActivate()
+    public void DeActivateDecoration()
     {
         _panel.SetActive(false);
 
