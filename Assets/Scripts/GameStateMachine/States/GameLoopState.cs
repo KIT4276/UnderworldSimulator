@@ -1,6 +1,12 @@
-﻿public class GameLoopState : IState
+﻿using UnityEngine;
+
+public class GameLoopState : IState
 {
-    public void Enter() {/*TODO*/}
+    public void Enter() 
+    {
+        //Debug.Log("GameLoopState Enter");
+        /*TODO*/
+    }
 
     public void Exit() { }
 }

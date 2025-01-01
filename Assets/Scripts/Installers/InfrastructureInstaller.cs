@@ -5,6 +5,7 @@ public class InfrastructureInstaller : MonoInstaller, ICoroutineRunner
 {
     [SerializeField] private GameObject _entryPointPrefab;
     [SerializeField] private GameObject _curtainPrefab;
+   
 
     private const string Curtain = "_curtain";
     private const string Infrastructure = "Infrastructure";
@@ -39,6 +40,8 @@ public class InfrastructureInstaller : MonoInstaller, ICoroutineRunner
         Container.BindInterfacesAndSelfTo<AssetsProvider>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<PersistantProgressService>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<SaveLoadService>().FromNew().AsSingle().NonLazy();
+
+       
     }
 
     private void BindFactories()

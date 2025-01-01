@@ -26,7 +26,9 @@ public class StateMachine
             [typeof(LoadLevelState)] = _stateFactory
             .CreateState<LoadLevelState>(),
             [typeof(GameLoopState)] = _stateFactory
-            .CreateState<GameLoopState>()
+            .CreateState<GameLoopState>(),
+            [typeof(DecorationState)] = _stateFactory
+            .CreateState<DecorationState>()
         };
         Enter<BootstrapState>();
         _isInited = true;
