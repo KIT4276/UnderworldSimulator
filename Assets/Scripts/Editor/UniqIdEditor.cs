@@ -18,7 +18,7 @@ public class UniqIdEditor : UnityEditor.Editor
             Generate(uniqId);
         else
         {
-            UniqId[] uniqIds = FindObjectsOfType<UniqId>();
+            UniqId[] uniqIds = FindObjectsByType<UniqId>(FindObjectsSortMode.InstanceID);
 
             if (uniqIds.Any(other => other != uniqId && other.Id == uniqId.Id))
                 Generate(uniqId);
