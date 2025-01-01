@@ -2,9 +2,6 @@
 
 public class BaseObstacle : MonoBehaviour
 {
-    [SerializeField] protected int _sortingOrderFront = 200;
-    [SerializeField] protected int _sortingOrderBehind = 90;
-
     protected SpriteRenderer _spriteRenderer;
     protected HeroMove _hero;
     protected bool _canFade;
@@ -20,7 +17,6 @@ public class BaseObstacle : MonoBehaviour
         {
             _hero = hero;
             _canFade = true;
-            _spriteRenderer.sortingOrder = _sortingOrderFront;
         }
         else
             _canFade = false;
@@ -31,7 +27,6 @@ public class BaseObstacle : MonoBehaviour
     {
         if (collision.GetComponent<HeroMove>() != null)
         {
-            _spriteRenderer.sortingOrder = _sortingOrderBehind;
             _canFade = true;
         }
         else 

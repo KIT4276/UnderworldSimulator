@@ -9,7 +9,7 @@ public class InteractableObstacle : MonoBehaviour
     private bool _isBroken;
     private bool _isActive;
     private Hero _hero;
-    private const string _reactionText = "Реакция персонажа...";
+    private const string _reactionText = "Реакция персонажа...";//хранить текст в другом месте
 
     public event Action Interact;
     public event Action LeftTheArea;
