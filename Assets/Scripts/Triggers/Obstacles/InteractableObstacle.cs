@@ -4,17 +4,17 @@ using UnityEngine.InputSystem;
 
 public class InteractableObstacle : MonoBehaviour
 {
-    [SerializeField] private GameObject _sign;
+    [SerializeField] protected GameObject _sign;
 
     private bool _isBroken;
-    private bool _isActive;
-    private HeroReaction _hero;
-    private const string _reactionText = "Реакция персонажа...";//хранить текст в другом месте
+    protected bool _isActive;
+    protected HeroReaction _hero;
+    private const string _reactionText = "Реакция персонажа...";//store text somewhere else
 
     public event Action Interact;
     public event Action LeftTheArea;
 
-    private void Awake()
+    protected void Awake()
     {
         _sign.SetActive(false);
     }
@@ -24,7 +24,7 @@ public class InteractableObstacle : MonoBehaviour
         _isBroken = true;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<HeroReaction>(out var hero))
         {
@@ -33,33 +33,32 @@ public class InteractableObstacle : MonoBehaviour
             Activate();
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    protected void OnTriggerExit2D(Collider2D collision)
     {
         DeActivate();
     }
 
-    private void OnPlayerInputActionTriggered(InputAction.CallbackContext context)
+    protected void OnPlayerInputActionTriggered(InputAction.CallbackContext context)
     {
-        if (context.action.name == "Interact" && _isActive)
+        if (_isActive && context.action.name == "Interact" && context.action.phase == InputActionPhase.Started)
             Interac();
     }
 
-    private void Activate()
+    protected void Activate()
     {
         _isActive = true;
         _sign.SetActive(true);
     }
 
-    private void DeActivate()
+    protected void DeActivate()
     {
         _isActive = false;
         _sign.SetActive(false);
-        _sign.SetActive(false); 
         _hero.HideReaction();
         LeftTheArea?.Invoke();
     }
 
-    private  void Interac()
+    protected virtual void Interac()
     {
         _sign.SetActive(false);
 

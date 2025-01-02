@@ -1,12 +1,12 @@
-using UnityEngine;
 using Zenject;
 
-public class Engineer : MonoBehaviour
+public class Engineer : InteractableObstacle
 {
-    [Inject] private StateMachine _stateMachine;
+    [Inject] private WorkbenchSystem _workbenchSystem;
 
-    public void EnterToWorkbench()
+    protected override void Interac()
     {
-
+        _sign.SetActive(false);
+        _workbenchSystem.ActivateWorkbench();
     }
 }

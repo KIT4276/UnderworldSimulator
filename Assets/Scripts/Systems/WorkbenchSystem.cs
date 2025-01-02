@@ -5,30 +5,28 @@ public class WorkbenchSystem : MonoBehaviour
 {
     [SerializeField] private GameObject _workbenchPanel;
     [SerializeField] private GameObject _decorationPanel;
-    [SerializeField] private GameObject _workbenchButton;
 
     private StateMachine _stateMachine;
-    private GameFactory _gameFactory;
 
     [Inject]
-    public void  Construct(StateMachine stateMachine, GameFactory gameFactory)
+    public void  Construct(StateMachine stateMachine)
     {
         _stateMachine = stateMachine;
-        _gameFactory = gameFactory;
 
         _workbenchPanel.SetActive(false);
         _decorationPanel.SetActive(false);
-        _workbenchButton.SetActive(false);
     }
 
     public void ActivateWorkbench()
     {
         SwitchPanels(true);
+        _stateMachine.Enter<WorkbenchState>();
     }
 
     public void DeActivateWorkbench()
     {
         _workbenchPanel.SetActive(false);
+        _stateMachine.Enter<GameLoopState>();
     }
 
     /// <summary>
@@ -38,6 +36,7 @@ public class WorkbenchSystem : MonoBehaviour
     {
         SwitchPanels(false);
         _stateMachine.Enter<DecorationState>();
+        
     }
 
     /// <summary>
@@ -47,12 +46,7 @@ public class WorkbenchSystem : MonoBehaviour
     public void DeActivateDecoration()
     {
         SwitchPanels(true);
-        _stateMachine.Enter<GameLoopState, HeroMove>(_gameFactory.HeroMove);
-    }
-
-    public void Activate()
-    {
-        _workbenchButton.SetActive(true);
+        _stateMachine.Enter<WorkbenchState>();
     }
 
     private void SwitchPanels(bool isWorkbench)
