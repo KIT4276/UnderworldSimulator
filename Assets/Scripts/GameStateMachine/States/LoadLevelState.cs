@@ -37,7 +37,7 @@ public class LoadLevelState : IPayloadedState<string>
         InitGameWorld();
         InformProgressReaders();
 
-        _stateMachine.Enter<GameLoopState>();
+        _stateMachine.Enter<GameLoopState, HeroMove>(_gameFactory.HeroMove);
     }
 
     private void InformProgressReaders()

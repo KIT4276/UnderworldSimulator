@@ -8,7 +8,7 @@ public class InteractableObstacle : MonoBehaviour
 
     private bool _isBroken;
     private bool _isActive;
-    private Hero _hero;
+    private HeroReaction _hero;
     private const string _reactionText = "Реакция персонажа...";//хранить текст в другом месте
 
     public event Action Interact;
@@ -26,7 +26,7 @@ public class InteractableObstacle : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Hero>(out var hero))
+        if (collision.TryGetComponent<HeroReaction>(out var hero))
         {
             _hero = hero;
             _hero.PlayerInput.onActionTriggered += OnPlayerInputActionTriggered;

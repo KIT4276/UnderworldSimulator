@@ -3,7 +3,7 @@ using Zenject;
 
 public class Engineer : MonoBehaviour
 {
-    [Inject] private DecorationState _decorationState;
+    [Inject] private StateMachine _stateMachine;
 
     public void EnterToWorkbench()
     {

@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 6311324493924786845}
   - component: {fileID: 7259032105233486234}
   m_Layer: 0
-  m_Name: Panel
+  m_Name: ReactionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 2407664204627849563}
   - component: {fileID: 9204417237617135584}
   m_Layer: 0
-  m_Name: Text (Legacy)
+  m_Name: ReactionText (Legacy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1063,7 +1063,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7797482379625180363}
   - component: {fileID: 9138319279788083510}
-  - component: {fileID: 1041407749860244645}
+  - component: {fileID: 6834409269637177149}
   m_Layer: 0
   m_Name: HitBox
   m_TagString: Untagged
@@ -1123,7 +1123,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0066643953, y: 1.2508012}
   m_Size: {x: 1.3065631, y: 2.5116594}
   m_Direction: 0
---- !u!114 &1041407749860244645
+--- !u!114 &6834409269637177149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1132,11 +1132,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7928713735440331194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37b06b654045b2046aac914ea3856ae4, type: 3}
+  m_Script: {fileID: 11500000, guid: eed28488f2847944e9aa11c08ca08435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _reaction: {fileID: 9204417237617135584}
-  _panel: {fileID: 1935507758866809987}
+  _reactionText: {fileID: 9204417237617135584}
+  _reactionPanel: {fileID: 1935507758866809987}
   _reactionTime: 3
   _playerInput: {fileID: 7239135253421124979}
 --- !u!1 &7935669083504756841

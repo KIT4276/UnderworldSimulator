@@ -3,10 +3,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class Hero : MonoBehaviour
+public class HeroReaction : MonoBehaviour
 {
-    [SerializeField] private Text _reaction;
-    [SerializeField] private GameObject _panel;
+    [SerializeField] private Text _reactionText;
+    [SerializeField] private GameObject _reactionPanel;
     [SerializeField] private float _reactionTime = 3;
     [SerializeField] private PlayerInput _playerInput;
 
@@ -14,19 +14,19 @@ public class Hero : MonoBehaviour
 
     private void Start()
     {
-        _panel.SetActive(false);
+        _reactionPanel.SetActive(false);
     }
 
 
     public void ShowReaction(string text)
     {
-        _panel.SetActive(true);
-        _reaction.text = text;
+        _reactionPanel.SetActive(true);
+        _reactionText.text = text;
 
-        StartCoroutine(HideRoutine());
+        StartCoroutine(HideReactionRoutine());
     }
 
-    private IEnumerator HideRoutine()
+    private IEnumerator HideReactionRoutine()
     {
         yield return new WaitForSeconds(_reactionTime);
         HideReaction();
@@ -34,6 +34,6 @@ public class Hero : MonoBehaviour
 
     public void HideReaction()
     {
-        _panel.SetActive(false);
+        _reactionPanel.SetActive(false);
     }
 }

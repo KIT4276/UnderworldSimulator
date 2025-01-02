@@ -1,12 +1,25 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class GameLoopState : IState
+public class GameLoopState : IPayloadedState<HeroMove>
 {
-    public void Enter() 
+    private  HeroMove _heroMove;
+    private readonly WorkbenchSystem _workbenchSystem;
+
+    public GameLoopState(WorkbenchSystem workbenchSystem)
     {
-        //Debug.Log("GameLoopState Enter");
-        /*TODO*/
+        _workbenchSystem = workbenchSystem;
     }
 
-    public void Exit() { }
+    public void Enter(HeroMove heroMove) 
+    {
+        _heroMove = heroMove;
+        _heroMove.Mobilize();
+        _workbenchSystem.Activate();
+    }
+
+    public void Exit() 
+    {
+        _heroMove.Immobilize(); 
+    }
 }
