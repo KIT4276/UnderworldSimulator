@@ -1,18 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class HeroMove : MonoBehaviour
+public class HeroMove : BaseMovable
 {
-    [SerializeField] private float _moveSpeed = 4;
     [SerializeField] private Rigidbody2D _rigidbody2d;
-    [SerializeField] private PlayerInput _playerInput;
 
 
-    private InputAction _moveAction;
-    private Vector2 _inputVector2;
+    public InputAction MoveAction{ get => _moveAction; }
     private const string MoveActionName = "Move";
 
-    private bool _canMove;
 
     public float MoveSpeed { get => _moveSpeed; }
 
@@ -26,13 +22,6 @@ public class HeroMove : MonoBehaviour
         Mobilize();
     }
 
-
-    private void Update()
-    {
-        if (_canMove && _inputVector2 != null)
-            _inputVector2 = _moveAction.ReadValue<Vector2>();
-    }
-
     private void FixedUpdate()
     {
         Vector2 position = _rigidbody2d.position;
@@ -41,12 +30,6 @@ public class HeroMove : MonoBehaviour
 
         _rigidbody2d.MovePosition(position);
     }
-
-    public void Immobilize()
-        => _canMove = false;
-
-    public void Mobilize()
-        => _canMove = true;
 
     public void ChangeMoveSpeed(float value)
     {
