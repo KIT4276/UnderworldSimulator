@@ -28,12 +28,14 @@ public class CameraMove : BaseMovable
     {
         base.Immobilize();
         //todo OF cinemachine
+        FindGlobalPosition();
     }
 
     public override void Mobilize()
     {
         base.Mobilize();
         //todo ON cinemachine
+        ReturnDefaultPosition();
     }
 
     public void ReturnDefaultPosition()
