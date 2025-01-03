@@ -846,9 +846,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 7239135253421124979}
   _moveSpeed: 4
+  _moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _heroMove: {fileID: 5955726131830560213}
   _followCMVCamera: {fileID: 3838848883822530399}
   _manualCMVCamera: {fileID: 8592153721622434261}
+  _scrollSpeed: 10
+  _scrollction: {fileID: 3823762362802810437, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!114 &7636213519455106398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1427,6 +1430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 7239135253421124979}
   _moveSpeed: 2
+  _moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _rigidbody2d: {fileID: 440455551612106775}
 --- !u!50 &440455551612106775
 Rigidbody2D:

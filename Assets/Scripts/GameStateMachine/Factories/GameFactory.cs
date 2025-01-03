@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 using Zenject;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class GameFactory : IService
 {
@@ -47,11 +46,6 @@ public class GameFactory : IService
         CameraMove = PlayerGameObject.GetComponentInChildren<CameraMove>();
 
         PlayerGameObject.GetComponentInChildren<CinemachinePositionComposer>().transform.parent = null;
-        //var CMVCameras = PlayerGameObject.GetComponentsInChildren<CinemachineCamera>();
-        //foreach (var cam in CMVCameras)
-        //{
-        //    cam.transform.parent = null;
-        //}
 
         CameraMove.transform.parent = null;
     }

@@ -1,14 +1,9 @@
-﻿using System;
-using UnityEngine;
-
-public class GameLoopState : IState
+﻿public class GameLoopState : IState
 {
-    //private readonly WorkbenchSystem _workbenchSystem;
     private readonly GameFactory _gameFactory;
 
-    public GameLoopState(/*WorkbenchSystem workbenchSystem,*/ GameFactory gameFactory)
+    public GameLoopState( GameFactory gameFactory)
     {
-        //_workbenchSystem = workbenchSystem;
         _gameFactory = gameFactory;
     }
 
@@ -16,7 +11,6 @@ public class GameLoopState : IState
     {
         _gameFactory.HeroMove.Mobilize();
         _gameFactory.CameraMove.Immobilize();
-        
     }
 
     public void Exit() 

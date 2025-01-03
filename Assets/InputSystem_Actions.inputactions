@@ -81,13 +81,13 @@
                     "name": "Sprint",
                     "type": "Button",
                     "id": "641cd816-40e6-41b4-8c3d-04687c349290",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Scrolling",
+                    "name": "Zoom",
                     "type": "Value",
                     "id": "16709f53-b626-48a8-9ee8-8ab0ea19d557",
                     "expectedControlType": "Axis",
@@ -483,37 +483,15 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "1D Axis",
-                    "id": "ef667760-8bd3-4939-b054-79c5e773120a",
-                    "path": "1DAxis",
+                    "name": "",
+                    "id": "aa535435-e464-4425-8727-dfe32436920f",
+                    "path": "<Mouse>/scroll/y",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Scrolling",
-                    "isComposite": true,
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Zoom",
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "8ba13587-bfd6-4768-bc00-258839317e7a",
-                    "path": "<Mouse>/scroll/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Scrolling",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "9d641e3b-9953-4bd7-bc2c-30e2f7405320",
-                    "path": "<Mouse>/scroll/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Scrolling",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 }
             ]
         },

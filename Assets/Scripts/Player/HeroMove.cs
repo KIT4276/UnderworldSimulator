@@ -3,11 +3,10 @@ using UnityEngine.InputSystem;
 
 public class HeroMove : BaseMovable
 {
+    [Space]
     [SerializeField] private Rigidbody2D _rigidbody2d;
 
-
     public InputAction MoveAction{ get => _moveAction; }
-    private const string MoveActionName = "Move";
 
 
     public float MoveSpeed { get => _moveSpeed; }
@@ -17,8 +16,6 @@ public class HeroMove : BaseMovable
         _rigidbody2d.gravityScale = 0;
         _rigidbody2d.freezeRotation = true;
 
-        _moveAction = _playerInput.currentActionMap.FindAction(MoveActionName);
-        _moveAction.Enable();
         Mobilize();
     }
 
