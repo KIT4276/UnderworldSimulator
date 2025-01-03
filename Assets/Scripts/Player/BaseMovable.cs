@@ -22,7 +22,7 @@ public abstract class BaseMovable : MonoBehaviour
     public virtual void Mobilize()
         => _canMove = true;
 
-    protected virtual void Update()
+    protected void Update()
     {
         if (_canMove && _inputVector2 != null)
             _inputVector2 = _moveAction.action.ReadValue<Vector2>();

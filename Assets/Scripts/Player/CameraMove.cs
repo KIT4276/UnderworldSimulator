@@ -1,3 +1,4 @@
+using System;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,12 +15,11 @@ public class CameraMove : BaseMovable
 
     private void Start()
     {
+        _scrollction.action.performed += OnScrollPerformed;
+
         _followCMVCamera.Priority = 11;
         _manualCMVCamera.Priority = 10;
-
-        _scrollction.action.performed += _x => _scrollValue = _x.action.ReadValue<float>();
     }
-
 
     private void FixedUpdate()
     {
@@ -48,5 +48,10 @@ public class CameraMove : BaseMovable
     {
         base.Mobilize();
         _followCMVCamera.Priority = 0;
+    }
+
+    private void OnScrollPerformed(InputAction.CallbackContext context)
+    {
+        _scrollValue = context.ReadValue<float>();
     }
 }
