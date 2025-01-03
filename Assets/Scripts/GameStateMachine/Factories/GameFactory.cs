@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using Zenject;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class GameFactory : IService
 {
@@ -33,11 +35,25 @@ public class GameFactory : IService
         PlayerGameObject = InstantiateRegistered(AssetPath.HeroPath, at.transform.position);
         HeroMove = PlayerGameObject.GetComponent<HeroMove>();
         HeroMove.Init();
-        CameraMove = PlayerGameObject.GetComponentInChildren<CameraMove>();
+        InitCamera();
         _container.Bind<HeroMove>().AsSingle();
 
         PlayerCreated?.Invoke();
         return PlayerGameObject;
+    }
+
+    private void InitCamera()
+    {
+        CameraMove = PlayerGameObject.GetComponentInChildren<CameraMove>();
+
+        PlayerGameObject.GetComponentInChildren<CinemachinePositionComposer>().transform.parent = null;
+        //var CMVCameras = PlayerGameObject.GetComponentsInChildren<CinemachineCamera>();
+        //foreach (var cam in CMVCameras)
+        //{
+        //    cam.transform.parent = null;
+        //}
+
+        CameraMove.transform.parent = null;
     }
 
     public StartMenu CreateStartMenu() =>

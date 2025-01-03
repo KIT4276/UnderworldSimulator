@@ -1,51 +1,38 @@
 using DG.Tweening;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraMove : BaseMovable
 {
     [SerializeField] private HeroMove _heroMove;
-    [SerializeField] private float _returnPositionTime = 1;
-
-    private Vector3 _defaultPosition;
+    [SerializeField] private CinemachineCamera _followCMVCamera;
+    [SerializeField] private CinemachineCamera _manualCMVCamera;
 
     private void Start()
     {
-        _defaultPosition = transform.position;
         _moveAction = _heroMove.MoveAction;
-
-        Debug.Log(_defaultPosition);
+        _followCMVCamera.Priority = 11;
+        _manualCMVCamera.Priority= 10;
     }
+
 
     private void FixedUpdate()
     {
         if (_canMove)
         {
-            transform.position += (Vector3)_inputVector2 * _moveSpeed * Time.deltaTime;
+            _manualCMVCamera.transform.position += (Vector3)_inputVector2 * _moveSpeed * Time.deltaTime;
         }
     }
 
     public override void Immobilize()
     {
         base.Immobilize();
-        //todo OF cinemachine
-        FindGlobalPosition();
+        _followCMVCamera.Priority = 11;
     }
 
     public override void Mobilize()
     {
         base.Mobilize();
-        //todo ON cinemachine
-        ReturnDefaultPosition();
-    }
-
-    public void ReturnDefaultPosition()
-    {
-        Debug.Log("ReturnDefaultPosition");
-        transform.DOMove(_defaultPosition, _returnPositionTime);
-    }
-
-    public void FindGlobalPosition()
-    {
-        _defaultPosition = transform.position;
+        _followCMVCamera.Priority = 0;
     }
 }

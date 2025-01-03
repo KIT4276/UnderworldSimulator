@@ -16,6 +16,6 @@ public class WorkbenchState : IState
 
     public void Exit()
     {
-        _gameFactory.CameraMove.ReturnDefaultPosition();
+        //_gameFactory.CameraMove.ReturnDefaultPosition();
     }
 }
