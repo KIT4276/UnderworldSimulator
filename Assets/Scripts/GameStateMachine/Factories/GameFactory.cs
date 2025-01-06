@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class GameFactory : IService
@@ -21,7 +22,8 @@ public class GameFactory : IService
     private readonly PersistantStaticData _staticData;//will be used later
     private readonly PersistantPlayerStaticData _playerStaticData;//will be used later
 
-    public GameFactory(IAssets assets, PersistantStaticData staticData, PersistantPlayerStaticData playerStaticData, DiContainer container)
+    public GameFactory(IAssets assets, PersistantStaticData staticData, PersistantPlayerStaticData playerStaticData,
+        DiContainer container)
     {
         _assets = assets;
         _staticData = staticData;
@@ -36,6 +38,8 @@ public class GameFactory : IService
         HeroMove.Init();
         InitCamera();
         _container.Bind<HeroMove>().AsSingle();
+        Debug.Log(PlayerGameObject.GetComponent<PlayerInput>());
+        _container.Bind<PlayerInput>().FromInstance(PlayerGameObject.GetComponent<PlayerInput>()).AsSingle();
 
         PlayerCreated?.Invoke();
         return PlayerGameObject;
