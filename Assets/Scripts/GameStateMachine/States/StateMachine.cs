@@ -10,6 +10,8 @@ public class StateMachine
     private IExitableState _activeState;
     private bool _isInited;
 
+    public IExitableState ActiveState {  get => _activeState; } 
+
     public StateMachine(StateFactory stateFactory) =>
         _stateFactory = stateFactory;
 
@@ -26,7 +28,11 @@ public class StateMachine
             [typeof(LoadLevelState)] = _stateFactory
             .CreateState<LoadLevelState>(),
             [typeof(GameLoopState)] = _stateFactory
-            .CreateState<GameLoopState>()
+            .CreateState<GameLoopState>(),
+            [typeof(WorkbenchState)] = _stateFactory
+            .CreateState<WorkbenchState>(),
+            [typeof(DecorationState)] = _stateFactory
+            .CreateState < DecorationState>()
         };
         Enter<BootstrapState>();
         _isInited = true;
@@ -54,6 +60,6 @@ public class StateMachine
         return state;
     }
 
-    private TState GetState<TState>() where TState : class, IExitableState =>
+    public TState GetState<TState>() where TState : class, IExitableState =>
          _states[typeof(TState)] as TState;
 }

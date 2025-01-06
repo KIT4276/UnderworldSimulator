@@ -13,6 +13,8 @@ public class StateMachineInstaller : MonoInstaller
         Container.Bind<LoadProgressState>().AsSingle().NonLazy();
         Container.Bind<LoadLevelState>().AsSingle().NonLazy();
         Container.Bind<GameLoopState>().AsSingle().NonLazy();
+        Container.Bind<WorkbenchState>().AsSingle().NonLazy();
+        Container.Bind<DecorationState>().AsSingle().NonLazy();
 
         Container
           .BindInterfacesAndSelfTo<StateMachine>()

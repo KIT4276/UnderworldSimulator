@@ -1,6 +1,21 @@
 ﻿public class GameLoopState : IState
 {
-    public void Enter() {/*TODO*/}
+    private readonly GameFactory _gameFactory;
 
-    public void Exit() { }
+    public GameLoopState( GameFactory gameFactory)
+    {
+        _gameFactory = gameFactory;
+    }
+
+    public void Enter() 
+    {
+        _gameFactory.HeroMove.Mobilize();
+        _gameFactory.CameraMove.Immobilize();
+    }
+
+    public void Exit() 
+    {
+        _gameFactory.HeroMove.Immobilize();
+        _gameFactory.CameraMove.Mobilize();
+    }
 }

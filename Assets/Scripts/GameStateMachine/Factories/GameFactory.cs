@@ -1,33 +1,53 @@
 using System;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
+using Zenject;
 
 public class GameFactory : IService
 {
+    private DiContainer _container;
+
     public event Action PlayerCreated;
 
     public GameObject PlayerGameObject { get; private set; }
 
     public List<ISavedProgressReader> ProgressReaders { get; } = new List<ISavedProgressReader>();
     public List<ISavedProgress> ProgressWriters { get; } = new List<ISavedProgress>();
+    public HeroMove HeroMove { get; private set; }
+    public CameraMove CameraMove { get; private set; }
 
     private readonly IAssets _assets;
     private readonly PersistantStaticData _staticData;//will be used later
     private readonly PersistantPlayerStaticData _playerStaticData;//will be used later
 
-    public GameFactory(IAssets assets, PersistantStaticData staticData, PersistantPlayerStaticData playerStaticData)
+    public GameFactory(IAssets assets, PersistantStaticData staticData, PersistantPlayerStaticData playerStaticData, DiContainer container)
     {
         _assets = assets;
         _staticData = staticData;
         _playerStaticData = playerStaticData;
+        _container = container;
     }
 
     public GameObject CreatePlayerAt(GameObject at)
     {
         PlayerGameObject = InstantiateRegistered(AssetPath.HeroPath, at.transform.position);
-        PlayerGameObject.GetComponent<HeroMove>().Init();
+        HeroMove = PlayerGameObject.GetComponent<HeroMove>();
+        HeroMove.Init();
+        InitCamera();
+        _container.Bind<HeroMove>().AsSingle();
+
         PlayerCreated?.Invoke();
         return PlayerGameObject;
+    }
+
+    private void InitCamera()
+    {
+        CameraMove = PlayerGameObject.GetComponentInChildren<CameraMove>();
+
+        PlayerGameObject.GetComponentInChildren<CinemachinePositionComposer>().transform.parent = null;
+
+        CameraMove.transform.parent = null;
     }
 
     public StartMenu CreateStartMenu() =>

@@ -1,17 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class HeroMove : MonoBehaviour
+public class HeroMove : BaseMovable
 {
-    [SerializeField] private float _moveSpeed = 4;
+    [Space]
     [SerializeField] private Rigidbody2D _rigidbody2d;
-    [SerializeField] private PlayerInput _playerInput;
 
+    public InputAction MoveAction{ get => _moveAction; }
 
-    private InputAction _moveAction;
-    private Vector2 _inputVector2;
-
-    private const string MoveActionName = "Move";
 
     public float MoveSpeed { get => _moveSpeed; }
 
@@ -20,18 +16,10 @@ public class HeroMove : MonoBehaviour
         _rigidbody2d.gravityScale = 0;
         _rigidbody2d.freezeRotation = true;
 
-        _moveAction = _playerInput.currentActionMap.FindAction(MoveActionName);
-        _moveAction.Enable();
+        Mobilize();
     }
 
-
-    private void Update()
-    {
-        if (_inputVector2 != null)
-            _inputVector2 = _moveAction.ReadValue<Vector2>();
-    }
-
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         Vector2 position = _rigidbody2d.position;
 
