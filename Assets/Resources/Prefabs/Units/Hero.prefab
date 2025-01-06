@@ -847,11 +847,10 @@ MonoBehaviour:
   _playerInput: {fileID: 7239135253421124979}
   _moveSpeed: 4
   _moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _heroMove: {fileID: 5955726131830560213}
+  _scrollction: {fileID: 3823762362802810437, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _followCMVCamera: {fileID: 3838848883822530399}
   _manualCMVCamera: {fileID: 8592153721622434261}
   _scrollSpeed: 10
-  _scrollction: {fileID: 3823762362802810437, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!114 &7636213519455106398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1154,7 +1153,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2301929364100716589}
@@ -1203,7 +1202,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: 2796962403775600193, guid: 133497999537f4a44af3eeeeaab6a563, type: 3}
+  m_Sprite: {fileID: 1527318482267298188, guid: 726238acda3224341b6d6074068ef3ce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1356,8 +1355,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0066643953, y: 1.2508012}
-  m_Size: {x: 1.3065631, y: 2.5116594}
+  m_Offset: {x: -0.0066643953, y: 1.0975734}
+  m_Size: {x: 1.3065631, y: 2.5359814}
   m_Direction: 0
 --- !u!114 &6834409269637177149
 MonoBehaviour:
@@ -1535,14 +1534,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.020064056, y: 0.2879765}
-      - {x: -0.2791379, y: 0.2698416}
-      - {x: -0.3182112, y: 0.20047799}
-      - {x: -0.24788941, y: 0.13407779}
-      - {x: -0.07878181, y: 0.09208307}
-      - {x: 0.103321165, y: 0.081444174}
-      - {x: 0.25715774, y: 0.08343283}
-      - {x: 0.31425536, y: 0.10322204}
-      - {x: 0.35426342, y: 0.14658257}
-      - {x: 0.32559496, y: 0.24713467}
+    - - {x: 0.04217918, y: 0.079083286}
+      - {x: -0.36999652, y: 0.049807902}
+      - {x: -0.43435895, y: -0.024903208}
+      - {x: -0.035938166, y: -0.05681802}
+      - {x: 0.38743347, y: -0.091967285}
+      - {x: 0.40975416, y: -0.017873257}
   m_UseDelaunayMesh: 0
