@@ -8,11 +8,11 @@ public class Placer : MonoBehaviour
 {
     public List<Placable> placedThings;
 
-    [Inject] private PlayerInput _playerInput;
+   // [Inject] private PlayerInput _playerInput;
 
     private TileMapHolder _grid;
     private Preview _placablePreview;
-    private Camera _mainCamera;
+   // private Camera _mainCamera;
 
     private void Awake()
     {
@@ -37,8 +37,8 @@ public class Placer : MonoBehaviour
             return;
         }
 
-        _placablePreview.transform.position = GetMouceWorldPosition();
-        Debug.Log(_placablePreview.transform.position);
+        //_placablePreview.transform.position = GetMouceWorldPosition();
+        //Debug.Log(_placablePreview.transform.position);
 
         //if (Input.GetMouseButtonDown(1)) // если нажата ПкМ, то отменяем постройку
         //{
@@ -70,19 +70,7 @@ public class Placer : MonoBehaviour
         //}
     }
 
-    private Vector3 GetMouceWorldPosition()
-    {
-        if (_mainCamera == null)
-            _mainCamera = Camera.main;
-
-        Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
-        //Debug.Log(mouseScreenPosition);
-        Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(new Vector3
-            (mouseScreenPosition.x, mouseScreenPosition.y, -_mainCamera.transform.position.z));
-        mouseWorldPosition.z = 0f;
-
-        return  mouseWorldPosition;
-    }
+    
 
     public void ShowPlacablePreview(Preview preview)
     {
@@ -94,7 +82,7 @@ public class Placer : MonoBehaviour
         
 
 
-        _placablePreview = Instantiate(preview, GetMouceWorldPosition(), Quaternion.identity);
+        _placablePreview = Instantiate(preview, Vector3.zero, Quaternion.identity);
 
         //Vector2Int gridPos = GetGrid().GetGridPosHere(_placablePreview.transform.position);
 
