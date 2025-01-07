@@ -7,7 +7,7 @@ public class Engineer : InteractableObstacle
 
     protected override void Interac()
     {
-        Debug.Log("Interac");
+        //Debug.Log("Interac");
         _sign.SetActive(false);
         _workbenchSystem.ActivateWorkbench();
     }

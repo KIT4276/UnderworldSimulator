@@ -43,7 +43,7 @@ public class InteractableObstacle : MonoBehaviour
 
     protected void OnPlayerInputActionTriggered(InputAction.CallbackContext context)
     {
-        Debug.Log("OnPlayerInputActionTriggered");
+        //Debug.Log("OnPlayerInputActionTriggered");
         if (_isActive && context.action.name == "Interact" && context.action.phase == InputActionPhase.Started)
             Interac();
     }
