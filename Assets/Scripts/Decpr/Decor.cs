@@ -21,6 +21,8 @@ public class Decor : MonoBehaviour
     private Color _red;
     private Color _normColor;
 
+    public event Action PlacedAcrion;
+
     private void Awake()
     {
         _collider.enabled = false;
@@ -32,8 +34,6 @@ public class Decor : MonoBehaviour
 
     private void OnClick(InputAction.CallbackContext context)
     {
-        Debug.Log(_canBuild);
-        Debug.Log(_isPlacing);
         if (_canBuild && _isPlacing)
         {
             PlaceObject();
@@ -139,7 +139,7 @@ public class Decor : MonoBehaviour
         // При необходимости делаем дополнительные действия:
         // Например, создаём новый объект для размещения
         _collider.enabled = true;
-        Debug.Log("Object placed at: " + transform.position);
+        PlacedAcrion?.Invoke();
     }
 
     private void CheckCamera()

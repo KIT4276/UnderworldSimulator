@@ -29,20 +29,12 @@ public class WorkbenchSystem : MonoBehaviour
         _stateMachine.Enter<GameLoopState>();
     }
 
-    /// <summary>
-    /// Should be called when activating a workbench
-    /// </summary>
     public void ActivateDecoration() 
     {
         SwitchPanels(false);
         _stateMachine.Enter<DecorationState>();
-        
     }
 
-    /// <summary>
-    ///  /// <summary>
-    /// Should be called when deactivating a workbench
-    /// </summary>
     public void DeActivateDecoration()
     {
         SwitchPanels(true);
