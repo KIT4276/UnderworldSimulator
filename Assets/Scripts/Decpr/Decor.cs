@@ -1,13 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 [RequireComponent(typeof(Collider2D))]
 public class Decor : MonoBehaviour
 {
     [SerializeField] private Collider2D _collider;
     [SerializeField] private SpriteRenderer _mainRenderer;
-    [SerializeField] private float _cellSize;
+    // [SerializeField] private float _cellSize;
     [SerializeField] private Vector2 _occupiedCells;
     [SerializeField] private InputActionReference _clickAcrion;
 
@@ -17,17 +18,21 @@ public class Decor : MonoBehaviour
     private bool _isPlacing;
     private bool _canBuild;
 
-    [SerializeField] private Color _blue;
-    private Color _red;
-    private Color _normColor;
+    //[SerializeField] private Color _blue;
+    //private Color _red;
+    //private Color _normColor;
+
+    /*[Inject] */
+    private PersistantStaticData _staticData;
 
     public event Action PlacedAcrion;
 
     private void Awake()
     {
+        //Debug.Log(_staticData);
         _collider.enabled = false;
-        _normColor = new Color(1, 1, 1, 1);
-        _red = new Color(1, 0.2f, 0.2f, 0.5f);
+        //_normColor = new Color(1, 1, 1, 1);
+        //_red = new Color(1, 0.2f, 0.2f, 0.5f);
 
         _clickAcrion.action.performed += OnClick;
     }
@@ -40,8 +45,11 @@ public class Decor : MonoBehaviour
         }
     }
 
-    public void Initialize()
-        => _isPlacing = true;
+    public void Initialize(PersistantStaticData staticData)
+    {
+        _isPlacing = true;
+        _staticData = staticData;
+    }
 
     private void FixedUpdate()
     {
@@ -60,8 +68,8 @@ public class Decor : MonoBehaviour
 
         mouseWorldPosition.z = 0f;
 
-        mouseWorldPosition.x = Mathf.Floor(mouseWorldPosition.x / _cellSize) * _cellSize;
-        mouseWorldPosition.y = Mathf.Floor(mouseWorldPosition.y / _cellSize) * _cellSize;
+        mouseWorldPosition.x = Mathf.Floor(mouseWorldPosition.x / _staticData.CellSize) * _staticData.CellSize;
+        mouseWorldPosition.y = Mathf.Floor(mouseWorldPosition.y / _staticData.CellSize) * _staticData.CellSize;
 
         return mouseWorldPosition;
     }
@@ -82,25 +90,26 @@ public class Decor : MonoBehaviour
         Vector3 snappedPosition = GetSnappedMouseWorldPosition();
 
         Vector2 offset = new Vector2(
-            -(_occupiedCells.x / 2f) * _cellSize + _cellSize / 2f,
-            -(_occupiedCells.y / 2f) * _cellSize + _cellSize / 2f
+            -(_occupiedCells.x / 2f) * _staticData.CellSize + _staticData.CellSize / 2f,
+            -(_occupiedCells.y / 2f) * _staticData.CellSize + _staticData.CellSize / 2f
         );
 
-        _canBuild = true; 
+        _canBuild = true;
 
         for (int x = 0; x < _occupiedCells.x; x++)
         {
             for (int y = 0; y < _occupiedCells.y; y++)
             {
                 Vector2 cellPosition = new Vector2(
-                    snappedPosition.x + offset.x + x * _cellSize,
-                    snappedPosition.y + offset.y + y * _cellSize
+                    snappedPosition.x + offset.x + x * _staticData.CellSize,
+                    snappedPosition.y + offset.y + y * _staticData.CellSize
                 );
 
                 RaycastHit2D hit = Physics2D.Raycast(cellPosition, Vector2.zero);
+                
                 if (hit.collider == null || !hit.collider.CompareTag(FloorTag))
                 {
-                    _canBuild = false; 
+                    _canBuild = false;
                     break;
                 }
             }
@@ -108,14 +117,14 @@ public class Decor : MonoBehaviour
                 break;
         }
 
-        _mainRenderer.material.color = _canBuild ? _blue : _red;
+        _mainRenderer.material.color = _canBuild ? _staticData.AllowedPositionColor : _staticData.BannedPositionColor;
     }
 
     private void PlaceObject()
     {
         _isPlacing = false;
 
-        _mainRenderer.material.color = _normColor;
+        _mainRenderer.material.color = _staticData.NormalColor;
 
         _collider.enabled = true;
         PlacedAcrion?.Invoke();

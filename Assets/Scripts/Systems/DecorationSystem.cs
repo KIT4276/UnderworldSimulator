@@ -11,7 +11,6 @@ public class DecorationSystem
     {
         if (_activeDecor != null)
             GameObject.Destroy(_activeDecor.gameObject);
-          
         
             _activeDecor = _factory.SpawnDecor(decorPrefab);
         _activeDecor.PlacedAcrion += RemoveActiveDecor;
@@ -20,6 +19,6 @@ public class DecorationSystem
     private void RemoveActiveDecor()
     {
         _activeDecor = null;
-        _activeDecor.PlacedAcrion -= RemoveActiveDecor;
+        //_activeDecor.PlacedAcrion -= RemoveActiveDecor;
     }
 }
