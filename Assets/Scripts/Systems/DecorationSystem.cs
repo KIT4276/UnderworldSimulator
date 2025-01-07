@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -21,5 +20,6 @@ public class DecorationSystem
     private void RemoveActiveDecor()
     {
         _activeDecor = null;
+        _activeDecor.PlacedAcrion -= RemoveActiveDecor;
     }
 }

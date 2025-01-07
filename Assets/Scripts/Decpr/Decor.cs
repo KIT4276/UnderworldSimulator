@@ -49,17 +49,6 @@ public class Decor : MonoBehaviour
         {
             transform.position = GetSnappedMouseWorldPosition();
             CheckIfCanBuild();
-
-            //// Размещение объекта по клику мышки
-            //if (Mouse.current.leftButton.wasPressedThisFrame)
-            //{
-            //    Debug.Log("Mouse");
-            //    if (_canBuild)
-            //    {
-            //        Debug.Log("_canBuild");
-            //        PlaceObject();
-            //    }
-            //}
         }
     }
 
@@ -71,7 +60,6 @@ public class Decor : MonoBehaviour
 
         mouseWorldPosition.z = 0f;
 
-        // Округляем позицию мыши к ближайшей сетке с учетом _cellSize
         mouseWorldPosition.x = Mathf.Floor(mouseWorldPosition.x / _cellSize) * _cellSize;
         mouseWorldPosition.y = Mathf.Floor(mouseWorldPosition.y / _cellSize) * _cellSize;
 
@@ -93,30 +81,26 @@ public class Decor : MonoBehaviour
 
         Vector3 snappedPosition = GetSnappedMouseWorldPosition();
 
-        // Смещение для расчета клеток относительно центра объекта
         Vector2 offset = new Vector2(
             -(_occupiedCells.x / 2f) * _cellSize + _cellSize / 2f,
             -(_occupiedCells.y / 2f) * _cellSize + _cellSize / 2f
         );
 
-        // Проверяем каждую клетку, которую будет занимать объект
-        _canBuild = true; // Предполагаем, что можно строить
+        _canBuild = true; 
 
         for (int x = 0; x < _occupiedCells.x; x++)
         {
             for (int y = 0; y < _occupiedCells.y; y++)
             {
-                // Вычисляем позицию клетки с учетом смещения
                 Vector2 cellPosition = new Vector2(
                     snappedPosition.x + offset.x + x * _cellSize,
                     snappedPosition.y + offset.y + y * _cellSize
                 );
 
-                // Проверяем каждую клетку на наличие объекта с тегом "Floor"
                 RaycastHit2D hit = Physics2D.Raycast(cellPosition, Vector2.zero);
                 if (hit.collider == null || !hit.collider.CompareTag(FloorTag))
                 {
-                    _canBuild = false; // Если хотя бы одна клетка не подходит, строить нельзя
+                    _canBuild = false; 
                     break;
                 }
             }
@@ -124,20 +108,15 @@ public class Decor : MonoBehaviour
                 break;
         }
 
-        // Меняем цвет в зависимости от возможности строить
         _mainRenderer.material.color = _canBuild ? _blue : _red;
     }
 
     private void PlaceObject()
     {
-        // Завершаем размещение объекта
         _isPlacing = false;
 
-        // Устанавливаем нормальный цвет
         _mainRenderer.material.color = _normColor;
 
-        // При необходимости делаем дополнительные действия:
-        // Например, создаём новый объект для размещения
         _collider.enabled = true;
         PlacedAcrion?.Invoke();
     }
