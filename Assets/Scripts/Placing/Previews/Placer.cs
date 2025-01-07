@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,116 +8,121 @@ public class Placer : MonoBehaviour
 {
     public List<Placable> placedThings;
 
-    private TileMapHolder grid;
-    private Preview placablePreview;
-    private PlayerInput _playerInput; // todo remove to separate object
+    [Inject] private PlayerInput _playerInput;
 
-    [Inject] private readonly DiContainer _container;
+    private TileMapHolder _grid;
+    private Preview _placablePreview;
+    private Camera _mainCamera;
 
     private void Awake()
     {
         placedThings = new List<Placable>();
-        StartCoroutine(WaitForPlayerInput());
     }
 
-    private IEnumerator WaitForPlayerInput()
-    {
-        Debug.Log("WaitForPlayerInput");
-        while (_container.Resolve<PlayerInput>() == null)
-            Debug.Log("wait for PlayerInput");
-
-        Debug.Log("find PlayerInput");
-        _playerInput = _container.Resolve<PlayerInput>();
-        Debug.Log(_playerInput);
-        yield return null;
-    }
 
     private TileMapHolder GetGrid()
     {
-        if (grid == null)
+        if (_grid == null)
         {
-            grid = GetComponent<TileMapHolder>();
+            _grid = GetComponent<TileMapHolder>();
         }
 
-        return grid;
+        return _grid;
     }
 
     private void Update()
     {
-        if (placablePreview == null)
+        if (_placablePreview == null)
         {
             return;
         }
 
-        if (Input.GetMouseButtonDown(1)) // если нажата ПкМ, то отменяем постройку
-        {
-            Destroy(placablePreview.gameObject);
-            placablePreview = null;
-            return;
-        }
-        else if (Input.GetKeyDown(KeyCode.Return))// (KeyCode.KeypadEnter))
-        {
-            InstantiatePlacable();
-        }
+        _placablePreview.transform.position = GetMouceWorldPosition();
+        Debug.Log(_placablePreview.transform.position);
 
-        if (Input.GetMouseButton(0))// если нажата или удерживается ЛКМ 
-        {
-            Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2Int gridPos = GetGrid().GetGridPosHere(mouse);
+        //if (Input.GetMouseButtonDown(1)) // если нажата ПкМ, то отменяем постройку
+        //{
+        //    Destroy(placablePreview.gameObject);
+        //    placablePreview = null;
+        //    return;
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Return))// (KeyCode.KeypadEnter))
+        //{
+        //    InstantiatePlacable();
+        //}
 
-            Vector2 cellCenter;
-            if (GetGrid().IsAreaBounded(gridPos.x, gridPos.y, Vector2Int.one))// в пределах ли нашей таблицы
-            {
-                cellCenter = GetGrid().GetGridCellPosition(gridPos);
-            }
-            else
-            {
-                cellCenter = mouse;
-            }
+        //if (Input.GetMouseButton(0))// если нажата или удерживается ЛКМ 
+        //{
+        //    Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    Vector2Int gridPos = GetGrid().GetGridPosHere(mouse);
 
-            placablePreview.SetCurrentMousePosition(cellCenter, gridPos, () => GetGrid().IsBuildAvailable(gridPos, placablePreview));
-        }
+        //    Vector2 cellCenter;
+        //    if (GetGrid().IsAreaBounded(gridPos.x, gridPos.y, Vector2Int.one))// в пределах ли нашей таблицы
+        //    {
+        //        cellCenter = GetGrid().GetGridCellPosition(gridPos);
+        //    }
+        //    else
+        //    {
+        //        cellCenter = mouse;
+        //    }
+
+        //    placablePreview.SetCurrentMousePosition(cellCenter, gridPos, () => GetGrid().IsBuildAvailable(gridPos, placablePreview));
+        //}
+    }
+
+    private Vector3 GetMouceWorldPosition()
+    {
+        if (_mainCamera == null)
+            _mainCamera = Camera.main;
+
+        Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
+        //Debug.Log(mouseScreenPosition);
+        Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(new Vector3
+            (mouseScreenPosition.x, mouseScreenPosition.y, -_mainCamera.transform.position.z));
+        mouseWorldPosition.z = 0f;
+
+        return  mouseWorldPosition;
     }
 
     public void ShowPlacablePreview(Preview preview)
     {
-        if (placablePreview != null)
+        if (_placablePreview != null)
         {
-            Destroy(placablePreview.gameObject);
+            Destroy(_placablePreview.gameObject);
         }
 
-        var cameraPos = Camera.main.transform.position;
-        var instPreviewPos = new Vector2(cameraPos.x, cameraPos.y);
-
-        placablePreview = Instantiate(preview, instPreviewPos, Quaternion.identity);
-
-        Vector2Int gridPos = GetGrid().GetGridPosHere(placablePreview.transform.position);
-
-        if (GetGrid().IsAreaBounded(gridPos.x, gridPos.y, Vector2Int.one))
-        {
-            placablePreview.SetSpawnPosition(gridPos);
-            placablePreview.SetBuildAvailable(GetGrid().IsBuildAvailable(gridPos, placablePreview));
-        }
-        else
-        {
-            placablePreview.SetBuildAvailable(false);
-        }
-    }
         
+
+
+        _placablePreview = Instantiate(preview, GetMouceWorldPosition(), Quaternion.identity);
+
+        //Vector2Int gridPos = GetGrid().GetGridPosHere(_placablePreview.transform.position);
+
+        //if (GetGrid().IsAreaBounded(gridPos.x, gridPos.y, Vector2Int.one))
+        //{
+        //    _placablePreview.SetSpawnPosition(gridPos);
+        //    _placablePreview.SetBuildAvailable(GetGrid().IsBuildAvailable(gridPos, _placablePreview));
+        //}
+        //else
+        //{
+        //    _placablePreview.SetBuildAvailable(false);
+        //}
+    }
+
     private void InstantiatePlacable()
     {
-        if (placablePreview != null && placablePreview.IsBuildAvailable())
+        if (_placablePreview != null && _placablePreview.IsBuildAvailable())
         {
-            Placable placableInstance = placablePreview.InstantiateHere();
+            Placable placableInstance = _placablePreview.InstantiateHere();
 
             placedThings.Add(placableInstance);
             OccupyCells(placableInstance.GridPlace);
 
-            Destroy(placablePreview.gameObject);
+            Destroy(_placablePreview.gameObject);
 
-            if (placablePreview != null)
+            if (_placablePreview != null)
             {
-                placablePreview = null;
+                _placablePreview = null;
             }
         }
     }

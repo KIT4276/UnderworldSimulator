@@ -1,15 +1,17 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public class InteractableObstacle : MonoBehaviour
 {
     [SerializeField] protected GameObject _sign;
+    [Inject]private PlayerInput _playerInput;
 
     private bool _isBroken;
     protected bool _isActive;
     protected HeroReaction _hero;
-    private const string _reactionText = "Реакция персонажа...";//store text somewhere else
+    private const string _reactionText = "Реакция персонажа...";//move text somewhere else
 
     public event Action Interact;
     public event Action LeftTheArea;
@@ -29,17 +31,19 @@ public class InteractableObstacle : MonoBehaviour
         if (collision.TryGetComponent<HeroReaction>(out var hero))
         {
             _hero = hero;
-            _hero.PlayerInput.onActionTriggered += OnPlayerInputActionTriggered;
+            _playerInput.onActionTriggered += OnPlayerInputActionTriggered;
             Activate();
         }
     }
     protected void OnTriggerExit2D(Collider2D collision)
     {
         DeActivate();
+        
     }
 
     protected void OnPlayerInputActionTriggered(InputAction.CallbackContext context)
     {
+        Debug.Log("OnPlayerInputActionTriggered");
         if (_isActive && context.action.name == "Interact" && context.action.phase == InputActionPhase.Started)
             Interac();
     }
@@ -72,5 +76,10 @@ public class InteractableObstacle : MonoBehaviour
     {
         //TODO animations
         Interact?.Invoke();
+    }
+
+    private void OnDisable()
+    {
+        _playerInput.onActionTriggered -= OnPlayerInputActionTriggered;
     }
 }

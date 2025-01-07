@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public abstract class BaseMovable : MonoBehaviour
 {
-    [SerializeField] protected PlayerInput _playerInput;
+    [Inject] protected PlayerInput _playerInput;
     [SerializeField] protected float _moveSpeed;
     [Space]
     [SerializeField] protected InputActionReference _moveAction;

@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class InfrastructureInstaller : MonoInstaller, ICoroutineRunner
 {
     [SerializeField] private GameObject _entryPointPrefab;
     [SerializeField] private GameObject _curtainPrefab;
+    [SerializeField] private GameObject _playerInputPrefab;
    
 
     private const string Curtain = "_curtain";
@@ -57,8 +59,7 @@ public class InfrastructureInstaller : MonoInstaller, ICoroutineRunner
 
     private void InstallInputService()
     {
-        //IInputService input = DefineInputService();
-        //Container.BindInterfacesAndSelfTo<IInputService>().FromInstance(input).AsSingle().NonLazy();
+        Container.Bind<PlayerInput>().FromComponentInNewPrefab(_playerInputPrefab).AsSingle().NonLazy();
     }
 
 

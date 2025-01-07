@@ -38,8 +38,8 @@ public class GameFactory : IService
         HeroMove.Init();
         InitCamera();
         _container.Bind<HeroMove>().AsSingle();
-        Debug.Log(PlayerGameObject.GetComponent<PlayerInput>());
-        _container.Bind<PlayerInput>().FromInstance(PlayerGameObject.GetComponent<PlayerInput>()).AsSingle();
+        
+        _container.Bind<PlayerInput>().FromInstance(PlayerGameObject.GetComponent<PlayerInput>()).AsSingle().NonLazy();
 
         PlayerCreated?.Invoke();
         return PlayerGameObject;
