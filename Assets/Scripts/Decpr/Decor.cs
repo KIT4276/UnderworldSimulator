@@ -8,24 +8,18 @@ public class Decor : MonoBehaviour
 {
     [SerializeField] private Collider2D _collider;
     [SerializeField] private SpriteRenderer _mainRenderer;
-    // [SerializeField] private float _cellSize;
     [SerializeField] private Vector2 _occupiedCells;
     [SerializeField] private InputActionReference _clickAcrion;
+    [SerializeField] private InputActionReference _cancelAcrion;
 
     private const string FloorTag = "Floor";
+    private PersistantStaticData _staticData;
     private Camera _mainCamera;
-
     private bool _isPlacing;
     private bool _canBuild;
 
-    //[SerializeField] private Color _blue;
-    //private Color _red;
-    //private Color _normColor;
-
-    /*[Inject] */
-    private PersistantStaticData _staticData;
-
     public event Action PlacedAcrion;
+    public event Action CanceledAcrion;
 
     private void Awake()
     {
@@ -35,6 +29,13 @@ public class Decor : MonoBehaviour
         //_red = new Color(1, 0.2f, 0.2f, 0.5f);
 
         _clickAcrion.action.performed += OnClick;
+        _cancelAcrion.action.performed += OnCanceled;
+    }
+
+    private void OnCanceled(InputAction.CallbackContext context)
+    {
+        _isPlacing = false;
+        CanceledAcrion?.Invoke();
     }
 
     private void OnClick(InputAction.CallbackContext context)
@@ -140,5 +141,6 @@ public class Decor : MonoBehaviour
     {
         _isPlacing = false;
         _clickAcrion.action.performed -= OnClick;
+        _cancelAcrion.action.performed -= OnCanceled;
     }
 }

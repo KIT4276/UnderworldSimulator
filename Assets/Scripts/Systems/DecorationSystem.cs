@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -14,11 +15,18 @@ public class DecorationSystem
         
             _activeDecor = _factory.SpawnDecor(decorPrefab);
         _activeDecor.PlacedAcrion += RemoveActiveDecor;
+        _activeDecor.CanceledAcrion += RemoveDecor;
+    }
+
+    private void RemoveDecor()
+    {
+        GameObject.Destroy(_activeDecor.gameObject);
+
+        //todo Return decor to inventory
     }
 
     private void RemoveActiveDecor()
     {
         _activeDecor = null;
-        //_activeDecor.PlacedAcrion -= RemoveActiveDecor;
     }
 }

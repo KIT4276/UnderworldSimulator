@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "GameData", menuName = "ScriptableObjects/GameDataScriptableObject", order = 2)]
 
@@ -15,10 +14,4 @@ public class PersistantStaticData : ScriptableObject
     public Color AllowedPositionColor => _allowedPositionColor;
     public Color BannedPositionColor => _bannedPositionColor;
     public Color NormalColor => _normColor; 
-
-    //TODO
-
-    //[SerializeField] private float _smthngLikeNumberOfBarracks...
-
-    //public float SmthngLikeNumberOfBarracks => _smthngLikeNumberOfBarracks...
 }
