@@ -56,6 +56,6 @@ public class CameraMove : BaseMovable
 
     private void OnDisable()
     {
-        _scrollAction.action.performed += OnScrollPerformed;
+        _scrollAction.action.performed -= OnScrollPerformed;
     }
 }
