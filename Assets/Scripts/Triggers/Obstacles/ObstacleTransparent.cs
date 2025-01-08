@@ -5,6 +5,7 @@ public class ObstacleTransparent : BaseObstacle
 {
     [SerializeField] private float _transparencyValue = 0.5f;
     [SerializeField] private float _transparencyTime = 1.0f;
+    [SerializeField] protected SpriteRenderer _spriteRenderer;
 
     private Tween _fadeInAnimation;
     private Tween _fadeOutAnimation;
