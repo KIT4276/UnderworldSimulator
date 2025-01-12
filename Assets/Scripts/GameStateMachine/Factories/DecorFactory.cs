@@ -1,18 +1,17 @@
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using Zenject;
 
 public class DecorFactory : MonoBehaviour
 {
     private PersistantStaticData _staticData;
-    private GreedHolder _greedHolder;
+    private SpaceDeterminantor _spaceDeterminantor;
     private DecorationSystem _decorationSystem;
 
     [Inject]
-    private void Construct(PersistantStaticData staticData, GreedHolder greedHolder)
+    private void Construct(PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor)
     {
         _staticData = staticData;
-        _greedHolder = greedHolder;
+        _spaceDeterminantor = spaceDeterminantor;
     }
 
     public void Initialize(DecorationSystem decorationSystem) => 
@@ -21,7 +20,7 @@ public class DecorFactory : MonoBehaviour
     public Decor SpawnDecor(Decor decorPrefab)
     {
         var decpr = Instantiate(decorPrefab);
-        decpr.Initialize(_staticData, _decorationSystem, _greedHolder);
+        decpr.Initialize(_staticData, _decorationSystem, _spaceDeterminantor);
 
         return decpr;
     }

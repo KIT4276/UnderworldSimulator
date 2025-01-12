@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class GreedHolder 
@@ -15,7 +14,7 @@ public class GreedHolder
         _spaceDeterminantor = spaceDeterminantor;
         _assets = assets;
 
-        _spaceDeterminantor.Found += OnFound;
+        OnFound();
     }
 
     private void OnFound()
@@ -28,21 +27,17 @@ public class GreedHolder
 
     private void FillIn(Floor floor)
     {
-        // Вычисляем количество ячеек по X и Y
         int xCells = Mathf.FloorToInt(floor.X_NumberOfSquares);
         int yCells = Mathf.FloorToInt(floor.Y_NumberOfSquares);
 
-        // Создаем массив ячеек
         _grid = new GridCell[xCells, yCells];
 
-        float cellSize = floor.GetCellSize(); // Получаем размер одной ячейки
-        Vector3 floorPosition = floor.transform.position; // Центр пола
+        float cellSize = floor.GetCellSize(); 
+        Vector3 floorPosition = floor.transform.position; 
 
-        // Вычисляем начальную позицию (левый нижний угол)
         float startX = floorPosition.x - (xCells * cellSize) / 2f;
         float startY = floorPosition.y - (yCells * cellSize) / 2f;
 
-        // Заполняем сетку
         for (int x = 0; x < xCells; x++)
         {
             for (int y = 0; y < yCells; y++)
@@ -50,7 +45,7 @@ public class GreedHolder
                 float centerX = startX + x * cellSize + cellSize / 2f;
                 float centerY = startY + y * cellSize + cellSize / 2f;
 
-                _grid[x, y] = new GridCell(centerX, centerY, false); // Создаем ячейку
+                _grid[x, y] = new GridCell(centerX, centerY, false); 
             }
         }
 
@@ -62,7 +57,7 @@ public class GreedHolder
         foreach (GridCell cell in _grid)
         {
             GameObject r = _assets.Instantiate(AssetPath.CellPath);
-            r.transform.position = new Vector3(cell._centerX, cell._centerY,0);
+            r.transform.position = new Vector3(cell._centerX, cell._centerY, 0);
         }
     }
 }

@@ -27,7 +27,7 @@ public class DecorationSystem
     private void ActivateDecor(Decor decor)
     {
         decor.PlacedAction += RemoveActiveDecor;
-        decor.CanceledAction += RemoveDecor;
+        decor.CanceledAcrion += RemoveDecor;
     }
 
     public void ReActivateDecor(Decor decor)
