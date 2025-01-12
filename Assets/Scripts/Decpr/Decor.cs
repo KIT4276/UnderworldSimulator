@@ -14,26 +14,30 @@ public class Decor : MonoBehaviour
     private const string FloorTag = "Floor";
     private PersistantStaticData _staticData;
     private DecorationSystem _decorationSystem;
+    private GreedHolder _greedHolder;
     private Camera _mainCamera;
     private bool _isPlacing;
     private bool _canBuild;
 
-    private int _groundlayerMask = (1 << 1) | (1 << 6) | (1 << 8)| (1 << 10);
+    //private int _groundlayerMask = (1 << 1) | (1 << 6) | (1 << 8)| (1 << 10);
 
     public event Action PlacedAction;
     public event Action CanceledAcrion;
 
-    public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem)
+    public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem, GreedHolder greedHolder)
     {
         _isPlacing = true;
         _staticData = staticData;
         _decorationSystem = decorationSystem;
+        _greedHolder = greedHolder;
 
         _clickAcrion.action.performed += OnClick;
         _cancelAcrion.action.performed += OnCanceled;
 
         foreach (var collider in _colliders)
             collider.enabled = false;
+
+        Debug.Log(greedHolder.Grid.Length);
     }
 
     private void OnCanceled(InputAction.CallbackContext context)
@@ -185,3 +189,5 @@ public class Decor : MonoBehaviour
         _cancelAcrion.action.performed -= OnCanceled;
     }
 }
+
+

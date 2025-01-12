@@ -12,6 +12,10 @@ public class GameplayInstaller : MonoInstaller
         InstallScriptableObjects();
 
         Container.Bind<WorkbenchSystem>().FromComponentInNewPrefab(_workbenchPrefab).AsSingle().NonLazy();
+
+        Container.Bind<SpaceDeterminantor>().FromNew().AsSingle().NonLazy(); 
+        Container.Bind<GreedHolder>().FromNew().AsSingle().NonLazy();
+
         Container.Bind<DecorFactory>().FromComponentInNewPrefab(_decorFactiryPrefab).AsSingle().NonLazy();
         Container.Bind<DecorationSystem>().FromNew().AsSingle().NonLazy();
     }
