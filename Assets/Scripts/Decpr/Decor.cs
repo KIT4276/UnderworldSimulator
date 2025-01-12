@@ -1,12 +1,11 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Zenject;
 
 [RequireComponent(typeof(Collider2D))]
 public class Decor : MonoBehaviour
 {
-    [SerializeField] private Collider2D _collider;
+    [SerializeField] private Collider2D[] _colliders;
     [SerializeField] private SpriteRenderer _mainRenderer;
     [SerializeField] private Vector2 _occupiedCells;
     [SerializeField] private InputActionReference _clickAcrion;
@@ -14,22 +13,27 @@ public class Decor : MonoBehaviour
 
     private const string FloorTag = "Floor";
     private PersistantStaticData _staticData;
+    private DecorationSystem _decorationSystem;
     private Camera _mainCamera;
     private bool _isPlacing;
     private bool _canBuild;
 
-    public event Action PlacedAcrion;
+    private int _groundlayerMask = (1 << 1) | (1 << 6) | (1 << 8)| (1 << 10);
+
+    public event Action PlacedAction;
     public event Action CanceledAcrion;
 
-    private void Awake()
+    public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem)
     {
-        //Debug.Log(_staticData);
-        _collider.enabled = false;
-        //_normColor = new Color(1, 1, 1, 1);
-        //_red = new Color(1, 0.2f, 0.2f, 0.5f);
+        _isPlacing = true;
+        _staticData = staticData;
+        _decorationSystem = decorationSystem;
 
         _clickAcrion.action.performed += OnClick;
         _cancelAcrion.action.performed += OnCanceled;
+
+        foreach (var collider in _colliders)
+            collider.enabled = false;
     }
 
     private void OnCanceled(InputAction.CallbackContext context)
@@ -40,16 +44,35 @@ public class Decor : MonoBehaviour
 
     private void OnClick(InputAction.CallbackContext context)
     {
-        if (_canBuild && _isPlacing)
+        if (_isPlacing)
         {
-            PlaceObject();
+            if (_canBuild)
+                PlaceObject();
         }
-    }
 
-    public void Initialize(PersistantStaticData staticData)
-    {
-        _isPlacing = true;
-        _staticData = staticData;
+        else if (_decorationSystem.ActiveDecor == null)
+        {
+            CheckCamera();
+
+            Ray ray = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray);
+
+            foreach (var hit in hits)
+            {
+                Debug.Log(hit.collider.name);
+                if (hit.collider.gameObject == this.gameObject)
+                {
+                    Debug.Log("DA");
+                    _decorationSystem.ReActivateDecor(this);
+                    _isPlacing = true;
+
+                    foreach (var collider in _colliders)
+                        collider.enabled = false;
+                    break;
+                }
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -106,13 +129,29 @@ public class Decor : MonoBehaviour
                     snappedPosition.y + offset.y + y * _staticData.CellSize
                 );
 
-                RaycastHit2D hit = Physics2D.Raycast(cellPosition, Vector2.zero);
-                
-                if (hit.collider == null || !hit.collider.CompareTag(FloorTag))
+                Ray ray = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+                RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray);
+
+                foreach (var hit in hits)
                 {
-                    _canBuild = false;
-                    break;
+                    if (hit.collider == null || !hit.collider.CompareTag(FloorTag))
+                    {
+                        _canBuild = false;
+                        break;
+                    }
                 }
+
+
+
+
+                //    RaycastHit2D hit = Physics2D.Raycast(cellPosition, Vector2.zero/*, Mathf.Infinity, _groundlayerMask*/);
+
+                //if (hit.collider == null || !hit.collider.CompareTag(FloorTag))
+                //{
+                //    _canBuild = false;
+                //    break;
+                //}
             }
             if (!_canBuild)
                 break;
@@ -127,8 +166,10 @@ public class Decor : MonoBehaviour
 
         _mainRenderer.material.color = _staticData.NormalColor;
 
-        _collider.enabled = true;
-        PlacedAcrion?.Invoke();
+        foreach (var collider in _colliders)
+            collider.enabled = true;
+
+        PlacedAction?.Invoke();
     }
 
     private void CheckCamera()

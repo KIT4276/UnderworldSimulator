@@ -5,6 +5,11 @@ public class StartMenu : MonoBehaviour
 {
     public event Action OnStarted;
 
+    private void Start()
+    {
+        StartNewGame(); // temporary
+    }
+
     public void StartNewGame()
     {
         PlayerPrefs.DeleteAll();
