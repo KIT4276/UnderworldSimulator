@@ -131,7 +131,7 @@ public class Decor : MonoBehaviour
                     float checkX = closestCell._centerX + offset.x + x * _staticData.CellSize;
                     float checkY = closestCell._centerY + offset.y + y * _staticData.CellSize;
 
-                    Debug.Log(IsPositionInGrid(checkX, checkY));
+                    //Debug.Log(IsPositionInGrid(checkX, checkY));
                     //Instantiate(_tempPrefab, new Vector3(checkX, checkY, 0f), Quaternion.identity);// for tests
 
                     if (!IsPositionInGrid(checkX, checkY) || GetGridCellAt(checkX, checkY).IsOccupied)
@@ -185,7 +185,7 @@ public class Decor : MonoBehaviour
 
     private bool IsPositionInGrid(float x, float y) //always fals
     {
-        Debug.Log(GetGridCellAt(x, y));
+        //Debug.Log(GetGridCellAt(x, y));
         return GetGridCellAt(x, y) != null;
     }
 
@@ -199,7 +199,7 @@ public class Decor : MonoBehaviour
 
                 if (Mathf.Abs(cell._centerX - x) < _staticData.Epsilon && Mathf.Abs(cell._centerY - y) < _staticData.Epsilon)
                 {
-                    Debug.Log("DA!");
+                    //Debug.Log("DA!");
                     return cell;
                 }
 
