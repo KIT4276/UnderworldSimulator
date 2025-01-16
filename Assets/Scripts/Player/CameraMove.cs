@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,11 +10,14 @@ public class CameraMove : BaseMovable
     [SerializeField] private CinemachineCamera _followCMVCamera;
     [SerializeField] private CinemachineCamera _manualCMVCamera;
     [SerializeField] private float _scrollSpeed = 10;
+    [SerializeField] private float _moveTime = 1;
 
     private float _scrollValue;
+    private HotelPoint _hotelPoint;
 
     private void Start()
     {
+        _manualCMVCamera.transform.parent = null;
         _scrollAction.action.performed += OnScrollPerformed;
 
         _followCMVCamera.Priority = 11;
@@ -47,6 +51,16 @@ public class CameraMove : BaseMovable
     {
         base.Mobilize();
         _followCMVCamera.Priority = 0;
+        ChekHotelPoint();
+        _manualCMVCamera.transform.DOMove(
+            new Vector3(_hotelPoint.transform.position.x, _hotelPoint.transform.position.y, transform.position.z),
+            _moveTime);
+    }
+
+    private void ChekHotelPoint()
+    {
+        if (_hotelPoint == null)
+            _hotelPoint = GameObject.FindAnyObjectByType<HotelPoint>();
     }
 
     private void OnScrollPerformed(InputAction.CallbackContext context)

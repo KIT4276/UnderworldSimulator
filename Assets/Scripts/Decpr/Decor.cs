@@ -226,7 +226,7 @@ public class Decor : MonoBehaviour
     private void OccupyCells()
     {
         _closestCell.IsOccupied = true;
-        Instantiate(_tempPrefab, new Vector3(_closestCell._centerX, _closestCell._centerY, 0f), Quaternion.identity);// for tests
+        //Instantiate(_tempPrefab, new Vector3(_closestCell._centerX, _closestCell._centerY, 0f), Quaternion.identity);// for tests
 
         if (_occupiedCells.x == 3)
         {
@@ -235,13 +235,13 @@ public class Decor : MonoBehaviour
 
             var rightCell = GetGridCellAt(x, y);
             rightCell.IsOccupied = true;
-            Instantiate(_tempPrefab, new Vector3( rightCell._centerX, rightCell._centerY, 0), Quaternion.identity);
+            //Instantiate(_tempPrefab, new Vector3( rightCell._centerX, rightCell._centerY, 0), Quaternion.identity);
 
             x = ((_closestCell._centerX - _staticData.CellSize / 2) - _staticData.CellSize / 2);
 
             var leftCell = GetGridCellAt(x, y);
             leftCell.IsOccupied = true;
-            Instantiate(_tempPrefab, new Vector3(leftCell._centerX, leftCell._centerY, 0), Quaternion.identity);
+            //Instantiate(_tempPrefab, new Vector3(leftCell._centerX, leftCell._centerY, 0), Quaternion.identity);
         }
     }
 
