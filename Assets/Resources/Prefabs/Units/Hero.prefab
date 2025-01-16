@@ -844,13 +844,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a005f66cd8df6c242bc5baa285f7cde0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerInput: {fileID: 7239135253421124979}
   _moveSpeed: 4
   _moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _scrollAction: {fileID: 3823762362802810437, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _followCMVCamera: {fileID: 3838848883822530399}
   _manualCMVCamera: {fileID: 8592153721622434261}
+  _positionComposer: {fileID: 2317379288469376648}
   _scrollSpeed: 10
+  _moveTime: 1
 --- !u!114 &7636213519455106398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1373,7 +1374,6 @@ MonoBehaviour:
   _reactionText: {fileID: 9204417237617135584}
   _reactionPanel: {fileID: 1935507758866809987}
   _reactionTime: 3
-  _playerInput: {fileID: 7239135253421124979}
 --- !u!1 &7935669083504756841
 GameObject:
   m_ObjectHideFlags: 0
@@ -1427,7 +1427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd99017fa1c2a040818907f7636ce05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerInput: {fileID: 7239135253421124979}
   _moveSpeed: 5
   _moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _rigidbody2d: {fileID: 440455551612106775}

@@ -49,7 +49,7 @@ public class GreedHolder
             }
         }
 
-        BuildGrid();
+        //BuildGrid();
     }
 
     private void BuildGrid()

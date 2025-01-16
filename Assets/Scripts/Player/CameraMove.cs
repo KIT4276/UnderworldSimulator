@@ -9,8 +9,10 @@ public class CameraMove : BaseMovable
     [Space]
     [SerializeField] private CinemachineCamera _followCMVCamera;
     [SerializeField] private CinemachineCamera _manualCMVCamera;
+    [SerializeField] private CinemachinePositionComposer _positionComposer;
     [SerializeField] private float _scrollSpeed = 10;
     [SerializeField] private float _moveTime = 1;
+    [SerializeField] private float _startDistance = 20;
 
     private float _scrollValue;
     private HotelPoint _hotelPoint;
@@ -26,6 +28,7 @@ public class CameraMove : BaseMovable
 
     private void FixedUpdate()
     {
+
         if (_canMove)
         {
             var deltaX = _inputVector2.x;
@@ -34,8 +37,11 @@ public class CameraMove : BaseMovable
 
             if (_inputVector2 != Vector2.zero)
                 deltaZ = 0f;
-
             _manualCMVCamera.transform.position += new Vector3(deltaX, deltaY, deltaZ) * _moveSpeed * Time.deltaTime;
+        }
+        else
+        {
+            _positionComposer.CameraDistance -= _scrollValue;
         }
 
         _scrollValue = 0f;
@@ -50,11 +56,11 @@ public class CameraMove : BaseMovable
     public override void Mobilize()
     {
         base.Mobilize();
-        _followCMVCamera.Priority = 0;
         ChekHotelPoint();
         _manualCMVCamera.transform.DOMove(
             new Vector3(_hotelPoint.transform.position.x, _hotelPoint.transform.position.y, transform.position.z),
             _moveTime);
+        _followCMVCamera.Priority = 0;
     }
 
     private void ChekHotelPoint()
@@ -67,6 +73,8 @@ public class CameraMove : BaseMovable
     {
         _scrollValue = context.ReadValue<float>();
     }
+
+
 
     private void OnDisable()
     {
