@@ -457,10 +457,10 @@ namespace DragonBones
 
         private bool _IsPrefab()
         {
-            //return PrefabUtility.GetCorrespondingObjectFromSource<GameObject>(_armatureComponent.gameObject) == null//
-              //  && PrefabUtility.GetPrefabInstanceHandle(_armatureComponent.gameObject) != null; //
-            return PrefabUtility.GetPrefabParent(_armatureComponent.gameObject) == null
-                && PrefabUtility.GetPrefabObject(_armatureComponent.gameObject) != null;
+            return PrefabUtility.GetCorrespondingObjectFromSource<GameObject>(_armatureComponent.gameObject) == null
+                && PrefabUtility.GetPrefabInstanceHandle(_armatureComponent.gameObject) != null; 
+            //return PrefabUtility.GetPrefabParent(_armatureComponent.gameObject) == null
+            //    && PrefabUtility.GetPrefabObject(_armatureComponent.gameObject) != null;
         }
 
         private List<string> _GetSortingLayerNames()

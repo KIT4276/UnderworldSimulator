@@ -18,7 +18,8 @@ public class DecorationSystem
     public void InstantiateDecor(Decor decorPrefab)
     {
         if (_activeDecor != null)
-            GameObject.Destroy(_activeDecor.gameObject);
+            _factory.DespawnDecor(_activeDecor);
+            //GameObject.Destroy(_activeDecor.gameObject);
 
         _activeDecor = _factory.SpawnDecor(decorPrefab);
         ActivateDecor(_activeDecor);
@@ -38,9 +39,12 @@ public class DecorationSystem
 
     private void RemoveDecor()
     {
-        GameObject.Destroy(_activeDecor.gameObject);
-
+        if (ActiveDecor != null)
+        {
+            _factory.DespawnDecor(_activeDecor);
+            _activeDecor = null;
         //todo Return decor to inventory
+        }
     }
 
     private void RemoveActiveDecor()

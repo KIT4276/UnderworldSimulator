@@ -12,11 +12,12 @@ public class Decor : MonoBehaviour
     [SerializeField] private InputActionReference _clickAcrion;
     [SerializeField] private InputActionReference _cancelAcrion;
     [Space]
-    [SerializeField] private GameObject _tempPrefab;
+    //[SerializeField] private GameObject _tempPrefab;
 
     private PersistantStaticData _staticData;
     private DecorationSystem _decorationSystem;
     private SpaceDeterminantor _spaceDeterminantor;
+    private DecorHolder _decorHolder;
     private Camera _mainCamera;
     private bool _isPlacing;
     private bool _canBuild;
@@ -26,12 +27,13 @@ public class Decor : MonoBehaviour
     public event Action CanceledAcrion;
 
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem
-        , SpaceDeterminantor spaceDeterminantor)
+        , SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
     {
         _isPlacing = true;
         _staticData = staticData;
         _decorationSystem = decorationSystem;
         _spaceDeterminantor = spaceDeterminantor;
+        _decorHolder = decorHolder;
 
         _clickAcrion.action.performed += OnClick;
         _cancelAcrion.action.performed += OnCanceled;
@@ -217,7 +219,7 @@ public class Decor : MonoBehaviour
         foreach (var collider in _colliders)
             collider.enabled = true;
 
-        
+        _decorHolder.InstallDecor(this);
 
         OccupyCells();
         PlacedAction?.Invoke();
