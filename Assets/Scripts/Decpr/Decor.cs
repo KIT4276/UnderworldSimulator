@@ -67,7 +67,7 @@ public class Decor : MonoBehaviour
                 //Debug.Log(hit.collider.name);
                 if (hit.collider.gameObject == this.gameObject)
                 {
-                    Debug.Log("DA");
+                    //Debug.Log("DA");
                     _decorationSystem.ReActivateDecor(this);
                     _isPlacing = true;
 

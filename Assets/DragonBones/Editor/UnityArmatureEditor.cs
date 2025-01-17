@@ -393,7 +393,8 @@ namespace DragonBones
             if (!EditorApplication.isPlayingOrWillChangePlaymode && Selection.activeObject == _armatureComponent.gameObject)
             {
                 EditorUtility.SetDirty(_armatureComponent);
-                HandleUtility.Repaint();
+                //HandleUtility.Repaint();
+                SceneView.RepaintAll();
             }
         }
 
@@ -456,6 +457,8 @@ namespace DragonBones
 
         private bool _IsPrefab()
         {
+            //return PrefabUtility.GetCorrespondingObjectFromSource<GameObject>(_armatureComponent.gameObject) == null//
+              //  && PrefabUtility.GetPrefabInstanceHandle(_armatureComponent.gameObject) != null; //
             return PrefabUtility.GetPrefabParent(_armatureComponent.gameObject) == null
                 && PrefabUtility.GetPrefabObject(_armatureComponent.gameObject) != null;
         }
