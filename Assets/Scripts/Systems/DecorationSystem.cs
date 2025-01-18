@@ -19,7 +19,6 @@ public class DecorationSystem
     {
         if (_activeDecor != null)
             _factory.DespawnDecor(_activeDecor);
-            //GameObject.Destroy(_activeDecor.gameObject);
 
         _activeDecor = _factory.SpawnDecor(decorPrefab);
         ActivateDecor(_activeDecor);

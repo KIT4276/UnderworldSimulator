@@ -12,7 +12,7 @@ public class Decor : MonoBehaviour
     [SerializeField] private InputActionReference _clickAcrion;
     [SerializeField] private InputActionReference _cancelAcrion;
     [Space]
-    //[SerializeField] private GameObject _tempPrefab;
+    [SerializeField] private GameObject _tempPrefab;
 
     private PersistantStaticData _staticData;
     private DecorationSystem _decorationSystem;
@@ -103,8 +103,7 @@ public class Decor : MonoBehaviour
         {
             _closestCell = closestCell;
 
-
-            transform.position = new Vector3(closestCell._centerX, closestCell._centerY, 0f);
+            transform.position = new Vector3(closestCell.CenterX, closestCell.CenterY, 0f);
         }
     }
 
@@ -130,8 +129,8 @@ public class Decor : MonoBehaviour
             {
                 for (int y = 0; y < _occupiedCells.y; y++)
                 {
-                    float checkX = closestCell._centerX + offset.x + x * _staticData.CellSize;
-                    float checkY = closestCell._centerY + offset.y + y * _staticData.CellSize;
+                    float checkX = closestCell.CenterX + offset.x + x * _staticData.CellSize;
+                    float checkY = closestCell.CenterY + offset.y + y * _staticData.CellSize;
 
                     //Debug.Log(IsPositionInGrid(checkX, checkY));
                     //Instantiate(_tempPrefab, new Vector3(checkX, checkY, 0f), Quaternion.identity);// for tests
@@ -164,7 +163,7 @@ public class Decor : MonoBehaviour
         {
             foreach (var cell in greedHolder.Grid)
             {
-                float distance = Vector2.Distance(new Vector2(cell._centerX, cell._centerY), position);
+                float distance = Vector2.Distance(new Vector2(cell.CenterX, cell.CenterY), position);
                 if (distance < minDistance)
                 {
                     minDistance = distance;
@@ -198,8 +197,7 @@ public class Decor : MonoBehaviour
             foreach (var cell in greedHolder.Grid)
             {
 
-
-                if (Mathf.Abs(cell._centerX - x) < _staticData.Epsilon && Mathf.Abs(cell._centerY - y) < _staticData.Epsilon)
+                if (Mathf.Abs(cell.CenterX - x) < _staticData.Epsilon && Mathf.Abs(cell.CenterY - y) < _staticData.Epsilon)
                 {
                     //Debug.Log("DA!");
                     return cell;
@@ -227,24 +225,32 @@ public class Decor : MonoBehaviour
 
     private void OccupyCells()
     {
-        _closestCell.IsOccupied = true;
-        //Instantiate(_tempPrefab, new Vector3(_closestCell._centerX, _closestCell._centerY, 0f), Quaternion.identity);// for tests
+        _closestCell.SetIsOccupied(true);
+        _closestCell.SpriteRenderer.color = Color.red;
+        //Instantiate(_tempPrefab, new Vector3(_closestCell.CenterX, _closestCell.CenterY, 0f), Quaternion.identity);// for tests
 
         if (_occupiedCells.x == 3)
         {
-            var x = ((_closestCell._centerX + _staticData.CellSize / 2) + _staticData.CellSize / 2);
-            var y = _closestCell._centerY;
+            var x = ((_closestCell.CenterX + _staticData.CellSize / 2) + _staticData.CellSize / 2);
+            var y = _closestCell.CenterY;
 
             var rightCell = GetGridCellAt(x, y);
-            rightCell.IsOccupied = true;
-            //Instantiate(_tempPrefab, new Vector3( rightCell._centerX, rightCell._centerY, 0), Quaternion.identity);
+            rightCell.SetIsOccupied( true);
+            rightCell.SpriteRenderer.color = Color.red;
+            //Instantiate(_tempPrefab, new Vector3(rightCell._centerX, rightCell._centerY, 0), Quaternion.identity);
 
-            x = ((_closestCell._centerX - _staticData.CellSize / 2) - _staticData.CellSize / 2);
+            x = ((_closestCell.CenterX - _staticData.CellSize / 2) - _staticData.CellSize / 2);
 
             var leftCell = GetGridCellAt(x, y);
-            leftCell.IsOccupied = true;
+            leftCell.SetIsOccupied(true);
+            leftCell.SpriteRenderer.color = Color.red;
             //Instantiate(_tempPrefab, new Vector3(leftCell._centerX, leftCell._centerY, 0), Quaternion.identity);
         }
+        if (_occupiedCells.y == 2)
+        {
+
+        }
+
     }
 
     private void CheckCamera()

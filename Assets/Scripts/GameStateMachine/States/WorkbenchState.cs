@@ -1,4 +1,7 @@
-﻿public class WorkbenchState : IState
+﻿
+using UnityEngine;
+
+public class WorkbenchState : IState
 {
     private readonly SpaceDeterminantor _spaceDeterminantor;
 
