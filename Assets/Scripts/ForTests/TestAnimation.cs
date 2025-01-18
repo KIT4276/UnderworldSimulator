@@ -22,6 +22,7 @@ public class TestAnimation : MonoBehaviour
 
     private void OnDisable()
     {
-        _playerInput.actions.FindAction("Cleek").performed -= OnCleek;
+        if (_playerInput != null)
+            _playerInput.actions.FindAction("Cleek").performed -= OnCleek;
     }
 }
