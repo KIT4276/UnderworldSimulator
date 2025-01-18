@@ -30,6 +30,5 @@ public class SpaceDeterminantor
             _floorObjects.Add(floor);
             _greedHolders.Add(new GreedHolder(_assets, floor));
         }
-        Debug.Log(FloorObjects.Count);
     }
 }

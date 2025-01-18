@@ -3,17 +3,15 @@ using UnityEngine;
 
 public class WorkbenchState : IState
 {
-    private readonly SpaceDeterminantor _spaceDeterminantor;
 
-    public WorkbenchState(SpaceDeterminantor spaceDeterminantor)
+    public WorkbenchState()
     {
-        _spaceDeterminantor = spaceDeterminantor;
     }
 
 
     public void Enter()
     {
-        _spaceDeterminantor.StartFind();
+        
     }
 
     public void Exit()

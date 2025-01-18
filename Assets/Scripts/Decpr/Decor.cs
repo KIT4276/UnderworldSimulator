@@ -25,6 +25,8 @@ public class Decor : MonoBehaviour
 
     public event Action PlacedAction;
     public event Action CanceledAcrion;
+    public event Action<GridCell> OnOccupyCell;
+    public event Action OnEmptyCell;
 
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem
         , SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
@@ -58,6 +60,7 @@ public class Decor : MonoBehaviour
 
         else if (_decorationSystem.ActiveDecor == null)
         {
+
             CheckCamera();
 
             Ray ray = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -69,7 +72,8 @@ public class Decor : MonoBehaviour
                 //Debug.Log(hit.collider.name);
                 if (hit.collider.gameObject == this.gameObject)
                 {
-                    //Debug.Log("DA");
+                    Debug.Log("DA");
+                    OnEmptyCell?.Invoke();
                     _decorationSystem.ReActivateDecor(this);
                     _isPlacing = true;
 
@@ -225,9 +229,9 @@ public class Decor : MonoBehaviour
 
     private void OccupyCells()
     {
-        _closestCell.SetIsOccupied(true);
-        _closestCell.SpriteRenderer.color = Color.red;
-        //Instantiate(_tempPrefab, new Vector3(_closestCell.CenterX, _closestCell.CenterY, 0f), Quaternion.identity);// for tests
+        _closestCell.OccupyCell();
+
+        OnOccupyCell?.Invoke(_closestCell);
 
         if (_occupiedCells.x == 3)
         {
@@ -235,16 +239,17 @@ public class Decor : MonoBehaviour
             var y = _closestCell.CenterY;
 
             var rightCell = GetGridCellAt(x, y);
-            rightCell.SetIsOccupied( true);
+            rightCell.OccupyCell();
             rightCell.SpriteRenderer.color = Color.red;
-            //Instantiate(_tempPrefab, new Vector3(rightCell._centerX, rightCell._centerY, 0), Quaternion.identity);
 
             x = ((_closestCell.CenterX - _staticData.CellSize / 2) - _staticData.CellSize / 2);
 
             var leftCell = GetGridCellAt(x, y);
-            leftCell.SetIsOccupied(true);
+            leftCell.OccupyCell();
             leftCell.SpriteRenderer.color = Color.red;
-            //Instantiate(_tempPrefab, new Vector3(leftCell._centerX, leftCell._centerY, 0), Quaternion.identity);
+            
+            OnOccupyCell?.Invoke(rightCell);
+            OnOccupyCell?.Invoke(leftCell);
         }
         if (_occupiedCells.y == 2)
         {

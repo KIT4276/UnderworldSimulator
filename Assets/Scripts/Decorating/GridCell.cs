@@ -8,6 +8,8 @@ public class GridCell
     public GameObject QuadObject { get; private set; }
     public SpriteRenderer SpriteRenderer { get; private set; }
 
+    private Color _startColor;
+
 
     public GridCell(float x, float y, bool isOccupied, IAssets assets)
     {
@@ -17,8 +19,19 @@ public class GridCell
         this.QuadObject = assets.Instantiate(AssetPath.CellPath);
         QuadObject.transform.position = new Vector3(x, y, 0);
         SpriteRenderer = QuadObject.GetComponent<SpriteRenderer>();
+
+        _startColor = SpriteRenderer.color;
     }
 
-    public void SetIsOccupied(bool isOccupied)
-        => IsOccupied = isOccupied;
+    public void OccupyCell()
+    {
+        IsOccupied = true;
+        SpriteRenderer.color = Color.red;
+    }
+
+    public void EmptyCell()
+    {
+        IsOccupied = false;
+        SpriteRenderer.color = _startColor;
+    }
 }
