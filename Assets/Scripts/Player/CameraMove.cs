@@ -12,7 +12,7 @@ public class CameraMove : BaseMovable
     [SerializeField] private CinemachinePositionComposer _positionComposer;
     [SerializeField] private float _scrollSpeed = 10;
     [SerializeField] private float _moveTime = 1;
-    [SerializeField] private float _startDistance = 20;
+    //[SerializeField] private float _startDistance = 20;
 
     private float _scrollValue;
     private HotelPoint _hotelPoint;

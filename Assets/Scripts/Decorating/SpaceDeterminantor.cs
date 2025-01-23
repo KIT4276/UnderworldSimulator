@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,11 +23,12 @@ public class SpaceDeterminantor
     public void FindDecorableSpace()
     {
         Floor[] objects = GameObject.FindObjectsByType<Floor>(FindObjectsSortMode.None);
-
         foreach (var obj in objects)
         {
-            _floorObjects.Add(obj.GetComponent<Floor>());
-            _greedHolders.Add(new GreedHolder(this, _assets));
+            //Debug.Log(obj);
+            var floor = obj.GetComponent<Floor>();
+            _floorObjects.Add(floor);
+            _greedHolders.Add(new GreedHolder(_assets, floor));
         }
     }
 }

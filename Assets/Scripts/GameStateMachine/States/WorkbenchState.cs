@@ -1,16 +1,17 @@
-﻿public class WorkbenchState : IState
-{
-    private readonly SpaceDeterminantor _spaceDeterminantor;
+﻿
+using UnityEngine;
 
-    public WorkbenchState(SpaceDeterminantor spaceDeterminantor)
+public class WorkbenchState : IState
+{
+
+    public WorkbenchState()
     {
-        _spaceDeterminantor = spaceDeterminantor;
     }
 
 
     public void Enter()
     {
-        _spaceDeterminantor.StartFind();
+        
     }
 
     public void Exit()

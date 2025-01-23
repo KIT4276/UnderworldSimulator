@@ -1,28 +1,23 @@
 using UnityEngine;
 
-public class GreedHolder 
+public class GreedHolder
 {
-     private SpaceDeterminantor _spaceDeterminantor;
-     private IAssets _assets;
+    private IAssets _assets;
 
     private GridCell[,] _grid;
 
-    public GridCell[,] Grid {  get => _grid; } 
+    public GridCell[,] Grid { get => _grid; }
 
-    public GreedHolder(SpaceDeterminantor spaceDeterminantor, IAssets assets)
+    public GreedHolder(IAssets assets, Floor floor)
     {
-        _spaceDeterminantor = spaceDeterminantor;
         _assets = assets;
 
-        OnFound();
+        OnFound(floor);
     }
 
-    private void OnFound()
+    private void OnFound(Floor floor)
     {
-        foreach (var floor in _spaceDeterminantor.FloorObjects)
-        {
-            FillIn(floor);
-        }
+        FillIn(floor);
     }
 
     private void FillIn(Floor floor)
@@ -32,8 +27,8 @@ public class GreedHolder
 
         _grid = new GridCell[xCells, yCells];
 
-        float cellSize = floor.GetCellSize(); 
-        Vector3 floorPosition = floor.transform.position; 
+        float cellSize = floor.GetCellSize();
+        Vector3 floorPosition = floor.transform.position;
 
         float startX = floorPosition.x - (xCells * cellSize) / 2f;
         float startY = floorPosition.y - (yCells * cellSize) / 2f;
@@ -45,19 +40,8 @@ public class GreedHolder
                 float centerX = startX + x * cellSize + cellSize / 2f;
                 float centerY = startY + y * cellSize + cellSize / 2f;
 
-                _grid[x, y] = new GridCell(centerX, centerY, false); 
+                _grid[x, y] = new GridCell(centerX, centerY, false, _assets);
             }
-        }
-
-        //BuildGrid();
-    }
-
-    private void BuildGrid()
-    {
-        foreach (GridCell cell in _grid)
-        {
-            GameObject r = _assets.Instantiate(AssetPath.CellPath);
-            r.transform.position = new Vector3(cell._centerX, cell._centerY, 0);
         }
     }
 }

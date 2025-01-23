@@ -99,7 +99,7 @@ namespace DragonBones
                 armatureComponent.transform.localScale = Vector2.one * 100.0f;
                 armatureComponent.transform.localPosition = Vector3.zero;
                 var dragonBonesJSON = AssetDatabase.LoadMainAssetAtPath(dragonBonesJSONPath) as TextAsset;
-
+               
                 ChangeDragonBonesData(armatureComponent, dragonBonesJSON);
             }
         }
@@ -236,7 +236,7 @@ namespace DragonBones
 
             _armatureComponent.armatureName = armatureName;
             _armatureComponent.isUGUI = isUGUI;
-
+           
             _armatureComponent = UnityFactory.factory.BuildArmatureComponent(_armatureComponent.armatureName, dragonBonesName, null, _armatureComponent.unityData.dataName, _armatureComponent.gameObject, _armatureComponent.isUGUI);
             if (slot != null)
             {
