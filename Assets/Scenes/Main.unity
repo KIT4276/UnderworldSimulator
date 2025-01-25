@@ -411,7 +411,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 171943910}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3fa54a453aca174a8527d7cdced785e, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e963c62202cba348826218ba09a70eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _polygonCollider: {fileID: 171943911}
@@ -425,7 +425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 238025125}
   - component: {fileID: 238025124}
-  - component: {fileID: 238025123}
+  - component: {fileID: 238025126}
   m_Layer: 0
   m_Name: room2
   m_TagString: Untagged
@@ -433,19 +433,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &238025123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 238025122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3fa54a453aca174a8527d7cdced785e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _polygonCollider: {fileID: 238025124}
 --- !u!60 &238025124
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -518,6 +505,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &238025126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238025122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e963c62202cba348826218ba09a70eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _polygonCollider: {fileID: 238025124}
 --- !u!4 &271132139 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 762107534986296580, guid: a40961a5603071f4a9adf89242686f3e, type: 3}

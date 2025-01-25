@@ -139,6 +139,7 @@ public class Decor : MonoBehaviour
     private void CheckIfCanBuild()
     {
         _canBuild = _closestCell != null && !_closestCell.IsOccupied;
+        //Debug.Log(_closestCell.IsOccupied);
     }
 
     private void UpdateColor()

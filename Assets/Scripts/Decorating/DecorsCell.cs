@@ -4,6 +4,7 @@ public class DecorsCell : GridCell
 {
     public DecorsCell(float x, float y, bool isOccupied, IAssets assets, GameObject polygonSplitterObject) : base(x, y, isOccupied, assets)
     {
+        Debug.Log("DecorsCell");
         this.CenterX = x;
         this.CenterY = y;
         this.IsOccupied = isOccupied;
