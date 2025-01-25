@@ -8,9 +8,9 @@ public class Decor : MonoBehaviour
     [SerializeField] private Collider2D[] _colliders;
     [SerializeField] private SpriteRenderer _mainRenderer;
     [SerializeField] private Vector2 _occupiedCells;
-    [SerializeField] private InputActionReference _clickAcrion;
-    [SerializeField] private InputActionReference _cancelAcrion;
-    [SerializeField] private InputActionReference _rotationAction;
+    [SerializeField] private InputActionReference _clickAction;
+    [SerializeField] private InputActionReference _cancelAction;
+    [SerializeField] private InputActionReference rotationAction;
     [Space]
     [SerializeField] private Sprite _frontSprite;
     [SerializeField] private Sprite _leftSprite;
@@ -29,73 +29,65 @@ public class Decor : MonoBehaviour
     private RotationState _rotationState;
 
     public event Action PlacedAction;
-    public event Action CanceledAcrion;
+    public event Action CanceledAction;
     public event Action<GridCell> OnOccupyCell;
     public event Action OnEmptyCell;
 
-    public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem
-        , SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
+    public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
+        SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
     {
+        this._staticData = staticData;
+        this._decorationSystem = decorationSystem;
+        this._spaceDeterminantor = spaceDeterminantor;
+        this._decorHolder = decorHolder;
+
         _rotationState = RotationState.Front;
         _isPlacing = true;
-        _staticData = staticData;
-        _decorationSystem = decorationSystem;
-        _spaceDeterminantor = spaceDeterminantor;
-        _decorHolder = decorHolder;
+        _decorData = new DecorData(this);
 
-        _clickAcrion.action.performed += OnClick;
-        _cancelAcrion.action.performed += OnCanceled;
-        _rotationAction.action.performed += OnRotate;
+        _clickAction.action.performed += OnClick;
+        _cancelAction.action.performed += OnCancel;
+        rotationAction.action.performed += OnRotate;
 
         foreach (var collider in _colliders)
             collider.enabled = false;
-
-        _decorData = new(this);
     }
 
     private void OnRotate(InputAction.CallbackContext context)
     {
-        if(!_isPlacing)  return;
+        if (!_isPlacing) return;
 
-        switch (_rotationState)
+        _rotationState = (RotationState)(((int)_rotationState + 1) % 4);
+        UpdateSprite(_rotationState);
+    }
+
+    private void UpdateSprite(RotationState state)
+    {
+        switch (state)
         {
             case RotationState.Front:
-                _mainRenderer.sprite = ReplacingNullIPictures(_leftSprite, _rightSprite);
-                _rotationState = RotationState.Left;
+                _mainRenderer.sprite = _frontSprite ?? _rightSprite;
+                _mainRenderer.flipX = false;
                 break;
             case RotationState.Left:
-                _mainRenderer.sprite = ReplacingNullIPictures(_backSprite, _frontSprite);
-                _rotationState = RotationState.Back;
+                _mainRenderer.sprite = _leftSprite ?? _rightSprite;
+                _mainRenderer.flipX = _leftSprite == null;
                 break;
             case RotationState.Back:
-                _mainRenderer.sprite = ReplacingNullIPictures(_rightSprite, _leftSprite);
-                _rotationState = RotationState.Right;
+                _mainRenderer.sprite = _backSprite ?? _frontSprite;
+                _mainRenderer.flipX = false;
                 break;
             case RotationState.Right:
-                _mainRenderer.sprite = ReplacingNullIPictures(_frontSprite, _backSprite);
-                _rotationState = RotationState.Front;
+                _mainRenderer.sprite = _rightSprite ?? _leftSprite;
+                _mainRenderer.flipX = _rightSprite == null;
                 break;
         }
     }
 
-    private Sprite ReplacingNullIPictures(Sprite neededSprite, Sprite replaceSprite)
-    {
-        if (neededSprite == null)
-        {
-            _mainRenderer.flipX = true;
-            return replaceSprite;
-        }
-        else
-        {
-            _mainRenderer.flipX = false;
-            return neededSprite;
-        }
-    }
-
-    private void OnCanceled(InputAction.CallbackContext context)
+    private void OnCancel(InputAction.CallbackContext context)
     {
         _isPlacing = false;
-        CanceledAcrion?.Invoke();
+        CanceledAction?.Invoke();
     }
 
     private void OnClick(InputAction.CallbackContext context)
@@ -105,28 +97,20 @@ public class Decor : MonoBehaviour
             if (_canBuild)
                 PlaceObject();
         }
-
         else if (_decorationSystem.ActiveDecor == null)
         {
-
             CheckCamera();
-
             Ray ray = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-
             RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray);
 
             foreach (var hit in hits)
             {
-                //Debug.Log(hit.collider.name);
-                if (hit.collider.gameObject == this.gameObject)
+                if (hit.collider != null && hit.collider.gameObject == gameObject)
                 {
-                    //Debug.Log("DA");
                     OnEmptyCell?.Invoke();
                     _decorationSystem.ReActivateDecor(this);
                     _isPlacing = true;
-
-                    foreach (var collider in _colliders)
-                        collider.enabled = false;
+                    ToggleColliders(false);
                     break;
                 }
             }
@@ -135,70 +119,24 @@ public class Decor : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_isPlacing)
-        {
-            FollowMouseWithSnap();
-            CheckIfCanBuild();
-            UpdateColor();
-        }
+        if (!_isPlacing) return;
+
+        FollowMouseWithSnap();
+        CheckIfCanBuild();
+        UpdateColor();
     }
 
     private void FollowMouseWithSnap()
     {
         CheckCamera();
-
-        Vector3 mouseWorldPosition = FindCursorPosition();
-
-        GridCell closestCell = GetClosestGridCell(mouseWorldPosition);
-
-        if (closestCell != null)
-        {
-            _closestCell = closestCell;
-
-            transform.position = new Vector3(closestCell.CenterX, closestCell.CenterY, 0f);
-        }
+        _closestCell = GetClosestGridCell(FindCursorPosition());
+        if (_closestCell != null)
+            transform.position = new Vector3(_closestCell.CenterX, _closestCell.CenterY, 0f);
     }
-
 
     private void CheckIfCanBuild()
     {
-        _canBuild = true;
-
-        GridCell closestCell = GetClosestGridCell(transform.position);
-
-        if (closestCell == null || closestCell.IsOccupied)
-        {
-            _canBuild = false;
-        }
-        else
-        {
-            Vector2 offset = new Vector2(
-                -(_occupiedCells.x / 2f) * _staticData.CellSize + _staticData.CellSize / 2f,
-                -(_occupiedCells.y / 2f) * _staticData.CellSize + _staticData.CellSize / 2f
-            );
-
-            for (int x = 0; x < _occupiedCells.x; x++)
-            {
-                for (int y = 0; y < _occupiedCells.y; y++)
-                {
-                    float checkX = closestCell.CenterX + offset.x + x * _staticData.CellSize;
-                    float checkY = closestCell.CenterY + offset.y + y * _staticData.CellSize;
-
-                    //Debug.Log(IsPositionInGrid(checkX, checkY));
-                    //Instantiate(_tempPrefab, new Vector3(checkX, checkY, 0f), Quaternion.identity);// for tests
-
-                    if (!IsPositionInGrid(checkX, checkY) || GetGridCellAt(checkX, checkY).IsOccupied)
-                    {
-                        // Debug.Log(GetGridCellAt(checkX, checkY).IsOccupied);
-                        _canBuild = false;
-                        break;
-                    }
-
-                }
-                if (!_canBuild)
-                    break;
-            }
-        }
+        _canBuild = _closestCell != null && !_closestCell.IsOccupied;
     }
 
     private void UpdateColor()
@@ -209,101 +147,43 @@ public class Decor : MonoBehaviour
     private GridCell GetClosestGridCell(Vector3 position)
     {
         float minDistance = float.MaxValue;
-        GridCell closestCell = null;
+        GridCell bestCell = null;
 
-        foreach (var greedHolder in _spaceDeterminantor.GreedHolders)
+        foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
         {
-            foreach (var cell in greedHolder.Grid)
+            foreach (var cell in gridHolder.Grid)
             {
                 float distance = Vector2.Distance(new Vector2(cell.CenterX, cell.CenterY), position);
                 if (distance < minDistance)
                 {
                     minDistance = distance;
-                    closestCell = cell;
+                    bestCell = cell;
                 }
             }
         }
-
-        return closestCell;
+        return bestCell;
     }
 
     private Vector3 FindCursorPosition()
     {
-        Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
-
-        Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(new Vector3
-            (mouseScreenPosition.x, mouseScreenPosition.y, -_mainCamera.transform.position.z));
-        return mouseWorldPosition;
-    }
-
-    private bool IsPositionInGrid(float x, float y) //always fals
-    {
-        //Debug.Log(GetGridCellAt(x, y));
-        return GetGridCellAt(x, y) != null;
-    }
-
-    private GridCell GetGridCellAt(float x, float y)
-    {
-        foreach (var greedHolder in _spaceDeterminantor.GreedHolders)
-        {
-            foreach (var cell in greedHolder.Grid)
-            {
-
-                if (Mathf.Abs(cell.CenterX - x) < _staticData.Epsilon && Mathf.Abs(cell.CenterY - y) < _staticData.Epsilon)
-                {
-                    //Debug.Log("DA!");
-                    return cell;
-                }
-
-            }
-        }
-        return null;
+        Vector2 screenPos = Mouse.current.position.ReadValue();
+        return _mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, -_mainCamera.transform.position.z));
     }
 
     private void PlaceObject()
     {
         _isPlacing = false;
-
         _mainRenderer.material.color = _staticData.NormalColor;
-
-        foreach (var collider in _colliders)
-            collider.enabled = true;
-
+        ToggleColliders(true);
         _decorHolder.InstallDecor(this);
-
-        OccupyCells();
+        OnOccupyCell?.Invoke(_closestCell);
         PlacedAction?.Invoke();
     }
 
-    private void OccupyCells()
+    private void ToggleColliders(bool state)
     {
-        //_closestCell.OccupyCell();
-
-        OnOccupyCell?.Invoke(_closestCell);
-
-        if (_occupiedCells.x == 3)
-        {
-            var x = ((_closestCell.CenterX + _staticData.CellSize / 2) + _staticData.CellSize / 2);
-            var y = _closestCell.CenterY;
-
-            var rightCell = GetGridCellAt(x, y);
-            //rightCell.OccupyCell();
-            rightCell.SpriteRenderer.color = Color.red;
-
-            x = ((_closestCell.CenterX - _staticData.CellSize / 2) - _staticData.CellSize / 2);
-
-            var leftCell = GetGridCellAt(x, y);
-            //leftCell.OccupyCell();
-            leftCell.SpriteRenderer.color = Color.red;
-            
-            OnOccupyCell?.Invoke(rightCell);
-            OnOccupyCell?.Invoke(leftCell);
-        }
-        if (_occupiedCells.y == 2)
-        {
-
-        }
-
+        foreach (var collider in _colliders)
+            collider.enabled = state;
     }
 
     private void CheckCamera()
@@ -315,8 +195,9 @@ public class Decor : MonoBehaviour
     private void OnDisable()
     {
         _isPlacing = false;
-        _clickAcrion.action.performed -= OnClick;
-        _cancelAcrion.action.performed -= OnCanceled;
+        _clickAction.action.performed -= OnClick;
+        _cancelAction.action.performed -= OnCancel;
+        rotationAction.action.performed -= OnRotate;
     }
 }
 

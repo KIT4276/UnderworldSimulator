@@ -13,9 +13,6 @@ public class DecorData
 
     public DecorData(Decor decor)
     {
-        Debug.Log("DecorData");
-
-
         ThisDecorComponent = decor;
 
         var posX = ThisDecorComponent.transform.position.x;
@@ -32,15 +29,12 @@ public class DecorData
 
     private void DeleteCell()
     {
-        Debug.Log("DeleteCell");
-        
         foreach (var cell in OccupitedCells)
             cell.EmptyCell();
     }
 
     public void AddCell(GridCell gridCell)
     {
-        Debug.Log("AddCell");
         gridCell.OccupyCell();
         OccupitedCells.Add(gridCell);
     }
