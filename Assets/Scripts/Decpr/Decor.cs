@@ -1,4 +1,3 @@
-using ModestTree;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,8 +10,12 @@ public class Decor : MonoBehaviour
     [SerializeField] private Vector2 _occupiedCells;
     [SerializeField] private InputActionReference _clickAcrion;
     [SerializeField] private InputActionReference _cancelAcrion;
+    [SerializeField] private InputActionReference _rotationAction;
     [Space]
-    [SerializeField] private GameObject _tempPrefab;
+    [SerializeField] private Sprite _frontSprite;
+    [SerializeField] private Sprite _leftSprite;
+    [SerializeField] private Sprite _backSprite;
+    [SerializeField] private Sprite _rightSprite;
 
     private PersistantStaticData _staticData;
     private DecorationSystem _decorationSystem;
@@ -23,6 +26,7 @@ public class Decor : MonoBehaviour
     private bool _canBuild;
     private GridCell _closestCell;
     private DecorData _decorData;
+    private RotationState _rotationState;
 
     public event Action PlacedAction;
     public event Action CanceledAcrion;
@@ -32,6 +36,7 @@ public class Decor : MonoBehaviour
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem
         , SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
     {
+        _rotationState = RotationState.Front;
         _isPlacing = true;
         _staticData = staticData;
         _decorationSystem = decorationSystem;
@@ -40,11 +45,51 @@ public class Decor : MonoBehaviour
 
         _clickAcrion.action.performed += OnClick;
         _cancelAcrion.action.performed += OnCanceled;
+        _rotationAction.action.performed += OnRotate;
 
         foreach (var collider in _colliders)
             collider.enabled = false;
 
         _decorData = new(this);
+    }
+
+    private void OnRotate(InputAction.CallbackContext context)
+    {
+        if(!_isPlacing)  return;
+
+        switch (_rotationState)
+        {
+            case RotationState.Front:
+                _mainRenderer.sprite = ReplacingNullIPictures(_leftSprite, _rightSprite);
+                _rotationState = RotationState.Left;
+                break;
+            case RotationState.Left:
+                _mainRenderer.sprite = ReplacingNullIPictures(_backSprite, _frontSprite);
+                _rotationState = RotationState.Back;
+                break;
+            case RotationState.Back:
+                _mainRenderer.sprite = ReplacingNullIPictures(_rightSprite, _leftSprite);
+                _rotationState = RotationState.Right;
+                break;
+            case RotationState.Right:
+                _mainRenderer.sprite = ReplacingNullIPictures(_frontSprite, _backSprite);
+                _rotationState = RotationState.Front;
+                break;
+        }
+    }
+
+    private Sprite ReplacingNullIPictures(Sprite neededSprite, Sprite replaceSprite)
+    {
+        if (neededSprite == null)
+        {
+            _mainRenderer.flipX = true;
+            return replaceSprite;
+        }
+        else
+        {
+            _mainRenderer.flipX = false;
+            return neededSprite;
+        }
     }
 
     private void OnCanceled(InputAction.CallbackContext context)
@@ -273,6 +318,14 @@ public class Decor : MonoBehaviour
         _clickAcrion.action.performed -= OnClick;
         _cancelAcrion.action.performed -= OnCanceled;
     }
+}
+
+public enum RotationState
+{
+    Front = 0,
+    Left = 1,
+    Back = 2,
+    Right = 3,
 }
 
 
