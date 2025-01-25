@@ -7,10 +7,10 @@ public class Decor : MonoBehaviour
 {
     [SerializeField] private Collider2D[] _colliders;
     [SerializeField] private SpriteRenderer _mainRenderer;
-    [SerializeField] private Vector2 _occupiedCells;
     [SerializeField] private InputActionReference _clickAction;
     [SerializeField] private InputActionReference _cancelAction;
     [SerializeField] private InputActionReference rotationAction;
+    [SerializeField] private PolygonSplitter _polygonSplitter;
     [Space]
     [SerializeField] private Sprite _frontSprite;
     [SerializeField] private Sprite _leftSprite;
@@ -34,7 +34,7 @@ public class Decor : MonoBehaviour
     public event Action OnEmptyCell;
 
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
-        SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
+        SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder, IAssets assets)
     {
         this._staticData = staticData;
         this._decorationSystem = decorationSystem;
@@ -51,6 +51,8 @@ public class Decor : MonoBehaviour
 
         foreach (var collider in _colliders)
             collider.enabled = false;
+
+        _polygonSplitter.Initialize(assets, staticData);
     }
 
     private void OnRotate(InputAction.CallbackContext context)
@@ -200,13 +202,3 @@ public class Decor : MonoBehaviour
         rotationAction.action.performed -= OnRotate;
     }
 }
-
-public enum RotationState
-{
-    Front = 0,
-    Left = 1,
-    Back = 2,
-    Right = 3,
-}
-
-

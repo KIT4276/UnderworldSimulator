@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class GridCell
 {
-    public float CenterX { get; private set; }
-    public float CenterY { get; private set; }
-    public bool IsOccupied { get; private set; }
-    public GameObject QuadObject { get; private set; }
-    public SpriteRenderer SpriteRenderer { get; private set; }
+    public float CenterX { get; protected set; }
+    public float CenterY { get; protected set; }
+    public bool IsOccupied { get; protected set; }
+    public GameObject QuadObject { get; protected set; }
+    public SpriteRenderer SpriteRenderer { get; protected set; }
 
-    private Color _startColor;
+    protected Color _startColor;
 
 
     public GridCell(float x, float y, bool isOccupied, IAssets assets)
