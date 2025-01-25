@@ -22,6 +22,7 @@ public class Decor : MonoBehaviour
     private bool _isPlacing;
     private bool _canBuild;
     private GridCell _closestCell;
+    private DecorData _decorData;
 
     public event Action PlacedAction;
     public event Action CanceledAcrion;
@@ -42,6 +43,8 @@ public class Decor : MonoBehaviour
 
         foreach (var collider in _colliders)
             collider.enabled = false;
+
+        _decorData = new(this);
     }
 
     private void OnCanceled(InputAction.CallbackContext context)
@@ -72,7 +75,7 @@ public class Decor : MonoBehaviour
                 //Debug.Log(hit.collider.name);
                 if (hit.collider.gameObject == this.gameObject)
                 {
-                    Debug.Log("DA");
+                    //Debug.Log("DA");
                     OnEmptyCell?.Invoke();
                     _decorationSystem.ReActivateDecor(this);
                     _isPlacing = true;
@@ -229,7 +232,7 @@ public class Decor : MonoBehaviour
 
     private void OccupyCells()
     {
-        _closestCell.OccupyCell();
+        //_closestCell.OccupyCell();
 
         OnOccupyCell?.Invoke(_closestCell);
 
@@ -239,13 +242,13 @@ public class Decor : MonoBehaviour
             var y = _closestCell.CenterY;
 
             var rightCell = GetGridCellAt(x, y);
-            rightCell.OccupyCell();
+            //rightCell.OccupyCell();
             rightCell.SpriteRenderer.color = Color.red;
 
             x = ((_closestCell.CenterX - _staticData.CellSize / 2) - _staticData.CellSize / 2);
 
             var leftCell = GetGridCellAt(x, y);
-            leftCell.OccupyCell();
+            //leftCell.OccupyCell();
             leftCell.SpriteRenderer.color = Color.red;
             
             OnOccupyCell?.Invoke(rightCell);
