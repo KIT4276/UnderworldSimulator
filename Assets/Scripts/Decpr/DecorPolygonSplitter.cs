@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class GreedPolygonSplitter : BasePolygonSplitter
+public class DecorPolygonSplitter : BasePolygonSplitter
 {
-    public List<GridCell> Cells { get => _сells; }
+    public List<GridCell> PotentiallyOccupiedCells { get => _сells; }
 
     protected override void Enumeration(float startX, float startY, float endX, float endY, List<Vector2> polygonPoints)
     {
@@ -11,18 +11,19 @@ public class GreedPolygonSplitter : BasePolygonSplitter
         {
             for (float y = startY; y < endY; y += _persistantStaticData.CellSize)
             {
-                Vector2 center = new Vector2(x + _persistantStaticData.CellSize / 2, y + _persistantStaticData.CellSize / 2);
+                Vector3 center = new Vector3(x + _persistantStaticData.CellSize / 2, y + _persistantStaticData.CellSize / 2, 0);
                 if (IsPointInsidePolygon(center, polygonPoints))
                 {
                     AddCells(center);
                 }
             }
         }
-    }
 
+        _polygonCollider.enabled = false;
+    }
 
     protected override void AddCells(Vector3 center)
     {
-        _сells.Add(new GridCell(center.x, center.y, false, _assets));
+        _сells.Add(new DecorsCell(center.x, center.y, true, _assets, this.gameObject));
     }
 }

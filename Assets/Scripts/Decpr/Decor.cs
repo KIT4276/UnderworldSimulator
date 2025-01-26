@@ -10,7 +10,7 @@ public class Decor : MonoBehaviour
     [SerializeField] private InputActionReference _clickAction;
     [SerializeField] private InputActionReference _cancelAction;
     [SerializeField] private InputActionReference rotationAction;
-    [SerializeField] private PolygonSplitter _polygonSplitter;
+    [SerializeField] private DecorPolygonSplitter _polygonSplitter;
     [Space]
     [SerializeField] private Sprite _frontSprite;
     [SerializeField] private Sprite _leftSprite;
@@ -139,7 +139,6 @@ public class Decor : MonoBehaviour
     private void CheckIfCanBuild()
     {
         _canBuild = _closestCell != null && !_closestCell.IsOccupied;
-        //Debug.Log(_closestCell.IsOccupied);
     }
 
     private void UpdateColor()

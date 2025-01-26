@@ -1,20 +1,19 @@
 using System.Collections.Generic;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 [RequireComponent(typeof(PolygonCollider2D))]
-public class PolygonSplitter : MonoBehaviour
+public abstract class BasePolygonSplitter : MonoBehaviour
 {
     [SerializeField] protected PolygonCollider2D _polygonCollider;
 
     protected PersistantStaticData _persistantStaticData;
     protected IAssets _assets;
 
-    public List<GridCell> Cells { get; private set; }
+    protected List<GridCell> _ñells;
 
     public void Initialize(IAssets assets, PersistantStaticData persistantStaticData)
     {
-        Cells = new List<GridCell>();
+        _ñells = new List<GridCell>();
 
         _assets = assets;
         _persistantStaticData = persistantStaticData;
@@ -41,27 +40,9 @@ public class PolygonSplitter : MonoBehaviour
         Enumeration(startX, startY, endX, endY, polygonPoints);
     }
 
-    protected virtual void Enumeration(float startX, float startY, float endX, float endY, List<Vector2> polygonPoints)
-    {
-        for (float x = startX; x < endX; x += _persistantStaticData.CellSize)
-        {
-            for (float y = startY; y < endY; y += _persistantStaticData.CellSize)
-            {
-                Vector3 center = new Vector3(x + _persistantStaticData.CellSize / 2, y + _persistantStaticData.CellSize / 2, 0);
-                if (IsPointInsidePolygon(center, polygonPoints))
-                {
-                    AddCells(center);
-                }
-            }
-        }
+    protected abstract void Enumeration(float startX, float startY, float endX, float endY, List<Vector2> polygonPoints);
 
-        _polygonCollider.enabled = false;
-    }
-
-    protected virtual void AddCells(Vector3 center)
-    {
-        Cells.Add(new DecorsCell(center.x, center.y, true, _assets, this.gameObject));
-    }
+    protected abstract void AddCells(Vector3 center);
 
     protected bool IsPointInsidePolygon(Vector2 point, List<Vector2> polygon)
     {
