@@ -13,6 +13,16 @@ public class DecorsCell : BaceCell
         QuadObject.name = "DecorsCell";
         SpriteRenderer = QuadObject.GetComponent<SpriteRenderer>();
 
-        //OccupyCell();
+        _startColor = SpriteRenderer.color;
+    }
+
+    public void HideCell()
+    {
+        SpriteRenderer.color = new Color(0,0,0,0);
+    }
+
+    public void ShowCell()
+    {
+        SpriteRenderer.color = _startColor;
     }
 }

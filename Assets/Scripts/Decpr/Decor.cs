@@ -124,6 +124,10 @@ public class Decor : MonoBehaviour
                     _decorationSystem.ReActivateDecor(this);
                     _isPlacing = true;
                     ToggleColliders(false);
+                    foreach (DecorsCell cell in _polygonSplitter.PotentiallyOccupiedCells)
+                    {
+                        cell.ShowCell();
+                    }
                     break;
                 }
             }
@@ -234,6 +238,11 @@ public class Decor : MonoBehaviour
         _decorHolder.InstallDecor(this);
 
         MarkOccupiedCells();
+
+        foreach (DecorsCell cell in _polygonSplitter.PotentiallyOccupiedCells)
+        {
+            cell.HideCell();
+        }
 
         PlacedAction?.Invoke();
     }
