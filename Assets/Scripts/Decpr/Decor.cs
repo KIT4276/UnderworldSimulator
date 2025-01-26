@@ -61,6 +61,7 @@ public class Decor : MonoBehaviour
 
         _rotationState = (RotationState)(((int)_rotationState + 1) % 4);
         UpdateSprite(_rotationState);
+        _polygonSplitter.transform.rotation *= Quaternion.Euler(0, 0, 90);
     }
 
     private void UpdateSprite(RotationState state)
@@ -68,21 +69,31 @@ public class Decor : MonoBehaviour
         switch (state)
         {
             case RotationState.Front:
-                _mainRenderer.sprite = _frontSprite ?? _rightSprite;
-                _mainRenderer.flipX = false;
+                _mainRenderer.sprite = CheckingSpriteExistence(_frontSprite, _backSprite);
                 break;
             case RotationState.Left:
-                _mainRenderer.sprite = _leftSprite ?? _rightSprite;
-                _mainRenderer.flipX = _leftSprite == null;
+                _mainRenderer.sprite = CheckingSpriteExistence(_leftSprite, _rightSprite);
                 break;
             case RotationState.Back:
-                _mainRenderer.sprite = _backSprite ?? _frontSprite;
-                _mainRenderer.flipX = false;
+                _mainRenderer.sprite = CheckingSpriteExistence(_backSprite, _frontSprite);
                 break;
             case RotationState.Right:
-                _mainRenderer.sprite = _rightSprite ?? _leftSprite;
-                _mainRenderer.flipX = _rightSprite == null;
+                _mainRenderer.sprite = CheckingSpriteExistence(_rightSprite, _leftSprite);
                 break;
+        }
+    }
+
+    private Sprite CheckingSpriteExistence(Sprite requiredSprite, Sprite replacementSprite)
+    {
+        if (requiredSprite == null)
+        {
+            _mainRenderer.flipX = true;
+            return replacementSprite;
+        }
+        else
+        {
+            _mainRenderer.flipX = false;
+            return requiredSprite;
         }
     }
 
@@ -222,7 +233,7 @@ public class Decor : MonoBehaviour
         ToggleColliders(true);
         _decorHolder.InstallDecor(this);
 
-        MarkOccupiedCells(); // Обновляем занятые клетки
+        MarkOccupiedCells();
 
         PlacedAction?.Invoke();
     }
@@ -231,7 +242,10 @@ public class Decor : MonoBehaviour
     {
         if (_polygonSplitter == null || _spaceDeterminantor == null) return;
 
-        float tolerance = _staticData.CellSize / 2; 
+        float tolerance = _staticData.CellSize / 2;
+
+        Quaternion rotation = _polygonSplitter.transform.rotation; 
+        Vector3 positionOffset = _polygonSplitter.transform.position; 
 
         foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
         {
@@ -239,14 +253,15 @@ public class Decor : MonoBehaviour
             {
                 foreach (var potentialCell in _polygonSplitter.PotentiallyOccupiedCells)
                 {
-                    Vector3 worldPosition = transform.TransformPoint(new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0));
+                    Vector3 localPosition = new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0);
+                    Vector3 rotatedPosition = rotation * localPosition; 
+                    Vector3 worldPosition = rotatedPosition + positionOffset;
 
                     if (Mathf.Abs(cell.CenterX - worldPosition.x) <= tolerance &&
                         Mathf.Abs(cell.CenterY - worldPosition.y) <= tolerance)
                     {
                         cell.OccupyCell();
                         OnOccupyCell?.Invoke(cell);
-                        //Debug.Log($"Marked Cell as Occupied at ({cell.CenterX}, {cell.CenterY})");
                     }
                 }
             }
