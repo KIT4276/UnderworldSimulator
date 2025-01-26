@@ -24,13 +24,13 @@ public class Decor : MonoBehaviour
     private Camera _mainCamera;
     private bool _isPlacing;
     private bool _canBuild;
-    private GridCell _closestCell;
+    private BaceCell _closestCell;
     private DecorData _decorData;
     private RotationState _rotationState;
 
     public event Action PlacedAction;
     public event Action CanceledAction;
-    public event Action<GridCell> OnOccupyCell;
+    public event Action<BaceCell> OnOccupyCell;
     public event Action OnEmptyCell;
 
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
@@ -138,7 +138,50 @@ public class Decor : MonoBehaviour
 
     private void CheckIfCanBuild()
     {
-        _canBuild = _closestCell != null && !_closestCell.IsOccupied;
+        _canBuild = true;
+
+        if (_polygonSplitter != null)
+        {
+            foreach (var potentialCell in _polygonSplitter.PotentiallyOccupiedCells)
+            {
+                bool isOccupiedOrOutOfBounds = true;
+
+                foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
+                {
+                    foreach (var cell in gridHolder.Grid)
+                    {
+                        Vector3 worldPosition = transform.TransformPoint(new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0));
+
+                        float tolerance = _staticData.CellSize / 2;
+
+                        if (Mathf.Abs(cell.CenterX - worldPosition.x) <= tolerance &&
+                            Mathf.Abs(cell.CenterY - worldPosition.y) <= tolerance)
+                        {
+                            if (cell.IsOccupied)
+                            {
+                                isOccupiedOrOutOfBounds = true;
+                                break;
+                            }
+                            else
+                            {
+                                isOccupiedOrOutOfBounds = false;
+                            }
+                        }
+                    }
+
+                    if (!isOccupiedOrOutOfBounds)
+                    {
+                        break;
+                    }
+                }
+
+                if (isOccupiedOrOutOfBounds)
+                {
+                    _canBuild = false;
+                    break;
+                }
+            }
+        }
     }
 
     private void UpdateColor()
@@ -146,10 +189,10 @@ public class Decor : MonoBehaviour
         _mainRenderer.material.color = _canBuild ? _staticData.AllowedPositionColor : _staticData.BannedPositionColor;
     }
 
-    private GridCell GetClosestGridCell(Vector3 position)
+    private BaceCell GetClosestGridCell(Vector3 position)
     {
         float minDistance = float.MaxValue;
-        GridCell bestCell = null;
+        BaceCell bestCell = null;
 
         foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
         {
@@ -178,8 +221,36 @@ public class Decor : MonoBehaviour
         _mainRenderer.material.color = _staticData.NormalColor;
         ToggleColliders(true);
         _decorHolder.InstallDecor(this);
-        OnOccupyCell?.Invoke(_closestCell);
+
+        MarkOccupiedCells(); // Обновляем занятые клетки
+
         PlacedAction?.Invoke();
+    }
+
+    private void MarkOccupiedCells()
+    {
+        if (_polygonSplitter == null || _spaceDeterminantor == null) return;
+
+        float tolerance = _staticData.CellSize / 2; 
+
+        foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
+        {
+            foreach (var cell in gridHolder.Grid)
+            {
+                foreach (var potentialCell in _polygonSplitter.PotentiallyOccupiedCells)
+                {
+                    Vector3 worldPosition = transform.TransformPoint(new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0));
+
+                    if (Mathf.Abs(cell.CenterX - worldPosition.x) <= tolerance &&
+                        Mathf.Abs(cell.CenterY - worldPosition.y) <= tolerance)
+                    {
+                        cell.OccupyCell();
+                        OnOccupyCell?.Invoke(cell);
+                        //Debug.Log($"Marked Cell as Occupied at ({cell.CenterX}, {cell.CenterY})");
+                    }
+                }
+            }
+        }
     }
 
     private void ToggleColliders(bool state)

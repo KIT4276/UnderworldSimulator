@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DecorPolygonSplitter : BasePolygonSplitter
 {
-    public List<GridCell> PotentiallyOccupiedCells { get => _сells; }
+    public List<BaceCell> PotentiallyOccupiedCells { get => _сells; }
 
     protected override void Enumeration(float startX, float startY, float endX, float endY, List<Vector2> polygonPoints)
     {
@@ -22,7 +22,7 @@ public class DecorPolygonSplitter : BasePolygonSplitter
         _polygonCollider.enabled = false;
     }
 
-    protected override void AddCells(Vector3 center)
+    private void AddCells(Vector3 center)
     {
         _сells.Add(new DecorsCell(center.x, center.y, true, _assets, this.gameObject));
     }

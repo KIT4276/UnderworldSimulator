@@ -6,7 +6,7 @@ public class DecorData
     public PositionOnLevel PositionOnLevel { get; private set; }
     public Decor ThisDecorComponent { get; private set; }
 
-    public List <GridCell> OccupitedCells { get; private set; }
+    public List <BaceCell> OccupitedCells { get; private set; }
 
 
     public DecorData(Decor decor)
@@ -31,7 +31,7 @@ public class DecorData
             cell.EmptyCell();
     }
 
-    public void AddCell(GridCell gridCell)
+    public void AddCell(BaceCell gridCell)
     {
         gridCell.OccupyCell();
         OccupitedCells.Add(gridCell);

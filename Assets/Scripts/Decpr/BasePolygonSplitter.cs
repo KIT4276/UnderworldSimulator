@@ -9,11 +9,11 @@ public abstract class BasePolygonSplitter : MonoBehaviour
     protected PersistantStaticData _persistantStaticData;
     protected IAssets _assets;
 
-    protected List<GridCell> _ñells;
+    protected List<BaceCell> _ñells;
 
     public void Initialize(IAssets assets, PersistantStaticData persistantStaticData)
     {
-        _ñells = new List<GridCell>();
+        _ñells = new List<BaceCell>();
 
         _assets = assets;
         _persistantStaticData = persistantStaticData;
@@ -42,7 +42,7 @@ public abstract class BasePolygonSplitter : MonoBehaviour
 
     protected abstract void Enumeration(float startX, float startY, float endX, float endY, List<Vector2> polygonPoints);
 
-    protected abstract void AddCells(Vector3 center);
+    //protected abstract void AddCells(Vector3 center);
 
     protected bool IsPointInsidePolygon(Vector2 point, List<Vector2> polygon)
     {
