@@ -12,6 +12,9 @@ public class CameraMove : BaseMovable
     [SerializeField] private CinemachinePositionComposer _positionComposer;
     [SerializeField] private float _scrollSpeed = 10;
     [SerializeField] private float _moveTime = 1;
+    [Space]
+    [SerializeField] private float _maxCameraDistance = -4;
+    [SerializeField] private float _minCameraDistance = -50;
     //[SerializeField] private float _startDistance = 20;
 
     private float _scrollValue;
@@ -28,6 +31,9 @@ public class CameraMove : BaseMovable
 
     private void FixedUpdate()
     {
+        if ((Camera.main.transform.position.z >= _maxCameraDistance && _scrollValue > 0)
+            || Camera.main.transform.position.z < _minCameraDistance && _scrollValue < 0)
+            return;
 
         if (_canMove)
         {
@@ -46,6 +52,9 @@ public class CameraMove : BaseMovable
 
         _scrollValue = 0f;
     }
+
+    //private bool ChekCameraPosition(CinemachineCamera camera) 
+    //    => camera.transform.position.z > _maxCameraDistance || camera.transform.position.z < _minCameraDistance;
 
     public override void Immobilize()
     {
@@ -73,7 +82,6 @@ public class CameraMove : BaseMovable
     {
         _scrollValue = context.ReadValue<float>();
     }
-
 
 
     private void OnDisable()
