@@ -10,6 +10,7 @@ public class HeroMove : BaseMovable
 
 
     public float MoveSpeed { get => _moveSpeed; }
+    public Vector2 InputVector2 { get => _inputVector2; }
 
     public void Init()
     {
