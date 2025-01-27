@@ -9,11 +9,11 @@ public abstract class BasePolygonSplitter : MonoBehaviour
     protected PersistantStaticData _persistantStaticData;
     protected IAssets _assets;
 
-    protected List<BaceCell> _ñells;
+    protected List<BaceCell> _cells;
 
     public void Initialize(IAssets assets, PersistantStaticData persistantStaticData)
     {
-        _ñells = new List<BaceCell>();
+        _cells = new List<BaceCell>();
 
         _assets = assets;
         _persistantStaticData = persistantStaticData;

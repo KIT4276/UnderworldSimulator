@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GreedPolygonSplitter : BasePolygonSplitter
 {
-    public List<BaceCell> Cells { get => _сells; }
+    public List<BaceCell> Cells { get => _cells; }
 
     protected override void Enumeration(float startX, float startY, float endX, float endY, List<Vector2> polygonPoints)
     {
@@ -23,6 +23,6 @@ public class GreedPolygonSplitter : BasePolygonSplitter
 
     private void AddCells(Vector3 center)
     {
-        _сells.Add(new GridCell(center.x, center.y, false, _assets));
+        _cells.Add(new GridCell(center.x, center.y, false, _assets));
     }
 }
