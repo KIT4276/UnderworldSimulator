@@ -58,7 +58,7 @@ public class CameraMove : BaseMovable
         }
         else
         {
-            _positionComposer.CameraDistance -= _scrollValue;
+            _positionComposer.CameraDistance -= _scrollValue * (_scrollSpeed/10);
 
             if (Camera.main.transform.position.z >= _maxCameraDistance && _scrollValue >= 0)
             {
