@@ -11,6 +11,7 @@ public class Decor : MonoBehaviour
     [SerializeField] private InputActionReference _cancelAction;
     [SerializeField] private InputActionReference rotationAction;
     [SerializeField] private DecorPolygonSplitter _polygonSplitter;
+    [SerializeField] private float _primuscus = 0.3f;
     [Space]
     [SerializeField] private Sprite _frontSprite;
     [SerializeField] private Sprite _leftSprite;
@@ -251,7 +252,7 @@ public class Decor : MonoBehaviour
     {
         if (_polygonSplitter == null || _spaceDeterminantor == null) return;
 
-        float tolerance = _staticData.CellSize / 2;
+        float tolerance = _staticData.CellSize * _primuscus;
 
         Quaternion rotation = _polygonSplitter.transform.rotation; 
         Vector3 positionOffset = _polygonSplitter.transform.position; 
