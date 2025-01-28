@@ -15,7 +15,6 @@ public class CameraMove : BaseMovable
     [Space]
     [SerializeField] private float _maxCameraDistance = -4;
     [SerializeField] private float _minCameraDistance = -50;
-    //[SerializeField] private float _startDistance = 20;
 
     private float _scrollValue;
     private HotelPoint _hotelPoint;
@@ -31,10 +30,6 @@ public class CameraMove : BaseMovable
 
     private void FixedUpdate()
     {
-        if ((Camera.main.transform.position.z >= _maxCameraDistance && _scrollValue > 0)
-            || Camera.main.transform.position.z < _minCameraDistance && _scrollValue < 0)
-            return;
-
         if (_canMove)
         {
             var deltaX = _inputVector2.x;
@@ -42,19 +37,48 @@ public class CameraMove : BaseMovable
             var deltaZ = _scrollValue * _scrollSpeed;
 
             if (_inputVector2 != Vector2.zero)
+            {
                 deltaZ = 0f;
+            }
             _manualCMVCamera.transform.position += new Vector3(deltaX, deltaY, deltaZ) * _moveSpeed * Time.deltaTime;
+
+            if (Camera.main.transform.position.z >= _maxCameraDistance && _scrollValue >= 0)
+            {
+                _manualCMVCamera.transform.position =
+                    new Vector3(FindCameraPos(_manualCMVCamera).x, FindCameraPos(_manualCMVCamera).y, _maxCameraDistance);
+
+
+            }
+            else if (Camera.main.transform.position.z <= _minCameraDistance && _scrollValue <= 0)
+            {
+                _manualCMVCamera.transform.position =
+                   new Vector3(FindCameraPos(_manualCMVCamera).x, FindCameraPos(_manualCMVCamera).y, _minCameraDistance);
+            }
+
         }
         else
         {
             _positionComposer.CameraDistance -= _scrollValue;
+
+            if (Camera.main.transform.position.z >= _maxCameraDistance && _scrollValue >= 0)
+            {
+                _positionComposer.CameraDistance = -_maxCameraDistance;
+            }
+            else if (Camera.main.transform.position.z < _minCameraDistance && _scrollValue <= 0)
+            {
+                _positionComposer.CameraDistance = -_minCameraDistance;
+            }
         }
 
         _scrollValue = 0f;
     }
 
-    //private bool ChekCameraPosition(CinemachineCamera camera) 
-    //    => camera.transform.position.z > _maxCameraDistance || camera.transform.position.z < _minCameraDistance;
+    private Vector2 FindCameraPos(CinemachineCamera camera)
+    {
+        var cameraPosX = camera.transform.position.x;
+        var cameraPosY = camera.transform.position.y;
+        return new Vector2(cameraPosX, cameraPosY);
+    }
 
     public override void Immobilize()
     {
