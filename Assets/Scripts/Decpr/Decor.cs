@@ -11,6 +11,7 @@ public class Decor : MonoBehaviour
     [SerializeField] private InputActionReference _cancelAction;
     [SerializeField] private InputActionReference rotationAction;
     [SerializeField] private DecorPolygonSplitter _polygonSplitter;
+    [SerializeField] private float _primuscus = 0.3f;
     [Space]
     [SerializeField] private Sprite _frontSprite;
     [SerializeField] private Sprite _leftSprite;
@@ -27,6 +28,7 @@ public class Decor : MonoBehaviour
     private BaceCell _closestCell;
     private DecorData _decorData;
     private RotationState _rotationState;
+    private bool _isOnDecorState;
 
     public event Action PlacedAction;
     public event Action CanceledAction;
@@ -52,12 +54,16 @@ public class Decor : MonoBehaviour
         foreach (var collider in _colliders)
             collider.enabled = false;
 
+
         _polygonSplitter.Initialize(assets, staticData);
     }
 
+    public void SetIsOnDecorState(bool isOnDecorState) => 
+        _isOnDecorState = isOnDecorState;
+
     private void OnRotate(InputAction.CallbackContext context)
     {
-        if (!_isPlacing) return;
+        if (!_isPlacing || !_isOnDecorState) return;
 
         _rotationState = (RotationState)(((int)_rotationState + 1) % 4);
         UpdateSprite(_rotationState);
@@ -105,6 +111,9 @@ public class Decor : MonoBehaviour
 
     private void OnClick(InputAction.CallbackContext context)
     {
+        if (!_isOnDecorState) return;
+
+
         if (_isPlacing)
         {
             if (_canBuild)
@@ -136,7 +145,7 @@ public class Decor : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_isPlacing) return;
+        if (!_isPlacing || !_isOnDecorState) return;
 
         FollowMouseWithSnap();
         CheckIfCanBuild();
@@ -251,7 +260,7 @@ public class Decor : MonoBehaviour
     {
         if (_polygonSplitter == null || _spaceDeterminantor == null) return;
 
-        float tolerance = _staticData.CellSize / 2;
+        float tolerance = _staticData.CellSize * _primuscus;
 
         Quaternion rotation = _polygonSplitter.transform.rotation; 
         Vector3 positionOffset = _polygonSplitter.transform.position; 

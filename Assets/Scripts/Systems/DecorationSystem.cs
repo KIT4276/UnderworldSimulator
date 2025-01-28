@@ -1,13 +1,24 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class DecorationSystem 
+public class DecorationSystem
 {
-  private DecorFactory _factory;
+    private DecorFactory _factory;
 
     private Decor _activeDecor;
     private object _mainCamera;
+    private List<Decor> _allDecorInTheScene = new();
 
-    public Decor ActiveDecor { get =>_activeDecor; }
+    public Decor ActiveDecor { get => _activeDecor; }
+
+    public void SetIsOnDecorState(bool isOnDecorState)
+    {
+        foreach (var decor in _allDecorInTheScene)
+        {
+            if (decor != null)
+                decor.SetIsOnDecorState(isOnDecorState);
+        }
+    }
 
     public DecorationSystem(DecorFactory factory)
     {
@@ -26,7 +37,8 @@ public class DecorationSystem
 
     private void ActivateDecor(Decor decor)
     {
-        decor.PlacedAction += RemoveActiveDecor;
+        decor.SetIsOnDecorState(true);
+        decor.PlacedAction += PlaceActiveDecor;
         decor.CanceledAction += RemoveDecor;
     }
 
@@ -40,14 +52,19 @@ public class DecorationSystem
     {
         if (ActiveDecor != null)
         {
+            if (_allDecorInTheScene.Contains(_activeDecor))
+                _allDecorInTheScene.Remove(_activeDecor);
+
             _factory.DespawnDecor(_activeDecor);
             _activeDecor = null;
-        //todo Return decor to inventory
+
+            //todo Return decor to inventory
         }
     }
 
-    private void RemoveActiveDecor()
+    private void PlaceActiveDecor()
     {
+        _allDecorInTheScene.Add(_activeDecor);
         _activeDecor = null;
     }
 
