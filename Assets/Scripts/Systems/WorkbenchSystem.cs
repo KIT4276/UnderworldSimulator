@@ -37,8 +37,8 @@ public class WorkbenchSystem : MonoBehaviour
 
     public void DeActivateDecoration()
     {
-        SwitchPanels(true);
         _stateMachine.Enter<WorkbenchState>();
+        SwitchPanels(true);
     }
 
     private void SwitchPanels(bool isWorkbench)

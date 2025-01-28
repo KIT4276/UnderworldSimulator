@@ -28,6 +28,7 @@ public class Decor : MonoBehaviour
     private BaceCell _closestCell;
     private DecorData _decorData;
     private RotationState _rotationState;
+    private bool _isOnDecorState;
 
     public event Action PlacedAction;
     public event Action CanceledAction;
@@ -53,12 +54,16 @@ public class Decor : MonoBehaviour
         foreach (var collider in _colliders)
             collider.enabled = false;
 
+
         _polygonSplitter.Initialize(assets, staticData);
     }
 
+    public void SetIsOnDecorState(bool isOnDecorState) => 
+        _isOnDecorState = isOnDecorState;
+
     private void OnRotate(InputAction.CallbackContext context)
     {
-        if (!_isPlacing) return;
+        if (!_isPlacing || !_isOnDecorState) return;
 
         _rotationState = (RotationState)(((int)_rotationState + 1) % 4);
         UpdateSprite(_rotationState);
@@ -106,6 +111,9 @@ public class Decor : MonoBehaviour
 
     private void OnClick(InputAction.CallbackContext context)
     {
+        if (!_isOnDecorState) return;
+
+
         if (_isPlacing)
         {
             if (_canBuild)
@@ -137,7 +145,7 @@ public class Decor : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_isPlacing) return;
+        if (!_isPlacing || !_isOnDecorState) return;
 
         FollowMouseWithSnap();
         CheckIfCanBuild();
