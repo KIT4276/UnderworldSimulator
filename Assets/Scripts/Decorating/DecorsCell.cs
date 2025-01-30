@@ -16,6 +16,7 @@ public class DecorsCell : BaceCell
         _startColor = SpriteRenderer.color;
     }
 
+
     public void HideCell()
     {
         SpriteRenderer.color = new Color(0,0,0,0);

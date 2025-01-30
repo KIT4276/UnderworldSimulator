@@ -256,14 +256,15 @@ public class Decor : MonoBehaviour
         PlacedAction?.Invoke();
     }
 
+
     private void MarkOccupiedCells()
     {
         if (_polygonSplitter == null || _spaceDeterminantor == null) return;
 
         float tolerance = _staticData.CellSize * _primuscus;
 
-        Quaternion rotation = _polygonSplitter.transform.rotation; 
-        Vector3 positionOffset = _polygonSplitter.transform.position; 
+        Quaternion rotation = _polygonSplitter.transform.rotation;
+        Vector3 positionOffset = _polygonSplitter.transform.position;
 
         foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
         {
@@ -272,7 +273,7 @@ public class Decor : MonoBehaviour
                 foreach (var potentialCell in _polygonSplitter.PotentiallyOccupiedCells)
                 {
                     Vector3 localPosition = new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0);
-                    Vector3 rotatedPosition = rotation * localPosition; 
+                    Vector3 rotatedPosition = rotation * localPosition;
                     Vector3 worldPosition = rotatedPosition + positionOffset;
 
                     if (Mathf.Abs(cell.CenterX - worldPosition.x) <= tolerance &&
