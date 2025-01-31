@@ -21,4 +21,5 @@ public abstract class BaceCell
         IsOccupied = false;
         SpriteRenderer.color = _startColor;
     }
+
 }
