@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ButtonChangeImage : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ButtonEnterChangeImage : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image _image;
     [SerializeField] private Sprite _normImage;

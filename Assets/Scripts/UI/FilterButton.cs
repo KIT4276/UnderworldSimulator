@@ -16,7 +16,7 @@ public class FilterButton : MonoBehaviour
             Deactivate();
     }
 
-    public void Switch()
+    public void SwitchIsActive()
     {
         if (_isActive)
             Deactivate();
