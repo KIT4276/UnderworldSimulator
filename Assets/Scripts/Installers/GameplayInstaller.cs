@@ -6,10 +6,13 @@ public class GameplayInstaller : MonoInstaller
     [SerializeField] private PersistantStaticData _persistantStaticData;
     [SerializeField] private GameObject _workbenchPrefab;
     [SerializeField] private GameObject _decorFactiryPrefab;
+    [SerializeField] private GameObject _inventoryPrefab;
 
     public override void InstallBindings()
     {
         InstallScriptableObjects();
+
+        Container.Bind<InventorySystem>().FromComponentInNewPrefab(_inventoryPrefab).AsSingle().NonLazy();
 
         Container.Bind<DecorHolder>().FromNew().AsSingle().NonLazy();
 
