@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Collider2D))]
-public class Decor : MonoBehaviour
+public class Decor : MonoBehaviour, IInventoryObject
 {
     [SerializeField] private Collider2D[] _colliders;
     [SerializeField] private SpriteRenderer _mainRenderer;
@@ -17,6 +17,8 @@ public class Decor : MonoBehaviour
     [SerializeField] private Sprite _leftSprite;
     [SerializeField] private Sprite _backSprite;
     [SerializeField] private Sprite _rightSprite;
+    [Space]
+    [SerializeField] private Sprite _icon;
 
     private PersistantStaticData _staticData;
     private DecorationSystem _decorationSystem;
@@ -58,7 +60,7 @@ public class Decor : MonoBehaviour
         _polygonSplitter.Initialize(assets, staticData);
     }
 
-    public void SetIsOnDecorState(bool isOnDecorState) => 
+    public void SetIsOnDecorState(bool isOnDecorState) =>
         _isOnDecorState = isOnDecorState;
 
     private void OnRotate(InputAction.CallbackContext context)
@@ -262,8 +264,8 @@ public class Decor : MonoBehaviour
 
         float tolerance = _staticData.CellSize * _primuscus;
 
-        Quaternion rotation = _polygonSplitter.transform.rotation; 
-        Vector3 positionOffset = _polygonSplitter.transform.position; 
+        Quaternion rotation = _polygonSplitter.transform.rotation;
+        Vector3 positionOffset = _polygonSplitter.transform.position;
 
         foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
         {
@@ -272,7 +274,7 @@ public class Decor : MonoBehaviour
                 foreach (var potentialCell in _polygonSplitter.PotentiallyOccupiedCells)
                 {
                     Vector3 localPosition = new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0);
-                    Vector3 rotatedPosition = rotation * localPosition; 
+                    Vector3 rotatedPosition = rotation * localPosition;
                     Vector3 worldPosition = rotatedPosition + positionOffset;
 
                     if (Mathf.Abs(cell.CenterX - worldPosition.x) <= tolerance &&
@@ -304,5 +306,10 @@ public class Decor : MonoBehaviour
         _clickAction.action.performed -= OnClick;
         _cancelAction.action.performed -= OnCancel;
         rotationAction.action.performed -= OnRotate;
+    }
+
+    public Sprite GetIcon()
+    {
+            return _icon;
     }
 }

@@ -22,14 +22,16 @@ public class WorkbenchSystem : MonoBehaviour
     public void ActivateInventory()
     {
         _inventory.gameObject.SetActive(true);
+        _inventory.ActivateInventory();
+        _stateMachine.Enter<DecorationState>(); // trmporary
     }
 
     public void ActivateWorkbench()
     {
         _workbenchPanel.SetActive(true );
-        //_stateMachine.Enter<WorkbenchState>();
+        _stateMachine.Enter<WorkbenchState>();
 
-        _stateMachine.Enter<DecorationState>(); // trmporary
+       
     }
 
     public void DeActivateWorkbench()
