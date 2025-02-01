@@ -17,8 +17,7 @@ public class Decor : MonoBehaviour, IInventoryObject
     [SerializeField] private Sprite _leftSprite;
     [SerializeField] private Sprite _backSprite;
     [SerializeField] private Sprite _rightSprite;
-    [Space]
-    [SerializeField] private Sprite _icon;
+    
 
     private PersistantStaticData _staticData;
     private DecorationSystem _decorationSystem;
@@ -306,10 +305,5 @@ public class Decor : MonoBehaviour, IInventoryObject
         _clickAction.action.performed -= OnClick;
         _cancelAction.action.performed -= OnCancel;
         rotationAction.action.performed -= OnRotate;
-    }
-
-    public Sprite GetIcon()
-    {
-            return _icon;
     }
 }

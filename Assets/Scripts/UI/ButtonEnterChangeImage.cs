@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class ButtonEnterChangeImage : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image _image;
+    [SerializeField] private Sprite _emptyImage; 
     [SerializeField] private Sprite _normImage;
     [SerializeField] private Sprite _highlightImage;
 
@@ -14,6 +15,12 @@ public class ButtonEnterChangeImage : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         _image.sprite = _normImage;
         _isOccupied = true;
+    }
+
+    public void DeActivate()
+    {
+        _image.sprite = _emptyImage;
+        _isOccupied = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
