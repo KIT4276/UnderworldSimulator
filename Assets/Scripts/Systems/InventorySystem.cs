@@ -40,12 +40,10 @@ public class InventorySystem : MonoBehaviour
 
     public void ReturnToInventory(Decor decor)
     {
-        Debug.Log("ReturnToInventory");
         for (int i = 0; i < _inventorySlot.Length; i++)
         {
             if(!_inventorySlot[i].IsOccupied)
             {
-                Debug.Log(i);
                 _inventorySlot[i].SetDecor(decor);
                 break;
             }
