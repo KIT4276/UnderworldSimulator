@@ -17,6 +17,8 @@ public class Decor : MonoBehaviour, IInventoryObject
     [SerializeField] private Sprite _leftSprite;
     [SerializeField] private Sprite _backSprite;
     [SerializeField] private Sprite _rightSprite;
+    [Space]
+    [SerializeField] private Sprite _icon;
     
 
     private PersistantStaticData _staticData;
@@ -32,7 +34,7 @@ public class Decor : MonoBehaviour, IInventoryObject
     private bool _isOnDecorState;
 
     public event Action PlacedAction;
-    public event Action CanceledAction;
+    public event Action<Decor> CanceledAction;
     public event Action<BaceCell> OnOccupyCell;
     public event Action OnEmptyCell;
 
@@ -61,6 +63,9 @@ public class Decor : MonoBehaviour, IInventoryObject
 
     public void SetIsOnDecorState(bool isOnDecorState) =>
         _isOnDecorState = isOnDecorState;
+
+    public Sprite GetIcon() 
+        => _icon;
 
     private void OnRotate(InputAction.CallbackContext context)
     {
@@ -106,8 +111,11 @@ public class Decor : MonoBehaviour, IInventoryObject
 
     private void OnCancel(InputAction.CallbackContext context)
     {
-        _isPlacing = false;
-        CanceledAction?.Invoke();
+        if (_isPlacing)
+        {
+            _isPlacing = false;
+            CanceledAction?.Invoke(this);
+        }
     }
 
     private void OnClick(InputAction.CallbackContext context)
@@ -134,6 +142,7 @@ public class Decor : MonoBehaviour, IInventoryObject
                     _decorationSystem.ReActivateDecor(this);
                     _isPlacing = true;
                     ToggleColliders(false);
+
                     foreach (DecorsCell cell in _polygonSplitter.PotentiallyOccupiedCells)
                     {
                         cell.ShowCell();

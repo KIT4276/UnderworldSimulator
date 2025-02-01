@@ -4,12 +4,19 @@ using UnityEngine;
 public class DecorationSystem
 {
     private DecorFactory _factory;
-
+    //private readonly InventorySystem _inventorySystem;
     private Decor _activeDecor;
     private object _mainCamera;
     private List<Decor> _allDecorInTheScene = new();
 
     public Decor ActiveDecor { get => _activeDecor; }
+
+    public DecorationSystem(DecorFactory factory/*, InventorySystem inventorySystem*/)
+    {
+        _factory = factory;
+        //_inventorySystem = inventorySystem;
+        _factory.Initialize(this);
+    }
 
     public void SetIsOnDecorState(bool isOnDecorState)
     {
@@ -20,12 +27,6 @@ public class DecorationSystem
         }
     }
 
-    public DecorationSystem(DecorFactory factory)
-    {
-        _factory = factory;
-        _factory.Initialize(this);
-    }
-
     public void InstantiateDecor(Decor decorPrefab)
     {
         if (_activeDecor != null)
@@ -33,6 +34,7 @@ public class DecorationSystem
 
         _activeDecor = _factory.SpawnDecor(decorPrefab);
         ActivateDecor(_activeDecor);
+        //_inventorySystem.OnDecorSpawned(_activeDecor);
     }
 
     private void ActivateDecor(Decor decor)
@@ -48,7 +50,7 @@ public class DecorationSystem
         ActivateDecor(decor);
     }
 
-    private void RemoveDecor()
+    private void RemoveDecor(Decor decor)
     {
         if (ActiveDecor != null)
         {
@@ -56,9 +58,10 @@ public class DecorationSystem
                 _allDecorInTheScene.Remove(_activeDecor);
 
             _factory.DespawnDecor(_activeDecor);
+            //_inventorySystem.ReturnToInventory(decor);
+            
             _activeDecor = null;
 
-            //todo Return decor to inventory
         }
     }
 

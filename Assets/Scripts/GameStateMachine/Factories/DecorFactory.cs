@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -9,8 +10,11 @@ public class DecorFactory : MonoBehaviour
     private IAssets _assets;
     private DecorationSystem _decorationSystem;
 
+    public event Action<Decor> OnSpawned;
+
     [Inject]
-    private void Construct(PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder, IAssets assets)
+    private void Construct(PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder
+        , IAssets assets)
     {
         _staticData = staticData;
         _spaceDeterminantor = spaceDeterminantor;
@@ -23,10 +27,10 @@ public class DecorFactory : MonoBehaviour
 
     public Decor SpawnDecor(Decor decorPrefab)
     {
-        var decpr = Instantiate(decorPrefab);
-        decpr.Initialize(_staticData, _decorationSystem, _spaceDeterminantor, _decorHolder, _assets);
-
-        return decpr;
+        var decor = Instantiate(decorPrefab);
+        decor.Initialize(_staticData, _decorationSystem, _spaceDeterminantor, _decorHolder, _assets);
+        OnSpawned?.Invoke(decor);
+        return decor;
     }
 
     public void DespawnDecor(Decor decor)
