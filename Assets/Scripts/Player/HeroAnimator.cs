@@ -1,5 +1,6 @@
 using DragonBones;
 using System.Collections;
+using System.Timers;
 using UnityEngine;
 
 public class HeroAnimator : MonoBehaviour
@@ -23,53 +24,29 @@ public class HeroAnimator : MonoBehaviour
 
     private void LateUpdate()
     {
-
         if (_heroMove.InputVector2.x > 0)
         {
-            if (_heroMove.InputVector2.y == 0)
-            {
-                CrossfadeArmatures(_currentArmature, _armatureRight, _transitionTime);
-            }
-            else if (_heroMove.InputVector2.y > 0)
-            {
-                CrossfadeArmatures(_currentArmature, _armatureBack, _transitionTime);
-            }
-            else
-            {
-                CrossfadeArmatures(_currentArmature, _armatureFront, _transitionTime);
-            }
-
+            CrossfadeArmatures(_currentArmature, _armatureRight, _transitionTime);
         }
         else if (_heroMove.InputVector2.x < 0)
         {
-            if (_heroMove.InputVector2.y == 0)
-            {
-                CrossfadeArmatures(_currentArmature, _armatureLeft, _transitionTime);
-            }
-            else if (_heroMove.InputVector2.y > 0)
+            CrossfadeArmatures(_currentArmature, _armatureLeft, _transitionTime);
+        }
+        else
+        {
+            if (_heroMove.InputVector2.y > 0)
             {
                 CrossfadeArmatures(_currentArmature, _armatureBack, _transitionTime);
             }
-            else
+            else if (_heroMove.InputVector2.y < 0)
             {
                 CrossfadeArmatures(_currentArmature, _armatureFront, _transitionTime);
             }
+            else
+            {
+                CrossfadeArmatures(_currentArmature, _armatureIdle, _transitionTime);
+            }
         }
-        if (_heroMove.InputVector2.y < 0)
-        {
-            CrossfadeArmatures(_currentArmature, _armatureFront, _transitionTime);
-        }
-        else if (_heroMove.InputVector2.y > 0 && _heroMove.InputVector2.x == 0)
-        {
-            CrossfadeArmatures(_currentArmature, _armatureBack, _transitionTime);
-        }
-
-
-        if (_heroMove.InputVector2.x == 0 && _heroMove.InputVector2.y == 0)
-        {
-            CrossfadeArmatures(_currentArmature, _armatureIdle, _transitionTime);
-        }
-
     }
 
     public void CrossfadeArmatures(UnityArmatureComponent oldArmature, UnityArmatureComponent newArmature, float duration)
