@@ -25,7 +25,6 @@ public class ButtonClickChangeImage : MonoBehaviour
 
     public void RestartView()
     {
-        Debug.Log("RestartView");
         _image.sprite = _normImage;
     }
 }
