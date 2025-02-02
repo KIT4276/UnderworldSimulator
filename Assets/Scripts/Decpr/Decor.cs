@@ -2,10 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Collider2D))]
 public class Decor : MonoBehaviour, IInventoryObject
 {
-    [SerializeField] private Collider2D[] _colliders;
+    //[SerializeField] private Collider2D[] _colliders;
     [SerializeField] private SpriteRenderer _mainRenderer;
     [SerializeField] private InputActionReference _clickAction;
     [SerializeField] private InputActionReference _cancelAction;
@@ -54,8 +53,8 @@ public class Decor : MonoBehaviour, IInventoryObject
         _cancelAction.action.performed += OnCancel;
         rotationAction.action.performed += OnRotate;
 
-        foreach (var collider in _colliders)
-            collider.enabled = false;
+        //foreach (var collider in _colliders)
+        //    collider.enabled = false;
 
 
         _polygonSplitter.Initialize(assets, staticData);
@@ -136,8 +135,10 @@ public class Decor : MonoBehaviour, IInventoryObject
 
             foreach (var hit in hits)
             {
-                if (hit.collider != null && hit.collider.gameObject == gameObject)
+                if((hit.collider != null && hit.collider.GetComponentInParent<Decor>() == this))
+                //if (hit.collider != null && hit.collider.gameObject == gameObject)
                 {
+                    Debug.Log("this");
                     OnEmptyCell?.Invoke();
                     _decorationSystem.ReActivateDecor(this);
                     _isPlacing = true;
@@ -298,8 +299,8 @@ public class Decor : MonoBehaviour, IInventoryObject
 
     private void ToggleColliders(bool state)
     {
-        foreach (var collider in _colliders)
-            collider.enabled = state;
+        //foreach (var collider in _colliders)
+        //    collider.enabled = state;
     }
 
     private void CheckCamera()
