@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,9 +19,11 @@ public class CameraMove : BaseMovable
 
     private float _scrollValue;
     private HotelPoint _hotelPoint;
+    private bool _canZoom;
 
     private void Start()
     {
+        _canZoom = true;
         _manualCMVCamera.transform.parent = null;
         _scrollAction.action.performed += OnScrollPerformed;
 
@@ -58,7 +61,7 @@ public class CameraMove : BaseMovable
         }
         else
         {
-            _positionComposer.CameraDistance -= _scrollValue * (_scrollSpeed/10);
+            _positionComposer.CameraDistance -= _scrollValue * (_scrollSpeed / 10);
 
             if (Camera.main.transform.position.z >= _maxCameraDistance && _scrollValue >= 0)
             {
@@ -86,6 +89,12 @@ public class CameraMove : BaseMovable
         _followCMVCamera.Priority = 11;
     }
 
+
+    public void SetCanZoom(bool canZoom)
+    {
+        _canZoom = canZoom;
+    }
+
     public override void Mobilize()
     {
         base.Mobilize();
@@ -104,7 +113,8 @@ public class CameraMove : BaseMovable
 
     private void OnScrollPerformed(InputAction.CallbackContext context)
     {
-        _scrollValue = context.ReadValue<float>();
+        if (_canZoom)
+            _scrollValue = context.ReadValue<float>();
     }
 
 
