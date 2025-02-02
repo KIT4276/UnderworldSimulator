@@ -136,9 +136,7 @@ public class Decor : MonoBehaviour, IInventoryObject
             foreach (var hit in hits)
             {
                 if((hit.collider != null && hit.collider.GetComponentInParent<Decor>() == this))
-                //if (hit.collider != null && hit.collider.gameObject == gameObject)
                 {
-                    Debug.Log("this");
                     OnEmptyCell?.Invoke();
                     _decorationSystem.ReActivateDecor(this);
                     _isPlacing = true;

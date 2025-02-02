@@ -1,9 +1,18 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class GreedPolygonSplitter : BasePolygonSplitter
 {
+    private DecorationState _decorationState;
+
     public List<BaceCell> Cells { get => _cells; }
+
+    [Inject] 
+    public void Construct(DecorationState decorationState)
+    {
+        _decorationState = decorationState;
+    }
 
     protected override void Enumeration(float startX, float startY, float endX, float endY, List<Vector2> polygonPoints)
     {
@@ -23,6 +32,6 @@ public class GreedPolygonSplitter : BasePolygonSplitter
 
     private void AddCells(Vector3 center)
     {
-        _cells.Add(new GridCell(center.x, center.y, false, _assets));
+        _cells.Add(new GridCell(center.x, center.y, false, _assets, _decorationState));
     }
 }
