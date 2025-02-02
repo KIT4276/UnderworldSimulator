@@ -14,7 +14,7 @@ public class WorkbenchSystem : MonoBehaviour
     {
         _stateMachine = stateMachine;
         _inventory = inventory;
-
+        _inventory.gameObject.SetActive(false);
         _workbenchPanel.SetActive(false);
 
         foreach (var button in buttonsClick)
@@ -40,8 +40,6 @@ public class WorkbenchSystem : MonoBehaviour
         }
 
         _stateMachine.Enter<WorkbenchState>();
-
-       
     }
 
     public void DeActivateWorkbench()

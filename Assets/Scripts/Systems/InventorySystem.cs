@@ -14,10 +14,10 @@ public class InventorySystem : MonoBehaviour
         _decorFactory.OnSpawned += OnDecorSpawned;
     }
 
-    private void Start()
-    {
-        DeActivateInventory();
-    }
+    //private void Start()
+    //{
+    //    DeActivateInventory();
+    //}
 
     public void OnDecorSpawned(Decor decor)
     {
@@ -30,7 +30,6 @@ public class InventorySystem : MonoBehaviour
         {
             slot.Initialized();
         }
-
     }
 
     public void DeActivateInventory()
@@ -42,7 +41,7 @@ public class InventorySystem : MonoBehaviour
     {
         for (int i = 0; i < _inventorySlot.Length; i++)
         {
-            if(!_inventorySlot[i].IsOccupied)
+            if (!_inventorySlot[i].IsOccupied)
             {
                 _inventorySlot[i].SetDecor(decor);
                 break;
