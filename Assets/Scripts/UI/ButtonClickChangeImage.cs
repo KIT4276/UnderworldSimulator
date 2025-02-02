@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,11 @@ public class ButtonClickChangeImage : MonoBehaviour
     {
         _image.sprite = _pressedImage;
         yield return new WaitForSeconds(_delay);
+        _image.sprite = _normImage;
+    }
+
+    public void RestartView()
+    {
         _image.sprite = _normImage;
     }
 }

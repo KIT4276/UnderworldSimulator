@@ -25,7 +25,7 @@ public class ButtonEnterChangeImage : MonoBehaviour, IPointerEnterHandler, IPoin
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-       if(_isOccupied)
+        if(_isOccupied)
         _image.sprite = _highlightImage;
     }
 
