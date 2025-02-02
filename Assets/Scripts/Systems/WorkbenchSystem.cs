@@ -4,7 +4,7 @@ using Zenject;
 public class WorkbenchSystem : MonoBehaviour
 {
     [SerializeField] private GameObject _workbenchPanel;
-    //[SerializeField] private GameObject _decorationPanel;
+    [SerializeField] private ButtonClickChangeImage[] buttonsClick;
 
     private StateMachine _stateMachine;
     private InventorySystem _inventory;
@@ -16,7 +16,11 @@ public class WorkbenchSystem : MonoBehaviour
         _inventory = inventory;
 
         _workbenchPanel.SetActive(false);
-        //_decorationPanel.SetActive(false);
+
+        foreach (var button in buttonsClick)
+        {
+            button.GetComponent<ButtonEnterChangeImage>().Activate();
+        }
     }
 
     public void ActivateInventory()
@@ -29,6 +33,12 @@ public class WorkbenchSystem : MonoBehaviour
     public void ActivateWorkbench()
     {
         _workbenchPanel.SetActive(true );
+
+        foreach (var button in buttonsClick)
+        {
+            button.RestartView();
+        }
+
         _stateMachine.Enter<WorkbenchState>();
 
        
@@ -40,22 +50,4 @@ public class WorkbenchSystem : MonoBehaviour
         _stateMachine.Enter<GameLoopState>();
         _inventory.gameObject.SetActive(false);
     }
-
-    //public void ActivateDecoration() 
-    //{
-    //    //SwitchPanels(false);
-    //    _stateMachine.Enter<DecorationState>();
-    //}
-
-    //public void DeActivateDecoration()
-    //{
-    //    _stateMachine.Enter<WorkbenchState>();
-    //    //SwitchPanels(true);
-    //}
-
-    //private void SwitchPanels(bool isWorkbench)
-    //{
-    //    _workbenchPanel.SetActive(isWorkbench);
-    //    _decorationPanel.SetActive(!isWorkbench);
-    //}
 }
