@@ -1,10 +1,10 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HeroReaction : MonoBehaviour
 {
-    [SerializeField] private Text _reactionText;
+    [SerializeField] private TMP_Text _reactionText;
     [SerializeField] private GameObject _reactionPanel;
     [SerializeField] private float _reactionTime = 3;
 
@@ -29,6 +29,7 @@ public class HeroReaction : MonoBehaviour
 
     public void HideReaction()
     {
+        StopAllCoroutines();
         _reactionPanel.SetActive(false);
     }
 }

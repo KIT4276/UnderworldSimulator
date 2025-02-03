@@ -6,12 +6,12 @@ using Zenject;
 public class InteractableObstacle : MonoBehaviour
 {
     [SerializeField] protected GameObject _sign;
+    [SerializeField] private string _reactionText = "Реакция персонажа...";//move text to SO
     [Inject]private PlayerInput _playerInput;
 
     private bool _isBroken;
     protected bool _isActive;
     protected HeroReaction _hero;
-    private const string _reactionText = "Реакция персонажа...";//move text to SO
 
     public event Action Interact;
     public event Action LeftTheArea;

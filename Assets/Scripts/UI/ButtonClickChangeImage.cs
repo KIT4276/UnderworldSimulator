@@ -25,6 +25,12 @@ public class ButtonClickChangeImage : MonoBehaviour
 
     public void RestartView()
     {
+       
         _image.sprite = _normImage;
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 }

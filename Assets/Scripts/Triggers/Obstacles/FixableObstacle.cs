@@ -20,8 +20,9 @@ public class FixableObstacle : MonoBehaviour
         _interactableObstacle.LeftTheArea += CloseFixMenu;
     }
 
-    private void CloseFixMenu()
+    public void CloseFixMenu()
     {
+        StopAllCoroutines();
         _menu.SetActive(false);
     }
 }
