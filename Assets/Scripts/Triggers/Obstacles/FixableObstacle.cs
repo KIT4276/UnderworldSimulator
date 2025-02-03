@@ -22,7 +22,7 @@ public class FixableObstacle : MonoBehaviour
 
     public void CloseFixMenu()
     {
-        StopAllCoroutines();
+        _interactableObstacle.LeftTheArea -= CloseFixMenu;
         _menu.SetActive(false);
     }
 }
