@@ -3314,7 +3314,7 @@ GameObject:
   - component: {fileID: 338126077407817723}
   - component: {fileID: 1034774496960148771}
   m_Layer: 5
-  m_Name: 'EmptyContentButton '
+  m_Name: 'Fireplace_ContentButton '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3429,7 +3429,7 @@ MonoBehaviour:
         m_MethodName: SpawnDecor
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgument: {fileID: 108882618963313820, guid: 05b2bce059ffe594da4550a304820634, type: 3}
           m_ObjectArgumentAssemblyTypeName: Decor, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -3476,12 +3476,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 350a8170a968b8a40bd494ec445d4132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isOccupied: 0
+  _isOccupied: 1
   _buttonIconImage: {fileID: 7734363043128578312}
   _buttonEnterChangeImage: {fileID: 8730595971869140923}
   _slotCounter: {fileID: 1034774496960148771}
   _button: {fileID: 1175731854110379145}
-  _icon: {fileID: -5950786688672675041, guid: 15749a5e9d072864cad4fef75490d6d6, type: 3}
+  _icon: {fileID: -8227080214931094891, guid: d36ce079afd2ea1488515fc915d77448, type: 3}
 --- !u!114 &1034774496960148771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3494,7 +3494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375f5b11f52e1d24bb30367f3c8496b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _count: 0
+  _count: 2
   _textMeshPro: {fileID: 3931052409699206083}
   _x_TextTablet: {fileID: 2508228680538104172}
   _inventorySlot: {fileID: 338126077407817723}
@@ -8244,7 +8244,7 @@ GameObject:
   - component: {fileID: 1091907105972726802}
   - component: {fileID: 8511235947498452941}
   m_Layer: 5
-  m_Name: 'EmptyContentButton '
+  m_Name: 'Firewood_ContentButton '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8359,7 +8359,7 @@ MonoBehaviour:
         m_MethodName: SpawnDecor
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgument: {fileID: 3020562668036507875, guid: f69bd5e339139a04f81c9da0798b6372, type: 3}
           m_ObjectArgumentAssemblyTypeName: Decor, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -8406,12 +8406,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 350a8170a968b8a40bd494ec445d4132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isOccupied: 0
+  _isOccupied: 1
   _buttonIconImage: {fileID: 5968973918417131768}
   _buttonEnterChangeImage: {fileID: 6682274008057730436}
   _slotCounter: {fileID: 8511235947498452941}
   _button: {fileID: 2372869743957886739}
-  _icon: {fileID: 0}
+  _icon: {fileID: -7381093908702338704, guid: 4dc056883343f2e46bbf70adaa8872bc, type: 3}
 --- !u!114 &8511235947498452941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8424,7 +8424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375f5b11f52e1d24bb30367f3c8496b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _count: 0
+  _count: 4
   _textMeshPro: {fileID: 8526621752283873953}
   _x_TextTablet: {fileID: 7045417478832449624}
   _inventorySlot: {fileID: 1091907105972726802}
@@ -37291,7 +37291,7 @@ GameObject:
   - component: {fileID: 5683183806644093938}
   - component: {fileID: 240604845615644205}
   m_Layer: 5
-  m_Name: lamp_ContentButton (Legacy) (2)
+  m_Name: Nightstand_ContentButton (Legacy) (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37406,7 +37406,7 @@ MonoBehaviour:
         m_MethodName: SpawnDecor
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 3164173863296418508, guid: a360288980ff1a9449c50a9455ef38e6, type: 3}
+          m_ObjectArgument: {fileID: 8788218111058133843, guid: 29c141c5a564b8949a2618011623adfb, type: 3}
           m_ObjectArgumentAssemblyTypeName: Decor, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -37453,12 +37453,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 350a8170a968b8a40bd494ec445d4132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isOccupied: 0
+  _isOccupied: 1
   _buttonIconImage: {fileID: 8223315735676593804}
   _buttonEnterChangeImage: {fileID: 2059682497477850591}
   _slotCounter: {fileID: 240604845615644205}
   _button: {fileID: 4529919779954063847}
-  _icon: {fileID: 4799545326678886173, guid: 10d5564700e68df4a9b550098019da81, type: 3}
+  _icon: {fileID: -2382142833325948702, guid: b44eab1934f581a4fb4c5fb1c965b05d, type: 3}
 --- !u!114 &240604845615644205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37471,7 +37471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375f5b11f52e1d24bb30367f3c8496b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _count: 0
+  _count: 6
   _textMeshPro: {fileID: 7794936910712159579}
   _x_TextTablet: {fileID: 7890227489032284604}
   _inventorySlot: {fileID: 5683183806644093938}
