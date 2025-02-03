@@ -3314,7 +3314,7 @@ GameObject:
   - component: {fileID: 338126077407817723}
   - component: {fileID: 1034774496960148771}
   m_Layer: 5
-  m_Name: 'EmptyContentButton '
+  m_Name: 'Fireplace_ContentButton '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3429,7 +3429,7 @@ MonoBehaviour:
         m_MethodName: SpawnDecor
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgument: {fileID: 108882618963313820, guid: 05b2bce059ffe594da4550a304820634, type: 3}
           m_ObjectArgumentAssemblyTypeName: Decor, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -3476,12 +3476,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 350a8170a968b8a40bd494ec445d4132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isOccupied: 0
+  _isOccupied: 1
   _buttonIconImage: {fileID: 7734363043128578312}
   _buttonEnterChangeImage: {fileID: 8730595971869140923}
   _slotCounter: {fileID: 1034774496960148771}
   _button: {fileID: 1175731854110379145}
-  _icon: {fileID: -5950786688672675041, guid: 15749a5e9d072864cad4fef75490d6d6, type: 3}
+  _icon: {fileID: -8227080214931094891, guid: d36ce079afd2ea1488515fc915d77448, type: 3}
 --- !u!114 &1034774496960148771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3494,7 +3494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375f5b11f52e1d24bb30367f3c8496b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _count: 0
+  _count: 2
   _textMeshPro: {fileID: 3931052409699206083}
   _x_TextTablet: {fileID: 2508228680538104172}
   _inventorySlot: {fileID: 338126077407817723}
