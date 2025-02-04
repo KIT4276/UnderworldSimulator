@@ -1,13 +1,10 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Zenject;
 
 public class Decor : MonoBehaviour, IInventoryObject
 {
-    //[SerializeField] private Collider2D[] _colliders;
     [SerializeField] private SpriteRenderer _mainRenderer;
     [SerializeField] private InputActionReference _clickAction;
     [SerializeField] private InputActionReference _cancelAction;
@@ -38,14 +35,8 @@ public class Decor : MonoBehaviour, IInventoryObject
     private bool _isOnDecorState;
 
     public event Action PlacedAction;
-    //public event Action<Decor> CanceledAction;
     public event Action<BaceCell> OnOccupyCell;
     public event Action OnEmptyCell;
-
-    private void Awake()
-    {
-        Debug.Log(transform.position);
-    }
 
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
         SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder, IAssets assets)
@@ -134,7 +125,6 @@ public class Decor : MonoBehaviour, IInventoryObject
     public void RemoveThisDecor()
     {
         _isPlacing = false;
-        // TODO
         _polygonSplitter.RemoveCells();
     }
 

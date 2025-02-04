@@ -16,16 +16,9 @@ public class InventorySystem : MonoBehaviour
     {
         _decorFactory = decorFactory;
         _decorationSystem = decorationSystem;
-        //_decorFactory.OnSpawned += OnDecorSpawned;
         _decorationSystem.TryToRemoveDecorAction += TryReturnToInventory;
-        //_decorationSystem.RemoveDecorAction += ReturnToInventory;
         _warningSign.SetActive(false);
     }
-
-    //public void OnDecorSpawned(Decor decor)
-    //{
-    //    decor.CanceledAction += ReturnToInventory;
-    //}
 
     public void ActivateInventory()
     {
