@@ -5,14 +5,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(ButtonEnterChangeImage), typeof(InventorySlotCounter))]
 public class InventorySlot : MonoBehaviour
 {
-    //[SerializeField] private bool _isOccupied; // temporary
-    //[Space]
     [SerializeField] private Image _buttonIconImage;
     [SerializeField] private ButtonEnterChangeImage _buttonEnterChangeImage;
     [SerializeField] private InventorySlotCounter _slotCounter;
     [SerializeField] private Button _button;
-    //[Space]
-    //[SerializeField]
     private Sprite _icon;
 
     public bool IsOccupied { get; private set; }
@@ -33,8 +29,6 @@ public class InventorySlot : MonoBehaviour
 
     private void SettingParameters()
     {
-        //Debug.Log("SettingParameters");
-
         if (IsOccupied)
         {
             _button.interactable = true;
@@ -52,15 +46,9 @@ public class InventorySlot : MonoBehaviour
 
     public void SetDecor(Decor decor)
     {
-        //Debug.Log("SetDecor");
-
-        //_button.interactable = true;
-        //_buttonEnterChangeImage.enabled = true;
+        Debug.Log(decor);
         IsOccupied = true;
-        //_buttonIconImage.gameObject.SetActive(true);
         _icon = decor.GetIcon();
-        //_buttonIconImage.sprite = _icon;
-        //_buttonEnterChangeImage.Activate();
         _slotCounter.SetCount(1);
         CurrentDecor = decor;
 
