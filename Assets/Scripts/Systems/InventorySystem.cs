@@ -37,14 +37,20 @@ public class InventorySystem : MonoBehaviour
 
     public void ReturnToInventory(Decor decor)
     {
-        Debug.Log(decor);
+        bool isPlaced = false;
+
         for (int i = 0; i < _inventorySlot.Length; i++)
         {
             if (!_inventorySlot[i].IsOccupied)
             {
                 _inventorySlot[i].SetDecor(_decorationSystem.ActiveDecor);
+                isPlaced = true;
                 break;
             }
+            else
+                Debug.Log("€чейка зан€та " + i);
         }
+        if(!isPlaced)
+        Debug.Log(" не нашлось место дл€ декора");
     }
 }

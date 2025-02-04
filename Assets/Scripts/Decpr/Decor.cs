@@ -113,6 +113,8 @@ public class Decor : MonoBehaviour, IInventoryObject
     {
         if (_isPlacing)
         {
+            //TODO ban cleaning if there are no cells
+
             _isPlacing = false;
             CanceledAction?.Invoke(this);
         }

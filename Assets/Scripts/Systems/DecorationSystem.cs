@@ -31,7 +31,7 @@ public class DecorationSystem
     {
         if (_activeDecor != null)
             _factory.DespawnDecor(_activeDecor);
-        Debug.Log(decorPrefab);
+        //Debug.Log(decorPrefab);
         _activeDecor = _factory.SpawnDecor(decorPrefab);
         ActivateDecor(_activeDecor);
         //_inventorySystem.OnDecorSpawned(_activeDecor);
