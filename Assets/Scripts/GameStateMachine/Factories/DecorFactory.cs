@@ -38,10 +38,12 @@ public class DecorFactory : MonoBehaviour
             decor = decorPrefab;
             decor.gameObject.SetActive(true);
         }
+
         decor.Initialize(_staticData, _decorationSystem, _spaceDeterminantor, _decorHolder, _assets);
         OnSpawned?.Invoke(decor);
         return decor;
     }
+
 
     public void DespawnDecor(Decor decor)
     {

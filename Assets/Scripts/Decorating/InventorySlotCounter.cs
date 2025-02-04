@@ -29,8 +29,6 @@ public class InventorySlotCounter : MonoBehaviour
 
     private void CheckingAndShow()
     {
-        if (_textMeshPro == null || _x_TextTablet == null) return;
-
         _textMeshPro.gameObject.SetActive(true);
         _x_TextTablet.SetActive(true);
         _textMeshPro.text = Count.ToString();

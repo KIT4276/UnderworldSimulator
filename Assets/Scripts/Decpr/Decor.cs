@@ -34,7 +34,7 @@ public class Decor : MonoBehaviour, IInventoryObject
     private bool _isOnDecorState;
 
     public event Action PlacedAction;
-    public event Action<Decor> CanceledAction;
+    //public event Action<Decor> CanceledAction;
     public event Action<BaceCell> OnOccupyCell;
     public event Action OnEmptyCell;
 
@@ -113,11 +113,18 @@ public class Decor : MonoBehaviour, IInventoryObject
     {
         if (_isPlacing)
         {
-            //TODO ban cleaning if there are no cells
+            //TODO prohibit cleaning if there are no cells
+            //_decorationSystem.RemoveDecor(this);
 
-            _isPlacing = false;
-            CanceledAction?.Invoke(this);
+            _decorationSystem.TryToRemoveDecor(this);
+            //_isPlacing = false;
+            //CanceledAction?.Invoke(this);
         }
+    }
+
+    public void RemoveThisDecor()
+    {
+        _isPlacing = false;
     }
 
     private void OnClick(InputAction.CallbackContext context)
