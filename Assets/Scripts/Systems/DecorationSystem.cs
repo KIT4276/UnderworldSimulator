@@ -1,22 +1,31 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DecorationSystem
 {
     private DecorFactory _factory;
-    //private readonly InventorySystem _inventorySystem;
     private Decor _activeDecor;
     private object _mainCamera;
     private List<Decor> _allDecorInTheScene = new();
 
     public Decor ActiveDecor { get => _activeDecor; }
+    public bool CanPlace { get; private set; }
 
-    public DecorationSystem(DecorFactory factory/*, InventorySystem inventorySystem*/)
+    public event Action<Decor> RemoveDecorAction;
+    public event Action<Decor> TryToRemoveDecorAction;
+
+    public DecorationSystem(DecorFactory factory)
     {
         _factory = factory;
-        //_inventorySystem = inventorySystem;
         _factory.Initialize(this);
     }
+
+    public void BanActions() => 
+        CanPlace = false;
+
+    public void AllowActions() =>
+        CanPlace = true;
 
     public void SetIsOnDecorState(bool isOnDecorState)
     {
@@ -31,17 +40,14 @@ public class DecorationSystem
     {
         if (_activeDecor != null)
             _factory.DespawnDecor(_activeDecor);
-
         _activeDecor = _factory.SpawnDecor(decorPrefab);
         ActivateDecor(_activeDecor);
-        //_inventorySystem.OnDecorSpawned(_activeDecor);
     }
 
     private void ActivateDecor(Decor decor)
     {
         decor.SetIsOnDecorState(true);
         decor.PlacedAction += PlaceActiveDecor;
-        decor.CanceledAction += RemoveDecor;
     }
 
     public void ReActivateDecor(Decor decor)
@@ -50,19 +56,24 @@ public class DecorationSystem
         ActivateDecor(decor);
     }
 
-    private void RemoveDecor(Decor decor)
+
+    public void TryToRemoveDecor(Decor decor)
     {
-        if (ActiveDecor != null)
+        if (_allDecorInTheScene.Contains(_activeDecor))
+            _allDecorInTheScene.Remove(_activeDecor);
+
+        if (decor == _activeDecor)
         {
-            if (_allDecorInTheScene.Contains(_activeDecor))
-                _allDecorInTheScene.Remove(_activeDecor);
-
-            _factory.DespawnDecor(_activeDecor);
-            //_inventorySystem.ReturnToInventory(decor);
-            
-            _activeDecor = null;
-
+            TryToRemoveDecorAction?.Invoke(_activeDecor);
         }
+    }
+
+    public void ReturtDecorToInventory()
+    {
+        _factory.DespawnDecor(_activeDecor);
+
+        RemoveDecorAction?.Invoke(_activeDecor);
+        _activeDecor = null;
     }
 
     private void PlaceActiveDecor()

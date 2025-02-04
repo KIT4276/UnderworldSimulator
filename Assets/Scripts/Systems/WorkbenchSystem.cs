@@ -8,12 +8,14 @@ public class WorkbenchSystem : MonoBehaviour
 
     private StateMachine _stateMachine;
     private InventorySystem _inventory;
+    private DecorationSystem _decorationSystem;
 
     [Inject]
-    public void  Construct(StateMachine stateMachine, InventorySystem inventory)
+    public void  Construct(StateMachine stateMachine, InventorySystem inventory, DecorationSystem decorationSystem)
     {
         _stateMachine = stateMachine;
         _inventory = inventory;
+        _decorationSystem = decorationSystem;
         _inventory.gameObject.SetActive(false);
         _workbenchPanel.SetActive(false);
 
@@ -44,8 +46,12 @@ public class WorkbenchSystem : MonoBehaviour
 
     public void DeActivateWorkbench()
     {
-        _workbenchPanel.SetActive(false);
-        _stateMachine.Enter<GameLoopState>();
-        _inventory.gameObject.SetActive(false);
+        if (_decorationSystem.ActiveDecor == null)
+        {
+
+            _workbenchPanel.SetActive(false);
+            _stateMachine.Enter<GameLoopState>();
+            _inventory.gameObject.SetActive(false);
+        }
     }
 }

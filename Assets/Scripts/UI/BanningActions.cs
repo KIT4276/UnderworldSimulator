@@ -1,13 +1,17 @@
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
-public class ZoomSwitch : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class BanningActions : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private CameraMove _cameraMove;
 
+    [Inject] private DecorationSystem _decorationSystem;
+
     public void OnPointerEnter(PointerEventData eventData)
     {
+        _decorationSystem.BanActions();
+        
         if (_cameraMove == null)
             FindCamera();
 
@@ -16,6 +20,7 @@ public class ZoomSwitch : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        _decorationSystem.AllowActions();
         _cameraMove.SetCanZoom(true);
     }
 

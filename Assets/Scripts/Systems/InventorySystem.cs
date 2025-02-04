@@ -1,27 +1,23 @@
+using System.Collections;
 using UnityEngine;
 using Zenject;
+
 
 public class InventorySystem : MonoBehaviour
 {
     [SerializeField] private InventorySlot[] _inventorySlot;
+    [SerializeField] private GameObject _warningSign;
 
     private DecorFactory _decorFactory;
+    private DecorationSystem _decorationSystem;
 
     [Inject]
-    private void Construct(DecorFactory decorFactory)
+    private void Construct(DecorFactory decorFactory, DecorationSystem decorationSystem)
     {
         _decorFactory = decorFactory;
-        _decorFactory.OnSpawned += OnDecorSpawned;
-    }
-
-    //private void Start()
-    //{
-    //    DeActivateInventory();
-    //}
-
-    public void OnDecorSpawned(Decor decor)
-    {
-        decor.CanceledAction += ReturnToInventory;
+        _decorationSystem = decorationSystem;
+        _decorationSystem.TryToRemoveDecorAction += TryReturnToInventory;
+        _warningSign.SetActive(false);
     }
 
     public void ActivateInventory()
@@ -34,18 +30,42 @@ public class InventorySystem : MonoBehaviour
 
     public void DeActivateInventory()
     {
+        if(_decorationSystem.ActiveDecor == null)
         this.gameObject.SetActive(false);
     }
 
-    public void ReturnToInventory(Decor decor)
+    private void TryReturnToInventory(Decor decor)
     {
+        bool isPlaced = false;
+
         for (int i = 0; i < _inventorySlot.Length; i++)
         {
             if (!_inventorySlot[i].IsOccupied)
             {
-                _inventorySlot[i].SetDecor(decor);
+                _inventorySlot[i].SetDecor(_decorationSystem.ActiveDecor);
+                _decorationSystem.ReturtDecorToInventory();
+                isPlaced = true;
                 break;
             }
         }
+        if (!isPlaced)
+        {
+            Debug.Log(" не нашлось место для декора");
+            StopAllCoroutines();
+            _warningSign.SetActive(true);
+            StartCoroutine(HideTAblet());
+        }
+    }
+
+    private IEnumerator HideTAblet()
+    {
+        yield return new WaitForSeconds(3);
+        _warningSign.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        _warningSign.SetActive(false);
     }
 }

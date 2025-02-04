@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InventorySlotCounter : MonoBehaviour
 {
-    [SerializeField] private int _count = 1; //tempotaty
     [SerializeField] private TMP_Text _textMeshPro;
     [SerializeField] private GameObject _x_TextTablet;
     [SerializeField] private InventorySlot _inventorySlot;
@@ -13,7 +12,6 @@ public class InventorySlotCounter : MonoBehaviour
 
     private void Awake()
     {
-        Count = _count;
         CheckingAndShow();
     }
 
@@ -31,7 +29,9 @@ public class InventorySlotCounter : MonoBehaviour
 
     private void CheckingAndShow()
     {
-        if (_textMeshPro == null || _x_TextTablet == null) return;
+        //_textMeshPro.gameObject.SetActive(true);
+        //_x_TextTablet.SetActive(true);
+        //_textMeshPro.text = Count.ToString();
 
         if (Count > 1)
         {
@@ -44,10 +44,11 @@ public class InventorySlotCounter : MonoBehaviour
             _textMeshPro.gameObject.SetActive(false);
             _x_TextTablet.SetActive(false);
 
-            if (Count == 0)
+            if (Count <= 0)
+            {
                 _inventorySlot.Deactivate();
+            }
         }
-
     }
 }
 

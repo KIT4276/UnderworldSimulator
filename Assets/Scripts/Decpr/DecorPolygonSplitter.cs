@@ -5,6 +5,17 @@ public class DecorPolygonSplitter : BasePolygonSplitter
 {
     public List<BaceCell> PotentiallyOccupiedCells { get => _cells; }
 
+    public void RemoveCells()
+    {
+
+        foreach (var cell in _cells)
+        {
+            cell.Remove();
+        }
+        _cells.Clear();
+        _polygonCollider.enabled = true;
+    }
+
     protected override void Enumeration(float startX, float startY, float endX, float endY, List<Vector2> polygonPoints)
     {
         for (float x = startX; x < endX; x += _persistantStaticData.CellSize)
