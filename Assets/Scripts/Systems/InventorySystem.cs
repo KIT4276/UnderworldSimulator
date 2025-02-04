@@ -1,6 +1,7 @@
 using UnityEngine;
 using Zenject;
 
+
 public class InventorySystem : MonoBehaviour
 {
     [SerializeField] private InventorySlot[] _inventorySlot;

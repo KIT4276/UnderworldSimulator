@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventorySlotCounter : MonoBehaviour
 {
-    [SerializeField] private int _count = 1; //tempotaty
+    //[SerializeField] private int _count = 1; //tempotaty
     [SerializeField] private TMP_Text _textMeshPro;
     [SerializeField] private GameObject _x_TextTablet;
     [SerializeField] private InventorySlot _inventorySlot;
@@ -13,7 +13,7 @@ public class InventorySlotCounter : MonoBehaviour
 
     private void Awake()
     {
-        Count = _count;
+        //Count = _count;
         CheckingAndShow();
     }
 
