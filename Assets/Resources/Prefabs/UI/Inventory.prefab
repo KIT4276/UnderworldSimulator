@@ -12669,7 +12669,7 @@ GameObject:
   - component: {fileID: 3791607959253174533}
   - component: {fileID: 5816847865471985089}
   m_Layer: 5
-  m_Name: Image
+  m_Name: warningSign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21642,7 +21642,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2605174055327651565
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26543,7 +26543,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inventorySlot:
   - {fileID: 8901070293567176020}
-  _warningTablet: {fileID: 2955848605983700003}
+  - {fileID: 8386984666134323754}
+  - {fileID: 5894060621600136485}
+  - {fileID: 3915488233589385023}
+  _warningSign: {fileID: 2955848605983700003}
 --- !u!114 &4385664758730827898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35417,7 +35420,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "\u041D\u0435\u0442 \u0441\u0432\u043E\u0431\u043E\u0434\u043D\u044B\u0445
-    \u043C\u0435\u0441\u0442 \u0432 \u0438\u043D\u0432\u0435\u043D\u0442\u0430\u0440\u0435"
+    \u043C\u0435\u0441\u0442 \u0432 \u0438\u043D\u0432\u0435\u043D\u0442\u0430\u0440\u0435,
+    \u043F\u0440\u0438\u0434\u0451\u0442\u0441\u044F \u043F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -36133,7 +36137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3482236203495027647
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36345,7 +36349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &212040167524969660
 RectTransform:
   m_ObjectHideFlags: 0

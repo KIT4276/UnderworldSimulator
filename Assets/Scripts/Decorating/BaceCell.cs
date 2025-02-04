@@ -21,4 +21,9 @@ public abstract class BaceCell
         IsOccupied = false;
         SpriteRenderer.color = _startColor;
     }
+
+    public void Remove ()
+    {
+        GameObject.Destroy(QuadObject);
+    }
 }

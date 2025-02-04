@@ -10,8 +10,6 @@ public class DecorSpawner : MonoBehaviour
 
     public void SpawnDecor()
     {
-       // Debug.Log(_slot.CurrentDecor);
-        
         if (_slot.IsOccupied)
             _decorationSystem.InstantiateDecor(_slot.CurrentDecor);
     }

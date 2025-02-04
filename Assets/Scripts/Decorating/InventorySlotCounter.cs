@@ -29,20 +29,20 @@ public class InventorySlotCounter : MonoBehaviour
 
     private void CheckingAndShow()
     {
-        _textMeshPro.gameObject.SetActive(true);
-        _x_TextTablet.SetActive(true);
-        _textMeshPro.text = Count.ToString();
+        //_textMeshPro.gameObject.SetActive(true);
+        //_x_TextTablet.SetActive(true);
+        //_textMeshPro.text = Count.ToString();
 
         if (Count > 1)
         {
-            //_textMeshPro.gameObject.SetActive(true);
-            //_x_TextTablet.SetActive(true);
-            //_textMeshPro.text = Count.ToString();
+            _textMeshPro.gameObject.SetActive(true);
+            _x_TextTablet.SetActive(true);
+            _textMeshPro.text = Count.ToString();
         }
         else
         {
-            //_textMeshPro.gameObject.SetActive(false);
-            //_x_TextTablet.SetActive(false);
+            _textMeshPro.gameObject.SetActive(false);
+            _x_TextTablet.SetActive(false);
 
             if (Count <= 0)
             {

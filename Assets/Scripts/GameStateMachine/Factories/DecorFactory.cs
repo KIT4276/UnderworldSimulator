@@ -47,7 +47,8 @@ public class DecorFactory : MonoBehaviour
 
     public void DespawnDecor(Decor decor)
     {
-        //GameObject.Destroy(decor.gameObject);
         decor.gameObject.SetActive(false);
+        decor.RemoveThisDecor();
+        decor.transform.position = new Vector3(0, 0, 0);
     }
 }

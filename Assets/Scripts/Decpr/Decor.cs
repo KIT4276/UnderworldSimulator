@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -19,7 +21,9 @@ public class Decor : MonoBehaviour, IInventoryObject
     [SerializeField] private Sprite _rightSprite;
     [Space]
     [SerializeField] private Sprite _icon;
-    
+    [Space]
+    [SerializeField] private GameObject _warningSign;
+
 
     private PersistantStaticData _staticData;
     private DecorationSystem _decorationSystem;
@@ -38,6 +42,11 @@ public class Decor : MonoBehaviour, IInventoryObject
     public event Action<BaceCell> OnOccupyCell;
     public event Action OnEmptyCell;
 
+    private void Awake()
+    {
+        Debug.Log(transform.position);
+    }
+
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
         SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder, IAssets assets)
     {
@@ -54,17 +63,14 @@ public class Decor : MonoBehaviour, IInventoryObject
         _cancelAction.action.performed += OnCancel;
         rotationAction.action.performed += OnRotate;
 
-        //foreach (var collider in _colliders)
-        //    collider.enabled = false;
-
-
+        _warningSign.SetActive(false);
         _polygonSplitter.Initialize(assets, staticData);
     }
 
     public void SetIsOnDecorState(bool isOnDecorState) =>
         _isOnDecorState = isOnDecorState;
 
-    public Sprite GetIcon() 
+    public Sprite GetIcon()
         => _icon;
 
     private void OnRotate(InputAction.CallbackContext context)
@@ -113,23 +119,29 @@ public class Decor : MonoBehaviour, IInventoryObject
     {
         if (_isPlacing)
         {
-            //TODO prohibit cleaning if there are no cells
-            //_decorationSystem.RemoveDecor(this);
+            if (_decorationSystem.CanPlace)
+                _decorationSystem.TryToRemoveDecor(this);
 
-            _decorationSystem.TryToRemoveDecor(this);
-            //_isPlacing = false;
-            //CanceledAction?.Invoke(this);
         }
+    }
+
+    private IEnumerator HideTAblet()
+    {
+        yield return new WaitForSeconds(3);
+        _warningSign.SetActive(false);
     }
 
     public void RemoveThisDecor()
     {
         _isPlacing = false;
+        // TODO
+        _polygonSplitter.RemoveCells();
     }
 
     private void OnClick(InputAction.CallbackContext context)
     {
         if (!_isOnDecorState) return;
+
 
 
         if (_isPlacing)
@@ -145,7 +157,7 @@ public class Decor : MonoBehaviour, IInventoryObject
 
             foreach (var hit in hits)
             {
-                if((hit.collider != null && hit.collider.GetComponentInParent<Decor>() == this))
+                if ((hit.collider != null && hit.collider.GetComponentInParent<Decor>() == this))
                 {
                     OnEmptyCell?.Invoke();
                     _decorationSystem.ReActivateDecor(this);
@@ -260,6 +272,15 @@ public class Decor : MonoBehaviour, IInventoryObject
 
     private void PlaceObject()
     {
+        if (!_decorationSystem.CanPlace)
+        {
+            StopAllCoroutines();
+            _warningSign.SetActive(true);
+            StartCoroutine(HideTAblet());
+            return;
+        }
+
+
         _isPlacing = false;
         _mainRenderer.material.color = _staticData.NormalColor;
         ToggleColliders(true);

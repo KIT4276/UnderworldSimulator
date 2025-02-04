@@ -6,7 +6,7 @@ using Zenject;
 public class InventorySystem : MonoBehaviour
 {
     [SerializeField] private InventorySlot[] _inventorySlot;
-    [SerializeField] private GameObject _warningTablet;
+    [SerializeField] private GameObject _warningSign;
 
     private DecorFactory _decorFactory;
     private DecorationSystem _decorationSystem;
@@ -19,7 +19,7 @@ public class InventorySystem : MonoBehaviour
         //_decorFactory.OnSpawned += OnDecorSpawned;
         _decorationSystem.TryToRemoveDecorAction += TryReturnToInventory;
         //_decorationSystem.RemoveDecorAction += ReturnToInventory;
-        _warningTablet.SetActive(false);
+        _warningSign.SetActive(false);
     }
 
     //public void OnDecorSpawned(Decor decor)
@@ -37,6 +37,7 @@ public class InventorySystem : MonoBehaviour
 
     public void DeActivateInventory()
     {
+        if(_decorationSystem.ActiveDecor == null)
         this.gameObject.SetActive(false);
     }
 
@@ -53,15 +54,12 @@ public class InventorySystem : MonoBehaviour
                 isPlaced = true;
                 break;
             }
-            else
-            {
-                Debug.Log("€чейка зан€та " + i);
-            }
         }
         if (!isPlaced)
         {
-            Debug.Log(" не нашлось место дл€ декора? ");
-            _warningTablet.SetActive(true);
+            Debug.Log(" не нашлось место дл€ декора");
+            StopAllCoroutines();
+            _warningSign.SetActive(true);
             StartCoroutine(HideTAblet());
         }
     }
@@ -69,33 +67,12 @@ public class InventorySystem : MonoBehaviour
     private IEnumerator HideTAblet()
     {
         yield return new WaitForSeconds(3);
-        _warningTablet.SetActive(false);
+        _warningSign.SetActive(false);
     }
-
-    //public void ReturnToInventory(Decor decor)
-    //{
-    //    bool isPlaced = false;
-
-    //    for (int i = 0; i < _inventorySlot.Length; i++)
-    //    {
-    //        if (!_inventorySlot[i].IsOccupied)
-    //        {
-    //            _inventorySlot[i].SetDecor(_decorationSystem.ActiveDecor);
-    //            isPlaced = true;
-    //            break;
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("€чейка зан€та " + i);
-    //        }
-    //    }
-    //    if(!isPlaced)
-    //    Debug.Log(" не нашлось место дл€ декора");
-    //}
 
     private void OnDisable()
     {
         StopAllCoroutines();
-        _warningTablet.SetActive(false);
+        _warningSign.SetActive(false);
     }
 }

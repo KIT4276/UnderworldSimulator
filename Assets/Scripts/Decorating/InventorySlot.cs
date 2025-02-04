@@ -46,7 +46,6 @@ public class InventorySlot : MonoBehaviour
 
     public void SetDecor(Decor decor)
     {
-        Debug.Log("SetDecor");
         IsOccupied = true;
         _icon = decor.GetIcon();
         _slotCounter.SetCount(1);

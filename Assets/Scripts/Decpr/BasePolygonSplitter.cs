@@ -23,12 +23,6 @@ public abstract class BasePolygonSplitter : MonoBehaviour
 
     protected void SplitPolygonIntoSquares()
     {
-        if (_polygonCollider == null || _assets == null)
-        {
-            Debug.LogError("PolygonCollider2D or Assets is not assigned.");
-            return;
-        }
-
         Bounds bounds = _polygonCollider.bounds;
         float startX = bounds.min.x;
         float startY = bounds.min.y;
