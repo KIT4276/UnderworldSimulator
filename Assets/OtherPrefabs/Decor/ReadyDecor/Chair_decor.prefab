@@ -27,10 +27,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5075906579035203853}
+  m_Father: {fileID: 2564036663471157149}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &4380743259893000948
 BoxCollider2D:
@@ -276,6 +276,7 @@ Transform:
   - {fileID: 7118842231188094283}
   - {fileID: 5393759651889476784}
   - {fileID: 4363867969371450900}
+  - {fileID: 1449393129846903725}
   - {fileID: 5075906579035203853}
   - {fileID: 7068715509305985108}
   - {fileID: 7206593498298893332}
@@ -298,7 +299,9 @@ MonoBehaviour:
   _clickAction: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _cancelAction: {fileID: -9184969692752736088, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   rotationAction: {fileID: -2486391391914466195, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _polygonSplitter: {fileID: 4556197266750140672}
+  _frontPolygonSplitter: {fileID: 4556197266750140672}
+  _leftPolygonSplitter: {fileID: 0}
+  _impassableZone: {fileID: 1449393129846903725}
   _primuscus: 0.3
   _frontSprite: {fileID: -5666326540327117157, guid: d8e3355a25c861549acbcdaaf3bc0a31, type: 3}
   _leftSprite: {fileID: -4361419631782997780, guid: 761c43385204e5540bd0053039fec241, type: 3}
@@ -337,8 +340,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1449393129846903725}
+  m_Children: []
   m_Father: {fileID: 2564036663471157149}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5264133570696442379

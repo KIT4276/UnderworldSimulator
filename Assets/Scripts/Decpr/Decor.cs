@@ -12,6 +12,7 @@ public class Decor : MonoBehaviour, IInventoryObject
     [SerializeField] private InputActionReference rotationAction;
     [SerializeField] private DecorPolygonSplitter _frontPolygonSplitter;
     [SerializeField] private DecorPolygonSplitter _leftPolygonSplitter;
+    [SerializeField] private Transform _impassableZone;
     [SerializeField] private float _primuscus = 0.3f;
     [Space]
     [SerializeField] private Sprite _frontSprite;
@@ -104,8 +105,8 @@ public class Decor : MonoBehaviour, IInventoryObject
         //..
         _rotationState = (RotationState)(((int)_rotationState + 1) % 4);
         UpdateSprite(_rotationState);
+        _impassableZone.rotation *= Quaternion.Euler(0, 0, 90);
         UpdatePolygonSplitter();
-        //_currentPolygonSplitter.transform.rotation *= Quaternion.Euler(0, 0, 90);
         //_polygonSplitter.RemoveCells();
         //_polygonSplitter.Initialize(_assets, _staticData);
     }
@@ -162,8 +163,9 @@ public class Decor : MonoBehaviour, IInventoryObject
     public void RemoveThisDecor()
     {
         _isPlacing = false;
-        _currentPolygonSplitter.transform.rotation = Quaternion.Euler(0, 0, 0);
-        _currentPolygonSplitter.RemoveCells();
+        _leftPolygonSplitter.RemoveCells();
+        _frontPolygonSplitter.RemoveCells();
+        _impassableZone.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     private void OnClick(InputAction.CallbackContext context)
@@ -372,7 +374,7 @@ public class Decor : MonoBehaviour, IInventoryObject
     private void MarkOccupiedCells()
     {
         //if (_currentPolygonSplitter == null || _spaceDeterminantor == null) return;
-        Debug.Log(_currentPolygonSplitter.name);
+       // Debug.Log(_currentPolygonSplitter.name);
         float tolerance = _staticData.CellSize * _primuscus;
 
         Quaternion rotation = _currentPolygonSplitter.transform.rotation;
