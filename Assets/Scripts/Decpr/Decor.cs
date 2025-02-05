@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -65,8 +64,10 @@ public class Decor : MonoBehaviour, IInventoryObject
         _warningSign.SetActive(false);
         UpdateSprite(_rotationState);
         //_currentPolygonSplitter.Initialize(assets, staticData);
-
-        _leftPolygonSplitter.Initialize(assets, staticData);
+        if (_leftPolygonSplitter != null)
+        {
+            _leftPolygonSplitter.Initialize(assets, staticData);
+        }
         _frontPolygonSplitter.Initialize(assets, staticData);
     }
 
@@ -78,7 +79,7 @@ public class Decor : MonoBehaviour, IInventoryObject
                 _currentPolygonSplitter = _frontPolygonSplitter;
                 break;
             case RotationState.Left:
-                if(_leftPolygonSplitter == null)
+                if (_leftPolygonSplitter == null)
                     _currentPolygonSplitter = _frontPolygonSplitter;
                 else _currentPolygonSplitter = _leftPolygonSplitter;
                 break;
@@ -163,7 +164,9 @@ public class Decor : MonoBehaviour, IInventoryObject
     public void RemoveThisDecor()
     {
         _isPlacing = false;
-        _leftPolygonSplitter.RemoveCells();
+        if (_leftPolygonSplitter != null)
+            _leftPolygonSplitter.RemoveCells();
+
         _frontPolygonSplitter.RemoveCells();
         _impassableZone.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
@@ -194,9 +197,12 @@ public class Decor : MonoBehaviour, IInventoryObject
                     _isPlacing = true;
                     ToggleColliders(false);
 
-                    foreach (DecorsCell cell in _leftPolygonSplitter.PotentiallyOccupiedCells)
+                    if (_leftPolygonSplitter != null)
                     {
-                        cell.ShowCell();
+                        foreach (DecorsCell cell in _leftPolygonSplitter.PotentiallyOccupiedCells)
+                        {
+                            cell.ShowCell();
+                        }
                     }
                     foreach (DecorsCell cell in _frontPolygonSplitter.PotentiallyOccupiedCells)
                     {
@@ -353,10 +359,12 @@ public class Decor : MonoBehaviour, IInventoryObject
         _decorHolder.InstallDecor(this);
 
         MarkOccupiedCells();
-
-        foreach (DecorsCell cell in _leftPolygonSplitter.PotentiallyOccupiedCells)
+        if (_leftPolygonSplitter != null)
         {
-            cell.HideCell();
+            foreach (DecorsCell cell in _leftPolygonSplitter.PotentiallyOccupiedCells)
+            {
+                cell.HideCell();
+            }
         }
         foreach (DecorsCell cell in _frontPolygonSplitter.PotentiallyOccupiedCells)
         {
@@ -374,7 +382,7 @@ public class Decor : MonoBehaviour, IInventoryObject
     private void MarkOccupiedCells()
     {
         //if (_currentPolygonSplitter == null || _spaceDeterminantor == null) return;
-       // Debug.Log(_currentPolygonSplitter.name);
+        // Debug.Log(_currentPolygonSplitter.name);
         float tolerance = _staticData.CellSize * _primuscus;
 
         Quaternion rotation = _currentPolygonSplitter.transform.rotation;
