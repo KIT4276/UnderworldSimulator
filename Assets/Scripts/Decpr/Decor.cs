@@ -50,11 +50,13 @@ public class Decor : MonoBehaviour, IInventoryObject
         _isPlacing = true;
         _decorData = new DecorData(this);
 
+
         _clickAction.action.performed += OnClick;
         _cancelAction.action.performed += OnCancel;
         rotationAction.action.performed += OnRotate;
 
         _warningSign.SetActive(false);
+        UpdateSprite(_rotationState);
         _polygonSplitter.Initialize(assets, staticData);
     }
 
@@ -126,6 +128,7 @@ public class Decor : MonoBehaviour, IInventoryObject
     {
         _isPlacing = false;
         _polygonSplitter.RemoveCells();
+        _polygonSplitter.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     private void OnClick(InputAction.CallbackContext context)
@@ -185,48 +188,48 @@ public class Decor : MonoBehaviour, IInventoryObject
     {
         _canBuild = true;
 
-        if (_polygonSplitter != null)
+        if (_polygonSplitter == null) return;
+
+        foreach (var potentialCell in _polygonSplitter.PotentiallyOccupiedCells)
         {
-            foreach (var potentialCell in _polygonSplitter.PotentiallyOccupiedCells)
+            bool isOccupiedOrOutOfBounds = true;
+
+            foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
             {
-                bool isOccupiedOrOutOfBounds = true;
-
-                foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
+                foreach (var cell in gridHolder.Grid)
                 {
-                    foreach (var cell in gridHolder.Grid)
+                    Vector3 worldPosition = transform.TransformPoint(new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0));
+
+                    float tolerance = _staticData.CellSize / 2;
+
+                    if (Mathf.Abs(cell.CenterX - worldPosition.x) <= tolerance &&
+                        Mathf.Abs(cell.CenterY - worldPosition.y) <= tolerance)
                     {
-                        Vector3 worldPosition = transform.TransformPoint(new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0));
-
-                        float tolerance = _staticData.CellSize / 2;
-
-                        if (Mathf.Abs(cell.CenterX - worldPosition.x) <= tolerance &&
-                            Mathf.Abs(cell.CenterY - worldPosition.y) <= tolerance)
+                        if (cell.IsOccupied)
                         {
-                            if (cell.IsOccupied)
-                            {
-                                isOccupiedOrOutOfBounds = true;
-                                break;
-                            }
-                            else
-                            {
-                                isOccupiedOrOutOfBounds = false;
-                            }
+                            isOccupiedOrOutOfBounds = true;
+                            break;
                         }
-                    }
-
-                    if (!isOccupiedOrOutOfBounds)
-                    {
-                        break;
+                        else
+                        {
+                            isOccupiedOrOutOfBounds = false;
+                        }
                     }
                 }
 
-                if (isOccupiedOrOutOfBounds)
+                if (!isOccupiedOrOutOfBounds)
                 {
-                    _canBuild = false;
                     break;
                 }
             }
+
+            if (isOccupiedOrOutOfBounds)
+            {
+                _canBuild = false;
+                break;
+            }
         }
+
     }
 
     private void UpdateColor()
