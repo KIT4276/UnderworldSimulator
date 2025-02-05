@@ -10,7 +10,8 @@ public class Decor : MonoBehaviour, IInventoryObject
     [SerializeField] private InputActionReference _clickAction;
     [SerializeField] private InputActionReference _cancelAction;
     [SerializeField] private InputActionReference rotationAction;
-    [SerializeField] private DecorPolygonSplitter _polygonSplitter;
+    [SerializeField] private DecorPolygonSplitter _frontPolygonSplitter;
+    [SerializeField] private DecorPolygonSplitter _leftPolygonSplitter;
     [SerializeField] private float _primuscus = 0.3f;
     [Space]
     [SerializeField] private Sprite _frontSprite;
@@ -35,6 +36,7 @@ public class Decor : MonoBehaviour, IInventoryObject
     private DecorData _decorData;
     private RotationState _rotationState;
     private bool _isOnDecorState;
+    private DecorPolygonSplitter _currentPolygonSplitter;
 
     public event Action PlacedAction;
     public event Action<BaceCell> OnOccupyCell;
@@ -50,6 +52,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         _assets = assets;
 
         _rotationState = RotationState.Front;
+        UpdatePolygonSplitter();
         _isPlacing = true;
         _decorData = new DecorData(this);
 
@@ -60,7 +63,33 @@ public class Decor : MonoBehaviour, IInventoryObject
 
         _warningSign.SetActive(false);
         UpdateSprite(_rotationState);
-        _polygonSplitter.Initialize(assets, staticData);
+        //_currentPolygonSplitter.Initialize(assets, staticData);
+
+        _leftPolygonSplitter.Initialize(assets, staticData);
+        _frontPolygonSplitter.Initialize(assets, staticData);
+    }
+
+    private void UpdatePolygonSplitter()
+    {
+        switch (_rotationState)
+        {
+            case RotationState.Front:
+                _currentPolygonSplitter = _frontPolygonSplitter;
+                break;
+            case RotationState.Left:
+                if(_leftPolygonSplitter == null)
+                    _currentPolygonSplitter = _frontPolygonSplitter;
+                else _currentPolygonSplitter = _leftPolygonSplitter;
+                break;
+            case RotationState.Back:
+                _currentPolygonSplitter = _frontPolygonSplitter;
+                break;
+            case RotationState.Right:
+                if (_leftPolygonSplitter == null)
+                    _currentPolygonSplitter = _frontPolygonSplitter;
+                else _currentPolygonSplitter = _leftPolygonSplitter;
+                break;
+        }
     }
 
     public void SetIsOnDecorState(bool isOnDecorState) =>
@@ -72,12 +101,13 @@ public class Decor : MonoBehaviour, IInventoryObject
     private void OnRotate(InputAction.CallbackContext context)
     {
         if (!_isPlacing || !_isOnDecorState) return;
-
+        //..
         _rotationState = (RotationState)(((int)_rotationState + 1) % 4);
         UpdateSprite(_rotationState);
-        _polygonSplitter.transform.rotation *= Quaternion.Euler(0, 0, 90);
-        _polygonSplitter.RemoveCells();
-        _polygonSplitter.Initialize(_assets, _staticData);
+        UpdatePolygonSplitter();
+        //_currentPolygonSplitter.transform.rotation *= Quaternion.Euler(0, 0, 90);
+        //_polygonSplitter.RemoveCells();
+        //_polygonSplitter.Initialize(_assets, _staticData);
     }
 
     private void UpdateSprite(RotationState state)
@@ -132,8 +162,8 @@ public class Decor : MonoBehaviour, IInventoryObject
     public void RemoveThisDecor()
     {
         _isPlacing = false;
-        _polygonSplitter.transform.rotation = Quaternion.Euler(0, 0, 0);
-        _polygonSplitter.RemoveCells();
+        _currentPolygonSplitter.transform.rotation = Quaternion.Euler(0, 0, 0);
+        _currentPolygonSplitter.RemoveCells();
     }
 
     private void OnClick(InputAction.CallbackContext context)
@@ -162,7 +192,11 @@ public class Decor : MonoBehaviour, IInventoryObject
                     _isPlacing = true;
                     ToggleColliders(false);
 
-                    foreach (DecorsCell cell in _polygonSplitter.PotentiallyOccupiedCells)
+                    foreach (DecorsCell cell in _leftPolygonSplitter.PotentiallyOccupiedCells)
+                    {
+                        cell.ShowCell();
+                    }
+                    foreach (DecorsCell cell in _frontPolygonSplitter.PotentiallyOccupiedCells)
                     {
                         cell.ShowCell();
                     }
@@ -193,9 +227,9 @@ public class Decor : MonoBehaviour, IInventoryObject
     {
         _canBuild = true;
 
-        if (_polygonSplitter == null) return;
+        if (_currentPolygonSplitter == null) return;
 
-        foreach (var potentialCell in _polygonSplitter.PotentiallyOccupiedCells)
+        foreach (var potentialCell in _currentPolygonSplitter.PotentiallyOccupiedCells)
         {
             bool foundMatchingCell = false;
 
@@ -313,32 +347,42 @@ public class Decor : MonoBehaviour, IInventoryObject
         _isPlacing = false;
         _mainRenderer.material.color = _staticData.NormalColor;
         ToggleColliders(true);
+        UpdatePolygonSplitter();
         _decorHolder.InstallDecor(this);
 
         MarkOccupiedCells();
 
-        foreach (DecorsCell cell in _polygonSplitter.PotentiallyOccupiedCells)
+        foreach (DecorsCell cell in _leftPolygonSplitter.PotentiallyOccupiedCells)
         {
             cell.HideCell();
         }
+        foreach (DecorsCell cell in _frontPolygonSplitter.PotentiallyOccupiedCells)
+        {
+            cell.HideCell();
+        }
+
+        //foreach (DecorsCell cell in _currentPolygonSplitter.PotentiallyOccupiedCells)
+        //{
+        //    cell.HideCell();
+        //}
 
         PlacedAction?.Invoke();
     }
 
     private void MarkOccupiedCells()
     {
-        if (_polygonSplitter == null || _spaceDeterminantor == null) return;
-
+        //if (_currentPolygonSplitter == null || _spaceDeterminantor == null) return;
+        Debug.Log(_currentPolygonSplitter.name);
         float tolerance = _staticData.CellSize * _primuscus;
 
-        Quaternion rotation = _polygonSplitter.transform.rotation;
-        Vector3 positionOffset = _polygonSplitter.transform.position;
+        Quaternion rotation = _currentPolygonSplitter.transform.rotation;
+        Vector3 positionOffset = _currentPolygonSplitter.transform.position;
 
         foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
         {
             foreach (var cell in gridHolder.Grid)
             {
-                foreach (var potentialCell in _polygonSplitter.PotentiallyOccupiedCells)
+                foreach (var potentialCell in _currentPolygonSplitter.PotentiallyOccupiedCells)
                 {
                     Vector3 localPosition = new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0);
                     Vector3 rotatedPosition = rotation * localPosition;
