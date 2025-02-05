@@ -5,38 +5,38 @@ using UnityEngine.InputSystem;
 
 public class Decor : MonoBehaviour, IInventoryObject
 {
-    [SerializeField] private SpriteRenderer _mainRenderer;
-    [SerializeField] private InputActionReference _clickAction;
-    [SerializeField] private InputActionReference _cancelAction;
-    [SerializeField] private InputActionReference rotationAction;
-    [SerializeField] private DecorPolygonSplitter _frontPolygonSplitter;
-    [SerializeField] private DecorPolygonSplitter _leftPolygonSplitter;
-    [SerializeField] private Transform _impassableZone;
-    [SerializeField] private float _primuscus = 0.3f;
+    [SerializeField] protected SpriteRenderer _mainRenderer;
+    [SerializeField] protected InputActionReference _clickAction;
+    [SerializeField] protected InputActionReference _cancelAction;
+    [SerializeField] protected InputActionReference rotationAction;
+    [SerializeField] protected DecorPolygonSplitter _frontPolygonSplitter;
+    [SerializeField] protected DecorPolygonSplitter _leftPolygonSplitter;
+    [SerializeField] protected Transform _impassableZone;
+    [SerializeField] protected float _primuscus = 0.3f;
     [Space]
-    [SerializeField] private Sprite _frontSprite;
-    [SerializeField] private Sprite _leftSprite;
-    [SerializeField] private Sprite _backSprite;
-    [SerializeField] private Sprite _rightSprite;
+    [SerializeField] protected Sprite _frontSprite;
+    [SerializeField] protected Sprite _leftSprite;
+    [SerializeField] protected Sprite _backSprite;
+    [SerializeField] protected Sprite _rightSprite;
     [Space]
-    [SerializeField] private Sprite _icon;
+    [SerializeField] protected Sprite _icon;
     [Space]
-    [SerializeField] private GameObject _warningSign;
+    [SerializeField] protected GameObject _warningSign;
 
 
-    private PersistantStaticData _staticData;
-    private DecorationSystem _decorationSystem;
-    private SpaceDeterminantor _spaceDeterminantor;
-    private DecorHolder _decorHolder;
-    private IAssets _assets;
-    private Camera _mainCamera;
-    private bool _isPlacing;
-    private bool _canBuild;
-    private BaceCell _closestCell;
-    private DecorData _decorData;
-    private RotationState _rotationState;
-    private bool _isOnDecorState;
-    private DecorPolygonSplitter _currentPolygonSplitter;
+    protected PersistantStaticData _staticData;
+    protected DecorationSystem _decorationSystem;
+    protected SpaceDeterminantor _spaceDeterminantor;
+    protected DecorHolder _decorHolder;
+    protected IAssets _assets;
+    protected Camera _mainCamera;
+    protected bool _isPlacing;
+    protected bool _canBuild;
+    protected BaceCell _closestCell;
+    protected DecorData _decorData;
+    protected RotationState _rotationState;
+    protected bool _isOnDecorState;
+    protected DecorPolygonSplitter _currentPolygonSplitter;
 
     public event Action PlacedAction;
     public event Action<BaceCell> OnOccupyCell;
@@ -71,7 +71,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         _frontPolygonSplitter.Initialize(assets, staticData);
     }
 
-    private void UpdatePolygonSplitter()
+    protected void UpdatePolygonSplitter()
     {
         switch (_rotationState)
         {
@@ -100,7 +100,7 @@ public class Decor : MonoBehaviour, IInventoryObject
     public Sprite GetIcon()
         => _icon;
 
-    private void OnRotate(InputAction.CallbackContext context)
+    protected virtual void OnRotate(InputAction.CallbackContext context)
     {
         if (!_isPlacing || !_isOnDecorState) return;
         //..
@@ -112,18 +112,20 @@ public class Decor : MonoBehaviour, IInventoryObject
         //_polygonSplitter.Initialize(_assets, _staticData);
     }
 
-    private void UpdateSprite(RotationState state)
+    protected void UpdateSprite(RotationState state)
     {
         switch (state)
         {
             case RotationState.Front:
-                _mainRenderer.sprite = CheckingSpriteExistence(_frontSprite, _backSprite);
+                _mainRenderer.sprite = _frontSprite;
+                _mainRenderer.flipX = false;
                 break;
             case RotationState.Left:
                 _mainRenderer.sprite = CheckingSpriteExistence(_leftSprite, _rightSprite);
                 break;
             case RotationState.Back:
-                _mainRenderer.sprite = CheckingSpriteExistence(_backSprite, _frontSprite);
+                _mainRenderer.sprite = _backSprite;
+                _mainRenderer.flipX = false;
                 break;
             case RotationState.Right:
                 _mainRenderer.sprite = CheckingSpriteExistence(_rightSprite, _leftSprite);
@@ -131,7 +133,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         }
     }
 
-    private Sprite CheckingSpriteExistence(Sprite requiredSprite, Sprite replacementSprite)
+    protected Sprite CheckingSpriteExistence(Sprite requiredSprite, Sprite replacementSprite)
     {
         if (requiredSprite == null)
         {
@@ -145,7 +147,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         }
     }
 
-    private void OnCancel(InputAction.CallbackContext context)
+    protected void OnCancel(InputAction.CallbackContext context)
     {
         if (_isPlacing)
         {
@@ -155,7 +157,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         }
     }
 
-    private IEnumerator HideTAblet()
+    protected IEnumerator HideTAblet()
     {
         yield return new WaitForSeconds(3);
         _warningSign.SetActive(false);
@@ -171,7 +173,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         _impassableZone.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
-    private void OnClick(InputAction.CallbackContext context)
+    protected void OnClick(InputAction.CallbackContext context)
     {
         if (!_isOnDecorState) return;
 
@@ -214,7 +216,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         }
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
         if (!_isPlacing || !_isOnDecorState) return;
 
@@ -223,7 +225,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         UpdateColor();
     }
 
-    private void FollowMouseWithSnap()
+    protected void FollowMouseWithSnap()
     {
         CheckCamera();
         _closestCell = GetClosestGridCell(FindCursorPosition());
@@ -231,7 +233,7 @@ public class Decor : MonoBehaviour, IInventoryObject
             transform.position = new Vector3(_closestCell.CenterX, _closestCell.CenterY, 0f);
     }
 
-    private void CheckIfCanBuild()
+    protected void CheckIfCanBuild()
     {
         _canBuild = true;
 
@@ -310,12 +312,12 @@ public class Decor : MonoBehaviour, IInventoryObject
 
     }
 
-    private void UpdateColor()
+    protected void UpdateColor()
     {
         _mainRenderer.material.color = _canBuild ? _staticData.AllowedPositionColor : _staticData.BannedPositionColor;
     }
 
-    private BaceCell GetClosestGridCell(Vector3 position)
+    protected BaceCell GetClosestGridCell(Vector3 position)
     {
         float minDistance = float.MaxValue;
         BaceCell bestCell = null;
@@ -335,13 +337,13 @@ public class Decor : MonoBehaviour, IInventoryObject
         return bestCell;
     }
 
-    private Vector3 FindCursorPosition()
+    protected Vector3 FindCursorPosition()
     {
         Vector2 screenPos = Mouse.current.position.ReadValue();
         return _mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, -_mainCamera.transform.position.z));
     }
 
-    private void PlaceObject()
+    protected void PlaceObject()
     {
         if (!_decorationSystem.CanPlace)
         {
@@ -379,7 +381,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         PlacedAction?.Invoke();
     }
 
-    private void MarkOccupiedCells()
+    protected void MarkOccupiedCells()
     {
         //if (_currentPolygonSplitter == null || _spaceDeterminantor == null) return;
         // Debug.Log(_currentPolygonSplitter.name);
@@ -409,19 +411,19 @@ public class Decor : MonoBehaviour, IInventoryObject
         }
     }
 
-    private void ToggleColliders(bool state)
+    protected void ToggleColliders(bool state)
     {
         //foreach (var collider in _colliders)
         //    collider.enabled = state;
     }
 
-    private void CheckCamera()
+    protected void CheckCamera()
     {
         if (_mainCamera == null)
             _mainCamera = Camera.main;
     }
 
-    private void OnDisable()
+    protected void OnDisable()
     {
         _isPlacing = false;
         _clickAction.action.performed -= OnClick;

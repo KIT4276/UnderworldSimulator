@@ -8207,6 +8207,7 @@ GameObject:
   - component: {fileID: 6682274008057730436}
   - component: {fileID: 1091907105972726802}
   - component: {fileID: 8511235947498452941}
+  - component: {fileID: 6318921391072865193}
   m_Layer: 5
   m_Name: 'ContentButton '
   m_TagString: Untagged
@@ -8318,7 +8319,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6318921391072865193}
         m_TargetAssemblyTypeName: DecorSpawner, Assembly-CSharp
         m_MethodName: SpawnDecor
         m_Mode: 1
@@ -8389,6 +8390,19 @@ MonoBehaviour:
   _textMeshPro: {fileID: 8526621752283873953}
   _x_TextTablet: {fileID: 7045417478832449624}
   _inventorySlot: {fileID: 1091907105972726802}
+--- !u!114 &6318921391072865193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811938542825653519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eea161c60c25b647b14cc201edc1302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slot: {fileID: 1091907105972726802}
 --- !u!1 &1871401119348765407
 GameObject:
   m_ObjectHideFlags: 0
@@ -21622,8 +21636,9 @@ GameObject:
   - component: {fileID: 8386984666134323754}
   - component: {fileID: 4283893882809129419}
   - component: {fileID: 3244242192294317927}
+  - component: {fileID: 8026706741070306270}
   m_Layer: 5
-  m_Name: ContentButton (Legacy) (1)
+  m_Name: newFireplace_ContentButton (Legacy) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21817,6 +21832,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slot: {fileID: 8386984666134323754}
+--- !u!114 &8026706741070306270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5099422247339662626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811c384358359554e8e82739c40506b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slot: {fileID: 8386984666134323754}
+  _slotCounter: {fileID: 4283893882809129419}
+  _count: 2
+  _decorPrefab: {fileID: 1292847781620758894, guid: 6918835bcc5df0b4c85e2f9b0d9c20b7, type: 3}
 --- !u!1 &5100320063463396251
 GameObject:
   m_ObjectHideFlags: 0
@@ -23237,7 +23268,7 @@ GameObject:
   - component: {fileID: 4535140015199203940}
   - component: {fileID: 3822124220068927818}
   m_Layer: 5
-  m_Name: chest_ContentButton (Legacy)
+  m_Name: newChest_ContentButton (Legacy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36408,8 +36439,9 @@ GameObject:
   - component: {fileID: 5894060621600136485}
   - component: {fileID: 4552744450792844395}
   - component: {fileID: 3153147640806518439}
+  - component: {fileID: 688392190093928557}
   m_Layer: 5
-  m_Name: ContentButton (Legacy) (2)
+  m_Name: mewLamp_ContentButton (Legacy) (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36603,6 +36635,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slot: {fileID: 5894060621600136485}
+--- !u!114 &688392190093928557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8632062326260143903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811c384358359554e8e82739c40506b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slot: {fileID: 5894060621600136485}
+  _slotCounter: {fileID: 4552744450792844395}
+  _count: 5
+  _decorPrefab: {fileID: 3782251639424202904, guid: 251c9bc71d855f34693f1b2d19931ad8, type: 3}
 --- !u!1 &8642099082320482682
 GameObject:
   m_ObjectHideFlags: 0
@@ -37461,7 +37509,7 @@ GameObject:
   - component: {fileID: 8651048479106704071}
   - component: {fileID: 2808506475432515287}
   m_Layer: 5
-  m_Name: MiniTable_ContentButton (Legacy) (2)
+  m_Name: newMiniTable_ContentButton (Legacy) (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
