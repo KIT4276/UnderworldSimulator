@@ -127,8 +127,8 @@ public class Decor : MonoBehaviour, IInventoryObject
     public void RemoveThisDecor()
     {
         _isPlacing = false;
-        _polygonSplitter.RemoveCells();
         _polygonSplitter.transform.rotation = Quaternion.Euler(0, 0, 0);
+        _polygonSplitter.RemoveCells();
     }
 
     private void OnClick(InputAction.CallbackContext context)
@@ -192,43 +192,74 @@ public class Decor : MonoBehaviour, IInventoryObject
 
         foreach (var potentialCell in _polygonSplitter.PotentiallyOccupiedCells)
         {
-            bool isOccupiedOrOutOfBounds = true;
+            bool foundMatchingCell = false;
 
             foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
             {
                 foreach (var cell in gridHolder.Grid)
                 {
                     Vector3 worldPosition = transform.TransformPoint(new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0));
-
                     float tolerance = _staticData.CellSize / 2;
 
                     if (Mathf.Abs(cell.CenterX - worldPosition.x) <= tolerance &&
                         Mathf.Abs(cell.CenterY - worldPosition.y) <= tolerance)
                     {
+                        foundMatchingCell = true;
                         if (cell.IsOccupied)
                         {
-                            isOccupiedOrOutOfBounds = true;
-                            break;
-                        }
-                        else
-                        {
-                            isOccupiedOrOutOfBounds = false;
+                            _canBuild = false;
+                            return;
                         }
                     }
                 }
-
-                if (!isOccupiedOrOutOfBounds)
-                {
-                    break;
-                }
             }
 
-            if (isOccupiedOrOutOfBounds)
+            if (!foundMatchingCell)
             {
                 _canBuild = false;
-                break;
+                return;
             }
         }
+
+        //foreach (var potentialCell in _polygonSplitter.PotentiallyOccupiedCells)
+        //{
+        //    bool isOccupiedOrOutOfBounds = true;
+
+        //    foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
+        //    {
+        //        foreach (var cell in gridHolder.Grid)
+        //        {
+        //            Vector3 worldPosition = transform.TransformPoint(new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0));
+
+        //            float tolerance = _staticData.CellSize / 2;
+
+        //            if (Mathf.Abs(cell.CenterX - worldPosition.x) <= tolerance &&
+        //                Mathf.Abs(cell.CenterY - worldPosition.y) <= tolerance)
+        //            {
+        //                if (cell.IsOccupied)
+        //                {
+        //                    isOccupiedOrOutOfBounds = true;
+        //                    break;
+        //                }
+        //                else
+        //                {
+        //                    isOccupiedOrOutOfBounds = false;
+        //                }
+        //            }
+        //        }
+
+        //        if (!isOccupiedOrOutOfBounds)
+        //        {
+        //            break;
+        //        }
+        //    }
+
+        //    if (isOccupiedOrOutOfBounds)
+        //    {
+        //        _canBuild = false;
+        //        break;
+        //    }
+        //}
 
     }
 
