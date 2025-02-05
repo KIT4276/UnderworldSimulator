@@ -7,7 +7,6 @@ public class DecorPolygonSplitter : BasePolygonSplitter
 
     public void RemoveCells()
     {
-
         foreach (var cell in _cells)
         {
             cell.Remove();

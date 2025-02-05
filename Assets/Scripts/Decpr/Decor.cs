@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,6 +27,7 @@ public class Decor : MonoBehaviour, IInventoryObject
     private DecorationSystem _decorationSystem;
     private SpaceDeterminantor _spaceDeterminantor;
     private DecorHolder _decorHolder;
+    private IAssets _assets;
     private Camera _mainCamera;
     private bool _isPlacing;
     private bool _canBuild;
@@ -45,6 +47,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         this._decorationSystem = decorationSystem;
         this._spaceDeterminantor = spaceDeterminantor;
         this._decorHolder = decorHolder;
+        _assets = assets;
 
         _rotationState = RotationState.Front;
         _isPlacing = true;
@@ -73,6 +76,8 @@ public class Decor : MonoBehaviour, IInventoryObject
         _rotationState = (RotationState)(((int)_rotationState + 1) % 4);
         UpdateSprite(_rotationState);
         _polygonSplitter.transform.rotation *= Quaternion.Euler(0, 0, 90);
+        _polygonSplitter.RemoveCells();
+        _polygonSplitter.Initialize(_assets, _staticData);
     }
 
     private void UpdateSprite(RotationState state)
@@ -199,7 +204,7 @@ public class Decor : MonoBehaviour, IInventoryObject
                 foreach (var cell in gridHolder.Grid)
                 {
                     Vector3 worldPosition = transform.TransformPoint(new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0));
-                    float tolerance = _staticData.CellSize / 2;
+                    float tolerance = _staticData.CellSize * _primuscus;
 
                     if (Mathf.Abs(cell.CenterX - worldPosition.x) <= tolerance &&
                         Mathf.Abs(cell.CenterY - worldPosition.y) <= tolerance)
