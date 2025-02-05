@@ -5,34 +5,38 @@ using UnityEngine.InputSystem;
 
 public class Decor : MonoBehaviour, IInventoryObject
 {
-    [SerializeField] private SpriteRenderer _mainRenderer;
-    [SerializeField] private InputActionReference _clickAction;
-    [SerializeField] private InputActionReference _cancelAction;
-    [SerializeField] private InputActionReference rotationAction;
-    [SerializeField] private DecorPolygonSplitter _polygonSplitter;
-    [SerializeField] private float _primuscus = 0.3f;
+    [SerializeField] protected SpriteRenderer _mainRenderer;
+    [SerializeField] protected InputActionReference _clickAction;
+    [SerializeField] protected InputActionReference _cancelAction;
+    [SerializeField] protected InputActionReference rotationAction;
+    [SerializeField] protected DecorPolygonSplitter _frontPolygonSplitter;
+    [SerializeField] protected DecorPolygonSplitter _leftPolygonSplitter;
+    [SerializeField] protected Transform _impassableZone;
+    [SerializeField] protected float _primuscus = 0.3f;
     [Space]
-    [SerializeField] private Sprite _frontSprite;
-    [SerializeField] private Sprite _leftSprite;
-    [SerializeField] private Sprite _backSprite;
-    [SerializeField] private Sprite _rightSprite;
+    [SerializeField] protected Sprite _frontSprite;
+    [SerializeField] protected Sprite _leftSprite;
+    [SerializeField] protected Sprite _backSprite;
+    [SerializeField] protected Sprite _rightSprite;
     [Space]
-    [SerializeField] private Sprite _icon;
+    [SerializeField] protected Sprite _icon;
     [Space]
-    [SerializeField] private GameObject _warningSign;
+    [SerializeField] protected GameObject _warningSign;
 
 
-    private PersistantStaticData _staticData;
-    private DecorationSystem _decorationSystem;
-    private SpaceDeterminantor _spaceDeterminantor;
-    private DecorHolder _decorHolder;
-    private Camera _mainCamera;
-    private bool _isPlacing;
-    private bool _canBuild;
-    private BaceCell _closestCell;
-    private DecorData _decorData;
-    private RotationState _rotationState;
-    private bool _isOnDecorState;
+    protected PersistantStaticData _staticData;
+    protected DecorationSystem _decorationSystem;
+    protected SpaceDeterminantor _spaceDeterminantor;
+    protected DecorHolder _decorHolder;
+    protected IAssets _assets;
+    protected Camera _mainCamera;
+    protected bool _isPlacing;
+    protected bool _canBuild;
+    protected BaceCell _closestCell;
+    protected DecorData _decorData;
+    protected RotationState _rotationState;
+    protected bool _isOnDecorState;
+    protected DecorPolygonSplitter _currentPolygonSplitter;
 
     public event Action PlacedAction;
     public event Action<BaceCell> OnOccupyCell;
@@ -45,17 +49,49 @@ public class Decor : MonoBehaviour, IInventoryObject
         this._decorationSystem = decorationSystem;
         this._spaceDeterminantor = spaceDeterminantor;
         this._decorHolder = decorHolder;
+        _assets = assets;
 
         _rotationState = RotationState.Front;
+        UpdatePolygonSplitter();
         _isPlacing = true;
         _decorData = new DecorData(this);
+
 
         _clickAction.action.performed += OnClick;
         _cancelAction.action.performed += OnCancel;
         rotationAction.action.performed += OnRotate;
 
         _warningSign.SetActive(false);
-        _polygonSplitter.Initialize(assets, staticData);
+        UpdateSprite(_rotationState);
+        //_currentPolygonSplitter.Initialize(assets, staticData);
+        if (_leftPolygonSplitter != null)
+        {
+            _leftPolygonSplitter.Initialize(assets, staticData);
+        }
+        _frontPolygonSplitter.Initialize(assets, staticData);
+    }
+
+    protected void UpdatePolygonSplitter()
+    {
+        switch (_rotationState)
+        {
+            case RotationState.Front:
+                _currentPolygonSplitter = _frontPolygonSplitter;
+                break;
+            case RotationState.Left:
+                if (_leftPolygonSplitter == null)
+                    _currentPolygonSplitter = _frontPolygonSplitter;
+                else _currentPolygonSplitter = _leftPolygonSplitter;
+                break;
+            case RotationState.Back:
+                _currentPolygonSplitter = _frontPolygonSplitter;
+                break;
+            case RotationState.Right:
+                if (_leftPolygonSplitter == null)
+                    _currentPolygonSplitter = _frontPolygonSplitter;
+                else _currentPolygonSplitter = _leftPolygonSplitter;
+                break;
+        }
     }
 
     public void SetIsOnDecorState(bool isOnDecorState) =>
@@ -64,27 +100,32 @@ public class Decor : MonoBehaviour, IInventoryObject
     public Sprite GetIcon()
         => _icon;
 
-    private void OnRotate(InputAction.CallbackContext context)
+    protected virtual void OnRotate(InputAction.CallbackContext context)
     {
         if (!_isPlacing || !_isOnDecorState) return;
-
+        //..
         _rotationState = (RotationState)(((int)_rotationState + 1) % 4);
         UpdateSprite(_rotationState);
-        _polygonSplitter.transform.rotation *= Quaternion.Euler(0, 0, 90);
+        _impassableZone.rotation *= Quaternion.Euler(0, 0, 90);
+        UpdatePolygonSplitter();
+        //_polygonSplitter.RemoveCells();
+        //_polygonSplitter.Initialize(_assets, _staticData);
     }
 
-    private void UpdateSprite(RotationState state)
+    protected void UpdateSprite(RotationState state)
     {
         switch (state)
         {
             case RotationState.Front:
-                _mainRenderer.sprite = CheckingSpriteExistence(_frontSprite, _backSprite);
+                _mainRenderer.sprite = _frontSprite;
+                _mainRenderer.flipX = false;
                 break;
             case RotationState.Left:
                 _mainRenderer.sprite = CheckingSpriteExistence(_leftSprite, _rightSprite);
                 break;
             case RotationState.Back:
-                _mainRenderer.sprite = CheckingSpriteExistence(_backSprite, _frontSprite);
+                _mainRenderer.sprite = _backSprite;
+                _mainRenderer.flipX = false;
                 break;
             case RotationState.Right:
                 _mainRenderer.sprite = CheckingSpriteExistence(_rightSprite, _leftSprite);
@@ -92,7 +133,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         }
     }
 
-    private Sprite CheckingSpriteExistence(Sprite requiredSprite, Sprite replacementSprite)
+    protected Sprite CheckingSpriteExistence(Sprite requiredSprite, Sprite replacementSprite)
     {
         if (requiredSprite == null)
         {
@@ -106,7 +147,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         }
     }
 
-    private void OnCancel(InputAction.CallbackContext context)
+    protected void OnCancel(InputAction.CallbackContext context)
     {
         if (_isPlacing)
         {
@@ -116,7 +157,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         }
     }
 
-    private IEnumerator HideTAblet()
+    protected IEnumerator HideTAblet()
     {
         yield return new WaitForSeconds(3);
         _warningSign.SetActive(false);
@@ -125,10 +166,14 @@ public class Decor : MonoBehaviour, IInventoryObject
     public void RemoveThisDecor()
     {
         _isPlacing = false;
-        _polygonSplitter.RemoveCells();
+        if (_leftPolygonSplitter != null)
+            _leftPolygonSplitter.RemoveCells();
+
+        _frontPolygonSplitter.RemoveCells();
+        _impassableZone.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
-    private void OnClick(InputAction.CallbackContext context)
+    protected void OnClick(InputAction.CallbackContext context)
     {
         if (!_isOnDecorState) return;
 
@@ -154,7 +199,14 @@ public class Decor : MonoBehaviour, IInventoryObject
                     _isPlacing = true;
                     ToggleColliders(false);
 
-                    foreach (DecorsCell cell in _polygonSplitter.PotentiallyOccupiedCells)
+                    if (_leftPolygonSplitter != null)
+                    {
+                        foreach (DecorsCell cell in _leftPolygonSplitter.PotentiallyOccupiedCells)
+                        {
+                            cell.ShowCell();
+                        }
+                    }
+                    foreach (DecorsCell cell in _frontPolygonSplitter.PotentiallyOccupiedCells)
                     {
                         cell.ShowCell();
                     }
@@ -164,7 +216,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         }
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
         if (!_isPlacing || !_isOnDecorState) return;
 
@@ -173,7 +225,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         UpdateColor();
     }
 
-    private void FollowMouseWithSnap()
+    protected void FollowMouseWithSnap()
     {
         CheckCamera();
         _closestCell = GetClosestGridCell(FindCursorPosition());
@@ -181,60 +233,91 @@ public class Decor : MonoBehaviour, IInventoryObject
             transform.position = new Vector3(_closestCell.CenterX, _closestCell.CenterY, 0f);
     }
 
-    private void CheckIfCanBuild()
+    protected void CheckIfCanBuild()
     {
         _canBuild = true;
 
-        if (_polygonSplitter != null)
+        if (_currentPolygonSplitter == null) return;
+
+        foreach (var potentialCell in _currentPolygonSplitter.PotentiallyOccupiedCells)
         {
-            foreach (var potentialCell in _polygonSplitter.PotentiallyOccupiedCells)
+            bool foundMatchingCell = false;
+
+            foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
             {
-                bool isOccupiedOrOutOfBounds = true;
-
-                foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
+                foreach (var cell in gridHolder.Grid)
                 {
-                    foreach (var cell in gridHolder.Grid)
+                    Vector3 worldPosition = transform.TransformPoint(new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0));
+                    float tolerance = _staticData.CellSize * _primuscus;
+
+                    if (Mathf.Abs(cell.CenterX - worldPosition.x) <= tolerance &&
+                        Mathf.Abs(cell.CenterY - worldPosition.y) <= tolerance)
                     {
-                        Vector3 worldPosition = transform.TransformPoint(new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0));
-
-                        float tolerance = _staticData.CellSize / 2;
-
-                        if (Mathf.Abs(cell.CenterX - worldPosition.x) <= tolerance &&
-                            Mathf.Abs(cell.CenterY - worldPosition.y) <= tolerance)
+                        foundMatchingCell = true;
+                        if (cell.IsOccupied)
                         {
-                            if (cell.IsOccupied)
-                            {
-                                isOccupiedOrOutOfBounds = true;
-                                break;
-                            }
-                            else
-                            {
-                                isOccupiedOrOutOfBounds = false;
-                            }
+                            _canBuild = false;
+                            return;
                         }
                     }
-
-                    if (!isOccupiedOrOutOfBounds)
-                    {
-                        break;
-                    }
-                }
-
-                if (isOccupiedOrOutOfBounds)
-                {
-                    _canBuild = false;
-                    break;
                 }
             }
+
+            if (!foundMatchingCell)
+            {
+                _canBuild = false;
+                return;
+            }
         }
+
+        //foreach (var potentialCell in _polygonSplitter.PotentiallyOccupiedCells)
+        //{
+        //    bool isOccupiedOrOutOfBounds = true;
+
+        //    foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
+        //    {
+        //        foreach (var cell in gridHolder.Grid)
+        //        {
+        //            Vector3 worldPosition = transform.TransformPoint(new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0));
+
+        //            float tolerance = _staticData.CellSize / 2;
+
+        //            if (Mathf.Abs(cell.CenterX - worldPosition.x) <= tolerance &&
+        //                Mathf.Abs(cell.CenterY - worldPosition.y) <= tolerance)
+        //            {
+        //                if (cell.IsOccupied)
+        //                {
+        //                    isOccupiedOrOutOfBounds = true;
+        //                    break;
+        //                }
+        //                else
+        //                {
+        //                    isOccupiedOrOutOfBounds = false;
+        //                }
+        //            }
+        //        }
+
+        //        if (!isOccupiedOrOutOfBounds)
+        //        {
+        //            break;
+        //        }
+        //    }
+
+        //    if (isOccupiedOrOutOfBounds)
+        //    {
+        //        _canBuild = false;
+        //        break;
+        //    }
+        //}
+
     }
 
-    private void UpdateColor()
+    protected void UpdateColor()
     {
         _mainRenderer.material.color = _canBuild ? _staticData.AllowedPositionColor : _staticData.BannedPositionColor;
     }
 
-    private BaceCell GetClosestGridCell(Vector3 position)
+    protected BaceCell GetClosestGridCell(Vector3 position)
     {
         float minDistance = float.MaxValue;
         BaceCell bestCell = null;
@@ -254,13 +337,13 @@ public class Decor : MonoBehaviour, IInventoryObject
         return bestCell;
     }
 
-    private Vector3 FindCursorPosition()
+    protected Vector3 FindCursorPosition()
     {
         Vector2 screenPos = Mouse.current.position.ReadValue();
         return _mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, -_mainCamera.transform.position.z));
     }
 
-    private void PlaceObject()
+    protected void PlaceObject()
     {
         if (!_decorationSystem.CanPlace)
         {
@@ -274,32 +357,44 @@ public class Decor : MonoBehaviour, IInventoryObject
         _isPlacing = false;
         _mainRenderer.material.color = _staticData.NormalColor;
         ToggleColliders(true);
+        UpdatePolygonSplitter();
         _decorHolder.InstallDecor(this);
 
         MarkOccupiedCells();
-
-        foreach (DecorsCell cell in _polygonSplitter.PotentiallyOccupiedCells)
+        if (_leftPolygonSplitter != null)
+        {
+            foreach (DecorsCell cell in _leftPolygonSplitter.PotentiallyOccupiedCells)
+            {
+                cell.HideCell();
+            }
+        }
+        foreach (DecorsCell cell in _frontPolygonSplitter.PotentiallyOccupiedCells)
         {
             cell.HideCell();
         }
 
+        //foreach (DecorsCell cell in _currentPolygonSplitter.PotentiallyOccupiedCells)
+        //{
+        //    cell.HideCell();
+        //}
+
         PlacedAction?.Invoke();
     }
 
-    private void MarkOccupiedCells()
+    protected void MarkOccupiedCells()
     {
-        if (_polygonSplitter == null || _spaceDeterminantor == null) return;
-
+        //if (_currentPolygonSplitter == null || _spaceDeterminantor == null) return;
+        // Debug.Log(_currentPolygonSplitter.name);
         float tolerance = _staticData.CellSize * _primuscus;
 
-        Quaternion rotation = _polygonSplitter.transform.rotation;
-        Vector3 positionOffset = _polygonSplitter.transform.position;
+        Quaternion rotation = _currentPolygonSplitter.transform.rotation;
+        Vector3 positionOffset = _currentPolygonSplitter.transform.position;
 
         foreach (var gridHolder in _spaceDeterminantor.GreedHolders)
         {
             foreach (var cell in gridHolder.Grid)
             {
-                foreach (var potentialCell in _polygonSplitter.PotentiallyOccupiedCells)
+                foreach (var potentialCell in _currentPolygonSplitter.PotentiallyOccupiedCells)
                 {
                     Vector3 localPosition = new Vector3(potentialCell.CenterX, potentialCell.CenterY, 0);
                     Vector3 rotatedPosition = rotation * localPosition;
@@ -316,19 +411,19 @@ public class Decor : MonoBehaviour, IInventoryObject
         }
     }
 
-    private void ToggleColliders(bool state)
+    protected void ToggleColliders(bool state)
     {
         //foreach (var collider in _colliders)
         //    collider.enabled = state;
     }
 
-    private void CheckCamera()
+    protected void CheckCamera()
     {
         if (_mainCamera == null)
             _mainCamera = Camera.main;
     }
 
-    private void OnDisable()
+    protected void OnDisable()
     {
         _isPlacing = false;
         _clickAction.action.performed -= OnClick;
