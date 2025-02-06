@@ -21,7 +21,6 @@ public class DecorDrag : MonoBehaviour
 
     public void OnRemoved()
     {
-        _decor.Removed -= OnRemoved;
         _canMove = false;
     }
 

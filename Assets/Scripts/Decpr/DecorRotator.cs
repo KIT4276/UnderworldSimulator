@@ -29,7 +29,6 @@ public class DecorRotator : MonoBehaviour
     {
         _decor.SetRotationState(RotationState.Front);
         _decor.Rotated -= OnRotate;
-        _decor.Removed -= OnRemoved;
     }
 
     private void OnRotate(RotationState predioslyRotationState)

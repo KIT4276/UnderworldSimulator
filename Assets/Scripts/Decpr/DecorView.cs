@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Decor))]
@@ -16,14 +17,17 @@ public class DecorView : MonoBehaviour
     private Decor _decor;
     private PersistantStaticData _staticData;
     private Color _originalColor;
+    private bool _canView;
 
     public void Initialize(Decor decor, PersistantStaticData staticData,  RotationState currenrRotationState)
     {
+        _canView = true;
         _decor = decor;
         _staticData = staticData;
         _originalColor = _mainRenderer.color;
 
         UpdateSprite(currenrRotationState);
+        UpdateView();
 
         _decor.DecorPlacedAction += OnPlaced;
         _decor.EndRotation += OnRotated;
@@ -32,16 +36,13 @@ public class DecorView : MonoBehaviour
     public void OnRemoved()
     {
         _mainRenderer.color = _originalColor;
-        UpdateView();
 
-        _decor.DecorPlacedAction -= OnPlaced;
-        _decor.EndRotation -= OnRotated;
-        _decor.Removed -= OnRemoved;
+        _canView = false;
     }
 
     private void LateUpdate()
     {
-        if (_decor.IsDragging)
+        if (_decor.IsDragging && _canView)
             UpdateView();
     }
 
@@ -93,11 +94,5 @@ public class DecorView : MonoBehaviour
             _mainRenderer.flipX = false;
             return requiredSprite;
         }
-    }
-
-    protected void OnDisable()
-    {
-        _decor.DecorPlacedAction -= OnPlaced;
-        _decor.EndRotation -= OnRotated;
     }
 }

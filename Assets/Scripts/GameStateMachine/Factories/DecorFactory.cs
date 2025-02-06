@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -9,7 +8,6 @@ public class DecorFactory : MonoBehaviour
     private DecorationSystem _decorationSystem;
     private Decor _removableDecor;
 
-    //public event Action<Decor> OnSpawned;
 
     [Inject]
     private void Construct(PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor, IAssets assets)
@@ -53,6 +51,8 @@ public class DecorFactory : MonoBehaviour
         _removableDecor.gameObject.SetActive(false);
         _removableDecor.RemoveThisDecor();
         _removableDecor.transform.position = new Vector3(0, 0, 0);
+        _removableDecor.Removed -= OnRemoveDecor;
 
+        _removableDecor = null;
     }
 }

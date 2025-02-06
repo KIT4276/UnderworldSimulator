@@ -15,7 +15,6 @@ public class DecorPlacer : MonoBehaviour
     public void OnRemoved()
     {
         _decor.Clicked -= OnClicked;
-        _decor.Removed -= OnRemoved;
     }
 
     private void OnClicked()
