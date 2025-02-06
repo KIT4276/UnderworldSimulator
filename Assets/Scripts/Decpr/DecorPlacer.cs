@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Decor))]
 public class DecorPlacer : MonoBehaviour
 {
-
     private Decor _decor;
 
     public void Initialize(Decor decor)
@@ -13,12 +12,20 @@ public class DecorPlacer : MonoBehaviour
         _decor.Clicked += OnClicked;
     }
 
+    public void OnRemoved()
+    {
+        _decor.Clicked -= OnClicked;
+        _decor.Removed -= OnRemoved;
+    }
+
     private void OnClicked()
     {
         if (_decor.IsDragging)
         {
             if (_decor.IsInside)
+            {
                 _decor.PlaceObject();
+            }
         }
         else if (IsMouseOnObject())
         {

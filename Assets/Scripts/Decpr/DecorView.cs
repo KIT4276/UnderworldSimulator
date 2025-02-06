@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Decor))]
@@ -26,6 +27,16 @@ public class DecorView : MonoBehaviour
 
         _decor.DecorPlacedAction += OnPlaced;
         _decor.EndRotation += OnRotated;
+    }
+
+    public void OnRemoved()
+    {
+        _mainRenderer.color = _originalColor;
+        UpdateView();
+
+        _decor.DecorPlacedAction -= OnPlaced;
+        _decor.EndRotation -= OnRotated;
+        _decor.Removed -= OnRemoved;
     }
 
     private void LateUpdate()
@@ -82,5 +93,11 @@ public class DecorView : MonoBehaviour
             _mainRenderer.flipX = false;
             return requiredSprite;
         }
+    }
+
+    protected void OnDisable()
+    {
+        _decor.DecorPlacedAction -= OnPlaced;
+        _decor.EndRotation -= OnRotated;
     }
 }

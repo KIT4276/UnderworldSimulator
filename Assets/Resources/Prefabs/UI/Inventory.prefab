@@ -8214,7 +8214,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &657215557734702708
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26544,6 +26544,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inventorySlot:
   - {fileID: 7405451597667199727}
+  - {fileID: 5683183806644093938}
+  - {fileID: 1091907105972726802}
   _warningSign: {fileID: 2955848605983700003}
 --- !u!114 &4385664758730827898
 MonoBehaviour:
@@ -37500,14 +37502,13 @@ GameObject:
   - component: {fileID: 5683183806644093938}
   - component: {fileID: 240604845615644205}
   - component: {fileID: 8651048479106704071}
-  - component: {fileID: 2808506475432515287}
   m_Layer: 5
-  m_Name: newMiniTable_ContentButton (Legacy) (2)
+  m_Name: ContentButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2689506311550347708
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37696,22 +37697,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slot: {fileID: 5683183806644093938}
---- !u!114 &2808506475432515287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8774166583573269276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 811c384358359554e8e82739c40506b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _slot: {fileID: 5683183806644093938}
-  _slotCounter: {fileID: 240604845615644205}
-  _count: 4
-  _decorPrefab: {fileID: 5487944608274610938, guid: 7c38a7e2410decd458e40172a27a5f1e, type: 3}
 --- !u!1 &8777383711244639114
 GameObject:
   m_ObjectHideFlags: 0

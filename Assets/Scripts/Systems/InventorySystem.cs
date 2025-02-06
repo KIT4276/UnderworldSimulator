@@ -43,9 +43,9 @@ public class InventorySystem : MonoBehaviour
         {
             if (!_inventorySlot[i].IsOccupied)
             {
-                //_inventorySlot[i].SetDecor(_decorationSystem.ActiveDecor);
-                //_decorationSystem.ReturtDecorToInventory();
-                //isPlaced = true;
+                _inventorySlot[i].SetDecor(decor);
+                _decorationSystem.ReturtDecorToInventory(decor);
+                isPlaced = true;
                 break;
             }
         }

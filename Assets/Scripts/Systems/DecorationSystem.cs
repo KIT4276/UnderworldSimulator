@@ -85,24 +85,19 @@ public class DecorationSystem
     //}
 
 
-    //public void TryToRemoveDecor(Decor decor)
-    //{
-    //    if (_allDecorInTheScene.Contains(_activeDecor))
-    //        _allDecorInTheScene.Remove(_activeDecor);
+    public void TryToRemoveDecor(Decor decor)
+    {
+        TryToRemoveDecorAction?.Invoke(decor);
+            //_decorHolder.DeActiveDecor();
+    }
 
-    //    if (decor == _activeDecor)
-    //    {
-    //        TryToRemoveDecorAction?.Invoke(_activeDecor);
-    //    }
-    //}
 
-    //public void ReturtDecorToInventory()
-    //{
-    //    _factory.DespawnDecor(_activeDecor);
-
-    //    RemoveDecorAction?.Invoke(_activeDecor);
-    //    _activeDecor = null;
-    //}
+    public void ReturtDecorToInventory(Decor decor)
+    {
+        _factory.DespawnDecor(decor);
+        _decorHolder.DeActiveDecor();
+        decor.RemoveThisDecor();
+    }
 
     //private void PlaceActiveDecor()
     //{

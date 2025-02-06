@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,16 +9,26 @@ public class DecorDrag : MonoBehaviour
     private PersistantStaticData _staticData;
     private SpaceDeterminantor _spaceDeterminantor;
 
+    private bool _canMove;
+
     public void Initialize(Decor decor, PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor)
     {
+        _canMove = true;
         _decor = decor;
         _staticData = staticData;
         _spaceDeterminantor = spaceDeterminantor;
     }
 
+    public void OnRemoved()
+    {
+        _decor.Removed -= OnRemoved;
+        _canMove = false;
+    }
+
     private void FixedUpdate()
     {
-        if (_decor.IsDragging)
+       // Debug.Log(_decor.IsDragging);
+        if (_decor.IsDragging && _canMove)
             DragObjeect();
     }
 
@@ -64,4 +75,5 @@ public class DecorDrag : MonoBehaviour
             }
         }
     }
+
 }

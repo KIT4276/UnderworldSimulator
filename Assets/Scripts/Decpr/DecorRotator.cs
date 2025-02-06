@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Decor))]
 public class DecorRotator : MonoBehaviour
@@ -22,6 +23,13 @@ public class DecorRotator : MonoBehaviour
         UpdateColliders(currentRotationState);
         UpdateImpassableZone(currentRotationState);
         _decor.Rotated += OnRotate;
+    }
+
+    public void OnRemoved()
+    {
+        _decor.SetRotationState(RotationState.Front);
+        _decor.Rotated -= OnRotate;
+        _decor.Removed -= OnRemoved;
     }
 
     private void OnRotate(RotationState predioslyRotationState)

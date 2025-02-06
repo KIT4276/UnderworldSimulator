@@ -44,6 +44,14 @@ public class DecorHolder : ISavedProgress
         ActiveDecor = null;
     }
 
+    public void DeActiveDecor()
+    {
+        if(InstalledDecor.Contains(ActiveDecor))
+            InstalledDecor.Remove(ActiveDecor);
+
+        ActiveDecor = null;
+    }
+
     public void UpdateProgress(PlayerProgress progress)
     {
 
