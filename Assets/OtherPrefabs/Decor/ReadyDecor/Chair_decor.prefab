@@ -253,6 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2564036663471157149}
   - component: {fileID: 5398454807080672356}
+  - component: {fileID: 6420567327935799728}
   - component: {fileID: 3356605821671380699}
   m_Layer: 8
   m_Name: Chair_decor
@@ -296,19 +297,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2e049ee758468469e6ff71428d24e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _decorView: {fileID: 6420567327935799728}
   _frontDecorCollider: {fileID: 4926451443839083195}
   _sideDecorCollider: {fileID: 0}
   _clickAction: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _cancelAction: {fileID: -9184969692752736088, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _rotationAction: {fileID: -2486391391914466195, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _impassableZone: {fileID: 1449393129846903725}
+  _icon: {fileID: -5666326540327117157, guid: d8e3355a25c861549acbcdaaf3bc0a31, type: 3}
+  _warningSign: {fileID: 4620542656382749775}
+--- !u!114 &6420567327935799728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3610120533346616655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36ad460e1f079364ca6a35ceade1b61f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _decor: {fileID: 5398454807080672356}
   _mainRenderer: {fileID: 2439694054543496935}
   _frontSprite: {fileID: -5666326540327117157, guid: d8e3355a25c861549acbcdaaf3bc0a31, type: 3}
   _leftSprite: {fileID: -4361419631782997780, guid: 761c43385204e5540bd0053039fec241, type: 3}
   _backSprite: {fileID: -5080265978692344986, guid: 89a6e11e94f9b154594d624e28f8dbfc, type: 3}
   _rightSprite: {fileID: 0}
-  _icon: {fileID: -5666326540327117157, guid: d8e3355a25c861549acbcdaaf3bc0a31, type: 3}
-  _warningSign: {fileID: 4620542656382749775}
 --- !u!61 &3356605821671380699
 BoxCollider2D:
   m_ObjectHideFlags: 0
