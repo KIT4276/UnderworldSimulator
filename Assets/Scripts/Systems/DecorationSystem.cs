@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public class DecorationSystem
 {
@@ -8,7 +7,7 @@ public class DecorationSystem
     private object _mainCamera;
     //public bool CanPlace { get; private set; }
 
-    public event Action<Decor> RemoveDecorAction;
+    //public event Action<Decor> RemoveDecorAction;
     public event Action<Decor> TryToRemoveDecorAction;
 
     public DecorationSystem(DecorFactory factory, DecorHolder decorHolder)

@@ -2,85 +2,65 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(DecorView))]
+[RequireComponent(typeof(DecorView),(typeof(DecorRotator)))]
+[RequireComponent (typeof(DecorDrag),(typeof(DecorPlacer)))]
 public class Decor : MonoBehaviour, IInventoryObject
 {
     [SerializeField] private DecorView _decorView;
-
-    [SerializeField] private Collider2D _frontDecorCollider;
-    [SerializeField] private Collider2D _sideDecorCollider;
+    [SerializeField] private DecorDrag _decorDrag;
+    [SerializeField] private DecorPlacer _decorPlacer;
+    [SerializeField] private DecorRotator _decorRotator;
     [Space]
     [SerializeField] protected InputActionReference _clickAction;
     [SerializeField] protected InputActionReference _cancelAction;
     [SerializeField] protected InputActionReference _rotationAction;
     [Space]
-    [SerializeField] protected Transform _impassableZone;
-    [Space]
     [SerializeField] protected Sprite _icon;
-
-    //[SerializeField] private SpriteRenderer _mainRenderer;
-    //[Space]
-    //[SerializeField] protected Sprite _frontSprite;
-    //[SerializeField] protected Sprite _leftSprite;
-    //[SerializeField] protected Sprite _backSprite;
-    //[SerializeField] protected Sprite _rightSprite;
-    //[Space]
-    //[SerializeField] protected Sprite _icon;
     [Space]
     [SerializeField] protected GameObject _warningSign;
 
-    //protected PersistantStaticData _staticData;
-    protected DecorationSystem _decorationSystem;
-    protected SpaceDeterminantor _spaceDeterminantor;
-    protected IAssets _assets;
     protected DecorData _decorData;
-    protected bool _isOnDecorState;
 
-    [Header("Новые параметры")]
-
-    private Collider2D _currentDecorCollider;
-    //private Color _originalColor;
-    private Camera _mainCamera;
+    protected DecorationSystem _decorationSystem;
     private bool _canPlace = true;
+    protected bool _isOnDecorState;
+    private RotationState _currentRotationState;
 
-    public RotationState RotationState { get; private set; }
     public bool IsInside { get; private set; }
     public bool IsDragging { get; private set; }
+    public Collider2D CurrentDecorCollider { get; private set; }
+    public Camera MainCamera { get; private set; }
+    public Collider2D CurrentClickableCollider { get; private set; }
 
     public event Action DecorPlacedAction;
-    public event Action DecorRotated;
+    public event Action Clicked;
+    public event Action<RotationState> Rotated;
+    public event Action<RotationState> EndRotation;
 
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
-        SpaceDeterminantor spaceDeterminantor, IAssets assets)
+        SpaceDeterminantor spaceDeterminantor)
     {
-        //_decorData = new DecorData(this);
-
         IsInside = true;
         IsDragging = false;
 
         _decorationSystem = decorationSystem;
-        _spaceDeterminantor = spaceDeterminantor;
-        _assets = assets;
 
-        RotationState = RotationState.Front;
+        _currentRotationState = RotationState.Front;
         IsDragging = true;
-        UpdateColliders();
-        //_originalColor = _mainRenderer.color;
-        _currentDecorCollider = _frontDecorCollider;
+
+        _warningSign.SetActive(false);
+
+        _decorView.Initialize(this, staticData, _currentRotationState);
+        _decorDrag.Initialize( this, staticData, spaceDeterminantor);
+        _decorPlacer.Initialize(this);
+        _decorRotator.Initialize(this, _currentRotationState);
+        CheckCamera();
+
         _clickAction.action.performed += OnClick;
         _rotationAction.action.performed += OnRotate;
         _cancelAction.action.performed += OnCancel;
-
-        _warningSign.SetActive(false);
-        //UpdateSprite(_rotationState);
-
-        _decorView.Initialize(staticData);
-        CheckCamera();
     }
 
-
-    public Sprite GetIcon()
-        => _icon;
 
     private void OnCancel(InputAction.CallbackContext context)
     {
@@ -89,82 +69,32 @@ public class Decor : MonoBehaviour, IInventoryObject
 
     private void FixedUpdate()
     {
-        if (!CheckCamera())
-        {
-            Debug.Log("Waiting for the camera...");
-            return;
-        }
-
-        if (IsDragging)
-        {
-            DragObjeect();
-            //UpdateView();
-        }
+        if (!CheckCamera()) return;
     }
 
-    //private void UpdateView()
-    //{
-    //    if (_isInside)
-    //        _mainRenderer.color = _staticData.AllowedPositionColor;
-    //    else
-    //        _mainRenderer.color = _staticData.BannedPositionColor;
-    //}
+    public Sprite GetIcon()
+        => _icon;
 
+    public void SetIsOnDecorState(bool isOnDecorState) => 
+        _isOnDecorState = isOnDecorState;
 
-    private void DragObjeect()
+    public void SetIsInside(bool isInside)
+        => IsInside = isInside;
+
+    public void SetCurrentClickableCollider(Collider2D collider2D) =>
+        CurrentClickableCollider = collider2D;
+
+    public void TakeDecorIfCan()
     {
-        Vector3 mousePosition = Mouse.current.position.ReadValue();
-        Ray ray = _mainCamera.ScreenPointToRay(mousePosition);
-        Plane xyPlane = new Plane(Vector3.forward, Vector3.zero);
-
-        if (xyPlane.Raycast(ray, out float distance))
-        {
-            Vector3 worldPosition = ray.GetPoint(distance);
-            transform.position = new Vector3(worldPosition.x, worldPosition.y, transform.position.z);
-        }
-
-        CheckPlacement();
-    }
-
-    private void CheckPlacement()
-    {
-        IsInside = false;
-
-        foreach (var floor in _spaceDeterminantor.FloorMarkers)
-        {
-            bool allPointsInside = true;
-
-            foreach (Vector2 point in _currentDecorCollider.bounds.GetCorners())
-            {
-                if (!floor.Collider.OverlapPoint(point))
-                {
-                    allPointsInside = false;
-                    break;
-                }
-            }
-
-            if (allPointsInside)
-            {
-                IsInside = true;
-                break;
-            }
-        }
+        if (_decorationSystem.ActivateDecorIfCan(this))
+            IsDragging = true;
     }
 
     private void OnClick(InputAction.CallbackContext context)
     {
         if (!_canPlace || !_isOnDecorState) return;
 
-        if (IsDragging)
-        {
-            if (IsInside)
-                PlaceObject();
-        }
-        else if (IsMouseOnObject())
-        {
-            if (_decorationSystem.ActivateDecorIfCan(this))
-                IsDragging = true;
-        }
+        Clicked?.Invoke();
     }
 
     public void BanActions() =>
@@ -173,70 +103,51 @@ public class Decor : MonoBehaviour, IInventoryObject
     public void AllowActions() =>
          _canPlace = true;
 
-    private bool IsMouseOnObject()
-    {
-        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
-        Ray ray = _mainCamera.ScreenPointToRay(mouseScreenPos);
-        RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity, LayerMask.GetMask("Decor"));
-
-        foreach (var hit in hits)
-        {
-            if (hit.collider == _currentDecorCollider || hit.collider.transform.IsChildOf(transform))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void PlaceObject()
+    public void PlaceObject()
     {
         IsDragging = false;
-        //_mainRenderer.color = _originalColor;
         _decorationSystem.InstanriateDecor(this);
         DecorPlacedAction?.Invoke();
     }
 
-    public void SetIsOnDecorState(bool isOnDecorState)
-    {
-        _isOnDecorState = isOnDecorState;
-    }
-
-    
-
-    protected virtual void OnRotate(InputAction.CallbackContext context)
+    private void OnRotate(InputAction.CallbackContext context)
     {
         if (!IsDragging || !_isOnDecorState) return;
 
-        RotationState = (RotationState)(((int)RotationState + 1) % 4);
-        DecorRotated?.Invoke();
-        //UpdateSprite(RotationState);
-        _impassableZone.rotation *= Quaternion.Euler(0, 0, 90);
-        UpdateColliders();
+        Rotated?.Invoke(_currentRotationState);
     }
 
-    private void UpdateColliders()
+    public void SetRotationState(RotationState rotationState)
     {
-        switch (RotationState)
-        {
-            case RotationState.Front:
-                _currentDecorCollider = _frontDecorCollider;
-                break;
-            case RotationState.Left:
-                if (_sideDecorCollider == null)
-                    _currentDecorCollider = _frontDecorCollider;
-                else _currentDecorCollider = _sideDecorCollider;
-                break;
-            case RotationState.Back:
-                _currentDecorCollider = _frontDecorCollider;
-                break;
-            case RotationState.Right:
-                if (_sideDecorCollider == null)
-                    _currentDecorCollider = _frontDecorCollider;
-                else _currentDecorCollider = _sideDecorCollider;
-                break;
-        }
+        _currentRotationState = rotationState;
+        EndRotation?.Invoke(_currentRotationState);
     }
+
+    public void SetCurrentDecorCollider(Collider2D collider)
+        => CurrentDecorCollider = collider;
+
+    //private void UpdateColliders()
+    //{
+    //    switch (CurrentRotationState)
+    //    {
+    //        case RotationState.Front:
+    //            CurrentDecorCollider = _frontDecorCollider;
+    //            break;
+    //        case RotationState.Left:
+    //            if (_sideDecorCollider == null)
+    //                CurrentDecorCollider = _frontDecorCollider;
+    //            else CurrentDecorCollider = _sideDecorCollider;
+    //            break;
+    //        case RotationState.Back:
+    //            CurrentDecorCollider = _frontDecorCollider;
+    //            break;
+    //        case RotationState.Right:
+    //            if (_sideDecorCollider == null)
+    //                CurrentDecorCollider = _frontDecorCollider;
+    //            else CurrentDecorCollider = _sideDecorCollider;
+    //            break;
+    //    }
+    //}
 
     //protected void UpdateSprite(RotationState state)
     //{
@@ -274,7 +185,7 @@ public class Decor : MonoBehaviour, IInventoryObject
     //}
     private bool CheckCamera()
     {
-        if (_mainCamera != null)
+        if (MainCamera != null)
         {
             return true;
         }
@@ -286,7 +197,7 @@ public class Decor : MonoBehaviour, IInventoryObject
             }
             else
             {
-                _mainCamera = Camera.main;
+                MainCamera = Camera.main;
                 return true;
             }
         }
@@ -315,7 +226,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         //    _leftPolygonSplitter.RemoveCells();
 
         //_frontPolygonSplitter.RemoveCells();
-        _impassableZone.transform.rotation = Quaternion.Euler(0, 0, 0);
+        //_impassableZone.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     //protected void OnClick(InputAction.CallbackContext context)
@@ -415,4 +326,5 @@ public class Decor : MonoBehaviour, IInventoryObject
         //_cancelAction.action.performed -= OnCancel;
         _rotationAction.action.performed -= OnRotate;
     }
+
 }

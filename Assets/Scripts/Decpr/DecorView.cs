@@ -1,30 +1,31 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Decor))]
 public class DecorView : MonoBehaviour
 {
-    [SerializeField] private Decor _decor;
     [SerializeField] private SpriteRenderer _mainRenderer;
     [Space]
     [SerializeField] protected Sprite _frontSprite;
     [SerializeField] protected Sprite _leftSprite;
     [SerializeField] protected Sprite _backSprite;
-    [SerializeField] protected Sprite _rightSprite;
+    [Tooltip("optional field"),
+    SerializeField] protected Sprite _rightSprite;
     
 
-    private Color _originalColor;
+    private Decor _decor;
     private PersistantStaticData _staticData;
+    private Color _originalColor;
 
-    public void Initialize(PersistantStaticData staticData)
+    public void Initialize(Decor decor, PersistantStaticData staticData,  RotationState currenrRotationState)
     {
-        _originalColor = _mainRenderer.color;
+        _decor = decor;
         _staticData = staticData;
+        _originalColor = _mainRenderer.color;
 
-        UpdateSprite(_decor.RotationState);
+        UpdateSprite(currenrRotationState);
 
         _decor.DecorPlacedAction += OnPlaced;
-        _decor.DecorRotated += OnRotated;
+        _decor.EndRotation += OnRotated;
     }
 
     private void LateUpdate()
@@ -42,15 +43,11 @@ public class DecorView : MonoBehaviour
             _mainRenderer.color = _staticData.BannedPositionColor;
     }
 
-    private void OnRotated()
-    {
-        UpdateSprite(_decor.RotationState);
-    }
+    private void OnRotated(RotationState rotationState) => 
+        UpdateSprite(rotationState);
 
-    private void OnPlaced()
-    {
+    private void OnPlaced() => 
         _mainRenderer.color = _originalColor;
-    }
 
     private void UpdateSprite(RotationState state)
     {
