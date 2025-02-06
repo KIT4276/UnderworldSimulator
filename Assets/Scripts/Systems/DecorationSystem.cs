@@ -1,90 +1,119 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DecorationSystem
 {
+    private DecorHolder _decorHolder;
     private DecorFactory _factory;
-    private Decor _activeDecor;
     private object _mainCamera;
-    private List<Decor> _allDecorInTheScene = new();
-
-    public Decor ActiveDecor { get => _activeDecor; }
-    public bool CanPlace { get; private set; }
+    //public bool CanPlace { get; private set; }
 
     public event Action<Decor> RemoveDecorAction;
     public event Action<Decor> TryToRemoveDecorAction;
 
-    public DecorationSystem(DecorFactory factory)
+    public DecorationSystem(DecorFactory factory, DecorHolder decorHolder)
     {
+        _decorHolder = decorHolder;
         _factory = factory;
         _factory.Initialize(this);
     }
 
-    public void BanActions() => 
-        CanPlace = false;
-
-    public void AllowActions() =>
-        CanPlace = true;
-
     public void SetIsOnDecorState(bool isOnDecorState)
     {
-        foreach (var decor in _allDecorInTheScene)
+        foreach (var decor in _decorHolder.GetDecorsInScene())
         {
-            if (decor != null)
-                decor.SetIsOnDecorState(isOnDecorState);
+            decor.SetIsOnDecorState(isOnDecorState);
         }
     }
 
-    public void InstantiateDecor(Decor decorPrefab)
+    public bool ActivateDecorIfCan(Decor decor)
     {
-        if (_activeDecor != null)
-            _factory.DespawnDecor(_activeDecor);
-        _activeDecor = _factory.SpawnDecor(decorPrefab);
-        ActivateDecor(_activeDecor);
+        if (_decorHolder.ActiveDecor != null)
+            return false;
+        else
+        {
+            _decorHolder.SetActiveDecor(decor);
+            return true;
+        }
     }
 
-    private void ActivateDecor(Decor decor)
+    public void SpawnDecorIfCan(Decor decorPrefab)
     {
+        if (_decorHolder.ActiveDecor != null) return;
+
+        var decor = _factory.SpawnDecor(decorPrefab);
         decor.SetIsOnDecorState(true);
-        decor.PlacedAction += PlaceActiveDecor;
+        _decorHolder.SetActiveDecor(decor);
     }
 
-    public void ReActivateDecor(Decor decor)
+    public void DeSpawnDecorIfCan(Decor decorPrefab)
     {
-        _activeDecor = decor;
-        ActivateDecor(decor);
+        //todo
     }
 
-
-    public void TryToRemoveDecor(Decor decor)
+    public void InstanriateDecor(Decor decor)
     {
-        if (_allDecorInTheScene.Contains(_activeDecor))
-            _allDecorInTheScene.Remove(_activeDecor);
+        _decorHolder.AddInstalledDecor(decor);
+    }
 
-        if (decor == _activeDecor)
+    public void BanActions()
+    {
+        foreach (var decor in _decorHolder.GetDecorsInScene())
         {
-            TryToRemoveDecorAction?.Invoke(_activeDecor);
+            decor?.BanActions();
         }
     }
 
-    public void ReturtDecorToInventory()
-    {
-        _factory.DespawnDecor(_activeDecor);
-
-        RemoveDecorAction?.Invoke(_activeDecor);
-        _activeDecor = null;
+    public void AllowActions() 
+        {
+        foreach (var decor in _decorHolder.GetDecorsInScene())
+        {
+            decor?.AllowActions();
+        }
     }
 
-    private void PlaceActiveDecor()
-    {
-        _allDecorInTheScene.Add(_activeDecor);
-        _activeDecor = null;
-    }
 
-    private void CheckCamera()
-    {
-        if (_mainCamera == null)
-            _mainCamera = Camera.main;
-    }
+    //private void ActivateDecor(Decor decor)
+    //{
+    //    decor.SetIsOnDecorState(true);
+    //    decor.PlacedAction += PlaceActiveDecor;
+    //}
+
+    //public void ReActivateDecor(Decor decor)
+    //{
+    //    _activeDecor = decor;
+    //    ActivateDecor(decor);
+    //}
+
+
+    //public void TryToRemoveDecor(Decor decor)
+    //{
+    //    if (_allDecorInTheScene.Contains(_activeDecor))
+    //        _allDecorInTheScene.Remove(_activeDecor);
+
+    //    if (decor == _activeDecor)
+    //    {
+    //        TryToRemoveDecorAction?.Invoke(_activeDecor);
+    //    }
+    //}
+
+    //public void ReturtDecorToInventory()
+    //{
+    //    _factory.DespawnDecor(_activeDecor);
+
+    //    RemoveDecorAction?.Invoke(_activeDecor);
+    //    _activeDecor = null;
+    //}
+
+    //private void PlaceActiveDecor()
+    //{
+    //    _allDecorInTheScene.Add(_activeDecor);
+    //    _activeDecor = null;
+    //}
+
+    //private void CheckCamera()
+    //{
+    //    if (_mainCamera == null)
+    //        _mainCamera = Camera.main;
+    //}
 }

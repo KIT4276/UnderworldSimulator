@@ -11,6 +11,6 @@ public class DecorSpawner : MonoBehaviour
     public void SpawnDecor()
     {
         if (_slot.IsOccupied)
-            _decorationSystem.InstantiateDecor(_slot.CurrentDecor);
+            _decorationSystem.SpawnDecorIfCan(_slot.CurrentDecor); //тут прикрутить счётчик, а не на кнопку!
     }
 }

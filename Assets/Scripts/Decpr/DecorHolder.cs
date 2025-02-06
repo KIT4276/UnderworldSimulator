@@ -1,32 +1,61 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class DecorHolder : ISavedProgress
 {
-    public List <Decor> InstalledDecor { get; private set; }
+    public List<Decor> InstalledDecor { get; private set; }
+    public Decor ActiveDecor { get; private set; }
 
     public DecorHolder()
     {
-        InstalledDecor = new List <Decor>();
+        InstalledDecor = new List<Decor>();
     }
 
-    public void InstallDecor(Decor decor)
-        => InstalledDecor.Add(decor);
+    public List<Decor> GetDecorsInScene()
+    {
+        List<Decor> allDecorsInScene = new List<Decor>();
 
-    public void UnInstallDecor(Decor decor)
-        => InstalledDecor.Remove(decor);
+        foreach (var decor in InstalledDecor)
+        {
+            allDecorsInScene.Add(decor);
+        }
+
+        if (ActiveDecor != null)
+            allDecorsInScene.Add(ActiveDecor);
+
+
+        return allDecorsInScene;
+    }
+
+    public void SetActiveDecor(Decor decor)
+    {
+        if (ActiveDecor == null)
+        {
+            ActiveDecor = decor;
+
+            if(InstalledDecor.Contains(decor))
+                InstalledDecor.Remove(decor);
+        }
+    }
+
+    public void AddInstalledDecor(Decor decor)
+    {
+        InstalledDecor.Add(decor);
+        ActiveDecor = null;
+    }
 
     public void UpdateProgress(PlayerProgress progress)
     {
-        
+
         foreach (var decor in InstalledDecor)
         {
             progress.DecorsData.Add(new DecorData(decor));
-        } 
+        }
     }
 
     public void LoadProgress(PlayerProgress progress)
     {
-       foreach(var decorData in progress.DecorsData)
+        foreach (var decorData in progress.DecorsData)
         {
             //todo instantiate all decor on level
         }

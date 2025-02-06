@@ -253,6 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2564036663471157149}
   - component: {fileID: 5398454807080672356}
+  - component: {fileID: 3356605821671380699}
   m_Layer: 8
   m_Name: Chair_decor
   m_TagString: Decor
@@ -295,24 +296,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2e049ee758468469e6ff71428d24e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainRenderer: {fileID: 2439694054543496935}
+  _frontDecorCollider: {fileID: 4926451443839083195}
+  _sideDecorCollider: {fileID: 0}
   _clickAction: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _cancelAction: {fileID: -9184969692752736088, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  rotationAction: {fileID: -2486391391914466195, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _frontPolygonSplitter: {fileID: 4556197266750140672}
-  _leftPolygonSplitter: {fileID: 0}
+  _rotationAction: {fileID: -2486391391914466195, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _impassableZone: {fileID: 1449393129846903725}
-  _primuscus: 0.3
+  _mainRenderer: {fileID: 2439694054543496935}
   _frontSprite: {fileID: -5666326540327117157, guid: d8e3355a25c861549acbcdaaf3bc0a31, type: 3}
   _leftSprite: {fileID: -4361419631782997780, guid: 761c43385204e5540bd0053039fec241, type: 3}
   _backSprite: {fileID: -5080265978692344986, guid: 89a6e11e94f9b154594d624e28f8dbfc, type: 3}
   _rightSprite: {fileID: 0}
   _icon: {fileID: -5666326540327117157, guid: d8e3355a25c861549acbcdaaf3bc0a31, type: 3}
   _warningSign: {fileID: 4620542656382749775}
-  _decorCollider: {fileID: 4926451443839083195}
-  _decorRenderer: {fileID: 2439694054543496935}
-  _invalidColor: {r: 0.89433956, g: 0.2548024, b: 0.2548024, a: 0.6117647}
-  _validColor: {r: 1, g: 1, b: 1, a: 0.72156864}
+--- !u!61 &3356605821671380699
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3610120533346616655}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.0038943142, y: 0.3943025}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.85201204, y: 1.5082068}
+  m_EdgeRadius: 0
 --- !u!1 &3702741246345554045
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,7 +507,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843e8913005f31540954f2faa1668e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _polygonCollider: {fileID: 4926451443839083195}
 --- !u!1 &3795260767610426561
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,7 +903,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843e8913005f31540954f2faa1668e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _polygonCollider: {fileID: 8793036789376291521}
 --- !u!1 &6887585369870049981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,7 +1296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843e8913005f31540954f2faa1668e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _polygonCollider: {fileID: 4514046634206846368}
 --- !u!1001 &2051378751056007512
 PrefabInstance:
   m_ObjectHideFlags: 0

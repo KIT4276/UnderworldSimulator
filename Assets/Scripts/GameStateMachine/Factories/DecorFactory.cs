@@ -39,7 +39,7 @@ public class DecorFactory : MonoBehaviour
             decor.gameObject.SetActive(true);
         }
 
-        decor.Initialize(_staticData, _decorationSystem, _spaceDeterminantor, _decorHolder, _assets);
+        decor.Initialize(_staticData, _decorationSystem, _spaceDeterminantor, _assets);
         OnSpawned?.Invoke(decor);
         return decor;
     }

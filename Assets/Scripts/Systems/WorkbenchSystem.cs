@@ -5,14 +5,15 @@ public class WorkbenchSystem : MonoBehaviour
 {
     [SerializeField] private GameObject _workbenchPanel;
     [SerializeField] private ButtonClickChangeImage[] buttonsClick;
-
+    private DecorHolder _decorHolder;
     private StateMachine _stateMachine;
     private InventorySystem _inventory;
     private DecorationSystem _decorationSystem;
 
     [Inject]
-    public void  Construct(StateMachine stateMachine, InventorySystem inventory, DecorationSystem decorationSystem)
+    public void  Construct(StateMachine stateMachine, InventorySystem inventory, DecorationSystem decorationSystem, DecorHolder decorHolder)
     {
+        _decorHolder = decorHolder;
         _stateMachine = stateMachine;
         _inventory = inventory;
         _decorationSystem = decorationSystem;
@@ -46,7 +47,7 @@ public class WorkbenchSystem : MonoBehaviour
 
     public void DeActivateWorkbench()
     {
-        if (_decorationSystem.ActiveDecor == null)
+        if (_decorHolder.ActiveDecor == null)
         {
 
             _workbenchPanel.SetActive(false);

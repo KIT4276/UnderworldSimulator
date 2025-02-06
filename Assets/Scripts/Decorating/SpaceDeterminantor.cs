@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class SpaceDeterminantor
 {
-    private List<GreedPolygonSplitter> _floorObjects = new();
-    private List<GreedHolder> _greedHolders = new();
+    //private List<GreedPolygonSplitter> _floorObjects = new();
+    //private List<GreedHolder> _greedHolders = new();
     private IAssets _assets;
     private readonly PersistantStaticData _persistantStaticData;
 
-    public List<GreedHolder> GreedHolders { get => _greedHolders; }
-    public List<GreedPolygonSplitter> FloorObjects { get => _floorObjects;  }
+    //public List<GreedHolder> GreedHolders { get => _greedHolders; }
+    //public List<GreedPolygonSplitter> FloorObjects { get => _floorObjects;  }
+
+    public List<FloorMarker> FloorMarkers = new();
 
     public SpaceDeterminantor(IAssets assets, PersistantStaticData persistantStaticData)
     {
@@ -24,13 +26,11 @@ public class SpaceDeterminantor
 
     public void FindDecorableSpace()
     {
-        GreedPolygonSplitter[] objects = GameObject.FindObjectsByType<GreedPolygonSplitter>(FindObjectsSortMode.None);
+        var markers = GameObject.FindObjectsByType<FloorMarker>(FindObjectsSortMode.None);
         
-        foreach (var obj in objects)
+        foreach (var marker in markers)
         {
-            //var floor = obj.GetComponent<GreedPolygonSplitter>();
-            _floorObjects.Add(obj);
-            _greedHolders.Add(new GreedHolder(obj, _assets, _persistantStaticData));
+            FloorMarkers.Add(marker);
         }
     }
 }

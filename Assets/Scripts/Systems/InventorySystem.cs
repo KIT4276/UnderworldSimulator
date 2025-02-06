@@ -7,13 +7,14 @@ public class InventorySystem : MonoBehaviour
 {
     [SerializeField] private InventorySlot[] _inventorySlot;
     [SerializeField] private GameObject _warningSign;
-
+    private DecorHolder _decorHolder;
     private DecorFactory _decorFactory;
     private DecorationSystem _decorationSystem;
 
     [Inject]
-    private void Construct(DecorFactory decorFactory, DecorationSystem decorationSystem)
+    private void Construct(DecorFactory decorFactory, DecorationSystem decorationSystem, DecorHolder decorHolder)
     {
+        _decorHolder = decorHolder;
         _decorFactory = decorFactory;
         _decorationSystem = decorationSystem;
         _decorationSystem.TryToRemoveDecorAction += TryReturnToInventory;
@@ -30,7 +31,7 @@ public class InventorySystem : MonoBehaviour
 
     public void DeActivateInventory()
     {
-        if(_decorationSystem.ActiveDecor == null)
+        if(_decorHolder.ActiveDecor == null)
         this.gameObject.SetActive(false);
     }
 
@@ -42,9 +43,9 @@ public class InventorySystem : MonoBehaviour
         {
             if (!_inventorySlot[i].IsOccupied)
             {
-                _inventorySlot[i].SetDecor(_decorationSystem.ActiveDecor);
-                _decorationSystem.ReturtDecorToInventory();
-                isPlaced = true;
+                //_inventorySlot[i].SetDecor(_decorationSystem.ActiveDecor);
+                //_decorationSystem.ReturtDecorToInventory();
+                //isPlaced = true;
                 break;
             }
         }
