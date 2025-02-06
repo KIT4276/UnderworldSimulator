@@ -11,6 +11,8 @@ public abstract class BasePolygonSplitter : MonoBehaviour
 
     protected List<BaceCell> _cells;
 
+    public PolygonCollider2D PolygonCollider {  get { return _polygonCollider; } }
+
     public void Initialize(IAssets assets, PersistantStaticData persistantStaticData)
     {
         _cells = new List<BaceCell>();
