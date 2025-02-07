@@ -34,16 +34,18 @@ public class Decor : MonoBehaviour, IInventoryObject
     public Collider2D CurrentDecorCollider { get; private set; }
     public Camera MainCamera { get; private set; }
     public Collider2D CurrentClickableCollider { get; private set; }
+    public int ID { get; private set; }
 
     public event Action DecorPlacedAction;
     public event Action Clicked;
     public event Action<RotationState> Rotated;
     public event Action<RotationState> EndRotation;
-    public event Action Removed;
 
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
-        SpaceDeterminantor spaceDeterminantor)
+        SpaceDeterminantor spaceDeterminantor, int id)
     {
+        if (ID == 0)
+            ID = id;
         IsInside = true;
         IsDragging = true;
         _decorationSystem = decorationSystem;
@@ -64,6 +66,8 @@ public class Decor : MonoBehaviour, IInventoryObject
 
     private void OnCancel(InputAction.CallbackContext context)
     {
+        Debug.Log(IsDragging + " " + ID);
+
         if (!IsDragging) return;
 
         _decorationSystem.TryToRemoveDecor(this);
@@ -74,13 +78,9 @@ public class Decor : MonoBehaviour, IInventoryObject
         IsDragging = false;
         IsInside = false;
 
-        _decorPlacer.OnRemoved();
         _decorDrag.OnRemoved();
         _decorRotator.OnRemoved();
         _decorView.OnRemoved();
-
-
-        Removed?.Invoke();
     }
 
     private void FixedUpdate()
@@ -109,7 +109,7 @@ public class Decor : MonoBehaviour, IInventoryObject
     private void OnClick(InputAction.CallbackContext context)
     {
         if (!_canPlace || !_isOnDecorState) return;
-        Debug.Log("OnClick");
+        //Debug.Log("OnClick");
         Clicked?.Invoke();
     }
 
@@ -121,7 +121,7 @@ public class Decor : MonoBehaviour, IInventoryObject
 
     public void PlaceObject()
     {
-        Debug.Log("PlaceObject");
+        //Debug.Log("PlaceObject");
         IsDragging = false;
         _decorationSystem.InstanriateDecor(this);
         DecorPlacedAction?.Invoke();

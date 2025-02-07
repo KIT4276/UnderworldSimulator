@@ -26,7 +26,6 @@ public class DecorDrag : MonoBehaviour
 
     private void FixedUpdate()
     {
-       // Debug.Log(_decor.IsDragging);
         if (_decor.IsDragging && _canMove)
             DragObjeect();
     }

@@ -36,7 +36,6 @@ public class DecorView : MonoBehaviour
     public void OnRemoved()
     {
         _mainRenderer.color = _originalColor;
-
         _canView = false;
     }
 
@@ -94,5 +93,11 @@ public class DecorView : MonoBehaviour
             _mainRenderer.flipX = false;
             return requiredSprite;
         }
+    }
+
+    private void OnDisable()
+    {
+        _decor.DecorPlacedAction -= OnPlaced;
+        _decor.EndRotation -= OnRotated;
     }
 }

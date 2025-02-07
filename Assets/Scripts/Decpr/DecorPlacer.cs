@@ -12,11 +12,6 @@ public class DecorPlacer : MonoBehaviour
         _decor.Clicked += OnClicked;
     }
 
-    public void OnRemoved()
-    {
-        _decor.Clicked -= OnClicked;
-    }
-
     private void OnClicked()
     {
         if (_decor.IsDragging)
@@ -46,5 +41,10 @@ public class DecorPlacer : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private void OnDisable()
+    {
+        _decor.Clicked -= OnClicked;
     }
 }

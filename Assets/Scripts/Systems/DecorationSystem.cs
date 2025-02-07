@@ -5,9 +5,7 @@ public class DecorationSystem
     private DecorHolder _decorHolder;
     private DecorFactory _factory;
     private object _mainCamera;
-    //public bool CanPlace { get; private set; }
 
-    //public event Action<Decor> RemoveDecorAction;
     public event Action<Decor> TryToRemoveDecorAction;
 
     public DecorationSystem(DecorFactory factory, DecorHolder decorHolder)
@@ -45,11 +43,6 @@ public class DecorationSystem
         _decorHolder.SetActiveDecor(decor);
     }
 
-    public void DeSpawnDecorIfCan(Decor decorPrefab)
-    {
-        //todo
-    }
-
     public void InstanriateDecor(Decor decor)
     {
         _decorHolder.AddInstalledDecor(decor);
@@ -72,42 +65,17 @@ public class DecorationSystem
     }
 
 
-    //private void ActivateDecor(Decor decor)
-    //{
-    //    decor.SetIsOnDecorState(true);
-    //    decor.PlacedAction += PlaceActiveDecor;
-    //}
-
-    //public void ReActivateDecor(Decor decor)
-    //{
-    //    _activeDecor = decor;
-    //    ActivateDecor(decor);
-    //}
-
 
     public void TryToRemoveDecor(Decor decor)
     {
         TryToRemoveDecorAction?.Invoke(decor);
-            //_decorHolder.DeActiveDecor();
     }
 
 
     public void ReturtDecorToInventory(Decor decor)
     {
-        _factory.DespawnDecor(decor);
+        _factory.OnRemoveDecor(decor);
         _decorHolder.DeActiveDecor();
-        decor.RemoveThisDecor();
+        //decor.RemoveThisDecor();
     }
-
-    //private void PlaceActiveDecor()
-    //{
-    //    _allDecorInTheScene.Add(_activeDecor);
-    //    _activeDecor = null;
-    //}
-
-    //private void CheckCamera()
-    //{
-    //    if (_mainCamera == null)
-    //        _mainCamera = Camera.main;
-    //}
 }

@@ -45,6 +45,7 @@ public class InventorySystem : MonoBehaviour
             {
                 _inventorySlot[i].SetDecor(decor);
                 _decorationSystem.ReturtDecorToInventory(decor);
+                //decor.RemoveThisDecor();
                 isPlaced = true;
                 break;
             }
@@ -68,5 +69,6 @@ public class InventorySystem : MonoBehaviour
     {
         StopAllCoroutines();
         _warningSign.SetActive(false);
+        _decorationSystem.TryToRemoveDecorAction -= TryReturnToInventory;
     }
 }
