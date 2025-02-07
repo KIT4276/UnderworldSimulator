@@ -46,32 +46,5 @@ public class DecorDrag : MonoBehaviour
             _decor.transform.position = new Vector3(snappedX, snappedY, _decor.transform.position.z);
         }
 
-        //CheckPlacement();
     }
-
-    //private void CheckPlacement()
-    //{
-    //    _decor.SetIsInside(false);
-
-    //    foreach (var floor in _spaceDeterminantor.FloorMarkers)
-    //    {
-    //        bool allPointsInside = true;
-
-    //        foreach (Vector2 point in _decor.CurrentDecorCollider.bounds.GetCorners())
-    //        {
-    //            if (!floor.Collider.OverlapPoint(point))
-    //            {
-    //                allPointsInside = false;
-    //                break;
-    //            }
-    //        }
-
-    //        if (allPointsInside)
-    //        {
-    //            _decor.SetIsInside(true);
-    //            break;
-    //        }
-    //    }
-    //}
-
 }
