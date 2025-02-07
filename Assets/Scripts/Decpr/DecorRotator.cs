@@ -1,19 +1,16 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Decor))]
 public class DecorRotator : MonoBehaviour
 {
-    [SerializeField] private Transform _frontImpassableZone;
-    [SerializeField] private Transform _sideImpassableZone;
+    [Tooltip("required field"), SerializeField] private Transform _frontImpassableZone;
+    [Tooltip("optional field"), SerializeField] private Transform _sideImpassableZone;
     [Space]
-    [SerializeField] private Collider2D _frontClickableCollider;
-    [SerializeField] private Collider2D _sideClickableCollider;
+    [Tooltip("required field"), SerializeField] private Collider2D _frontClickableCollider;
+    [Tooltip("optional field"), SerializeField] private Collider2D _sideClickableCollider;
     [Space]
-    [SerializeField] private Collider2D _frontOccupiedZone;
-    [Tooltip("optional field"),
-    SerializeField]
-    private Collider2D _sideOccupiedZone;
+    [Tooltip("required field"), SerializeField] private Collider2D _frontOccupiedZone;
+    [Tooltip("optional field"), SerializeField] private Collider2D _sideOccupiedZone;
 
     private Decor _decor;
 
@@ -28,7 +25,7 @@ public class DecorRotator : MonoBehaviour
     public void OnRemoved()
     {
         _decor.SetRotationState(RotationState.Front);
-       
+
     }
 
     private void OnRotate(RotationState predioslyRotationState)
@@ -42,6 +39,8 @@ public class DecorRotator : MonoBehaviour
 
     private void UpdateImpassableZone(RotationState newRotationState)
     {
+        if (_sideImpassableZone == null) return;
+
         if (newRotationState == RotationState.Front || newRotationState == RotationState.Back)
         {
             _frontImpassableZone.gameObject.SetActive(true);
@@ -56,7 +55,9 @@ public class DecorRotator : MonoBehaviour
 
     private Collider2D UpdateClickableColliders(RotationState newRotationState)
     {
-        if (newRotationState == RotationState.Front || newRotationState == RotationState.Back)
+
+
+        if (newRotationState == RotationState.Front || newRotationState == RotationState.Back || _sideClickableCollider == null)
             return _frontClickableCollider;
         else
             return _sideClickableCollider;
