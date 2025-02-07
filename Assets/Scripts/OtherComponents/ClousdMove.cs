@@ -61,5 +61,3 @@ public class ClousdMove : MonoBehaviour, IRandomizedPosition
     private float SelectSpeed() =>
         Random.Range(_moveSpeedMin, _moveSpeedMax);
 }
-
-
