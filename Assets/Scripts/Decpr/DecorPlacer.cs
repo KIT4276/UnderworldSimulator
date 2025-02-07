@@ -4,12 +4,68 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Decor))]
 public class DecorPlacer : MonoBehaviour
 {
+    private bool _canMove;
     private Decor _decor;
+    private SpaceDeterminantor _spaceDeterminantor;
+    private DecorHolder _decorHolder;
 
-    public void Initialize(Decor decor)
+    public void Initialize(Decor decor, SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
     {
+        _canMove = true;
         _decor = decor;
+        _spaceDeterminantor = spaceDeterminantor;
+        _decorHolder = decorHolder;
         _decor.Clicked += OnClicked;
+    }
+
+    public void OnRemoved()
+    {
+        _canMove = false;
+    }
+
+    private void FixedUpdate()
+    {
+        if (_decor.IsDragging && _canMove)
+            CheckPlacement();
+    }
+
+    private void CheckPlacement()
+    {
+        _decor.SetIsInside(false);
+
+        foreach (var floor in _spaceDeterminantor.FloorMarkers)
+        {
+            bool allPointsInside = true;
+
+            foreach (Vector2 point in _decor.CurrentDecorCollider.bounds.GetCorners())
+            {
+                if (!floor.Collider.OverlapPoint(point))
+                {
+                    allPointsInside = false;
+                    break;
+                }
+            }
+
+            if (allPointsInside)
+            {
+                _decor.SetIsInside(true);
+                break;
+            }
+        }
+
+        if (_decor.IsInside)
+        {
+            foreach (var otherDecor in _decorHolder.InstalledDecor)
+            {
+                if (otherDecor == _decor) continue;
+
+                if (_decor.CurrentDecorCollider.bounds.Intersects(otherDecor.CurrentDecorCollider.bounds))
+                {
+                    _decor.SetIsInside(false);
+                    break;
+                }
+            }
+        }
     }
 
     private void OnClicked()

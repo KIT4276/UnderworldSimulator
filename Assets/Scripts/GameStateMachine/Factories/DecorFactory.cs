@@ -5,15 +5,17 @@ public class DecorFactory : MonoBehaviour
 {
     private PersistantStaticData _staticData;
     private SpaceDeterminantor _spaceDeterminantor;
+    private DecorHolder _decorHolder;
     private DecorationSystem _decorationSystem;
 
     private int _currentID;
 
     [Inject]
-    private void Construct(PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor, IAssets assets)
+    private void Construct(PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor, IAssets assets, DecorHolder decorHolder)
     {
         _staticData = staticData;
         _spaceDeterminantor = spaceDeterminantor;
+        _decorHolder = decorHolder;
     }
 
     public void Initialize(DecorationSystem decorationSystem) =>
@@ -36,7 +38,7 @@ public class DecorFactory : MonoBehaviour
             decor.gameObject.SetActive(true);
         }
         
-        decor.Initialize(_staticData, _decorationSystem, _spaceDeterminantor, _currentID);
+        decor.Initialize(_staticData, _decorationSystem, _spaceDeterminantor, _currentID, _decorHolder);
         return decor;
     }
 

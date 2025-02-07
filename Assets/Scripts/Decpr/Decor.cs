@@ -1,10 +1,6 @@
 using System;
-using UnityEditor.SceneManagement;
-
-//using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(DecorView), (typeof(DecorRotator)))]
 [RequireComponent(typeof(DecorDrag), (typeof(DecorPlacer)))]
@@ -42,7 +38,7 @@ public class Decor : MonoBehaviour, IInventoryObject
     public event Action<RotationState> EndRotation;
 
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
-        SpaceDeterminantor spaceDeterminantor, int id)
+        SpaceDeterminantor spaceDeterminantor, int id, DecorHolder decorHolder)
     {
         if (ID == 0)
             ID = id;
@@ -55,7 +51,7 @@ public class Decor : MonoBehaviour, IInventoryObject
 
         _decorView.Initialize(this, staticData, _currentRotationState);
         _decorDrag.Initialize(this, staticData, spaceDeterminantor);
-        _decorPlacer.Initialize(this);
+        _decorPlacer.Initialize(this, spaceDeterminantor, decorHolder);
         _decorRotator.Initialize(this, _currentRotationState);
         CheckCamera();
 
@@ -78,6 +74,7 @@ public class Decor : MonoBehaviour, IInventoryObject
         IsDragging = false;
         IsInside = false;
 
+        _decorPlacer.OnRemoved();
         _decorDrag.OnRemoved();
         _decorRotator.OnRemoved();
         _decorView.OnRemoved();
