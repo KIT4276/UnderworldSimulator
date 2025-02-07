@@ -26,12 +26,12 @@ public class DecorPlacer : MonoBehaviour
     private void FixedUpdate()
     {
         if (_decor.IsDragging && _canMove)
-            CheckPlacement();
+            _decor.SetIsInside(CheckPlacement());
     }
 
-    private void CheckPlacement()
+    private bool CheckPlacement()
     {
-        _decor.SetIsInside(false);
+        bool isInside = false;
 
         foreach (var floor in _spaceDeterminantor.FloorMarkers)
         {
@@ -48,12 +48,12 @@ public class DecorPlacer : MonoBehaviour
 
             if (allPointsInside)
             {
-                _decor.SetIsInside(true);
+                isInside = true;
                 break;
             }
         }
 
-        if (_decor.IsInside)
+        if (isInside)
         {
             foreach (var otherDecor in _decorHolder.InstalledDecor)
             {
@@ -61,11 +61,12 @@ public class DecorPlacer : MonoBehaviour
 
                 if (_decor.CurrentDecorCollider.bounds.Intersects(otherDecor.CurrentDecorCollider.bounds))
                 {
-                    _decor.SetIsInside(false);
+                    isInside = false;
                     break;
                 }
             }
         }
+        return isInside;
     }
 
     private void OnClicked()

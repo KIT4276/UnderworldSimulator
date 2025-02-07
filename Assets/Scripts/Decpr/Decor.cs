@@ -16,8 +16,6 @@ public class Decor : MonoBehaviour, IInventoryObject
     [SerializeField] protected InputActionReference _rotationAction;
     [Space]
     [SerializeField] protected Sprite _icon;
-    //[Space]
-    //[SerializeField] protected GameObject _warningSign;
 
     protected DecorData _decorData;
     protected DecorationSystem _decorationSystem;
@@ -46,8 +44,6 @@ public class Decor : MonoBehaviour, IInventoryObject
         IsDragging = true;
         _decorationSystem = decorationSystem;
         _currentRotationState = RotationState.Front;
-
-        //_warningSign.SetActive(false);
 
         _decorView.Initialize(this, staticData, _currentRotationState);
         _decorDrag.Initialize(this, staticData, spaceDeterminantor);

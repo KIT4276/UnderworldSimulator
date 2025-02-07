@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -42,9 +41,22 @@ public class DecorDrag : MonoBehaviour
 
             float snappedX = Mathf.Round(worldPosition.x / _staticData.CellSize) * _staticData.CellSize;
             float snappedY = Mathf.Round(worldPosition.y / _staticData.CellSize) * _staticData.CellSize;
+            Vector3 snappedPosition = new Vector3(snappedX, snappedY, _decor.transform.position.z);
 
-            _decor.transform.position = new Vector3(snappedX, snappedY, _decor.transform.position.z);
+            bool isInsideFloor = false;
+            foreach (var floor in _spaceDeterminantor.FloorMarkers)
+            {
+                if (floor.Collider.OverlapPoint(snappedPosition))
+                {
+                    isInsideFloor = true;
+                    break;
+                }
+            }
+
+            if (isInsideFloor)
+            {
+                _decor.transform.position = snappedPosition;
+            }
         }
-
     }
 }
