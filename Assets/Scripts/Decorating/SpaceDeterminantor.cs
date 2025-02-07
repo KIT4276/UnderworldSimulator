@@ -19,15 +19,15 @@ public class SpaceDeterminantor
         _persistantStaticData = persistantStaticData;
     }
 
-    public void StartFind()
-    {
-        FindDecorableSpace();
-    }
+    //public void StartFind()
+    //{
+    //    FindDecorableSpace();
+    //}
 
     public void FindDecorableSpace()
     {
         var markers = GameObject.FindObjectsByType<FloorMarker>(FindObjectsSortMode.None);
-        
+        Debug.Log(markers.Length);
         foreach (var marker in markers)
         {
             FloorMarkers.Add(marker);
