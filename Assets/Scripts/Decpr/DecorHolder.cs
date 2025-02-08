@@ -37,8 +37,8 @@ public class DecorHolder : ISavedProgress
 
     public void AddInstalledDecor(Decor decor)
     {
-        InstalledDecor.Add(decor);
         ActiveDecor = null;
+        InstalledDecor.Add(decor);
     }
 
     public void DeActiveDecor()

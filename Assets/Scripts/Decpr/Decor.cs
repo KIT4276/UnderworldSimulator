@@ -71,13 +71,14 @@ public class Decor : MonoBehaviour, IInventoryObject
 
     public void RemoveThisDecor()
     {
-        IsDragging = false;
-        IsInside = false;
-
+        Debug.Log("RemoveThisDecor");
         _decorPlacer.OnRemoved();
         _decorDrag.OnRemoved();
         _decorRotator.OnRemoved();
         _decorView.OnRemoved();
+
+        IsDragging = false;
+        IsInside = false;
     }
 
     private void FixedUpdate()

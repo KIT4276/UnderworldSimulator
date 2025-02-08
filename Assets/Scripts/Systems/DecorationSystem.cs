@@ -25,13 +25,13 @@ public class DecorationSystem
 
     public bool ActivateDecorIfCan(Decor decor)
     {
-        if (_decorHolder.ActiveDecor != null)
-            return false;
-        else
-        {
+        //if (_decorHolder.ActiveDecor != null)
+        //    return false;
+        //else
+        //{
             _decorHolder.SetActiveDecor(decor);
             return true;
-        }
+        //}
     }
 
     public bool SpawnDecorIfCan(Decor decorPrefab)

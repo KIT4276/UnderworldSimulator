@@ -71,6 +71,7 @@ public class DecorPlacer : MonoBehaviour
 
     private void OnClicked()
     {
+        //Debug.Log(_decor.IsDragging);
         if (_decor.IsDragging)
         {
             if (_decor.IsInside)
