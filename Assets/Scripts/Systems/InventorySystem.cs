@@ -31,8 +31,8 @@ public class InventorySystem : MonoBehaviour
 
     public void DeActivateInventory()
     {
-        if(_decorHolder.ActiveDecor == null)
-        this.gameObject.SetActive(false);
+        if (_decorHolder.ActiveDecor == null)
+            this.gameObject.SetActive(false);
     }
 
     private void TryReturnToInventory(Decor decor)
@@ -41,15 +41,29 @@ public class InventorySystem : MonoBehaviour
 
         for (int i = 0; i < _inventorySlot.Length; i++)
         {
-            if (!_inventorySlot[i].IsOccupied)
+            if (_inventorySlot[i].IsOccupied)
             {
-                _inventorySlot[i].SetDecor(decor);
-                _decorationSystem.ReturtDecorToInventory(decor);
-                //decor.RemoveThisDecor();
-                isPlaced = true;
-                break;
+                if (_inventorySlot[i].CurrentDecor.DecorType == decor.DecorType)
+                {
+                    ReturnToInventory(decor, i);
+                    isPlaced = true;
+                    break;
+                }
             }
         }
+        if (!isPlaced)
+        {
+            for (int i = 0; i < _inventorySlot.Length; i++)
+            {
+                if (!_inventorySlot[i].IsOccupied)
+                {
+                    ReturnToInventory(decor, i);
+                    isPlaced = true;
+                    break;
+                }
+            }
+        }
+
         if (!isPlaced)
         {
             Debug.Log(" не нашлось место для декора");
@@ -57,6 +71,12 @@ public class InventorySystem : MonoBehaviour
             _warningSign.SetActive(true);
             StartCoroutine(HideTAblet());
         }
+    }
+
+    private void ReturnToInventory(Decor decor, int i)
+    {
+        _inventorySlot[i].SetDecor(decor);
+        _decorationSystem.ReturtDecorToInventory(decor);
     }
 
     private IEnumerator HideTAblet()

@@ -17,7 +17,7 @@ public class TestInventorySlot : MonoBehaviour
     private void InitSlot()
     {
         _slot.SetDecor(_decorPrefab);
-        _slotCounter.SetCount(_count);
+        _slotCounter.AddCount(_count);
     }
 
     private void OnDisable()

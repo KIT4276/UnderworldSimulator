@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(DecorDrag), (typeof(DecorPlacer)))]
 public class Decor : MonoBehaviour, IInventoryObject
 {
+    [SerializeField] private DecorType _decorType;
+    [Space]
     [SerializeField] private DecorView _decorView;
     [SerializeField] private DecorDrag _decorDrag;
     [SerializeField] private DecorPlacer _decorPlacer;
@@ -23,6 +25,8 @@ public class Decor : MonoBehaviour, IInventoryObject
     protected bool _isOnDecorState;
     private RotationState _currentRotationState;
 
+
+    public DecorType DecorType { get => _decorType; }
     public bool IsInside { get; private set; }
     public bool IsDragging { get; private set; }
     public Collider2D CurrentDecorCollider { get; private set; }
@@ -58,7 +62,7 @@ public class Decor : MonoBehaviour, IInventoryObject
 
     private void OnCancel(InputAction.CallbackContext context)
     {
-        Debug.Log(IsDragging + " " + ID);
+        //Debug.Log(IsDragging + " " + ID);
 
         if (!IsDragging) return;
 

@@ -184,6 +184,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4161964031659894026}
   - component: {fileID: 1292847781620758894}
+  - component: {fileID: 4664871189322237186}
+  - component: {fileID: 9119611530334401951}
+  - component: {fileID: 6249079352401169172}
+  - component: {fileID: 4855234846001896026}
   m_Layer: 8
   m_Name: newFireplace_decor
   m_TagString: Decor
@@ -226,21 +230,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb3fe47e2f027a418d03336df7a52c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainRenderer: {fileID: 8744422088667879429}
+  _decorType: 5
+  _decorView: {fileID: 0}
+  _decorDrag: {fileID: 0}
+  _decorPlacer: {fileID: 0}
+  _decorRotator: {fileID: 0}
   _clickAction: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _cancelAction: {fileID: -9184969692752736088, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  rotationAction: {fileID: -2486391391914466195, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _frontPolygonSplitter: {fileID: 4533289679576149269}
-  _leftPolygonSplitter: {fileID: 1931626894641945882}
-  _impassableZone: {fileID: 5217348228020936248}
-  _primuscus: 0.7
-  _frontSprite: {fileID: -8227080214931094891, guid: ed82b33ba4ceabf4e8904a9b420487e1, type: 3}
-  _leftSprite: {fileID: -2473244594194541931, guid: 716a469bbce439f438a093532fc47089, type: 3}
+  _rotationAction: {fileID: 0}
+  _icon: {fileID: -8227080214931094891, guid: ed82b33ba4ceabf4e8904a9b420487e1, type: 3}
+  _excludedDirection: 2
+--- !u!114 &4664871189322237186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557263519429011884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36ad460e1f079364ca6a35ceade1b61f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainRenderer: {fileID: 0}
+  _frontSprite: {fileID: 0}
+  _leftSprite: {fileID: 0}
   _backSprite: {fileID: 0}
   _rightSprite: {fileID: 0}
-  _icon: {fileID: -8227080214931094891, guid: ed82b33ba4ceabf4e8904a9b420487e1, type: 3}
-  _warningSign: {fileID: 5949691450661058199}
-  _excludedDirection: 2
+--- !u!114 &9119611530334401951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557263519429011884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c9fde25a182d2c43ba90e5aee876d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _frontImpassableZone: {fileID: 0}
+  _sideImpassableZone: {fileID: 0}
+  _frontClickableCollider: {fileID: 0}
+  _sideClickableCollider: {fileID: 0}
+  _frontOccupiedZone: {fileID: 0}
+  _sideOccupiedZone: {fileID: 0}
+--- !u!114 &6249079352401169172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557263519429011884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4856057c1275d0f49824995ce5fe7fec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4855234846001896026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557263519429011884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5087a0002fa5143bfad9d23d0bf6f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2563792695340857425
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,7 +872,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843e8913005f31540954f2faa1668e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _polygonCollider: {fileID: 2482784409724445357}
 --- !u!1 &7415503382813979640
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,7 +1056,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843e8913005f31540954f2faa1668e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _polygonCollider: {fileID: 4937298096623905775}
 --- !u!1 &8814565916453179277
 GameObject:
   m_ObjectHideFlags: 0

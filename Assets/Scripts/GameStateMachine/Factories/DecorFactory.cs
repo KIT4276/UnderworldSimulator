@@ -33,7 +33,7 @@ public class DecorFactory : MonoBehaviour
         }
         else
         {
-            //Debug.Log("IsValid()");
+            Debug.Log("IsValid()");
             decor = decorPrefab;
             decor.gameObject.SetActive(true);
         }

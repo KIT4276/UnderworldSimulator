@@ -41,6 +41,8 @@ public class ClousdMove : MonoBehaviour, IRandomizedPosition
     {
         foreach (Transform transform in _transforms)
         {
+            if (transform == null) Debug.Log("Ooooops!__________");
+
             if (transform.position.x < _minPositionY)
             {
                 transform.position = new Vector3(_maxPositionX, transform.position.y, transform.position.z);

@@ -97,6 +97,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7250148367410634170}
   - component: {fileID: 6972081460890612564}
+  - component: {fileID: 4650704420950937372}
+  - component: {fileID: 2893722403574033586}
+  - component: {fileID: 4305171571110022649}
+  - component: {fileID: 5548009109508381640}
   m_Layer: 8
   m_Name: newOttoman_decor
   m_TagString: Decor
@@ -139,20 +143,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2e049ee758468469e6ff71428d24e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainRenderer: {fileID: 7131900214858507158}
+  _decorType: 6
+  _decorView: {fileID: 0}
+  _decorDrag: {fileID: 0}
+  _decorPlacer: {fileID: 0}
+  _decorRotator: {fileID: 0}
   _clickAction: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _cancelAction: {fileID: -9184969692752736088, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  rotationAction: {fileID: -2486391391914466195, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _frontPolygonSplitter: {fileID: 4720570325533428203}
-  _leftPolygonSplitter: {fileID: 4045794449126113383}
-  _impassableZone: {fileID: 3622233525160440129}
-  _primuscus: 0.6
-  _frontSprite: {fileID: -2486488515312492014, guid: 3888e20cf9c08264891c9efd230d3776, type: 3}
-  _leftSprite: {fileID: 7140252831417113789, guid: 2f679a906097ad848b22fefc6222179f, type: 3}
-  _backSprite: {fileID: -2486488515312492014, guid: 3888e20cf9c08264891c9efd230d3776, type: 3}
-  _rightSprite: {fileID: 0}
+  _rotationAction: {fileID: 0}
   _icon: {fileID: -2486488515312492014, guid: 3888e20cf9c08264891c9efd230d3776, type: 3}
-  _warningSign: {fileID: 3800978776440680086}
+--- !u!114 &4650704420950937372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639819781569752182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36ad460e1f079364ca6a35ceade1b61f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainRenderer: {fileID: 0}
+  _frontSprite: {fileID: 0}
+  _leftSprite: {fileID: 0}
+  _backSprite: {fileID: 0}
+  _rightSprite: {fileID: 0}
+--- !u!114 &2893722403574033586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639819781569752182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c9fde25a182d2c43ba90e5aee876d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _frontImpassableZone: {fileID: 0}
+  _sideImpassableZone: {fileID: 0}
+  _frontClickableCollider: {fileID: 0}
+  _sideClickableCollider: {fileID: 0}
+  _frontOccupiedZone: {fileID: 0}
+  _sideOccupiedZone: {fileID: 0}
+--- !u!114 &4305171571110022649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639819781569752182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4856057c1275d0f49824995ce5fe7fec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5548009109508381640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639819781569752182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5087a0002fa5143bfad9d23d0bf6f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3067690118647213820
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,7 +482,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843e8913005f31540954f2faa1668e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _polygonCollider: {fileID: 248521005475211027}
 --- !u!1 &4017482541534292349
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,7 +877,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843e8913005f31540954f2faa1668e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _polygonCollider: {fileID: 7269801662199175006}
 --- !u!1001 &7554589385921540993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -921,10 +977,5 @@ PrefabInstance:
 --- !u!224 &1637518414371760781 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9110475656793168140, guid: 0d38bbfacd161cc4497d17cd78a28304, type: 3}
-  m_PrefabInstance: {fileID: 7554589385921540993}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3800978776440680086 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6658713930279525655, guid: 0d38bbfacd161cc4497d17cd78a28304, type: 3}
   m_PrefabInstance: {fileID: 7554589385921540993}
   m_PrefabAsset: {fileID: 0}

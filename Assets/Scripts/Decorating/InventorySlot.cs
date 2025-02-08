@@ -9,12 +9,13 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] private ButtonEnterChangeImage _buttonEnterChangeImage;
     [SerializeField] private InventorySlotCounter _slotCounter;
     [SerializeField] private Button _button;
-    private Sprite _icon;
 
     public bool IsOccupied { get; private set; }
     public Decor CurrentDecor { get; private set; }
 
     public event Action OnInitialized;
+
+    private Sprite _icon;
 
     private void Awake()
     {
@@ -48,7 +49,7 @@ public class InventorySlot : MonoBehaviour
     {
         IsOccupied = true;
         _icon = decor.GetIcon();
-        _slotCounter.SetCount(1);
+        _slotCounter.AddCount(1);
         CurrentDecor = decor;
 
         SettingParameters();

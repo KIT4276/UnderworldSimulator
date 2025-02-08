@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 
@@ -21,9 +22,15 @@ public class InventorySlotCounter : MonoBehaviour
         CheckingAndShow();
     }
 
-    public void SetCount(int count)
+    //public void SetCount(int count)
+    //{
+    //    Count = count;
+    //    CheckingAndShow();
+    //}
+
+    public void AddCount(int count)
     {
-        Count = count;
+        Count += count;
         CheckingAndShow();
     }
 

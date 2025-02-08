@@ -330,7 +330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843e8913005f31540954f2faa1668e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _polygonCollider: {fileID: 3597992863962901455}
 --- !u!1 &3524033347296145395
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,6 +460,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5320273437166721378}
   - component: {fileID: 3293913624607525943}
+  - component: {fileID: 1377476173932656998}
+  - component: {fileID: 5697260774000834921}
+  - component: {fileID: 6283271527111167530}
+  - component: {fileID: 4520262551358901913}
   m_Layer: 8
   m_Name: newChest_decor
   m_TagString: Decor
@@ -502,20 +505,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2e049ee758468469e6ff71428d24e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainRenderer: {fileID: 5886110569323116053}
+  _decorType: 4
+  _decorView: {fileID: 0}
+  _decorDrag: {fileID: 0}
+  _decorPlacer: {fileID: 0}
+  _decorRotator: {fileID: 0}
   _clickAction: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _cancelAction: {fileID: -9184969692752736088, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  rotationAction: {fileID: -2486391391914466195, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _frontPolygonSplitter: {fileID: 975681968961558292}
-  _leftPolygonSplitter: {fileID: 0}
-  _impassableZone: {fileID: 789492988782649946}
-  _primuscus: 0.7
-  _frontSprite: {fileID: 2418894680459312807, guid: 287b423e37193fd499bb60ee3b127891, type: 3}
-  _leftSprite: {fileID: -7823594900074495825, guid: 3985934fe69e9e94dbe7dcf66570133e, type: 3}
-  _backSprite: {fileID: -6082050249946815406, guid: a015ec2363a4300499489e594eba0035, type: 3}
-  _rightSprite: {fileID: -3991190223548827210, guid: cb9a929acb5acd74b83e83276416da51, type: 3}
+  _rotationAction: {fileID: 0}
   _icon: {fileID: 2418894680459312807, guid: 287b423e37193fd499bb60ee3b127891, type: 3}
-  _warningSign: {fileID: 1026939172000443221}
+--- !u!114 &1377476173932656998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4187135814033629436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36ad460e1f079364ca6a35ceade1b61f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainRenderer: {fileID: 0}
+  _frontSprite: {fileID: 0}
+  _leftSprite: {fileID: 0}
+  _backSprite: {fileID: 0}
+  _rightSprite: {fileID: 0}
+--- !u!114 &5697260774000834921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4187135814033629436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c9fde25a182d2c43ba90e5aee876d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _frontImpassableZone: {fileID: 0}
+  _sideImpassableZone: {fileID: 0}
+  _frontClickableCollider: {fileID: 0}
+  _sideClickableCollider: {fileID: 0}
+  _frontOccupiedZone: {fileID: 0}
+  _sideOccupiedZone: {fileID: 0}
+--- !u!114 &6283271527111167530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4187135814033629436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4856057c1275d0f49824995ce5fe7fec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4520262551358901913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4187135814033629436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5087a0002fa5143bfad9d23d0bf6f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5200417795552913609
 GameObject:
   m_ObjectHideFlags: 0
@@ -1060,6 +1117,6 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0

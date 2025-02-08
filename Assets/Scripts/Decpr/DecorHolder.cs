@@ -29,13 +29,10 @@ public class DecorHolder : ISavedProgress
 
     public void SetActiveDecor(Decor decor)
     {
-        if (ActiveDecor == null)
-        {
-            ActiveDecor = decor;
+        ActiveDecor = decor;
 
-            if(InstalledDecor.Contains(decor))
-                InstalledDecor.Remove(decor);
-        }
+        if (InstalledDecor.Contains(decor))
+            InstalledDecor.Remove(decor);
     }
 
     public void AddInstalledDecor(Decor decor)
@@ -46,7 +43,7 @@ public class DecorHolder : ISavedProgress
 
     public void DeActiveDecor()
     {
-        if(InstalledDecor.Contains(ActiveDecor))
+        if (InstalledDecor.Contains(ActiveDecor))
             InstalledDecor.Remove(ActiveDecor);
 
         ActiveDecor = null;
