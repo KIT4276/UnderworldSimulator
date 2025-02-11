@@ -7,14 +7,13 @@ public class DecorSpawner : MonoBehaviour
     [SerializeField] private InventorySlot _slot;
     [SerializeReference] private InventorySlotCounter _counter;
 
-    [Inject] private DecorationSystem _decorationSystem;
+    [Inject] private readonly DecorationSystem _decorationSystem;
 
     public void SpawnDecor()
     {
         if (_slot.IsOccupied)
         {
-            if (_decorationSystem.SpawnDecorIfCan(_slot.CurrentDecor))
-                _counter.DecreaseCount();
+            _decorationSystem.SpawnDecorIfCan(_slot.TakeLastDecor());
         }
     }
 }

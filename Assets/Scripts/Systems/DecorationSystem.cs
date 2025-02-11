@@ -34,18 +34,17 @@ public class DecorationSystem
         //}
     }
 
-    public bool SpawnDecorIfCan(Decor decorPrefab)
+    public void SpawnDecorIfCan(Decor decorPrefab)
     {
         if (_decorHolder.ActiveDecor != null)
-            return false;
+            TryToRemoveDecor(decorPrefab);
 
-        else
-        {
+            //else
+            //{
             var decor = _factory.SpawnDecor(decorPrefab);
             decor.SetIsOnDecorState(true);
             _decorHolder.SetActiveDecor(decor);
-            return true;
-        }
+        //}
     }
 
     public void InstanriateDecor(Decor decor)

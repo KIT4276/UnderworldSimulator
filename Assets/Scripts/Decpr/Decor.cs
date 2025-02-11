@@ -71,7 +71,7 @@ public class Decor : MonoBehaviour, IInventoryObject
 
     public void RemoveThisDecor()
     {
-        Debug.Log("RemoveThisDecor");
+        //Debug.Log("RemoveThisDecor");
         _decorPlacer.OnRemoved();
         _decorDrag.OnRemoved();
         _decorRotator.OnRemoved();

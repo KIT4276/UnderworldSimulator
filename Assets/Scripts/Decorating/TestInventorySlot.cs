@@ -8,6 +8,8 @@ public class TestInventorySlot : MonoBehaviour
     [SerializeField] private int _count;
     [SerializeField] private Decor _decorPrefab;
 
+    private bool _isInited;
+
 
     private void Awake()
     {
@@ -16,8 +18,12 @@ public class TestInventorySlot : MonoBehaviour
 
     private void InitSlot()
     {
-        _slot.SetDecor(_decorPrefab);
-        _slotCounter.AddCount(_count);
+        if (_isInited) return;
+        for (int i = 0; i < _count; i++)
+        {
+            _slot.SetDecor(_decorPrefab);
+            _isInited = true;
+        }
     }
 
     private void OnDisable()

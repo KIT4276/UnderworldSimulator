@@ -26,18 +26,18 @@ public class DecorFactory : MonoBehaviour
         Decor decor;
         _currentID++;
 
-        //if (!decorPrefab.gameObject.scene.IsValid())
-        //{
-            Debug.Log("NO");
+        if (!decorPrefab.gameObject.scene.IsValid())
+        {
+           // Debug.Log("NO");
             decor = Instantiate(decorPrefab);
-        //}
-        //else
-        ////{
-        //   Debug.Log("Valid");
-        //    decor = decorPrefab;
-        //    decor.gameObject.SetActive(true);
-        //}
-        
+        }
+        else
+        {
+           // Debug.Log("Valid");
+            decor = decorPrefab;
+            decor.gameObject.SetActive(true);
+        }
+
         decor.Initialize(_staticData, _decorationSystem, _spaceDeterminantor, _currentID, _decorHolder);
         return decor;
     }
