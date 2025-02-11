@@ -25,13 +25,8 @@ public class DecorationSystem
 
     public bool ActivateDecorIfCan(Decor decor)
     {
-        //if (_decorHolder.ActiveDecor != null)
-        //    return false;
-        //else
-        //{
-            _decorHolder.SetActiveDecor(decor);
-            return true;
-        //}
+        _decorHolder.SetActiveDecor(decor);
+        return true;
     }
 
     public void SpawnDecorIfCan(Decor decorPrefab)
@@ -39,12 +34,9 @@ public class DecorationSystem
         if (_decorHolder.ActiveDecor != null)
             TryToRemoveDecor(decorPrefab);
 
-            //else
-            //{
-            var decor = _factory.SpawnDecor(decorPrefab);
-            decor.SetIsOnDecorState(true);
-            _decorHolder.SetActiveDecor(decor);
-        //}
+        var decor = _factory.SpawnDecor(decorPrefab);
+        decor.SetIsOnDecorState(true);
+        _decorHolder.SetActiveDecor(decor);
     }
 
     public void InstanriateDecor(Decor decor)
@@ -60,26 +52,22 @@ public class DecorationSystem
         }
     }
 
-    public void AllowActions() 
-        {
+    public void AllowActions()
+    {
         foreach (var decor in _decorHolder.GetDecorsInScene())
         {
             decor?.AllowActions();
         }
     }
 
-
-
     public void TryToRemoveDecor(Decor decor)
     {
         TryToRemoveDecorAction?.Invoke(decor);
     }
 
-
     public void ReturtDecorToInventory(Decor decor)
     {
         _factory.OnRemoveDecor(decor);
         _decorHolder.DeActiveDecor();
-        //decor.RemoveThisDecor();
     }
 }

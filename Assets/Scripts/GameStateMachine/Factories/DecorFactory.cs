@@ -28,12 +28,10 @@ public class DecorFactory : MonoBehaviour
 
         if (!decorPrefab.gameObject.scene.IsValid())
         {
-           // Debug.Log("NO");
             decor = Instantiate(decorPrefab);
         }
         else
         {
-           // Debug.Log("Valid");
             decor = decorPrefab;
             decor.gameObject.SetActive(true);
         }

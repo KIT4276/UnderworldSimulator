@@ -7,15 +7,14 @@ public class InventorySystem : MonoBehaviour
 {
     [SerializeField] private InventorySlot[] _inventorySlot;
     [SerializeField] private GameObject _warningSign;
+
     private DecorHolder _decorHolder;
-    //private DecorFactory _decorFactory;
     private DecorationSystem _decorationSystem;
 
     [Inject]
-    public void Construct(/*DecorFactory decorFactory,*/ DecorationSystem decorationSystem, DecorHolder decorHolder)
+    public void Construct( DecorationSystem decorationSystem, DecorHolder decorHolder)
     {
         _decorHolder = decorHolder;
-        //_decorFactory = decorFactory;
         _decorationSystem = decorationSystem;
         _decorationSystem.TryToRemoveDecorAction += TryReturnToInventory;
         _warningSign.SetActive(false);
