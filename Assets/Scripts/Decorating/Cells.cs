@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -13,7 +12,6 @@ public class Cells : MonoBehaviour
     [Inject]
     public void Construct(DecorationState decorationState)
     {
-        //Debug.Log(this.name);
         _cells.SetActive(true);
         _decorationState = decorationState;
         _decorationState.DecorationStateEnter += OnDecorStateEnter;

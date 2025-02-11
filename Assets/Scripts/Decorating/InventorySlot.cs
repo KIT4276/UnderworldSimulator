@@ -21,16 +21,12 @@ public class InventorySlot : MonoBehaviour
 
     private Sprite _icon;
 
-    private void Awake()
-    {
-        //if (Decors == null) return;
-        //SettingParameters();
-        Debug.Log("Awake");
-    }
-
     public void Initialized()
     {
-        Decors = new List<Decor>();
+        if (Decors == null)
+        {
+            Decors = new List<Decor>();
+        }
         SettingParameters();
         OnInitialized?.Invoke();
     }
@@ -80,7 +76,6 @@ public class InventorySlot : MonoBehaviour
 
     private void Deactivate()
     {
-        Debug.Log("Deactivate");
         _buttonEnterChangeImage.enabled = false;
         IsOccupied = false;
         _buttonIconImage.sprite = null;
