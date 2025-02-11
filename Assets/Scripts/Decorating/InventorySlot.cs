@@ -21,6 +21,20 @@ public class InventorySlot : MonoBehaviour
 
     private Sprite _icon;
 
+    private void Awake()
+    {
+        //if (Decors == null) return;
+        //SettingParameters();
+        Debug.Log("Awake");
+    }
+
+    public void Initialized()
+    {
+        Decors = new List<Decor>();
+        SettingParameters();
+        OnInitialized?.Invoke();
+    }
+
     public Decor TakeLastDecor()
     {
         var decor = Decors[^1];
@@ -35,13 +49,6 @@ public class InventorySlot : MonoBehaviour
             Initialized();
         var decor = Decors[^1];
         return decor;
-    }
-
-    public void Initialized()
-    {
-        Decors = new List<Decor>();
-        SettingParameters();
-        OnInitialized?.Invoke();
     }
 
     private void SettingParameters()
@@ -71,8 +78,9 @@ public class InventorySlot : MonoBehaviour
         CheckingAndShow();
     }
 
-    public void Deactivate()
+    private void Deactivate()
     {
+        Debug.Log("Deactivate");
         _buttonEnterChangeImage.enabled = false;
         IsOccupied = false;
         _buttonIconImage.sprite = null;

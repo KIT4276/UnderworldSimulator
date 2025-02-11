@@ -13,7 +13,8 @@ public class Cells : MonoBehaviour
     [Inject]
     public void Construct(DecorationState decorationState)
     {
-        _cells.SetActive(false);
+        //Debug.Log(this.name);
+        _cells.SetActive(true);
         _decorationState = decorationState;
         _decorationState.DecorationStateEnter += OnDecorStateEnter;
         _decorationState.DecorationStateExit += OnDecorStateExit;

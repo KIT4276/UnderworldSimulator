@@ -28,6 +28,7 @@ public class WorkbenchSystem : MonoBehaviour
 
     public void ActivateInventory()
     {
+        Debug.Log("ActivateInventory"); 
         _inventory.gameObject.SetActive(true);
         _inventory.ActivateInventory();
         _stateMachine.Enter<DecorationState>(); // trmporary
