@@ -1,30 +1,49 @@
-﻿using DG.Tweening;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ClousdBehaviour : MonoBehaviour
 {
+    [SerializeField] public float fadeSpeed = 1f;  
     private SpriteRenderer _spriteRenderer;
-    [SerializeField] private float _normCAlpha;
-    [SerializeField] private float _meltingSpeed = 2;
+    private Color _spriteColor;
+    private bool _isFadingOut = false;
+    private bool _isFadingIn = false;
 
-    private void Start()
+    void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _normCAlpha = _spriteRenderer.color.a;
+        _spriteColor = _spriteRenderer.color;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void Update()
     {
-        if (collision == null) Debug.Log("OP!_____________________");
-        
-        if (collision.GetComponent<HotelPoint>() != null)
-            _spriteRenderer.DOFade(0, _meltingSpeed);
+        if (_isFadingOut && _spriteColor.a > 0)
+        {
+            _spriteColor.a -= fadeSpeed * Time.deltaTime;
+            _spriteRenderer.color = _spriteColor;
+        }
+
+        if (_isFadingIn && _spriteColor.a < 1)
+        {
+            _spriteColor.a += fadeSpeed * Time.deltaTime;
+            _spriteRenderer.color = _spriteColor;
+        }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision == null) Debug.Log("OP!_____________________");
-        if (collision.GetComponent<HotelPoint>() != null)
-            _spriteRenderer.DOFade(_normCAlpha, _meltingSpeed);
+        if (other.GetComponent<HotelPoint>() != null)
+        {
+            _isFadingOut = true;
+            _isFadingIn = false;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.GetComponent<HotelPoint>() != null)
+        {
+            _isFadingIn = true;
+            _isFadingOut = false;
+        }
     }
 }
