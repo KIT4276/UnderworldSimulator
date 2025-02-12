@@ -35,7 +35,7 @@ public class DecorFactory : MonoBehaviour
             decor = decorPrefab;
             decor.gameObject.SetActive(true);
         }
-
+        decor.gameObject.SetActive(true) ;
         decor.Initialize(_staticData, _decorationSystem, _spaceDeterminantor, _currentID, _decorHolder);
         return decor;
     }
@@ -45,6 +45,7 @@ public class DecorFactory : MonoBehaviour
     {
         decor.RemoveThisDecor();
         decor.transform.position = new Vector3(0, 0, 0);
-        decor.gameObject.SetActive(false);
+        decor.gameObject./*transform.position = new Vector3(-100, -100, 0);*/SetActive(false);
     }
+
 }
