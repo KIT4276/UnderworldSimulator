@@ -49,10 +49,10 @@ public class WorkbenchSystem : MonoBehaviour
     {
         if (_decorHolder.ActiveDecor == null)
         {
-
             _workbenchPanel.SetActive(false);
             _stateMachine.Enter<GameLoopState>();
             _inventory.gameObject.SetActive(false);
+
         }
     }
 }

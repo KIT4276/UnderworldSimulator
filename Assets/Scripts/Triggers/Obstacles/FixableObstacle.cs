@@ -24,5 +24,6 @@ public class FixableObstacle : MonoBehaviour
     {
         _interactableObstacle.LeftTheArea -= CloseFixMenu;
         _menu.SetActive(false);
+        _interactableObstacle.OnGameLoopStateEnter();
     }
 }
