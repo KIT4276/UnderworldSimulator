@@ -7,7 +7,9 @@ public class InteractableObstacle : MonoBehaviour
 {
     [SerializeField] protected GameObject _sign;
     [SerializeField] private string _reactionText = "Реакция персонажа...";//move text to SO
-    [Inject]private PlayerInput _playerInput;
+
+    [Inject] protected PlayerInput _playerInput;
+    [Inject] protected GameLoopState _gameLoopState;
 
     private bool _isBroken;
     protected bool _isActive;
@@ -33,17 +35,21 @@ public class InteractableObstacle : MonoBehaviour
             _hero = hero;
             _playerInput.onActionTriggered += OnPlayerInputActionTriggered;
             Activate();
+            _gameLoopState.EnterGameLoopState += OnGameLoopStateEnter;
         }
     }
     protected void OnTriggerExit2D(Collider2D collision)
     {
         DeActivate();
-        
+    }
+
+    public void OnGameLoopStateEnter()
+    {
+        Activate();
     }
 
     protected void OnPlayerInputActionTriggered(InputAction.CallbackContext context)
     {
-        //Debug.Log("OnPlayerInputActionTriggered");
         if (_isActive && context.action.name == "Interact" && context.action.phase == InputActionPhase.Started)
             Interac();
     }
