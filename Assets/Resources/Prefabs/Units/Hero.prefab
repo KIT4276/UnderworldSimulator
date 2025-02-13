@@ -2197,7 +2197,7 @@ Transform:
   m_GameObject: {fileID: 2273220647618406924}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7051951, w: 0.7090133}
-  m_LocalPosition: {x: 0.011488531, y: 4.85553, z: -0.003}
+  m_LocalPosition: {x: 0.011498642, y: 4.816, z: -0.003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2627,7 +2627,7 @@ Transform:
   m_GameObject: {fileID: 2883347955353526957}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7051951, w: 0.7090133}
-  m_LocalPosition: {x: 0.011488531, y: 4.85553, z: -0.020000001}
+  m_LocalPosition: {x: 0.011498642, y: 4.816, z: -0.020000001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4754,7 +4754,7 @@ Transform:
   m_GameObject: {fileID: 4808890894661750690}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7051951, w: 0.7090133}
-  m_LocalPosition: {x: 0.011488531, y: 4.85553, z: -0.019000001}
+  m_LocalPosition: {x: 0.011498642, y: 4.816, z: -0.019000001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7159,8 +7159,10 @@ MonoBehaviour:
   _positionComposer: {fileID: 1715230573778128630}
   _scrollSpeed: 30
   _moveTime: 1
-  _maxCameraDistance: -6
-  _minCameraDistance: -40
+  _maxGameLoopZoom: -6
+  _minGameLoopZoom: -40
+  _maxDecoratingZoom: -6
+  _mainDecoratingZoom: -40
 --- !u!114 &1938723780897126922
 MonoBehaviour:
   m_ObjectHideFlags: 0
