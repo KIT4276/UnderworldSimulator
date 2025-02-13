@@ -2,15 +2,7 @@ using UnityEngine;
 
 public class HotelPoint : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Collider2D _frame;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Collider2D Frame { get => _frame; }
 }
