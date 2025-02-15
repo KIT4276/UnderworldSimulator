@@ -7,4 +7,6 @@
     Chest,
     Fireplace,
     Ottoman,
+    Bookshelf,
+    Table,
 }
