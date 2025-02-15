@@ -5,7 +5,7 @@ using Zenject;
 
 public class InventorySystem : MonoBehaviour
 {
-    [SerializeField] private InventorySlot[] _inventorySlot;
+    [SerializeField] private DecorInventorySlot[] _inventorySlot;
     [SerializeField] private GameObject _warningSign;
 
     private DecorHolder _decorHolder;
@@ -16,7 +16,7 @@ public class InventorySystem : MonoBehaviour
     {
         _decorHolder = decorHolder;
         _decorationSystem = decorationSystem;
-        _decorationSystem.TryToRemoveDecorAction += TryReturnToInventory;
+        _decorationSystem.TryToRemoveDecorAction += TryReturnDecorToInventory;
         _warningSign.SetActive(false);
     }
 
@@ -24,7 +24,7 @@ public class InventorySystem : MonoBehaviour
     {
         foreach (var slot in _inventorySlot)
         {
-            slot.Initialized();
+            slot.Initialize();
         }
     }
 
@@ -34,7 +34,8 @@ public class InventorySystem : MonoBehaviour
             this.gameObject.SetActive(false);
     }
 
-    private void TryReturnToInventory(Decor decor)
+    private void TryReturnDecorToInventory(Decor decor)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
+                                                       //для лута создать свой метод
     {
         bool isPlaced = false;
 
@@ -42,7 +43,7 @@ public class InventorySystem : MonoBehaviour
         {
             if (_inventorySlot[i].IsOccupied)
             {
-                if (_inventorySlot[i].GetLastDecor().DecorType == decor.DecorType)
+                if (((Decor)_inventorySlot[i].GetLastInventoryObject()).DecorType == decor.DecorType)
                 {
                     ReturnToInventory(decor, i);
                     isPlaced = true;
@@ -88,6 +89,6 @@ public class InventorySystem : MonoBehaviour
     {
         StopAllCoroutines();
         _warningSign.SetActive(false);
-        _decorationSystem.TryToRemoveDecorAction -= TryReturnToInventory;
+        _decorationSystem.TryToRemoveDecorAction -= TryReturnDecorToInventory;
     }
 }

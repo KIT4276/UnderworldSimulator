@@ -1,10 +1,9 @@
 using UnityEngine;
 
-[RequireComponent(typeof(InventorySlot))]
+[RequireComponent(typeof(DecorInventorySlot))]
 public class TestInventorySlot : MonoBehaviour
 {
-    [SerializeField] private InventorySlot _slot;
-    [SerializeField] private InventorySlotCounter _slotCounter;
+    [SerializeField] private DecorInventorySlot _slot;
     [SerializeField] private int _count;
     [SerializeField] private Decor _decorPrefab;
 
@@ -13,7 +12,7 @@ public class TestInventorySlot : MonoBehaviour
 
     private void Awake()
     {
-        _slot.OnInitialized += InitSlot;
+        _slot.InitializedAction += InitSlot;
     }
 
     private void InitSlot()
@@ -28,6 +27,6 @@ public class TestInventorySlot : MonoBehaviour
 
     private void OnDisable()
     {
-        _slot.OnInitialized -= InitSlot;
+        _slot.InitializedAction -= InitSlot;
     }
 }
