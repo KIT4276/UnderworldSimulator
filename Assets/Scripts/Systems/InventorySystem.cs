@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
-
 
 public class InventorySystem : MonoBehaviour
 {
@@ -10,6 +10,8 @@ public class InventorySystem : MonoBehaviour
 
     private DecorHolder _decorHolder;
     private DecorationSystem _decorationSystem;
+
+    public event Action Closed;
 
     [Inject]
     public void Construct( DecorationSystem decorationSystem, DecorHolder decorHolder)
@@ -31,7 +33,48 @@ public class InventorySystem : MonoBehaviour
     public void DeActivateInventory()
     {
         if (_decorHolder.ActiveDecor == null)
+        {
             this.gameObject.SetActive(false);
+            Closed?.Invoke();
+        }
+    }
+
+    public void TryReturnLootToInventory(Loot loot) /// Внимательно! Сюда обращаемся только чтобы вернуть лут
+    {
+        bool isPlaced = false;
+
+        for (int i = 0; i < _inventorySlot.Length; i++)
+        {
+            if (_inventorySlot[i].IsOccupied)
+            {
+                if (((Loot)_inventorySlot[i].GetLastItems()).LootType == loot.LootType)
+                {
+                    ReturnLootToInventory(loot, i);
+                    isPlaced = true;
+                    break;
+                }
+            }
+        }
+        if (!isPlaced)
+        {
+            for (int i = 0; i < _inventorySlot.Length; i++)
+            {
+                if (!_inventorySlot[i].IsOccupied)
+                {
+                    ReturnLootToInventory(loot, i);
+                    isPlaced = true;
+                    break;
+                }
+            }
+        }
+
+        if (!isPlaced)
+        {
+            Debug.Log(" не нашлось место для декора");
+            StopAllCoroutines();
+            _warningSign.SetActive(true);
+            StartCoroutine(HideTAblet());
+        }
     }
 
     private void TryReturnDecorToInventory(Decor decor)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
@@ -78,6 +121,12 @@ public class InventorySystem : MonoBehaviour
     {
         _inventorySlot[i].SetItem(decor);
         _decorationSystem.ReturtDecorToInventory(decor);
+    }
+
+    private void ReturnLootToInventory(Loot loot, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть лут.
+    {
+        _inventorySlot[i].SetItem(loot);
+        //_decorationSystem.ReturtDecorToInventory(loot);
     }
 
     private IEnumerator HideTAblet()

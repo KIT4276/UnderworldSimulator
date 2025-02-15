@@ -7,6 +7,7 @@ public class GameplayInstaller : MonoInstaller
     [SerializeField] private GameObject _workbenchPrefab;
     [SerializeField] private GameObject _decorFactiryPrefab;
     [SerializeField] private GameObject _inventoryPrefab;
+    [SerializeField] private GameObject _LootPrefab;
 
     public override void InstallBindings()
     {
@@ -22,6 +23,7 @@ public class GameplayInstaller : MonoInstaller
 
         Container.Bind<DecorFactory>().FromComponentInNewPrefab(_decorFactiryPrefab).AsSingle().NonLazy();
         Container.Bind<DecorationSystem>().FromNew().AsSingle().NonLazy();
+        Container.Bind<LootSystem>().FromComponentInNewPrefab(_LootPrefab).AsSingle().NonLazy();
     }
 
     private void InstallScriptableObjects()

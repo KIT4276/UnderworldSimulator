@@ -48,6 +48,8 @@ public class InventorySlot : MonoBehaviour
 
     public void SetItem(BaseItem item)
     {
+        Debug.Log("Set Item " + item.name);
+        
         IsOccupied = true;
         _icon = item.GetIcon();
         Items.Add(item);
