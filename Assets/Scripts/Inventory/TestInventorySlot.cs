@@ -1,14 +1,12 @@
 using UnityEngine;
 
-[RequireComponent(typeof(DecorInventorySlot))]
 public class TestInventorySlot : MonoBehaviour
 {
-    [SerializeField] private DecorInventorySlot _slot;
+    [SerializeField] private InventorySlot _slot;
     [SerializeField] private int _count;
-    [SerializeField] private Decor _decorPrefab;
+    [SerializeField] private BaseItem _itemPrefab;
 
     private bool _isInited;
-
 
     private void Awake()
     {
@@ -17,12 +15,13 @@ public class TestInventorySlot : MonoBehaviour
 
     private void InitSlot()
     {
-        if (_isInited) return;
-        for (int i = 0; i < _count; i++)
-        {
-            _slot.SetDecor(_decorPrefab);
-            _isInited = true;
-        }
+        if (_isInited|| _count == 0 && _itemPrefab == null) return;
+
+            for (int i = 0; i < _count; i++)
+            {
+                _slot.SetItem(_itemPrefab);
+                _isInited = true;
+            }
     }
 
     private void OnDisable()

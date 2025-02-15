@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(DecorView), (typeof(DecorRotator)))]
 [RequireComponent(typeof(DecorDrag), (typeof(DecorPlacer)))]
-public class Decor : MonoBehaviour, IInventoryObject
+public class Decor : BaseItem
 {
     [SerializeField] private DecorType _decorType;
     [Space]
@@ -17,7 +17,7 @@ public class Decor : MonoBehaviour, IInventoryObject
     [SerializeField] protected InputActionReference _cancelAction;
     [SerializeField] protected InputActionReference _rotationAction;
     [Space]
-    [SerializeField] protected Sprite _icon;
+    
 
     protected DecorData _decorData;
     protected DecorationSystem _decorationSystem;
@@ -85,9 +85,6 @@ public class Decor : MonoBehaviour, IInventoryObject
     {
         if (!CheckCamera()) return;
     }
-
-    public Sprite GetIcon()
-        => _icon;
 
     public void SetIsOnDecorState(bool isOnDecorState) =>
         _isOnDecorState = isOnDecorState;

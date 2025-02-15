@@ -249,7 +249,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 211.8}
+  m_AnchoredPosition: {x: 0, y: 242.1}
   m_SizeDelta: {x: 0, y: -492.2133}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5023605615222217725
@@ -1010,8 +1010,9 @@ GameObject:
   - component: {fileID: 8675767389576119678}
   - component: {fileID: 3370450227857788272}
   - component: {fileID: 4075787173145741583}
-  - component: {fileID: 6243167805323560341}
-  - component: {fileID: 1441081843727836503}
+  - component: {fileID: 5075638006906164448}
+  - component: {fileID: 6508440342745993468}
+  - component: {fileID: 2094098934449750448}
   m_Layer: 5
   m_Name: LootContentButton
   m_TagString: Untagged
@@ -1123,9 +1124,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6243167805323560341}
-        m_TargetAssemblyTypeName: DecorSpawner, Assembly-CSharp
-        m_MethodName: SpawnDecor
+      - m_Target: {fileID: 2094098934449750448}
+        m_TargetAssemblyTypeName: InventoryClickHandler, Assembly-CSharp
+        m_MethodName: OnButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1151,7 +1152,7 @@ MonoBehaviour:
   _emptyImage: {fileID: 3429337977335612603, guid: b73679d96b3a042458da47f6f4f5ba8d, type: 3}
   _normImage: {fileID: -3259823593519958375, guid: 85b80ec7fb37aea49840a21e1eb6fefd, type: 3}
   _highlightImage: {fileID: 315520549990147914, guid: 92ee7afdbf1c32641aa3c2fb4fbf721e, type: 3}
---- !u!114 &6243167805323560341
+--- !u!114 &5075638006906164448
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1160,20 +1161,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3031234444428968120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eea161c60c25b647b14cc201edc1302, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _slot: {fileID: 1441081843727836503}
---- !u!114 &1441081843727836503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3031234444428968120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c851b1818bd5d4746863c84389796e84, type: 3}
+  m_Script: {fileID: 11500000, guid: 350a8170a968b8a40bd494ec445d4132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonIconImage: {fileID: 2965678014577282548}
@@ -1181,6 +1169,34 @@ MonoBehaviour:
   _button: {fileID: 3370450227857788272}
   _textMeshPro: {fileID: 5594435865072325976}
   _x_TextTablet: {fileID: 302074243828521987}
+--- !u!114 &6508440342745993468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3031234444428968120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811c384358359554e8e82739c40506b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slot: {fileID: 5075638006906164448}
+  _count: 2
+  _itemPrefab: {fileID: 3323827491770189643, guid: 43d19ef23eed01e4898303987dac4f73, type: 3}
+--- !u!114 &2094098934449750448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3031234444428968120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a475482e724c944bb8249788d823326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slot: {fileID: 5075638006906164448}
 --- !u!1 &3039475731682323117
 GameObject:
   m_ObjectHideFlags: 0
@@ -1475,7 +1491,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3336628845244969503}
   m_HandleRect: {fileID: 5689031888223199247}
   m_Direction: 2
-  m_Value: 1.0000001
+  m_Value: 1
   m_Size: 0.34542271
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1993,9 +2009,9 @@ GameObject:
   - component: {fileID: 7055979044673893865}
   - component: {fileID: 6488317539028249147}
   - component: {fileID: 7538894850144216171}
-  - component: {fileID: 3663936203468278803}
-  - component: {fileID: 4503032040940791004}
   - component: {fileID: 4516036225274074962}
+  - component: {fileID: 2237146183814557386}
+  - component: {fileID: 6613479525350516774}
   m_Layer: 5
   m_Name: newCair_ContentButton (Legacy)
   m_TagString: Untagged
@@ -2107,9 +2123,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3663936203468278803}
-        m_TargetAssemblyTypeName: DecorSpawner, Assembly-CSharp
-        m_MethodName: SpawnDecor
+      - m_Target: {fileID: 6613479525350516774}
+        m_TargetAssemblyTypeName: InventoryClickHandler, Assembly-CSharp
+        m_MethodName: OnButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2135,36 +2151,6 @@ MonoBehaviour:
   _emptyImage: {fileID: 3429337977335612603, guid: b73679d96b3a042458da47f6f4f5ba8d, type: 3}
   _normImage: {fileID: -3259823593519958375, guid: 85b80ec7fb37aea49840a21e1eb6fefd, type: 3}
   _highlightImage: {fileID: 315520549990147914, guid: 92ee7afdbf1c32641aa3c2fb4fbf721e, type: 3}
---- !u!114 &3663936203468278803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4055505804007410765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eea161c60c25b647b14cc201edc1302, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _slot: {fileID: 4503032040940791004}
---- !u!114 &4503032040940791004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4055505804007410765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ec5c595cc7df244fb2e74c4defad517, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _buttonIconImage: {fileID: 649743758871832444}
-  _buttonEnterChangeImage: {fileID: 7538894850144216171}
-  _button: {fileID: 6488317539028249147}
-  _textMeshPro: {fileID: 2126161505439961820}
-  _x_TextTablet: {fileID: 1388281398611891830}
 --- !u!114 &4516036225274074962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2177,9 +2163,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811c384358359554e8e82739c40506b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slot: {fileID: 4503032040940791004}
+  _slot: {fileID: 2237146183814557386}
   _count: 5
-  _decorPrefab: {fileID: 5398454807080672356, guid: f1b4378526746834b9ccd1e03a14993a, type: 3}
+  _itemPrefab: {fileID: 5398454807080672356, guid: f1b4378526746834b9ccd1e03a14993a, type: 3}
+--- !u!114 &2237146183814557386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4055505804007410765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 350a8170a968b8a40bd494ec445d4132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buttonIconImage: {fileID: 649743758871832444}
+  _buttonEnterChangeImage: {fileID: 7538894850144216171}
+  _button: {fileID: 6488317539028249147}
+  _textMeshPro: {fileID: 2126161505439961820}
+  _x_TextTablet: {fileID: 1388281398611891830}
+--- !u!114 &6613479525350516774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4055505804007410765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a475482e724c944bb8249788d823326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slot: {fileID: 2237146183814557386}
 --- !u!1 &4404729270519896243
 GameObject:
   m_ObjectHideFlags: 0
@@ -2808,10 +2824,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inventorySlot:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2237146183814557386}
+  - {fileID: 5075638006906164448}
   _warningSign: {fileID: 2955848605983700003}
 --- !u!114 &4385664758730827898
 MonoBehaviour:

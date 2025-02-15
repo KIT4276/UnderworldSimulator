@@ -5,7 +5,7 @@ using Zenject;
 
 public class InventorySystem : MonoBehaviour
 {
-    [SerializeField] private DecorInventorySlot[] _inventorySlot;
+    [SerializeField] private InventorySlot[] _inventorySlot;
     [SerializeField] private GameObject _warningSign;
 
     private DecorHolder _decorHolder;
@@ -43,9 +43,9 @@ public class InventorySystem : MonoBehaviour
         {
             if (_inventorySlot[i].IsOccupied)
             {
-                if (((Decor)_inventorySlot[i].GetLastInventoryObject()).DecorType == decor.DecorType)
+                if (((Decor)_inventorySlot[i].GetLastItems()).DecorType == decor.DecorType)
                 {
-                    ReturnToInventory(decor, i);
+                    ReturnDecorToInventory(decor, i);
                     isPlaced = true;
                     break;
                 }
@@ -57,7 +57,7 @@ public class InventorySystem : MonoBehaviour
             {
                 if (!_inventorySlot[i].IsOccupied)
                 {
-                    ReturnToInventory(decor, i);
+                    ReturnDecorToInventory(decor, i);
                     isPlaced = true;
                     break;
                 }
@@ -73,9 +73,10 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    private void ReturnToInventory(Decor decor, int i)
+    private void ReturnDecorToInventory(Decor decor, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
+                                                           //для лута создать свой метод
     {
-        _inventorySlot[i].SetDecor(decor);
+        _inventorySlot[i].SetItem(decor);
         _decorationSystem.ReturtDecorToInventory(decor);
     }
 
