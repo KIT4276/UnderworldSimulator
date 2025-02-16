@@ -33,4 +33,19 @@ public class HeroMove : BaseMovable
     {
         _moveSpeed = value;
     }
+
+    /// <summary>
+    /// override for tests
+    /// </summary>
+    public override void Mobilize()
+    {
+        base.Mobilize();
+       // Debug.Log("Hero Mobilize");
+    }
+
+    public override void Immobilize()
+    {
+        base.Immobilize();
+       // Debug.Log("Hero Immobilize");
+    }
 }

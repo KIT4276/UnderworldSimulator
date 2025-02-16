@@ -21,7 +21,9 @@ public abstract class BaseMovable : MonoBehaviour
     }
 
     public virtual void Mobilize()
-        => _canMove = true;
+    {
+        _canMove = true;
+    }
 
     protected void Update()
     {

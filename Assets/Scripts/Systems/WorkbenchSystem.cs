@@ -1,17 +1,22 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class WorkbenchSystem : MonoBehaviour
 {
     [SerializeField] private GameObject _workbenchPanel;
     [SerializeField] private ButtonClickChangeImage[] buttonsClick;
+    [SerializeField] private InputActionReference _escapeAction;
+
+
     private DecorHolder _decorHolder;
     private StateMachine _stateMachine;
     private InventorySystem _inventory;
     private DecorationSystem _decorationSystem;
 
     [Inject]
-    public void  Construct(StateMachine stateMachine, InventorySystem inventory, DecorationSystem decorationSystem, DecorHolder decorHolder)
+    public void Construct(StateMachine stateMachine, InventorySystem inventory, DecorationSystem decorationSystem, DecorHolder decorHolder)
     {
         _decorHolder = decorHolder;
         _stateMachine = stateMachine;
@@ -24,6 +29,8 @@ public class WorkbenchSystem : MonoBehaviour
         {
             button.GetComponent<ButtonEnterChangeImage>().Activate();
         }
+
+        _escapeAction.action.performed += OnEscape;
     }
 
     public void ActivateInventory()
@@ -35,7 +42,7 @@ public class WorkbenchSystem : MonoBehaviour
 
     public void ActivateWorkbench()
     {
-        _workbenchPanel.SetActive(true );
+        _workbenchPanel.SetActive(true);
 
         foreach (var button in buttonsClick)
         {
@@ -54,5 +61,11 @@ public class WorkbenchSystem : MonoBehaviour
             _inventory.gameObject.SetActive(false);
 
         }
+    }
+
+    private void OnEscape(InputAction.CallbackContext context)
+    {
+        if (_stateMachine.ActiveState is WorkbenchState)
+            DeActivateWorkbench();
     }
 }

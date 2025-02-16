@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class StateMachine
 {
@@ -32,7 +33,11 @@ public class StateMachine
             [typeof(WorkbenchState)] = _stateFactory
             .CreateState<WorkbenchState>(),
             [typeof(DecorationState)] = _stateFactory
-            .CreateState < DecorationState>()
+            .CreateState < DecorationState>(),
+            [typeof(LootState)] = _stateFactory
+            .CreateState<LootState>(),
+            [typeof(InventoryState)] = _stateFactory
+            .CreateState<InventoryState>(),
         };
         Enter<BootstrapState>();
         _isInited = true;
@@ -42,12 +47,16 @@ public class StateMachine
     {
         IState state = ChangeState<TState>();
         state.Enter();
+
+        //Debug.Log("Enter To " + ActiveState);
     }
 
     public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadedState<TPayload>
     {
         TState state = ChangeState<TState>();
         state.Enter(payload);
+
+       // Debug.Log("Enter To " + ActiveState);
     }
 
     private TState ChangeState<TState>() where TState : class, IExitableState

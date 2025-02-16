@@ -20,7 +20,7 @@ public class GameLoopState : IState
 
     public void Exit() 
     {
-        _gameFactory.HeroMove.Immobilize();
-        _gameFactory.CameraMove.Mobilize();
+        //_gameFactory.HeroMove.Immobilize();
+        //_gameFactory.CameraMove.Mobilize();
     }
 }
