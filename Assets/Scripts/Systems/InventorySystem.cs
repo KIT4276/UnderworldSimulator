@@ -29,11 +29,11 @@ public class InventorySystem : MonoBehaviour
 
     private void OnEscape(InputAction.CallbackContext context)
     {
-        if (!(_stateMachine.ActiveState is LootState))
-        {
-            DeActivateInventory();
+        //if (!(_stateMachine.ActiveState is LootState))
+        //{
+        DeActivateInventory();
 
-        }
+        //}
     }
 
     public void ActivateInventory()
@@ -48,127 +48,125 @@ public class InventorySystem : MonoBehaviour
     {
         if (_decorHolder.ActiveDecor == null)
         {
-
-
-            //Debug.Log(_stateMachine.ActiveState);
+            //Debug.Log("Было " + _stateMachine.ActiveState);
 
             if (_stateMachine.ActiveState is InventoryState || _stateMachine.ActiveState is LootState)
             {
                 _stateMachine.Enter<GameLoopState>();
+                Closed?.Invoke();
             }
             else if (_stateMachine.ActiveState is DecorationState)
             {
                 _stateMachine.Enter<WorkbenchState>();
             }
 
-            Closed?.Invoke();
             this.gameObject.SetActive(false);
         }
     }
 
 
-public void TryReturnLootToInventory(Loot loot) /// Внимательно! Сюда обращаемся только чтобы вернуть лут
-{
-    bool isPlaced = false;
+    public void TryReturnLootToInventory(Loot loot) /// Внимательно! Сюда обращаемся только чтобы вернуть лут
+    {
+        bool isPlaced = false;
 
-    for (int i = 0; i < _inventorySlot.Length; i++)
-    {
-        if (_inventorySlot[i].IsOccupied)
-        {
-            if (_inventorySlot[i].GetLastItems() is Loot &&
-                ((Loot)_inventorySlot[i].GetLastItems()).LootType == loot.LootType)
-            {
-                ReturnLootToInventory(loot, i);
-                isPlaced = true;
-                break;
-            }
-        }
-    }
-    if (!isPlaced)
-    {
         for (int i = 0; i < _inventorySlot.Length; i++)
         {
-            if (!_inventorySlot[i].IsOccupied)
+            if (_inventorySlot[i].IsOccupied)
             {
-                ReturnLootToInventory(loot, i);
-                isPlaced = true;
-                break;
+                if (_inventorySlot[i].GetLastItems() is Loot &&
+                    ((Loot)_inventorySlot[i].GetLastItems()).LootType == loot.LootType)
+                {
+                    ReturnLootToInventory(loot, i);
+                    isPlaced = true;
+                    break;
+                }
             }
         }
-    }
-
-    if (!isPlaced)
-    {
-        Debug.Log(" не нашлось место для декора");
-        StopAllCoroutines();
-        _warningSign.SetActive(true);
-        StartCoroutine(HideTAblet());
-    }
-}
-
-private void TryReturnDecorToInventory(Decor decor)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
-                                                   //для лута создать свой метод
-{
-    bool isPlaced = false;
-
-    for (int i = 0; i < _inventorySlot.Length; i++)
-    {
-        if (_inventorySlot[i].IsOccupied)
+        if (!isPlaced)
         {
-            if (_inventorySlot[i].GetLastItems() is Decor
-                && ((Decor)_inventorySlot[i].GetLastItems()).DecorType == decor.DecorType)
+            for (int i = 0; i < _inventorySlot.Length; i++)
             {
-                ReturnDecorToInventory(decor, i);
-                isPlaced = true;
-                break;
+                if (!_inventorySlot[i].IsOccupied)
+                {
+                    ReturnLootToInventory(loot, i);
+                    isPlaced = true;
+                    break;
+                }
             }
         }
-    }
-    if (!isPlaced)
-    {
-        for (int i = 0; i < _inventorySlot.Length; i++)
+
+        if (!isPlaced)
         {
-            if (!_inventorySlot[i].IsOccupied)
-            {
-                ReturnDecorToInventory(decor, i);
-                isPlaced = true;
-                break;
-            }
+            Debug.Log(" не нашлось место для декора");
+            StopAllCoroutines();
+            _warningSign.SetActive(true);
+            StartCoroutine(HideTAblet());
         }
     }
 
-    if (!isPlaced)
-    {
-        Debug.Log(" не нашлось место для декора");
-        StopAllCoroutines();
-        _warningSign.SetActive(true);
-        StartCoroutine(HideTAblet());
-    }
-}
-
-private void ReturnDecorToInventory(Decor decor, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
+    private void TryReturnDecorToInventory(Decor decor)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
                                                        //для лута создать свой метод
-{
-    _inventorySlot[i].SetItem(decor);
-    _decorationSystem.ReturtDecorToInventory(decor);
-}
+    {
+        bool isPlaced = false;
 
-private void ReturnLootToInventory(Loot loot, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть лут.
-{
-    _inventorySlot[i].SetItem(loot);
-    //_decorationSystem.ReturtDecorToInventory(loot);
-}
+        for (int i = 0; i < _inventorySlot.Length; i++)
+        {
+            if (_inventorySlot[i].IsOccupied)
+            {
+                if (_inventorySlot[i].GetLastItems() is Decor
+                    && ((Decor)_inventorySlot[i].GetLastItems()).DecorType == decor.DecorType)
+                {
+                    ReturnDecorToInventory(decor, i);
+                    isPlaced = true;
+                    break;
+                }
+            }
+        }
+        if (!isPlaced)
+        {
+            for (int i = 0; i < _inventorySlot.Length; i++)
+            {
+                if (!_inventorySlot[i].IsOccupied)
+                {
+                    ReturnDecorToInventory(decor, i);
+                    isPlaced = true;
+                    break;
+                }
+            }
+        }
 
-private IEnumerator HideTAblet()
-{
-    yield return new WaitForSeconds(3);
-    _warningSign.SetActive(false);
-}
+        if (!isPlaced)
+        {
+            Debug.Log(" не нашлось место для декора");
+            StopAllCoroutines();
+            _warningSign.SetActive(true);
+            StartCoroutine(HideTAblet());
+        }
+    }
 
-private void OnDisable()
-{
-    StopAllCoroutines();
-    _warningSign.SetActive(false);
-    _decorationSystem.TryToRemoveDecorAction -= TryReturnDecorToInventory;
-}
+    private void ReturnDecorToInventory(Decor decor, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
+                                                           //для лута создать свой метод
+    {
+        _inventorySlot[i].SetItem(decor);
+        _decorationSystem.ReturtDecorToInventory(decor);
+    }
+
+    private void ReturnLootToInventory(Loot loot, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть лут.
+    {
+        _inventorySlot[i].SetItem(loot);
+        //_decorationSystem.ReturtDecorToInventory(loot);
+    }
+
+    private IEnumerator HideTAblet()
+    {
+        yield return new WaitForSeconds(3);
+        _warningSign.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        _warningSign.SetActive(false);
+        _decorationSystem.TryToRemoveDecorAction -= TryReturnDecorToInventory;
+    }
 }

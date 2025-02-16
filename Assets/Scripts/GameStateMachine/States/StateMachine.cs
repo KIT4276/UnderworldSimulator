@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class StateMachine
 {
@@ -48,7 +47,7 @@ public class StateMachine
         IState state = ChangeState<TState>();
         state.Enter();
 
-        //Debug.Log("Enter To " + ActiveState);
+        //Debug.Log( ActiveState);
     }
 
     public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadedState<TPayload>
