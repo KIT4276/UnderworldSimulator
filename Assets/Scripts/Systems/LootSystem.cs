@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class LootSystem : MonoBehaviour
 {
+    [SerializeField] private InputActionReference _escapeAction;
     [SerializeField] private GameObject _menu;
     [SerializeField] private LootSlot[] _slots;
     
@@ -18,6 +20,7 @@ public class LootSystem : MonoBehaviour
     {
         _menu.SetActive(false);
         _inventorySystem.Closed += CloseMenu;
+        _escapeAction.action.performed += OnEscape;
     }
 
     public void OpenMenu()
@@ -68,6 +71,12 @@ public class LootSystem : MonoBehaviour
         }
     }
 
+
+    private void OnEscape(InputAction.CallbackContext context)
+    {
+        Debug.Log("OnEscape");
+        CloseMenu();
+    }
 
     private void OnDestroy()
     {

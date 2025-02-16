@@ -35,7 +35,6 @@ public class InventorySlot : MonoBehaviour
         if (Items == null)
             Initialize();
         var item = Items[^1];
-        //Debug.Log(item);
         return item;
     }
 
@@ -49,9 +48,7 @@ public class InventorySlot : MonoBehaviour
 
     public void SetItem(BaseItem item)
     {
-       // Debug.Log("Set Item " + item.name);
-        if(Items == null)
-            Items = new List<BaseItem>();
+        Items ??= new List<BaseItem>();
 
         IsOccupied = true;
         _icon = item.GetIcon();
