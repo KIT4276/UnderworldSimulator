@@ -47,7 +47,8 @@ public class InventorySystem : MonoBehaviour
         {
             if (_inventorySlot[i].IsOccupied)
             {
-                if (((Loot)_inventorySlot[i].GetLastItems()).LootType == loot.LootType)
+                if (_inventorySlot[i].GetLastItems() is Loot && 
+                    ((Loot)_inventorySlot[i].GetLastItems()).LootType == loot.LootType)
                 {
                     ReturnLootToInventory(loot, i);
                     isPlaced = true;
@@ -86,7 +87,8 @@ public class InventorySystem : MonoBehaviour
         {
             if (_inventorySlot[i].IsOccupied)
             {
-                if (((Decor)_inventorySlot[i].GetLastItems()).DecorType == decor.DecorType)
+                if (_inventorySlot[i].GetLastItems() is Decor
+                    && ((Decor)_inventorySlot[i].GetLastItems()).DecorType == decor.DecorType)
                 {
                     ReturnDecorToInventory(decor, i);
                     isPlaced = true;

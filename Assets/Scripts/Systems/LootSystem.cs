@@ -10,7 +10,10 @@ public class LootSystem : MonoBehaviour
     [Inject] private InventorySystem _inventorySystem;
 
     private bool _isInited;
-    
+    private GameObject _interactiveObject;
+
+    public event Action OpenMenuAction;
+
     void Start()
     {
         _menu.SetActive(false);
@@ -31,6 +34,7 @@ public class LootSystem : MonoBehaviour
             }
             _isInited = true;
         }
+        OpenMenuAction?.Invoke();
     }
 
     public void CloseMenu()
@@ -42,6 +46,28 @@ public class LootSystem : MonoBehaviour
     {
         _inventorySystem.TryReturnLootToInventory((Loot)item);
     }
+
+    public void OffInteractiveObject()
+    {
+        _interactiveObject.SetActive(false);
+    }
+
+    public void FillSlot(Loot loot, int count, GameObject interactiveObject)
+    {
+        foreach(var slot in _slots)
+        {
+            if(!slot.IsOccupied)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    slot.SetItem(loot);
+                }
+                _interactiveObject = interactiveObject;
+                break;
+            }
+        }
+    }
+
 
     private void OnDestroy()
     {

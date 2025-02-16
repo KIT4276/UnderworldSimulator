@@ -34,8 +34,9 @@ public class InventorySlot : MonoBehaviour
     {
         if (Items == null)
             Initialize();
-        var decor = Items[^1];
-        return decor;
+        var item = Items[^1];
+        //Debug.Log(item);
+        return item;
     }
 
     public BaseItem TakeLastItem()
@@ -48,8 +49,10 @@ public class InventorySlot : MonoBehaviour
 
     public void SetItem(BaseItem item)
     {
-        Debug.Log("Set Item " + item.name);
-        
+       // Debug.Log("Set Item " + item.name);
+        if(Items == null)
+            Items = new List<BaseItem>();
+
         IsOccupied = true;
         _icon = item.GetIcon();
         Items.Add(item);

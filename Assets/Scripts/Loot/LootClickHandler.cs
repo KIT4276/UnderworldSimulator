@@ -9,16 +9,19 @@ public class LootClickHandler : MonoBehaviour
 
     public void OntakeClick()
     {
-        Debug.Log("OntakeClick");
+        //Debug.Log("OntakeClick");
         _lootSystem.TakeLootToInventory(_lootSlot.TakeLastItem());
     }
 
     public void OnTakeAllClick()
     {
-        Debug.Log("OnTakeAllClick");
-        foreach (var loot in _lootSlot.Loots)
+        //Debug.Log("OnTakeAllClick");
+
+        while (_lootSlot.Loots.Count > 0)
         {
             _lootSystem.TakeLootToInventory(_lootSlot.TakeLastItem());
         }
+        _lootSystem.OffInteractiveObject();
+        _lootSystem.CloseMenu();
     }
 }

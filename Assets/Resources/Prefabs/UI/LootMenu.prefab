@@ -832,7 +832,6 @@ GameObject:
   - component: {fileID: 6918490560459022255}
   - component: {fileID: 9112315048336215121}
   - component: {fileID: 939759091450168400}
-  - component: {fileID: 286987317461036983}
   m_Layer: 5
   m_Name: LootSlot
   m_TagString: Untagged
@@ -946,7 +945,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 9112315048336215121}
         m_TargetAssemblyTypeName: LootClickHandler, Assembly-CSharp
-        m_MethodName: OnClick
+        m_MethodName: OntakeClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -998,25 +997,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abeecaf40f4c82341966b2249aa93eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _image: {fileID: 1840380733823184966}
+  _image: {fileID: 6438927288301655461}
   _emptyImage: {fileID: -3164809056393425246, guid: 650bf249ace70d04dbaa89ee170c4163, type: 3}
   _normImage: {fileID: 3998120638648347872, guid: cd63cd48985d4d645961c20021c3eb36, type: 3}
   _highlightImage: {fileID: 8793915729297761979, guid: e10998b5aa492ff43bf652a3391c769e, type: 3}
---- !u!114 &286987317461036983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3948618257507528854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 811c384358359554e8e82739c40506b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _slot: {fileID: 6918490560459022255}
-  _count: 2
-  _itemPrefab: {fileID: 3323827491770189643, guid: 43d19ef23eed01e4898303987dac4f73, type: 3}
 --- !u!1 &4873654922299818218
 GameObject:
   m_ObjectHideFlags: 0
@@ -1051,8 +1035,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.07, y: -0.07}
-  m_SizeDelta: {x: 18.2221, y: 22.7484}
+  m_AnchoredPosition: {x: 0.0125, y: -0.1275}
+  m_SizeDelta: {x: 15.1144, y: 18.4897}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9075340106552385146
 CanvasRenderer:
@@ -1180,6 +1164,7 @@ GameObject:
   - component: {fileID: 2111204751407590599}
   - component: {fileID: 63980435206396912}
   - component: {fileID: 7520395354188723949}
+  - component: {fileID: 8429760500706936242}
   m_Layer: 5
   m_Name: LootMenu
   m_TagString: Untagged
@@ -1285,6 +1270,18 @@ MonoBehaviour:
   _menu: {fileID: 8297236583148652926}
   _slots:
   - {fileID: 6918490560459022255}
+--- !u!114 &8429760500706936242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5393038484487928416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c5be77ae403f0488277875d0a5732c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6043690210055459844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,8 +1617,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 44536651024053094}
   m_HandleRect: {fileID: 8079610792819312097}
   m_Direction: 2
-  m_Value: 1.0000017
-  m_Size: 0.85855836
+  m_Value: 1
+  m_Size: 0.8585585
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

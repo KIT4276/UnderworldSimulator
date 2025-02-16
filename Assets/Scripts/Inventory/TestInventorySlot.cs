@@ -10,13 +10,11 @@ public class TestInventorySlot : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Awake " + this.gameObject.name);
         _slot.InitializedAction += InitSlot;
     }
 
     private void InitSlot()
     {
-       
         if (_isInited|| _count == 0 && _itemPrefab == null) return;
 
             for (int i = 0; i < _count; i++)
