@@ -1016,9 +1016,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9112315048336215121}
-        m_TargetAssemblyTypeName: LootClickHandler, Assembly-CSharp
-        m_MethodName: OnTakeAllClick
+      - m_Target: {fileID: 7520395354188723949}
+        m_TargetAssemblyTypeName: LootSystem, Assembly-CSharp
+        m_MethodName: TakeAllLoot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1044,7 +1044,7 @@ GameObject:
   - component: {fileID: 9112315048336215121}
   - component: {fileID: 939759091450168400}
   m_Layer: 5
-  m_Name: LootSlot
+  m_Name: LootSlot_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1183,6 +1183,7 @@ MonoBehaviour:
   _button: {fileID: 1354516290518515398}
   _textMeshPro: {fileID: 4151716791755254454}
   _x_TextTablet: {fileID: 1385286771092788856}
+  _lootClickHandler: {fileID: 9112315048336215121}
 --- !u!114 &9112315048336215121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1693,6 +1694,8 @@ MonoBehaviour:
   _menu: {fileID: 8297236583148652926}
   _slots:
   - {fileID: 6918490560459022255}
+  - {fileID: 2023159220122944538}
+  - {fileID: 724169907979489183}
 --- !u!114 &8429760500706936242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1721,7 +1724,7 @@ GameObject:
   - component: {fileID: 5546865046452256189}
   - component: {fileID: 569572294913171150}
   m_Layer: 5
-  m_Name: LootSlot (1)
+  m_Name: LootSlot_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1860,6 +1863,7 @@ MonoBehaviour:
   _button: {fileID: 1668179497241483588}
   _textMeshPro: {fileID: 1793743879308726497}
   _x_TextTablet: {fileID: 1202488373349509796}
+  _lootClickHandler: {fileID: 5546865046452256189}
 --- !u!114 &5546865046452256189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2313,7 +2317,7 @@ GameObject:
   - component: {fileID: 7888179245061143743}
   - component: {fileID: 1062573594435168946}
   m_Layer: 5
-  m_Name: LootSlot (2)
+  m_Name: LootSlot_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2452,6 +2456,7 @@ MonoBehaviour:
   _button: {fileID: 3175457186119726503}
   _textMeshPro: {fileID: 6243986184391168171}
   _x_TextTablet: {fileID: 7168325112353052297}
+  _lootClickHandler: {fileID: 7888179245061143743}
 --- !u!114 &7888179245061143743
 MonoBehaviour:
   m_ObjectHideFlags: 0

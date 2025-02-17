@@ -34,6 +34,14 @@ public class LootSystem : MonoBehaviour
 
     }
 
+    public void TakeAllLoot()
+    {
+        foreach (var slot in _slots)
+        {
+            slot.LootClickHandler.OnTakeAllClick();
+        }
+    }
+
     //private void OnLootStateExit()
     //{
     //    _isOnLootState = true;
@@ -83,6 +91,7 @@ public class LootSystem : MonoBehaviour
 
     public void FillSlot(Loot loot, int count, GameObject interactiveObject)
     {
+        //Debug.Log(_slots[0]);
         foreach (var slot in _slots)
         {
             if (!slot.IsOccupied)

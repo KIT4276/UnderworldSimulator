@@ -15,6 +15,7 @@ public class LootSettings : MonoBehaviour
 
     private void FillSlots()
     {
+       // Debug.Log("FillSlots");
         _lootSystem.FillSlot(_loot, _count, this.gameObject);
     }
 
