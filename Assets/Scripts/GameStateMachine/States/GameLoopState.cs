@@ -4,7 +4,7 @@ public class GameLoopState : IState
 {
     private readonly GameFactory _gameFactory;
 
-    public event Action EnterGameLoopState;
+    public event Action GameLoopStateEnter;
 
     public GameLoopState( GameFactory gameFactory)
     {
@@ -15,7 +15,7 @@ public class GameLoopState : IState
     {
         _gameFactory.HeroMove.Mobilize();
         _gameFactory.CameraMove.Immobilize();
-        EnterGameLoopState?.Invoke();
+        GameLoopStateEnter?.Invoke();
     }
 
     public void Exit() 

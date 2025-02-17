@@ -22,7 +22,7 @@ public class Decor : BaseItem
     protected DecorData _decorData;
     protected DecorationSystem _decorationSystem;
     private bool _canPlace = true;
-    protected bool _isOnDecorState;
+    protected bool _isCanDecorate;
     private RotationState _currentRotationState;
 
 
@@ -86,8 +86,8 @@ public class Decor : BaseItem
         if (!CheckCamera()) return;
     }
 
-    public void SetIsOnDecorState(bool isOnDecorState) =>
-        _isOnDecorState = isOnDecorState;
+    public void SetIsCanDecorate(bool isOnDecorState) =>
+        _isCanDecorate = isOnDecorState;
 
     public void SetIsInside(bool isInside)
         => IsInside = isInside;
@@ -103,7 +103,7 @@ public class Decor : BaseItem
 
     private void OnClick(InputAction.CallbackContext context)
     {
-        if (!_canPlace || !_isOnDecorState) return;
+        if (!_canPlace || !_isCanDecorate) return;
         //Debug.Log("OnClick");
         Clicked?.Invoke();
     }
@@ -124,7 +124,7 @@ public class Decor : BaseItem
 
     private void OnRotate(InputAction.CallbackContext context)
     {
-        if (!IsDragging || !_isOnDecorState) return;
+        if (!IsDragging || !_isCanDecorate) return;
 
         Rotated?.Invoke(_currentRotationState);
     }

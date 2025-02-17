@@ -19,7 +19,7 @@ public class DecorationSystem
     {
         foreach (var decor in _decorHolder.GetDecorsInScene())
         {
-            decor.SetIsOnDecorState(isOnDecorState);
+            decor.SetIsCanDecorate(isOnDecorState);
         }
     }
 
@@ -35,7 +35,7 @@ public class DecorationSystem
             TryToRemoveDecor(decorPrefab);
 
         var decor = _factory.SpawnDecor(decorPrefab);
-        decor.SetIsOnDecorState(true);
+        decor.SetIsCanDecorate(true);
         _decorHolder.SetActiveDecor(decor);
     }
 

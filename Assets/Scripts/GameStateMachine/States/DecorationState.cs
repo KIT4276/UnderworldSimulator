@@ -6,8 +6,8 @@ public class DecorationState : IState
     private readonly DecorationSystem _decorationSystem;
     private readonly GameFactory _gameFactory;
 
-    public event Action DecorationStateEnter;
-    public event Action DecorationStateExit;
+    //public event Action DecorationStateEnter;
+    //public event Action DecorationStateExit;
 
     public DecorationState(GameFactory gameFactory, DecorationSystem decorationSystem, SpaceDeterminantor spaceDeterminantor)
     {
@@ -18,9 +18,9 @@ public class DecorationState : IState
 
     public void Enter()
     {
-        DecorationStateEnter?.Invoke();
-        _decorationSystem.SetIsOnDecorState(true);
-        _spaceDeterminantor.FindDecorableSpace();
+       // DecorationStateEnter?.Invoke();
+        //_decorationSystem.SetIsOnDecorState(true);
+        //_spaceDeterminantor.FindDecorableSpace();
 
         _gameFactory.HeroMove.Immobilize();
         _gameFactory.CameraMove.Mobilize();
@@ -29,7 +29,7 @@ public class DecorationState : IState
     public void Exit()
     {
         _decorationSystem.SetIsOnDecorState(false);
-        DecorationStateExit?.Invoke();
+       // DecorationStateExit?.Invoke();
     }
 }
 
