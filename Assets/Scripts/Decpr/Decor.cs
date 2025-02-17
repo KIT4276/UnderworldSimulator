@@ -103,6 +103,7 @@ public class Decor : BaseItem
 
     private void OnClick(InputAction.CallbackContext context)
     {
+       // Debug.Log(_canPlace);
         if (!_canPlace || !_isCanDecorate) return;
         //Debug.Log("OnClick");
         Clicked?.Invoke();
@@ -120,6 +121,7 @@ public class Decor : BaseItem
         IsDragging = false;
         _decorationSystem.InstanriateDecor(this);
         DecorPlacedAction?.Invoke();
+        AllowActions();
     }
 
     private void OnRotate(InputAction.CallbackContext context)

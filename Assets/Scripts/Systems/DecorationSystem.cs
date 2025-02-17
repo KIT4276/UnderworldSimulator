@@ -15,7 +15,7 @@ public class DecorationSystem
         _factory.Initialize(this);
     }
 
-    public void SetIsOnDecorState(bool isOnDecorState)
+    public void SetCanDecorate(bool isOnDecorState)
     {
         foreach (var decor in _decorHolder.GetDecorsInScene())
         {

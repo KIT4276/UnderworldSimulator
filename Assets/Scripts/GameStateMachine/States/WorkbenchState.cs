@@ -20,15 +20,16 @@ public class WorkbenchState : IState
 
     public void Enter()
     {
-        _decorationSystem.SetIsOnDecorState(true);
+        _decorationSystem.SetCanDecorate(true);
         _spaceDeterminantor.FindDecorableSpace();
 
         _gameFactory.HeroMove.Immobilize();
+        _gameFactory.CameraMove.Mobilize();
         WorkbenchStateEnter?.Invoke();
     }
 
     public void Exit()
     {
-        
+        _decorationSystem.SetCanDecorate(false);
     }
 }

@@ -19,16 +19,16 @@ public class DecorationState : IState
     public void Enter()
     {
        // DecorationStateEnter?.Invoke();
-        //_decorationSystem.SetIsOnDecorState(true);
+        _decorationSystem.SetCanDecorate(true);
         //_spaceDeterminantor.FindDecorableSpace();
 
         _gameFactory.HeroMove.Immobilize();
-        _gameFactory.CameraMove.Mobilize();
+       // _gameFactory.CameraMove.Mobilize();
     }
 
     public void Exit()
     {
-        _decorationSystem.SetIsOnDecorState(false);
+        _decorationSystem.SetCanDecorate(false);
        // DecorationStateExit?.Invoke();
     }
 }
