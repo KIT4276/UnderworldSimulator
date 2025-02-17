@@ -65,7 +65,7 @@ public class InventorySystem : MonoBehaviour
     }
 
 
-    public void TryReturnLootToInventory(Loot loot) /// Внимательно! Сюда обращаемся только чтобы вернуть лут
+    public void TryReturnLootToInventory(Item loot) /// Внимательно! Сюда обращаемся только чтобы вернуть лут
     {
         bool isPlaced = false;
 
@@ -73,8 +73,8 @@ public class InventorySystem : MonoBehaviour
         {
             if (_inventorySlot[i].IsOccupied)
             {
-                if (_inventorySlot[i].GetLastItems() is Loot &&
-                    ((Loot)_inventorySlot[i].GetLastItems()).LootType == loot.LootType)
+                if (_inventorySlot[i].GetLastItems() is Item &&
+                    ((Item)_inventorySlot[i].GetLastItems()).LootType == loot.LootType)
                 {
                     ReturnLootToInventory(loot, i);
                     isPlaced = true;
@@ -151,7 +151,7 @@ public class InventorySystem : MonoBehaviour
         _decorationSystem.ReturtDecorToInventory(decor);
     }
 
-    private void ReturnLootToInventory(Loot loot, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть лут.
+    private void ReturnLootToInventory(Item loot, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть лут.
     {
         _inventorySlot[i].SetItem(loot);
         //_decorationSystem.ReturtDecorToInventory(loot);

@@ -298,10 +298,9 @@ GameObject:
   - component: {fileID: 8634076026275737400}
   - component: {fileID: 2965191337474689980}
   - component: {fileID: 3323827491770189643}
-  - component: {fileID: 1121015432029204622}
   - component: {fileID: 2441257902777066172}
   m_Layer: 0
-  m_Name: TestILoot 1
+  m_Name: Item 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -369,7 +368,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: -3015038093722270057, guid: 51e057dff9516114d8c1e82d5456a08a, type: 3}
+  m_Sprite: {fileID: 4333753106896139656, guid: 2c1784b7087e710479634763c1f01c9b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -392,25 +391,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d81c93df1571143a44cc010cb1a3bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: -3015038093722270057, guid: 51e057dff9516114d8c1e82d5456a08a, type: 3}
+  _icon: {fileID: 4333753106896139656, guid: 2c1784b7087e710479634763c1f01c9b, type: 3}
   _type: 6
---- !u!114 &1121015432029204622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6782332791002167624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bae39692475e16408c0d21ffe62e892, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sign: {fileID: 3179675697086850599}
-  _reactionText: "\u041D\u0435\u0442 \u0440\u0435\u0430\u043A\u0446\u0438\u0438"
-  _interactionTime: 1.5
-  _progressBar: {fileID: 6839042229254365432}
-  _bar: {fileID: 7166854922921513509}
 --- !u!61 &2441257902777066172
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -449,7 +431,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.27, y: 1.235}
+    oldSize: {x: 5.12, y: 5.12}
     newSize: {x: 5.08, y: 4.94}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -648,10 +630,5 @@ PrefabInstance:
 --- !u!224 &579567372808245116 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1747333871138251832, guid: bddcdd86c3416d441a1c59757a4b7cfa, type: 3}
-  m_PrefabInstance: {fileID: 1167786427599055684}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3179675697086850599 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4329284852409797987, guid: bddcdd86c3416d441a1c59757a4b7cfa, type: 3}
   m_PrefabInstance: {fileID: 1167786427599055684}
   m_PrefabAsset: {fileID: 0}

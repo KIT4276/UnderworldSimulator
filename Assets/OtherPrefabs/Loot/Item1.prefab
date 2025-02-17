@@ -85,7 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3886367541910143795}
   - component: {fileID: 675573085788801990}
-  - component: {fileID: 3051183355822982522}
+  - component: {fileID: 5024422325384310959}
   m_Layer: 0
   m_Name: ImpassableZone
   m_TagString: Untagged
@@ -101,13 +101,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3385791875332864532}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8634076026275737400}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &675573085788801990
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -163,8 +163,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &3051183355822982522
-PolygonCollider2D:
+--- !u!70 &5024422325384310959
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -197,69 +197,9 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.27, y: 1.235}
-    newSize: {x: 1.27, y: 1.235}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.17999999, y: -0.295}
-      - {x: -0.085, y: -0.21499999}
-      - {x: -0.0275, y: -0.205}
-      - {x: 0.04, y: -0.14}
-      - {x: 0.04, y: -0.1275}
-      - {x: 0.037499998, y: -0.12}
-      - {x: 0.0075, y: -0.0875}
-      - {x: 0.26999998, y: 0.1125}
-      - {x: 0.285, y: 0.1125}
-      - {x: 0.3575, y: 0.122499995}
-      - {x: 0.34, y: 0.089999996}
-      - {x: 0.33499998, y: 0.074999996}
-      - {x: 0.4025, y: 0.005}
-      - {x: 0.42749998, y: -0.005}
-      - {x: 0.45749998, y: -0.005}
-      - {x: 0.48499998, y: 0.0075}
-      - {x: 0.625, y: 0.145}
-      - {x: 0.635, y: 0.16749999}
-      - {x: 0.635, y: 0.2175}
-      - {x: 0.565, y: 0.2925}
-      - {x: 0.5475, y: 0.295}
-      - {x: 0.5175, y: 0.275}
-      - {x: 0.51, y: 0.3425}
-      - {x: 0.285, y: 0.57}
-      - {x: 0.2025, y: 0.61}
-      - {x: 0.1525, y: 0.6175}
-      - {x: 0.065, y: 0.6175}
-      - {x: 0.024999999, y: 0.6125}
-      - {x: -0.057499997, y: 0.575}
-      - {x: -0.1025, y: 0.5275}
-      - {x: -0.1025, y: 0.515}
-      - {x: -0.0925, y: 0.5025}
-      - {x: -0.01, y: 0.49249998}
-      - {x: 0.085, y: 0.4075}
-      - {x: 0.099999994, y: 0.33499998}
-      - {x: 0.0925, y: 0.285}
-      - {x: 0.122499995, y: 0.2575}
-      - {x: -0.1325, y: 0.0525}
-      - {x: -0.14, y: 0.055}
-      - {x: -0.1525, y: 0.055}
-      - {x: -0.60499996, y: -0.39749998}
-      - {x: -0.6175, y: -0.4125}
-      - {x: -0.635, y: -0.4425}
-      - {x: -0.635, y: -0.52}
-      - {x: -0.61, y: -0.57}
-      - {x: -0.5525, y: -0.6175}
-      - {x: -0.4525, y: -0.6175}
-      - {x: -0.42749998, y: -0.60249996}
-      - {x: -0.21, y: -0.39}
-      - {x: -0.19749999, y: -0.33499998}
-  m_UseDelaunayMesh: 0
+  m_Offset: {x: -0.06, y: 0}
+  m_Size: {x: 2.55, y: 2.29}
+  m_Direction: 0
 --- !u!1 &4138746252544769481
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,7 +277,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.58431375, g: 0.34509805, b: 0.474813, a: 1}
+  m_Color: {r: 0.58431375, g: 0.5440799, b: 0.34509805, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -358,10 +298,9 @@ GameObject:
   - component: {fileID: 8634076026275737400}
   - component: {fileID: 2965191337474689980}
   - component: {fileID: 3323827491770189643}
-  - component: {fileID: 1121015432029204622}
   - component: {fileID: 2441257902777066172}
   m_Layer: 0
-  m_Name: TestILoot 2
+  m_Name: Item1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -429,7 +368,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: 4333753106896139656, guid: 2c1784b7087e710479634763c1f01c9b, type: 3}
+  m_Sprite: {fileID: -3015038093722270057, guid: 51e057dff9516114d8c1e82d5456a08a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -452,25 +391,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d81c93df1571143a44cc010cb1a3bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 4333753106896139656, guid: 2c1784b7087e710479634763c1f01c9b, type: 3}
-  _type: 8
---- !u!114 &1121015432029204622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6782332791002167624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bae39692475e16408c0d21ffe62e892, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sign: {fileID: 3179675697086850599}
-  _reactionText: "\u041D\u0435\u0442 \u0440\u0435\u0430\u043A\u0446\u0438\u0438"
-  _interactionTime: 1.5
-  _progressBar: {fileID: 6839042229254365432}
-  _bar: {fileID: 7166854922921513509}
+  _icon: {fileID: -3015038093722270057, guid: 51e057dff9516114d8c1e82d5456a08a, type: 3}
+  _type: 6
 --- !u!61 &2441257902777066172
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -509,7 +431,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 5.12}
+    oldSize: {x: 1.27, y: 1.235}
     newSize: {x: 5.08, y: 4.94}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -708,10 +630,5 @@ PrefabInstance:
 --- !u!224 &579567372808245116 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1747333871138251832, guid: bddcdd86c3416d441a1c59757a4b7cfa, type: 3}
-  m_PrefabInstance: {fileID: 1167786427599055684}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3179675697086850599 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4329284852409797987, guid: bddcdd86c3416d441a1c59757a4b7cfa, type: 3}
   m_PrefabInstance: {fileID: 1167786427599055684}
   m_PrefabAsset: {fileID: 0}

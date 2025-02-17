@@ -459,11 +459,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8634076026275737400}
   - component: {fileID: 2965191337474689980}
-  - component: {fileID: 3323827491770189643}
   - component: {fileID: 1121015432029204622}
-  - component: {fileID: 2380481428818615953}
-  - component: {fileID: 6090737264678310926}
   - component: {fileID: 2441257902777066172}
+  - component: {fileID: 2251281006712007549}
   m_Layer: 0
   m_Name: TestILoot
   m_TagString: Untagged
@@ -545,20 +543,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3323827491770189643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6782332791002167624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d81c93df1571143a44cc010cb1a3bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _icon: {fileID: -3015038093722270057, guid: 51e057dff9516114d8c1e82d5456a08a, type: 3}
-  _type: 0
 --- !u!114 &1121015432029204622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,34 +560,7 @@ MonoBehaviour:
   _interactionTime: 1.5
   _progressBar: {fileID: 6839042229254365432}
   _bar: {fileID: 7166854922921513509}
---- !u!114 &2380481428818615953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6782332791002167624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7018efeb68901b84c84542838898e30a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _loot: {fileID: 3323827491770189643, guid: bf138c8edfe49624793837104e7ca1b6, type: 3}
-  _count: 4
---- !u!114 &6090737264678310926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6782332791002167624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7018efeb68901b84c84542838898e30a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _loot: {fileID: 3323827491770189643, guid: b3f24e29529146b4a8824406fe880a71, type: 3}
-  _count: 2
+  _loot: {fileID: 2251281006712007549}
 --- !u!61 &2441257902777066172
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -650,6 +607,23 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.4638963, y: 2.3053894}
   m_EdgeRadius: 0
+--- !u!114 &2251281006712007549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6782332791002167624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9d385196c34804ca88478bc9d65b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lootSettings:
+  - _loot: {fileID: 3323827491770189643, guid: bf138c8edfe49624793837104e7ca1b6, type: 3}
+    _count: 2
+  - _loot: {fileID: 3323827491770189643, guid: 4761a9f3486e1324ba41e5313ec6ef16, type: 3}
+    _count: 4
 --- !u!1 &6839042229254365432
 GameObject:
   m_ObjectHideFlags: 0

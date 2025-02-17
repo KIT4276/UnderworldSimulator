@@ -1,26 +1,41 @@
+using System;
 using UnityEngine;
-using Zenject;
 
-
-public class LootSettings : MonoBehaviour
+[Serializable]
+public class LootSettings /*: MonoBehaviour*/
 {
-    [SerializeField] private Loot _loot;
+    [SerializeField] private Item _loot;
     [SerializeField] private int _count;
-    [Inject] private LootSystem _lootSystem;
 
-    private void Start()
-    {
-        _lootSystem.OpenMenuAction += FillSlots;
-    }
 
-    private void FillSlots()
-    {
-       // Debug.Log("FillSlots");
-        _lootSystem.FillSlot(_loot, _count, this.gameObject);
-    }
+    public Item Loot { get => _loot; }
+    public int Count { get => _count; }
+    
 
-    private void OnDestroy()
-    {
-        _lootSystem.OpenMenuAction -= FillSlots;
-    }
+    //[SerializeField] private Loot _loot;
+    //[SerializeField] private int _count;
+    //[Inject] private LootSystem _lootSystem;
+
+    //private bool _isActive;
+
+    //private void Start()
+    //{
+    //    _lootSystem.OpenMenuAction += FillSlots;
+    //}
+
+    //public void SetIsActive(bool isActive)
+    //{
+    //    _isActive = isActive;
+    //}
+
+    //private void FillSlots()
+    //{
+    //   // Debug.Log("FillSlots");
+    //    _lootSystem.FillSlot(_loot, _count, this.gameObject);
+    //}
+
+    //private void OnDestroy()
+    //{
+    //    _lootSystem.OpenMenuAction -= FillSlots;
+    //}
 }

@@ -14,7 +14,7 @@ public class InventoryClickHandler : MonoBehaviour
             if (_slot.IsOccupied)
                 _decorationSystem.SpawnDecorIfCan((Decor)_slot.TakeLastItem());
         }
-        else if (_slot.GetLastItems() is Loot)
+        else if (_slot.GetLastItems() is Item)
         {
             Debug.Log($"{_slot.GetLastItems()} Тут происходят какие-то действия с лутом ");
         }

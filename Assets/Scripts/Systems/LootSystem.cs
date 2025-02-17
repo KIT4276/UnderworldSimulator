@@ -81,7 +81,7 @@ public class LootSystem : MonoBehaviour
 
     public void TakeLootToInventory(BaseItem item)
     {
-        _inventorySystem.TryReturnLootToInventory((Loot)item);
+        _inventorySystem.TryReturnLootToInventory((Item)item);
     }
 
     public void OffInteractiveObject()
@@ -89,7 +89,7 @@ public class LootSystem : MonoBehaviour
         _interactiveObject.SetActive(false);
     }
 
-    public void FillSlot(Loot loot, int count, GameObject interactiveObject)
+    public void FillSlot(Item loot, int count, GameObject interactiveObject)
     {
         //Debug.Log(_slots[0]);
         foreach (var slot in _slots)

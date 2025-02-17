@@ -1,34 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Loot : BaseItem
+public class Loot  : MonoBehaviour
 {
-    [SerializeField] private LootType _type;
-    
-    public LootType LootType{ get => _type;}
-}
+    [SerializeField] private LootSettings[] _lootSettings;
 
-public enum LootType
-{
-    Wood,
-
-    Copper,
-    Iron,
-    Bronze,
-    Aluminum,
-
-    BlackGranite,
-    RedGranite,
-    Marble,
-
-    Percale,
-    Cobweb,
-
-    Glass,
-
-    PineResin,
-
-    GlowingFlowersOrAnimals,
-
-    Bones,
-    Teeth,
+    public LootSettings[] LootSettings { get => _lootSettings; }
 }
