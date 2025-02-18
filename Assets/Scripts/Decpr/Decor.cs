@@ -18,7 +18,7 @@ public class Decor : BaseItem
     [SerializeField] protected InputActionReference _cancelAction;
     [SerializeField] protected InputActionReference _rotationAction;
 
-    [Inject] private StateMachine _stateMachine;
+    /*[Inject] */private StateMachine _stateMachine;
 
     protected DecorData _decorData;
     protected DecorationSystem _decorationSystem;
@@ -41,13 +41,14 @@ public class Decor : BaseItem
     public event Action<RotationState> EndRotation;
 
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
-        SpaceDeterminantor spaceDeterminantor, int id, DecorHolder decorHolder)
+        SpaceDeterminantor spaceDeterminantor, int id, DecorHolder decorHolder, StateMachine stateMachine)
     {
         if (ID == 0)
             ID = id;
         IsInside = true;
         IsDragging = true;
         _decorationSystem = decorationSystem;
+        _stateMachine = stateMachine;
         _currentRotationState = RotationState.Front;
 
         InitComponents(staticData, spaceDeterminantor, decorHolder);

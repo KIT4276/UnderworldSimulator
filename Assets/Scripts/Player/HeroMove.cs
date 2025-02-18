@@ -11,15 +11,17 @@ public class HeroMove : BaseMovable
     public float MoveSpeed { get => _moveSpeed; }
     public Vector2 InputVector2 { get => _inputVector2; }
 
-    public void Init()
+    public void Init(StateMachine stateMachine)
     {
         _rigidbody2d.gravityScale = 0;
         _rigidbody2d.freezeRotation = true;
 
+        _stateMachine = stateMachine;
+        _stateMachine.ChangeStateAction += OnChangeState;
         Mobilize();
     }
 
-    protected override void OnChangeState(IExitableState state)
+    private void OnChangeState(IExitableState state)
     {
         if (state is GameLoopState)
         {
@@ -43,6 +45,11 @@ public class HeroMove : BaseMovable
     public void ChangeMoveSpeed(float value)
     {
         _moveSpeed = value;
+    }
+
+    private void OnDestroy()
+    {
+        _stateMachine.ChangeStateAction -= OnChangeState;
     }
 
     ///// <summary>

@@ -1,8 +1,10 @@
 using DG.Tweening;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public class CameraMove : BaseMovable
 {
@@ -32,6 +34,13 @@ public class CameraMove : BaseMovable
 
         _followCMVCamera.Priority = 11;
         _manualCMVCamera.Priority = 10;
+    }
+
+    public void Init(StateMachine stateMachine)
+    {
+        _stateMachine = stateMachine;
+
+        _stateMachine.ChangeStateAction += OnChangeState;
     }
 
     private void FixedUpdate()
@@ -118,7 +127,7 @@ public class CameraMove : BaseMovable
         _followCMVCamera.Priority = 0;
     }
 
-    protected override void OnChangeState(IExitableState state)
+    private  void OnChangeState(IExitableState state)
     {
         if(state is DecorationState)
         {
@@ -146,5 +155,6 @@ public class CameraMove : BaseMovable
     private void OnDisable()
     {
         _scrollAction.action.performed -= OnScrollPerformed;
+        _stateMachine.ChangeStateAction -= OnChangeState;
     }
 }
