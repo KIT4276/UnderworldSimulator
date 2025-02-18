@@ -15,7 +15,7 @@ public class LootState : IState
     public void Enter()
     {
         //LootStateEnter?.Invoke();
-        _gameFactory.HeroMove.Immobilize();
+        //_gameFactory.HeroMove.Immobilize();
     }
 
     public void Exit()

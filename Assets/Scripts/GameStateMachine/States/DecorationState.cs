@@ -6,9 +6,6 @@ public class DecorationState : IState
     private readonly DecorationSystem _decorationSystem;
     private readonly GameFactory _gameFactory;
 
-    //public event Action DecorationStateEnter;
-    //public event Action DecorationStateExit;
-
     public DecorationState(GameFactory gameFactory, DecorationSystem decorationSystem, SpaceDeterminantor spaceDeterminantor)
     {
         _spaceDeterminantor = spaceDeterminantor;
@@ -18,19 +15,14 @@ public class DecorationState : IState
 
     public void Enter()
     {
-       // DecorationStateEnter?.Invoke();
-        _decorationSystem.SetCanDecorate(true);
-        //_spaceDeterminantor.FindDecorableSpace();
-
-        _gameFactory.HeroMove.Immobilize();
-       // _gameFactory.CameraMove.Mobilize();
+        //_decorationSystem.SetCanDecorate(true);
+        //_gameFactory.HeroMove.Immobilize();
     }
 
     public void Exit()
     {
-        _decorationSystem.SetCanDecorate(false);
-       // DecorationStateExit?.Invoke();
-    }
+       // _decorationSystem.SetCanDecorate(false);
+    }//
 }
 
     

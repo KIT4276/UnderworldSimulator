@@ -1,10 +1,11 @@
+using System;
 using Zenject;
 
 public class Engineer : InteractableObstacle
 {
     [Inject] private WorkbenchSystem _workbenchSystem;
     [Inject] private StateMachine _machine;
-   
+
 
     //[Inject]
     //private void Construct(WorkbenchSystem workbenchSystem, StateMachine machine, GameLoopState gameLoopState)
@@ -15,15 +16,14 @@ public class Engineer : InteractableObstacle
     //    _gameLoopState.EnterGameLoopState += OnGameLoopStateEnter;
     //}
 
+
     protected override void Interac()
     {
         if (_machine.ActiveState != _gameLoopState)
             return;
 
         _sign.SetActive(false);
-        _workbenchSystem.ActivateWorkbench();
-       
+        //_workbenchSystem.ActivateWorkbench();
+        _machine.Enter<WorkbenchState>();
     }
-
-    
 }

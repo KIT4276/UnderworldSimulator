@@ -9,7 +9,7 @@
     
     public void Enter()
     {
-        _gameFactory.HeroMove.Immobilize();
+        //_gameFactory.HeroMove.Immobilize();
     }
 
     public void Exit()

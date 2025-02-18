@@ -6,8 +6,7 @@ public class HeroMove : BaseMovable
     [Space]
     [SerializeField] private Rigidbody2D _rigidbody2d;
 
-    public InputAction MoveAction{ get => _moveAction; }
-
+    public InputAction MoveAction { get => _moveAction; }
 
     public float MoveSpeed { get => _moveSpeed; }
     public Vector2 InputVector2 { get => _inputVector2; }
@@ -18,6 +17,18 @@ public class HeroMove : BaseMovable
         _rigidbody2d.freezeRotation = true;
 
         Mobilize();
+    }
+
+    protected override void OnChangeState(IExitableState state)
+    {
+        if (state is GameLoopState)
+        {
+            Mobilize();
+        }
+        else
+        {
+            Immobilize();
+        }
     }
 
     private void FixedUpdate()
@@ -34,18 +45,18 @@ public class HeroMove : BaseMovable
         _moveSpeed = value;
     }
 
-    /// <summary>
-    /// override for tests
-    /// </summary>
-    public override void Mobilize()
-    {
-        base.Mobilize();
-       // Debug.Log("Hero Mobilize");
-    }
+    ///// <summary>
+    ///// override for tests
+    ///// </summary>
+    //public override void Mobilize()
+    //{
+    //    base.Mobilize();
+    //   // Debug.Log("Hero Mobilize");
+    //}
 
-    public override void Immobilize()
-    {
-        base.Immobilize();
-       // Debug.Log("Hero Immobilize");
-    }
+    //public override void Immobilize()
+    //{
+    //    base.Immobilize();
+    //   // Debug.Log("Hero Immobilize");
+    //}
 }

@@ -1,5 +1,6 @@
 using DG.Tweening;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -102,7 +103,6 @@ public class CameraMove : BaseMovable
         _followCMVCamera.Priority = 11;
     }
 
-
     public void SetCanZoom(bool canZoom)
     {
         _canZoom = canZoom;
@@ -116,6 +116,18 @@ public class CameraMove : BaseMovable
             new Vector3(_hotelPoint.transform.position.x, _hotelPoint.transform.position.y, transform.position.z),
             _moveTime);
         _followCMVCamera.Priority = 0;
+    }
+
+    protected override void OnChangeState(IExitableState state)
+    {
+        if(state is DecorationState)
+        {
+            Mobilize();
+        }
+        else if(!_canMove)
+        {
+            Immobilize();
+        }
     }
 
     private void ChekHotelPoint()

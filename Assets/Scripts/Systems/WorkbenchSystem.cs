@@ -29,18 +29,48 @@ public class WorkbenchSystem : MonoBehaviour
         {
             button.GetComponent<ButtonEnterChangeImage>().Activate();
         }
-
+        _stateMachine.ChangeStateAction += OnChangeState;
         _escapeAction.action.performed += OnEscape;
     }
 
-    public void ActivateInventory()
+    public void OnInventoryButtonClick()
+    {
+        _stateMachine.Enter<DecorationState>();
+    }
+
+    private void OnChangeState(IExitableState state)
+    {
+       if(state is WorkbenchState )
+        {
+            DeActivateInventory();
+            ActivateWorkbench();
+        }
+       else if(state is DecorationState ) 
+        {
+            // todo highlight Inventory button
+            ActivateInventory();
+        }
+       else if(state is GameLoopState)
+        {
+            DeActivateInventory();
+            DeActivateWorkbench();
+        }
+       
+    }
+
+    private void ActivateInventory()
     {
         _inventory.gameObject.SetActive(true);
         _inventory.ActivateInventory();
-        _stateMachine.Enter<DecorationState>(); // trmporary
+        //_stateMachine.Enter<DecorationState>(); // trmporary
     }
 
-    public void ActivateWorkbench()
+    private void DeActivateInventory()
+    {
+        _inventory.gameObject.SetActive(false);
+    }
+
+    private void ActivateWorkbench()
     {
         _workbenchPanel.SetActive(true);
 
@@ -49,15 +79,15 @@ public class WorkbenchSystem : MonoBehaviour
             button.RestartView();
         }
 
-        _stateMachine.Enter<WorkbenchState>();
+        //_stateMachine.Enter<WorkbenchState>();
     }
 
-    public void DeActivateWorkbench()
+    private void DeActivateWorkbench()
     {
         if (_decorHolder.ActiveDecor == null)
         {
             _workbenchPanel.SetActive(false);
-            _stateMachine.Enter<GameLoopState>();
+            //_stateMachine.Enter<GameLoopState>();
             _inventory.gameObject.SetActive(false);
 
         }
@@ -65,7 +95,22 @@ public class WorkbenchSystem : MonoBehaviour
 
     private void OnEscape(InputAction.CallbackContext context)
     {
-        if (_stateMachine.ActiveState is WorkbenchState)
-            DeActivateWorkbench();
+        //if (_stateMachine.ActiveState is WorkbenchState)
+        //    DeActivateWorkbench();
+
+        if(_stateMachine.ActiveState is DecorationState)
+        {
+            _stateMachine.Enter<WorkbenchState>();
+        }
+        else if(_stateMachine.ActiveState is WorkbenchState)
+        {
+            _stateMachine.Enter<GameLoopState>();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        _stateMachine.ChangeStateAction -= OnChangeState;
+        _escapeAction.action.performed -= OnEscape;
     }
 }
