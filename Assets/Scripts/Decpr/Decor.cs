@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Zenject;
 
 [RequireComponent(typeof(DecorView), (typeof(DecorRotator)))]
 [RequireComponent(typeof(DecorDrag), (typeof(DecorPlacer)))]
@@ -18,8 +17,7 @@ public class Decor : BaseItem
     [SerializeField] protected InputActionReference _cancelAction;
     [SerializeField] protected InputActionReference _rotationAction;
 
-    /*[Inject] */private StateMachine _stateMachine;
-
+    private StateMachine _stateMachine;
     protected DecorData _decorData;
     protected DecorationSystem _decorationSystem;
     private bool _canPlace = true;
@@ -54,7 +52,7 @@ public class Decor : BaseItem
         InitComponents(staticData, spaceDeterminantor, decorHolder);
 
         CheckCamera();
-        _isCanDecorate = true;
+        //_isCanDecorate = true;
         OnStateChange(_stateMachine.ActiveState);
 
         _clickAction.action.performed += OnClick;
@@ -62,6 +60,8 @@ public class Decor : BaseItem
         _cancelAction.action.performed += OnCancel;
 
         _stateMachine.ChangeStateAction += OnStateChange;
+
+        //Debug.Log(_isCanDecorate);
     }
 
     private void InitComponents(PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
@@ -110,8 +110,10 @@ public class Decor : BaseItem
         if (!CheckCamera()) return;
     }
 
-    // public void SetIsCanDecorate(bool isOnDecorState) =>
-   // _isCanDecorate = isOnDecorState;
+    public void SetIsCanDecorate(bool isCanDecorate)
+    {
+        _isCanDecorate = isCanDecorate;
+    }
 
     public void SetIsInside(bool isInside)
         => IsInside = isInside;
@@ -184,10 +186,10 @@ public class Decor : BaseItem
         }
     }
 
-
     protected void OnDisable()
     {
-        IsDragging = false;
+        //IsDragging = false;
+
         _clickAction.action.performed -= OnClick;
         _cancelAction.action.performed -= OnCancel;
         _rotationAction.action.performed -= OnRotate;

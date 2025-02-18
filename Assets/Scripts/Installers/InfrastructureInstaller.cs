@@ -45,7 +45,7 @@ public class InfrastructureInstaller : MonoInstaller, ICoroutineRunner
         Container.BindInterfacesAndSelfTo<PersistantProgressService>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<SaveLoadService>().FromNew().AsSingle().NonLazy();
 
-       // Container.Bind<StatesTransitor>().FromNew().AsSingle().NonLazy();
+       Container.Bind<StatesTransitor>().FromNew().AsSingle().NonLazy();
     }
 
     private void BindFactories()

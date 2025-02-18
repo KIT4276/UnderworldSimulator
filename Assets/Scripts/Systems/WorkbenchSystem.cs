@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -7,7 +8,8 @@ public class WorkbenchSystem : MonoBehaviour
 {
     [SerializeField] private GameObject _workbenchPanel;
     [SerializeField] private ButtonClickChangeImage[] buttonsClick;
-    [SerializeField] private InputActionReference _escapeAction;
+    // [SerializeField] private InputActionReference _escapeAction;
+    [SerializeField] private GameObject _warningSign;
 
 
     private DecorHolder _decorHolder;
@@ -24,45 +26,91 @@ public class WorkbenchSystem : MonoBehaviour
         _decorationSystem = decorationSystem;
         _inventory.gameObject.SetActive(false);
         _workbenchPanel.SetActive(false);
+        _warningSign.SetActive(false);
 
         foreach (var button in buttonsClick)
         {
             button.GetComponent<ButtonEnterChangeImage>().Activate();
         }
+
         _stateMachine.ChangeStateAction += OnChangeState;
-        _escapeAction.action.performed += OnEscape;
+        //_escapeAction.action.performed += OnEscape;
     }
+
+    public void ShowSign()
+    {
+        StopAllCoroutines();
+        _warningSign.SetActive(true);
+        StartCoroutine(HideSign());
+    }
+
+    private IEnumerator HideSign()
+    {
+        yield return new WaitForSeconds(3);
+        _warningSign.SetActive(false);
+    }
+
+    //public void OnExitWorkbench()
+    //{
+    //    _stateMachine.Enter<GameLoopState>();
+    //}
 
     public void OnInventoryButtonClick()
     {
         _stateMachine.Enter<DecorationState>();
     }
 
+    //private void OnEscape(InputAction.CallbackContext context)
+    //{
+    //    if (_stateMachine.ActiveState is DecorationState)
+    //    {
+    //        _stateMachine.Enter<WorkbenchState>();
+    //    }
+    //    else if (_stateMachine.ActiveState is WorkbenchState)
+    //    {
+    //        OnExitWorkbench();
+    //    }
+    //}
+
     private void OnChangeState(IExitableState state)
     {
-       if(state is WorkbenchState )
+        switch (state)
         {
-            DeActivateInventory();
-            ActivateWorkbench();
+            case GameLoopState:
+                DeActivateInventory();
+                DeActivateWorkbench();
+                break;
+
+            case DecorationState:
+                // todo highlight Inventory button
+                ActivateInventory();
+                break;
+            case WorkbenchState:
+                DeActivateInventory();
+                ActivateWorkbench();
+                break;
         }
-       else if(state is DecorationState ) 
-        {
-            // todo highlight Inventory button
-            ActivateInventory();
-        }
-       else if(state is GameLoopState)
-        {
-            DeActivateInventory();
-            DeActivateWorkbench();
-        }
-       
+        //if (state is WorkbenchState)
+        //{
+        //    DeActivateInventory();
+        //    ActivateWorkbench();
+        //}
+        //else if (state is DecorationState)
+        //{
+        //    // todo highlight Inventory button
+        //    ActivateInventory();
+        //}
+        //else if (state is GameLoopState)
+        //{
+        //    DeActivateInventory();
+        //    DeActivateWorkbench();
+        //}
     }
 
     private void ActivateInventory()
     {
         _inventory.gameObject.SetActive(true);
         _inventory.ActivateInventory();
-        //_stateMachine.Enter<DecorationState>(); // trmporary
     }
 
     private void DeActivateInventory()
@@ -78,8 +126,6 @@ public class WorkbenchSystem : MonoBehaviour
         {
             button.RestartView();
         }
-
-        //_stateMachine.Enter<WorkbenchState>();
     }
 
     private void DeActivateWorkbench()
@@ -87,30 +133,13 @@ public class WorkbenchSystem : MonoBehaviour
         if (_decorHolder.ActiveDecor == null)
         {
             _workbenchPanel.SetActive(false);
-            //_stateMachine.Enter<GameLoopState>();
             _inventory.gameObject.SetActive(false);
-
-        }
-    }
-
-    private void OnEscape(InputAction.CallbackContext context)
-    {
-        //if (_stateMachine.ActiveState is WorkbenchState)
-        //    DeActivateWorkbench();
-
-        if(_stateMachine.ActiveState is DecorationState)
-        {
-            _stateMachine.Enter<WorkbenchState>();
-        }
-        else if(_stateMachine.ActiveState is WorkbenchState)
-        {
-            _stateMachine.Enter<GameLoopState>();
         }
     }
 
     private void OnDestroy()
     {
         _stateMachine.ChangeStateAction -= OnChangeState;
-        _escapeAction.action.performed -= OnEscape;
+        //_escapeAction.action.performed -= OnEscape;
     }
 }

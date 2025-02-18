@@ -17,13 +17,13 @@ public class LootSystem : MonoBehaviour
     private GameObject _interactiveObject;
 
     public event Action OpenMenuAction;
-    private bool _isOnLootState;
+   // private bool _isOnLootState;
 
     void Start()
     {
         _menu.SetActive(false);
-        _inventorySystem.Closed += CloseMenu;
-        _escapeAction.action.performed += OnEscape;
+        //_inventorySystem.Closed += CloseMenu;
+       // _escapeAction.action.performed += OnEscape;
         //_lootState.LootStateEnter += OnLootStateEnter;
         //_lootState.LootStateExit += OnLootStateExit;
     }
@@ -107,14 +107,14 @@ public class LootSystem : MonoBehaviour
     }
 
 
-    private void OnEscape(InputAction.CallbackContext context)
-    {
-        //Debug.Log("OnEscape");
-        CloseMenu();
-    }
+    //private void OnEscape(InputAction.CallbackContext context)
+    //{
+    //    //Debug.Log("OnEscape");
+    //    CloseMenu();
+    //}
 
     private void OnDestroy()
     {
-        _inventorySystem.Closed -= CloseMenu;
+        //_inventorySystem.Closed -= CloseMenu;
     }
 }

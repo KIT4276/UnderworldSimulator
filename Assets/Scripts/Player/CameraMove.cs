@@ -133,7 +133,7 @@ public class CameraMove : BaseMovable
         {
             Mobilize();
         }
-        else if(!_canMove)
+        else /*if(!_canMove)*/
         {
             Immobilize();
         }

@@ -9,32 +9,32 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private InventorySlot[] _inventorySlot;
     [SerializeField] private GameObject _warningSign;
     [SerializeField] private InputActionReference _escapeAction;
-    private StateMachine _stateMachine;
+    //private StateMachine _stateMachine;
     private DecorHolder _decorHolder;
     private DecorationSystem _decorationSystem;
 
-    public event Action Closed;
+    //public event Action Closed;
 
     [Inject]
     public void Construct(DecorationSystem decorationSystem, DecorHolder decorHolder, StateMachine stateMachine)
     {
-        _stateMachine = stateMachine;
+        //_stateMachine = stateMachine;
         _decorHolder = decorHolder;
         _decorationSystem = decorationSystem;
         _decorationSystem.TryToRemoveDecorAction += TryReturnDecorToInventory;
         _warningSign.SetActive(false);
 
-        _escapeAction.action.performed += OnEscape;
+       // _escapeAction.action.performed += OnEscape;
     }
 
-    private void OnEscape(InputAction.CallbackContext context)
-    {
-        //if (!(_stateMachine.ActiveState is LootState))
-        //{
-        DeActivateInventory();
+    //private void OnEscape(InputAction.CallbackContext context)
+    //{
+    //    //if (!(_stateMachine.ActiveState is LootState))
+    //    //{
+    //    DeActivateInventory();
 
-        //}
-    }
+    //    //}
+    //}
 
     public void ActivateInventory()
     {
@@ -44,25 +44,19 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public void DeActivateInventory()
-    {
-        if (_decorHolder.ActiveDecor == null)
-        {
-            //Debug.Log("Было " + _stateMachine.ActiveState);
+    //private void DeActivateInventory()
+    //{
+    //    if (_decorHolder.ActiveDecor == null)
+    //    {
 
-            if (_stateMachine.ActiveState is InventoryState || _stateMachine.ActiveState is LootState)
-            {
-                _stateMachine.Enter<GameLoopState>();
-                Closed?.Invoke();
-            }
-            else if (_stateMachine.ActiveState is DecorationState)
-            {
-                _stateMachine.Enter<WorkbenchState>();
-            }
+    //        if (_stateMachine.ActiveState is InventoryState || _stateMachine.ActiveState is LootState)
+    //        {
+    //            Closed?.Invoke();
+    //        }
 
-            this.gameObject.SetActive(false);
-        }
-    }
+    //        this.gameObject.SetActive(false);
+    //    }
+    //}
 
 
     public void TryReturnLootToInventory(Item loot) /// Внимательно! Сюда обращаемся только чтобы вернуть лут
@@ -100,7 +94,7 @@ public class InventorySystem : MonoBehaviour
             Debug.Log(" не нашлось место для декора");
             StopAllCoroutines();
             _warningSign.SetActive(true);
-            StartCoroutine(HideTAblet());
+            StartCoroutine(HideSign());
         }
     }
 
@@ -140,7 +134,7 @@ public class InventorySystem : MonoBehaviour
             Debug.Log(" не нашлось место для декора");
             StopAllCoroutines();
             _warningSign.SetActive(true);
-            StartCoroutine(HideTAblet());
+            StartCoroutine(HideSign());
         }
     }
 
@@ -157,7 +151,7 @@ public class InventorySystem : MonoBehaviour
         //_decorationSystem.ReturtDecorToInventory(loot);
     }
 
-    private IEnumerator HideTAblet()
+    private IEnumerator HideSign()
     {
         yield return new WaitForSeconds(3);
         _warningSign.SetActive(false);
