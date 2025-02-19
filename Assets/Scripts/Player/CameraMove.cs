@@ -129,7 +129,7 @@ public class CameraMove : BaseMovable
 
     private  void OnChangeState(IExitableState state)
     {
-        if(state is DecorationState)
+        if(state is DecorationState || state is WorkbenchState)
         {
             Mobilize();
         }
