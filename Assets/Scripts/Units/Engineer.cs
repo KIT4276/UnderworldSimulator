@@ -1,3 +1,4 @@
+using System;
 using Zenject;
 
 public class Engineer : InteractableObstacle
@@ -6,7 +7,13 @@ public class Engineer : InteractableObstacle
 
     private void Start()
     {
-        _gameLoopState.GameLoopStateEnter += Activate;
+        _gameLoopState.GameLoopStateEnter += ConditionalActivate;
+    }
+
+    private void ConditionalActivate()
+    {
+        if (_machine.PredioslyState is WorkbenchState)
+            Activate();
     }
 
     protected override void Interac()
@@ -21,6 +28,6 @@ public class Engineer : InteractableObstacle
 
     private void OnDestroy()
     {
-        _gameLoopState.GameLoopStateEnter -= Activate;
+        _gameLoopState.GameLoopStateEnter -= ConditionalActivate;
     }
 }

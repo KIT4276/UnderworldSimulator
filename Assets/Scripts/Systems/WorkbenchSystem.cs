@@ -19,6 +19,7 @@ public class WorkbenchSystem : MonoBehaviour
 
     public event Action InventoryButtonClick;
     public event Action Exit;
+    public event Action Destroyed;
 
     [Inject]
     public void Construct(StateMachine stateMachine, InventorySystem inventory, DecorationSystem decorationSystem, DecorHolder decorHolder)
@@ -144,5 +145,6 @@ public class WorkbenchSystem : MonoBehaviour
     {
         _stateMachine.ChangeStateAction -= OnChangeState;
         //_escapeAction.action.performed -= OnEscape;
+        Destroyed?.Invoke();
     }
 }

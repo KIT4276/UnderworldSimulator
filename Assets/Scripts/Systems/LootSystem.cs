@@ -128,6 +128,6 @@ public class LootSystem : MonoBehaviour
 
     private void OnDestroy()
     {
-        //_inventorySystem.Closed -= CloseMenu;
+        _stateMachine.ChangeStateAction -= OnChangeState;
     }
 }

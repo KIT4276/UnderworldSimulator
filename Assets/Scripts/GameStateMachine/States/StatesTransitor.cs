@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,7 @@ public class StatesTransitor
     private readonly WorkbenchSystem _workbenchSystem;
     private readonly InventorySystem _inventorySystem;
     private readonly LootSystem _lootSystem;
+    private readonly PlayerInput _playerInput;
 
     public StatesTransitor(StateMachine stateMachine, PlayerInput playerInput, DecorHolder decorHolder, WorkbenchSystem workbenchSystem,
         InventorySystem inventorySystem, LootSystem lootSystem)
@@ -18,6 +20,7 @@ public class StatesTransitor
         _workbenchSystem = workbenchSystem;
         _inventorySystem = inventorySystem;
         _lootSystem = lootSystem;
+        _playerInput = playerInput;
 
         playerInput.actions["Escape"].performed += OnEscape;
         playerInput.actions["Inventory"].performed += OnInventory;
@@ -26,8 +29,9 @@ public class StatesTransitor
         _inventorySystem.Exit += ConditionalToWorkbenchState;
         _lootSystem.OpenMenuAction += ToLootState;
         _lootSystem.CloseMenuAction += ToGameLoopState;
-    }
 
+        _workbenchSystem.Destroyed += OnDestroyed;
+    }
 
     private void OnEscape(InputAction.CallbackContext context)
     {
@@ -91,5 +95,18 @@ public class StatesTransitor
     private void ToInventoryState()
     {
         _stateMachine.Enter<InventoryState>();
+    }
+
+    private void OnDestroyed()
+    {
+        _playerInput.actions["Escape"].performed -= OnEscape;
+        _playerInput.actions["Inventory"].performed -= OnInventory;
+        _workbenchSystem.InventoryButtonClick -= ToDecorateState;
+        _workbenchSystem.Exit -= ToGameLoopState;
+        _inventorySystem.Exit -= ConditionalToWorkbenchState;
+        _lootSystem.OpenMenuAction -= ToLootState;
+        _lootSystem.CloseMenuAction -= ToGameLoopState;
+
+        _workbenchSystem.Destroyed -= OnDestroyed;
     }
 }
