@@ -8,6 +8,7 @@ using Zenject;
 public class GameFactory : IService
 {
     private DiContainer _container;
+    private readonly StateMachine _stateMachine;
 
     public event Action PlayerCreated;
 
@@ -23,19 +24,20 @@ public class GameFactory : IService
     private readonly PersistantPlayerStaticData _playerStaticData;//will be used later
 
     public GameFactory(IAssets assets, PersistantStaticData staticData, PersistantPlayerStaticData playerStaticData,
-        DiContainer container)
+        DiContainer container, StateMachine stateMachine)
     {
         _assets = assets;
         _staticData = staticData;
         _playerStaticData = playerStaticData;
         _container = container;
+        _stateMachine = stateMachine;
     }
 
     public GameObject CreatePlayerAt(GameObject at)
     {
         PlayerGameObject = InstantiateRegistered(AssetPath.HeroPath, at.transform.position);
         HeroMove = PlayerGameObject.GetComponent<HeroMove>();
-        HeroMove.Init();
+        HeroMove.Init(_stateMachine);
         InitCamera();
         _container.Bind<HeroMove>().AsSingle();
         
@@ -48,7 +50,7 @@ public class GameFactory : IService
     private void InitCamera()
     {
         CameraMove = PlayerGameObject.GetComponentInChildren<CameraMove>();
-
+        CameraMove.Init(_stateMachine);
         PlayerGameObject.GetComponentInChildren<CinemachinePositionComposer>().transform.parent = null;
 
         CameraMove.transform.parent = null;

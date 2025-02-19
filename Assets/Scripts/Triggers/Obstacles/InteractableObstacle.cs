@@ -35,17 +35,12 @@ public class InteractableObstacle : MonoBehaviour
             _hero = hero;
             _playerInput.onActionTriggered += OnPlayerInputActionTriggered;
             Activate();
-            _gameLoopState.GameLoopStateEnter += OnGameLoopStateEnter;
+          
         }
     }
     protected void OnTriggerExit2D(Collider2D collision)
     {
         DeActivate();
-    }
-
-    public void OnGameLoopStateEnter()
-    {
-        Activate();
     }
 
     protected void OnPlayerInputActionTriggered(InputAction.CallbackContext context)
@@ -54,7 +49,7 @@ public class InteractableObstacle : MonoBehaviour
             Interac();
     }
 
-    protected void Activate()
+    public void Activate()
     {
         _isActive = true;
         _sign.SetActive(true);

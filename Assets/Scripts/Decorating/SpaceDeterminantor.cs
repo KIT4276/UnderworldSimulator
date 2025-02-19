@@ -1,33 +1,28 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpaceDeterminantor
 {
-    //private List<GreedPolygonSplitter> _floorObjects = new();
-    //private List<GreedHolder> _greedHolders = new();
-    private IAssets _assets;
-    private readonly PersistantStaticData _persistantStaticData;
-
-    //public List<GreedHolder> GreedHolders { get => _greedHolders; }
-    //public List<GreedPolygonSplitter> FloorObjects { get => _floorObjects;  }
-
     public List<FloorMarker> FloorMarkers = new();
 
-    public SpaceDeterminantor(IAssets assets, PersistantStaticData persistantStaticData)
+    public SpaceDeterminantor(StateMachine stateMachine)
     {
-        _assets = assets;
-        _persistantStaticData = persistantStaticData;
+        stateMachine.ChangeStateAction += OnChangeState;
     }
 
-    //public void StartFind()
-    //{
-    //    FindDecorableSpace();
-    //}
+    private void OnChangeState(IExitableState state)
+    {
+        if (state is DecorationState)
+            FindDecorableSpace();
+    }
 
     public void FindDecorableSpace()
     {
         var markers = GameObject.FindObjectsByType<FloorMarker>(FindObjectsSortMode.None);
-        //Debug.Log(markers.Length);
+        
+        if (markers != null)
+            FloorMarkers.Clear();
         foreach (var marker in markers)
         {
             FloorMarkers.Add(marker);

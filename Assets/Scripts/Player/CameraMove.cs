@@ -1,7 +1,10 @@
 using DG.Tweening;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public class CameraMove : BaseMovable
 {
@@ -31,6 +34,13 @@ public class CameraMove : BaseMovable
 
         _followCMVCamera.Priority = 11;
         _manualCMVCamera.Priority = 10;
+    }
+
+    public void Init(StateMachine stateMachine)
+    {
+        _stateMachine = stateMachine;
+
+        _stateMachine.ChangeStateAction += OnChangeState;
     }
 
     private void FixedUpdate()
@@ -102,7 +112,6 @@ public class CameraMove : BaseMovable
         _followCMVCamera.Priority = 11;
     }
 
-
     public void SetCanZoom(bool canZoom)
     {
         _canZoom = canZoom;
@@ -116,6 +125,18 @@ public class CameraMove : BaseMovable
             new Vector3(_hotelPoint.transform.position.x, _hotelPoint.transform.position.y, transform.position.z),
             _moveTime);
         _followCMVCamera.Priority = 0;
+    }
+
+    private  void OnChangeState(IExitableState state)
+    {
+        if(state is DecorationState || state is WorkbenchState)
+        {
+            Mobilize();
+        }
+        else /*if(!_canMove)*/
+        {
+            Immobilize();
+        }
     }
 
     private void ChekHotelPoint()
@@ -134,5 +155,6 @@ public class CameraMove : BaseMovable
     private void OnDisable()
     {
         _scrollAction.action.performed -= OnScrollPerformed;
+        _stateMachine.ChangeStateAction -= OnChangeState;
     }
 }

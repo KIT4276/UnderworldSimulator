@@ -24,6 +24,8 @@ public class GameplayInstaller : MonoInstaller
         Container.Bind<DecorFactory>().FromComponentInNewPrefab(_decorFactiryPrefab).AsSingle().NonLazy();
         Container.Bind<DecorationSystem>().FromNew().AsSingle().NonLazy();
         Container.Bind<LootSystem>().FromComponentInNewPrefab(_LootPrefab).AsSingle().NonLazy();
+
+
     }
 
     private void InstallScriptableObjects()

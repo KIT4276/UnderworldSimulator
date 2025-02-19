@@ -20,6 +20,6 @@ public class LootClickHandler : MonoBehaviour
             _lootSystem.TakeLootToInventory(_lootSlot.TakeLastItem());
         }
         _lootSystem.OffInteractiveObject();
-        _lootSystem.CloseMenu();
+        _lootSystem.OnCloseMenu();
     }
 }

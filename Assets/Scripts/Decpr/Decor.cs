@@ -16,9 +16,8 @@ public class Decor : BaseItem
     [SerializeField] protected InputActionReference _clickAction;
     [SerializeField] protected InputActionReference _cancelAction;
     [SerializeField] protected InputActionReference _rotationAction;
-    [Space]
-    
 
+    private StateMachine _stateMachine;
     protected DecorData _decorData;
     protected DecorationSystem _decorationSystem;
     private bool _canPlace = true;
@@ -40,24 +39,49 @@ public class Decor : BaseItem
     public event Action<RotationState> EndRotation;
 
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
-        SpaceDeterminantor spaceDeterminantor, int id, DecorHolder decorHolder)
+        SpaceDeterminantor spaceDeterminantor, int id, DecorHolder decorHolder, StateMachine stateMachine)
     {
         if (ID == 0)
             ID = id;
         IsInside = true;
         IsDragging = true;
         _decorationSystem = decorationSystem;
+        _stateMachine = stateMachine;
         _currentRotationState = RotationState.Front;
 
-        _decorView.Initialize(this, staticData, _currentRotationState);
-        _decorDrag.Initialize(this, staticData, spaceDeterminantor);
-        _decorPlacer.Initialize(this, spaceDeterminantor, decorHolder);
-        _decorRotator.Initialize(this, _currentRotationState);
+        InitComponents(staticData, spaceDeterminantor, decorHolder);
+
         CheckCamera();
+        //_isCanDecorate = true;
+        OnStateChange(_stateMachine.ActiveState);
 
         _clickAction.action.performed += OnClick;
         _rotationAction.action.performed += OnRotate;
         _cancelAction.action.performed += OnCancel;
+
+        _stateMachine.ChangeStateAction += OnStateChange;
+
+        //Debug.Log(_isCanDecorate);
+    }
+
+    private void InitComponents(PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
+    {
+        _decorView.Initialize(this, staticData, _currentRotationState);
+        _decorDrag.Initialize(this, staticData, spaceDeterminantor);
+        _decorPlacer.Initialize(this, spaceDeterminantor, decorHolder);
+        _decorRotator.Initialize(this, _currentRotationState);
+    }
+
+    private void OnStateChange(IExitableState state)
+    {
+        if (state is DecorationState || state is WorkbenchState)
+        {
+            _isCanDecorate = true;
+        }
+        else
+        {
+            _isCanDecorate = false;
+        }
     }
 
     private void OnCancel(InputAction.CallbackContext context)
@@ -86,8 +110,10 @@ public class Decor : BaseItem
         if (!CheckCamera()) return;
     }
 
-    public void SetIsCanDecorate(bool isOnDecorState) =>
-        _isCanDecorate = isOnDecorState;
+    public void SetIsCanDecorate(bool isCanDecorate)
+    {
+        _isCanDecorate = isCanDecorate;
+    }
 
     public void SetIsInside(bool isInside)
         => IsInside = isInside;
@@ -103,7 +129,7 @@ public class Decor : BaseItem
 
     private void OnClick(InputAction.CallbackContext context)
     {
-       // Debug.Log(_canPlace);
+        // Debug.Log(_canPlace);
         if (!_canPlace || !_isCanDecorate) return;
         //Debug.Log("OnClick");
         Clicked?.Invoke();
@@ -159,13 +185,14 @@ public class Decor : BaseItem
             }
         }
     }
-    
 
     protected void OnDisable()
     {
-        IsDragging = false;
+        //IsDragging = false;
+
         _clickAction.action.performed -= OnClick;
         _cancelAction.action.performed -= OnCancel;
         _rotationAction.action.performed -= OnRotate;
+        _stateMachine.ChangeStateAction -= OnStateChange;
     }
 }
