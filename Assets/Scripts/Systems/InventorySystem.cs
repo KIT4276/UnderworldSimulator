@@ -39,18 +39,10 @@ public class InventorySystem : MonoBehaviour
        if(state is LootState || state is InventoryState)
         {
             this.gameObject.SetActive(true);
+            ActivateInventory();
         }
 
     }
-
-    //private void OnEscape(InputAction.CallbackContext context)
-    //{
-    //    //if (!(_stateMachine.ActiveState is LootState))
-    //    //{
-    //    DeActivateInventory();
-
-    //    //}
-    //}
 
     public void ActivateInventory()
     {
@@ -59,20 +51,6 @@ public class InventorySystem : MonoBehaviour
             slot.Initialize();
         }
     }
-
-    //private void DeActivateInventory()
-    //{
-    //    if (_decorHolder.ActiveDecor == null)
-    //    {
-
-    //        if (_stateMachine.ActiveState is InventoryState || _stateMachine.ActiveState is LootState)
-    //        {
-    //            Closed?.Invoke();
-    //        }
-
-    //        this.gameObject.SetActive(false);
-    //    }
-    //}
 
 
     public void TryReturnLootToInventory(Item loot) /// ¬нимательно! —юда обращаемс€ только чтобы вернуть лут

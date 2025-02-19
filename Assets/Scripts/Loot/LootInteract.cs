@@ -35,7 +35,6 @@ public class LootInteract : InteractableObstacle
             _lootSystem.FillSlot(lootSetting.Loot, lootSetting.Count, this. gameObject);
         }
 
-        //TODO add lootSettings this particular object to LootSystem
     }
 
     private IEnumerator InteractionProgress()
