@@ -78,12 +78,17 @@ public class LootSystem : MonoBehaviour
             CloseMenu();
     }
 
-    public void CloseMenu()
+    public void OnCloseMenu()
     {
-        _menu.SetActive(false);
         //Debug.Log(_stateMachine.ActiveState + "__________________________________");
         //if (!(_stateMachine.ActiveState is InventoryState) && !)
         CloseMenuAction?.Invoke();
+
+    }
+
+    private void CloseMenu()
+    {
+        _menu.SetActive(false);
 
     }
 
