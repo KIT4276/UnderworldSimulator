@@ -17,22 +17,25 @@ public class LootSystem : MonoBehaviour
     private GameObject _interactiveObject;
 
     public event Action OpenMenuAction;
-   // private bool _isOnLootState;
+    public event Action CloseMenuAction;
+    // private bool _isOnLootState;
 
     void Start()
     {
         _menu.SetActive(false);
         //_inventorySystem.Closed += CloseMenu;
-       // _escapeAction.action.performed += OnEscape;
+        // _escapeAction.action.performed += OnEscape;
         //_lootState.LootStateEnter += OnLootStateEnter;
         //_lootState.LootStateExit += OnLootStateExit;
+
+        _stateMachine.ChangeStateAction += OnChangeState;
     }
 
-    public void EnterLootState()
-    {
-        _stateMachine.Enter<LootState>();
+    //public void EnterLootState()
+    //{
+    //    //_stateMachine.Enter<LootState>();
 
-    }
+    //}
 
     public void TakeAllLoot()
     {
@@ -54,7 +57,6 @@ public class LootSystem : MonoBehaviour
 
     public void OpenMenu()
     {
-
         _menu.SetActive(true);
         _inventorySystem.gameObject.SetActive(true);
         _inventorySystem.ActivateInventory();
@@ -70,12 +72,18 @@ public class LootSystem : MonoBehaviour
         OpenMenuAction?.Invoke();
     }
 
+    private void OnChangeState(IExitableState state)
+    {
+        if (state is GameLoopState)
+            CloseMenu();
+    }
+
     public void CloseMenu()
     {
         _menu.SetActive(false);
         //Debug.Log(_stateMachine.ActiveState + "__________________________________");
         //if (!(_stateMachine.ActiveState is InventoryState) && !)
-            _stateMachine.Enter<GameLoopState>();
+        CloseMenuAction?.Invoke();
 
     }
 

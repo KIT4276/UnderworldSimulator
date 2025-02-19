@@ -12,6 +12,7 @@ public class StateMachine
     private bool _isInited;
 
     public IExitableState ActiveState {  get => _activeState; } 
+    public IExitableState PredioslyState { get; private set; }
 
     public StateMachine(StateFactory stateFactory) =>
         _stateFactory = stateFactory;
@@ -50,7 +51,7 @@ public class StateMachine
         IState state = ChangeState<TState>();
         state.Enter();
 
-        //Debug.Log( ActiveState);
+        Debug.Log( ActiveState);
     }
 
     public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadedState<TPayload>
@@ -61,13 +62,17 @@ public class StateMachine
 
     private TState ChangeState<TState>() where TState : class, IExitableState
     {
-       // var lastState = _activeState;
-        _activeState?.Exit();
+        if (_activeState != null)
+        {
+            PredioslyState = _activeState;
+            _activeState.Exit();
+        }
 
         TState state = GetState<TState>();
         _activeState = state;
 
         ChangeStateAction?.Invoke( state);
+
         return state;
     }
 

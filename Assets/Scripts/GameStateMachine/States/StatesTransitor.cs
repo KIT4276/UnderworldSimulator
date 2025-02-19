@@ -8,19 +8,26 @@ public class StatesTransitor
     private readonly DecorHolder _decorHolder;
     private readonly WorkbenchSystem _workbenchSystem;
     private readonly InventorySystem _inventorySystem;
+    private readonly LootSystem _lootSystem;
 
     public StatesTransitor(StateMachine stateMachine, PlayerInput playerInput, DecorHolder decorHolder, WorkbenchSystem workbenchSystem,
-        InventorySystem inventorySystem)
+        InventorySystem inventorySystem, LootSystem lootSystem)
     {
         _stateMachine = stateMachine;
         _decorHolder = decorHolder;
         _workbenchSystem = workbenchSystem;
         _inventorySystem = inventorySystem;
+        _lootSystem = lootSystem;
+
         playerInput.actions["Escape"].performed += OnEscape;
+        playerInput.actions["Inventory"].performed += OnInventory;
         _workbenchSystem.InventoryButtonClick += ToDecorateState;
         _workbenchSystem.Exit += ToGameLoopState;
         _inventorySystem.Exit += ConditionalToWorkbenchState;
+        _lootSystem.OpenMenuAction += ToLootState;
+        _lootSystem.CloseMenuAction += ToGameLoopState;
     }
+
 
     private void OnEscape(InputAction.CallbackContext context)
     {
@@ -33,11 +40,24 @@ public class StatesTransitor
             case WorkbenchState:
                 ToGameLoopState();
                 break;
+            case InventoryState:
+                ToGameLoopState();
+                break;
+            case LootState:
+                ToGameLoopState();
+                break;
         }
+    }
+
+    private void OnInventory(InputAction.CallbackContext context)
+    {
+        ToInventoryState();
     }
 
     private void ConditionalToWorkbenchState()
     {
+        if (_stateMachine.ActiveState is LootState) return; 
+
         if (_decorHolder.ActiveDecor == null)
         {
             ToWorkbenchState();

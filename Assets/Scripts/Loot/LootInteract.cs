@@ -23,7 +23,7 @@ public class LootInteract : InteractableObstacle
     protected override void Interac()
     {
         _progressBar.SetActive(true);
-        _lootSystem.EnterLootState();
+        
 
         if (_interactionCoroutine == null)
         {
