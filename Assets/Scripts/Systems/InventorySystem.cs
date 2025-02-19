@@ -9,14 +9,14 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private InventorySlot[] _inventorySlot;
     [SerializeField] private GameObject _warningSign;
     [SerializeField] private InputActionReference _escapeAction;
-    //private StateMachine _stateMachine;
+   // private StateMachine _stateMachine;
     private DecorHolder _decorHolder;
     private DecorationSystem _decorationSystem;
 
-    //public event Action Closed;
+    public event Action Exit;
 
     [Inject]
-    public void Construct(DecorationSystem decorationSystem, DecorHolder decorHolder, StateMachine stateMachine)
+    public void Construct(DecorationSystem decorationSystem, DecorHolder decorHolder/*, StateMachine stateMachine*/)
     {
         //_stateMachine = stateMachine;
         _decorHolder = decorHolder;
@@ -24,7 +24,12 @@ public class InventorySystem : MonoBehaviour
         _decorationSystem.TryToRemoveDecorAction += TryReturnDecorToInventory;
         _warningSign.SetActive(false);
 
-       // _escapeAction.action.performed += OnEscape;
+        // _escapeAction.action.performed += OnEscape;
+    }
+
+    public void OnExit()
+    {
+        Exit?.Invoke();
     }
 
     //private void OnEscape(InputAction.CallbackContext context)

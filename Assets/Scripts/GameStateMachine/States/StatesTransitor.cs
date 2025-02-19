@@ -17,27 +17,59 @@ public class StatesTransitor
         _workbenchSystem = workbenchSystem;
         _inventorySystem = inventorySystem;
         playerInput.actions["Escape"].performed += OnEscape;
+        _workbenchSystem.InventoryButtonClick += ToDecorateState;
+        _workbenchSystem.Exit += ToGameLoopState;
+        _inventorySystem.Exit += ConditionalToWorkbenchState;
     }
 
     private void OnEscape(InputAction.CallbackContext context)
     {
-        Debug.Log("OnEscape");
 
         switch (_stateMachine.ActiveState)
         {
             case DecorationState:
-                if (_decorHolder.ActiveDecor == null)
-                {
-                    _stateMachine.Enter<WorkbenchState>();
-                }
-                else
-                {
-                    _workbenchSystem.ShowSign();
-                }
+                ConditionalToWorkbenchState();
                 break;
             case WorkbenchState:
-                _stateMachine.Enter<GameLoopState>();
+                ToGameLoopState();
                 break;
         }
+    }
+
+    private void ConditionalToWorkbenchState()
+    {
+        if (_decorHolder.ActiveDecor == null)
+        {
+            ToWorkbenchState();
+        }
+        else
+        {
+            _workbenchSystem.ShowSign();
+        }
+    }
+
+    private void ToDecorateState()
+    {
+        _stateMachine.Enter<DecorationState>();
+    }
+
+    private void ToWorkbenchState()
+    {
+        _stateMachine.Enter<WorkbenchState>();
+    }
+
+    private void ToGameLoopState()
+    {
+        _stateMachine.Enter<GameLoopState>();
+    }
+
+    private void ToLootState()
+    {
+        _stateMachine.Enter<LootState>();
+    }
+
+    private void ToInventoryState()
+    {
+        _stateMachine.Enter<InventoryState>();
     }
 }

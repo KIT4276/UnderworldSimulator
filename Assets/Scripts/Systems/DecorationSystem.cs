@@ -7,17 +7,17 @@ public class DecorationSystem
   // private InputAction _escapeAction;
     private DecorHolder _decorHolder;
     private DecorFactory _factory;
-    private StateMachine _stateMachine;
+   // private StateMachine _stateMachine;
 
     public event Action<Decor> TryToRemoveDecorAction;
 
-    public DecorationSystem(DecorFactory factory, DecorHolder decorHolder, /*PlayerInput playerInput, */StateMachine stateMachine)
+    public DecorationSystem(DecorFactory factory, DecorHolder decorHolder /*,PlayerInput playerInput, *//*StateMachine stateMachine*/)
     {
         //_escapeAction = playerInput.actions["Escape"];
 
         _decorHolder = decorHolder;
         _factory = factory;
-        _stateMachine = stateMachine;
+        //_stateMachine = stateMachine;
         _factory.Initialize(this);
 
         //_escapeAction.performed += OnEscape;

@@ -17,6 +17,9 @@ public class WorkbenchSystem : MonoBehaviour
     private InventorySystem _inventory;
     private DecorationSystem _decorationSystem;
 
+    public event Action InventoryButtonClick;
+    public event Action Exit;
+
     [Inject]
     public void Construct(StateMachine stateMachine, InventorySystem inventory, DecorationSystem decorationSystem, DecorHolder decorHolder)
     {
@@ -50,14 +53,14 @@ public class WorkbenchSystem : MonoBehaviour
         _warningSign.SetActive(false);
     }
 
-    //public void OnExitWorkbench()
-    //{
-    //    _stateMachine.Enter<GameLoopState>();
-    //}
+    public void OnExitWorkbench()
+    {
+        Exit?.Invoke();
+    }
 
     public void OnInventoryButtonClick()
     {
-        _stateMachine.Enter<DecorationState>();
+        InventoryButtonClick?.Invoke(); 
     }
 
     //private void OnEscape(InputAction.CallbackContext context)
