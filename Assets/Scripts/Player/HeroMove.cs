@@ -11,7 +11,7 @@ public class HeroMove : BaseMovable
     public float MoveSpeed { get => _moveSpeed; }
     public Vector2 InputVector2 { get => _inputVector2; }
 
-    public void Init(StateMachine stateMachine)
+    public void Initialize(StateMachine stateMachine)
     {
         _rigidbody2d.gravityScale = 0;
         _rigidbody2d.freezeRotation = true;

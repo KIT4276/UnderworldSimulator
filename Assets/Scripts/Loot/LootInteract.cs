@@ -5,12 +5,13 @@ using Zenject;
 
 public class LootInteract : InteractableObstacle
 {
-    [SerializeField] private float _interactionTime = 1;
+   // [SerializeField] private float _interactionTime = 1;
     [SerializeField] private GameObject _progressBar;
     [SerializeField] private Image _bar;
     [SerializeField] private Loot _loot;
 
     [Inject] private LootSystem _lootSystem;
+    [Inject] private PersistantStaticData _staticData;
 
     private Coroutine _interactionCoroutine;
 
@@ -27,6 +28,7 @@ public class LootInteract : InteractableObstacle
 
         if (_interactionCoroutine == null)
         {
+            _hero.GetHero.OnLoot();
             _interactionCoroutine = StartCoroutine(InteractionProgress());
         }
 
@@ -42,10 +44,10 @@ public class LootInteract : InteractableObstacle
         float elapsedTime = 0f;
         _bar.fillAmount = 0f;
 
-        while (elapsedTime < _interactionTime)
+        while (elapsedTime < _staticData.LootInteractTime)
         {
             elapsedTime += Time.deltaTime;
-            _bar.fillAmount = Mathf.Clamp01(elapsedTime / _interactionTime);
+            _bar.fillAmount = Mathf.Clamp01(elapsedTime / _staticData.LootInteractTime);
             yield return null;
         }
 

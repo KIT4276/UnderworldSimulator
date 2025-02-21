@@ -7,11 +7,16 @@ public class HeroReaction : MonoBehaviour
     [SerializeField] private TMP_Text _reactionText;
     [SerializeField] private GameObject _reactionPanel;
     [SerializeField] private float _reactionTime = 3;
+    [SerializeField] private Hero _hero;
+
+    
 
     private void Start()
     {
         _reactionPanel.SetActive(false);
     }
+
+    public Hero GetHero => _hero;
 
     public void ShowReaction(string text)
     {

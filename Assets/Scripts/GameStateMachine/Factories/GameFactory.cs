@@ -16,7 +16,7 @@ public class GameFactory : IService
 
     public List<ISavedProgressReader> ProgressReaders { get; } = new List<ISavedProgressReader>();
     public List<ISavedProgress> ProgressWriters { get; } = new List<ISavedProgress>();
-    public HeroMove HeroMove { get; private set; }
+    //public HeroMove HeroMove { get; private set; }
     public CameraMove CameraMove { get; private set; }
 
     private readonly IAssets _assets;
@@ -36,10 +36,11 @@ public class GameFactory : IService
     public GameObject CreatePlayerAt(GameObject at)
     {
         PlayerGameObject = InstantiateRegistered(AssetPath.HeroPath, at.transform.position);
-        HeroMove = PlayerGameObject.GetComponent<HeroMove>();
-        HeroMove.Init(_stateMachine);
+        //HeroMove = PlayerGameObject.GetComponent<HeroMove>();
+        //HeroMove.Init(_stateMachine);
+        PlayerGameObject.GetComponent<Hero>().Initialize(_stateMachine, _container, _staticData);
         InitCamera();
-        _container.Bind<HeroMove>().AsSingle();
+        //_container.Bind<HeroMove>().AsSingle();
         
         _container.Bind<PlayerInput>().FromInstance(PlayerGameObject.GetComponent<PlayerInput>()).AsSingle().NonLazy();
 
