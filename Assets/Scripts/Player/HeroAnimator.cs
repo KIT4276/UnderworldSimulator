@@ -24,24 +24,11 @@ public class HeroAnimator : MonoBehaviour
     {
         _stateMachine = stateMachine;
         _staticData = staticData;
-        
-
-        //_stateMachine.ChangeStateAction += OnChangeState;
     }
 
-    //public void OnChangeState()
-    //{
-    //    Debug.Log("OnChangeState");
-    //    //if (state is LootState)
-    //    //{
-    //        Debug.Log("LootState");
-
-    //        StartCoroutine(LootRoutine());
-    //   // }
-    //}
     private void Update()
     {
-        Debug.Log(_armatureFront.animationName);
+        Debug.Log(_currentArmature.animationName);
     }
 
     public void PlayLoot()
@@ -51,10 +38,10 @@ public class HeroAnimator : MonoBehaviour
 
     private IEnumerator LootRoutine()
     {
-        Debug.Log(_armatureFront.animationName);
+        //Debug.Log(_armatureFront.animationName);
         var predioslyAnimation = _armatureFront.animationName;
         _currentArmature.animation.Play(LootName);
-        Debug.Log(_armatureFront.animationName);
+        //Debug.Log(_armatureFront.animationName);
         yield return new WaitForSeconds(_staticData.LootInteractTime);
         _currentArmature.animation.Play(predioslyAnimation);
     }
