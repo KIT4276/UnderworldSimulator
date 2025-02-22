@@ -18,7 +18,8 @@ public class InventorySlot : MonoBehaviour
 
     public event Action InitializedAction;
 
-    protected List<BaseItem> Items;
+    public List<BaseItem> Items;
+
     protected Sprite _icon;
 
     public void Initialize()
