@@ -9,9 +9,12 @@ public class PersistantStaticData : ScriptableObject
     [SerializeField] private Color _allowedPositionColor = Color.blue;
     [SerializeField] private Color _bannedPositionColor = new Color(1, 0.2f, 0.2f, 0.5f);
     [SerializeField] private float _epsilon = 0.01f;
+    [SerializeField] private float _lootInteractTime = 1f;
 
     public float CellSize => _cellSize;
     public Color AllowedPositionColor => _allowedPositionColor;
     public Color BannedPositionColor => _bannedPositionColor;
     public float Epsilon => _epsilon;
+
+    public float LootInteractTime => _lootInteractTime;
 }

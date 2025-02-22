@@ -1,10 +1,7 @@
 using DG.Tweening;
 using Unity.Cinemachine;
-using Unity.VisualScripting;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Zenject;
 
 public class CameraMove : BaseMovable
 {

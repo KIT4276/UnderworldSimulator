@@ -1,8 +1,7 @@
 using DragonBones;
 using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Zenject;
 
 public class HeroAnimator : MonoBehaviour
 {
@@ -10,25 +9,45 @@ public class HeroAnimator : MonoBehaviour
     [SerializeField] private UnityArmatureComponent _armatureBack;
     [SerializeField] private UnityArmatureComponent _armatureLeft;
     [SerializeField] private UnityArmatureComponent _armatureRight;
-    //[SerializeField] private UnityArmatureComponent _armatureIdle;
     [SerializeField] private HeroMove _heroMove;
 
 
     private UnityArmatureComponent _currentArmature;
+    //private StateMachine _stateMachine;
+    private PersistantStaticData _staticData;
 
-    private void Start()
+    private const string StandName = "stand";
+    private const string WalkName = "walk";
+    private const string LootName = "loot_animation";
+
+    public void Initialize(StateMachine stateMachine, PersistantStaticData staticData)
     {
         _heroMove.Mobilize();
         _currentArmature = _armatureFront;
-        _currentArmature.animation.Play("stand");
+        _currentArmature.animation.Play(StandName);
 
-        //_heroMove.MoveAction.performed += UpdateAnim;
+        //_stateMachine = stateMachine;
+        _staticData = staticData;
+    }
+
+
+    public void PlayLoot()
+    {
+        StartCoroutine(LootRoutine());
+    }
+
+    private IEnumerator LootRoutine()
+    {
+        var predioslyAnimation = _currentArmature.armature.animation.lastAnimationName;
+        _currentArmature.animation.Play(LootName);
+       // Debug.Log(_currentArmature.armature.animation.lastAnimationName);
+        yield return new WaitForSeconds(_staticData.LootInteractTime);
+        _currentArmature.animation.Play(predioslyAnimation);
+       // Debug.Log(_currentArmature.armature.animation.lastAnimationName);
     }
 
     private void LateUpdate()
     {
-        //if (context.phase != InputActionPhase.Started || context.phase != InputActionPhase.Canceled) return;
-        //Debug.Log("UpdateAnim");
         if (_heroMove.InputVector2.x > 0)
         {
             CrossArmatures(_armatureRight);
@@ -50,31 +69,32 @@ public class HeroAnimator : MonoBehaviour
             }
             else
             {
-                if (_currentArmature.armature.animation.lastAnimationName == "stand") return;
-                _currentArmature.armature.animation.Play("stand");
+                //Debug.Log(_currentArmature);
+                //Debug.Log(_currentArmature.armature);
+                //Debug.Log(_currentArmature.animation);
+                //Debug.Log(_currentArmature.animation.lastAnimationName);
+                if (_currentArmature.armature.animation.lastAnimationName == LootName) return;
+                if (_currentArmature.armature.animation.lastAnimationName == StandName) return;
+                _currentArmature.animation.Play(StandName);
             }
         }
-    }
 
-    private void FixedUpdate()
-    {
         //Debug.Log(_currentArmature.armature.animation.lastAnimationName);
-        
     }
 
     public void CrossArmatures(UnityArmatureComponent newArmature)
     {
         if (_currentArmature == newArmature)
         {
-            if (_currentArmature.armature.animation.lastAnimationName != "walk")
-                _currentArmature.animation.Play("walk");
+            if (_currentArmature.armature.animation.lastAnimationName != WalkName)
+                _currentArmature.animation.Play(WalkName);
             else
                 return;
         }
 
-            _currentArmature.gameObject.SetActive(false);
-            newArmature.gameObject.SetActive(true);
-            _currentArmature = newArmature;
-            _currentArmature.animation.Play("walk");
+        _currentArmature.gameObject.SetActive(false);
+        newArmature.gameObject.SetActive(true);
+        _currentArmature = newArmature;
+        _currentArmature.animation.Play(WalkName);
     }
 }
