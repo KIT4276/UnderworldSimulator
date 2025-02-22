@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class StateMachine
 {
@@ -11,9 +12,12 @@ public class StateMachine
     private bool _isInited;
 
     public IExitableState ActiveState {  get => _activeState; } 
+    public IExitableState PredioslyState { get; private set; }
 
     public StateMachine(StateFactory stateFactory) =>
         _stateFactory = stateFactory;
+
+    public event Action<IExitableState> ChangeStateAction;
 
     public void Initialize()
     {
@@ -32,7 +36,11 @@ public class StateMachine
             [typeof(WorkbenchState)] = _stateFactory
             .CreateState<WorkbenchState>(),
             [typeof(DecorationState)] = _stateFactory
-            .CreateState < DecorationState>()
+            .CreateState < DecorationState>(),
+            [typeof(LootState)] = _stateFactory
+            .CreateState<LootState>(),
+            [typeof(InventoryState)] = _stateFactory
+            .CreateState<InventoryState>(),
         };
         Enter<BootstrapState>();
         _isInited = true;
@@ -42,6 +50,8 @@ public class StateMachine
     {
         IState state = ChangeState<TState>();
         state.Enter();
+
+       // Debug.Log( ActiveState);
     }
 
     public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadedState<TPayload>
@@ -52,10 +62,16 @@ public class StateMachine
 
     private TState ChangeState<TState>() where TState : class, IExitableState
     {
-        _activeState?.Exit();
+        if (_activeState != null)
+        {
+            PredioslyState = _activeState;
+            _activeState.Exit();
+        }
 
         TState state = GetState<TState>();
         _activeState = state;
+
+        ChangeStateAction?.Invoke( state);
 
         return state;
     }

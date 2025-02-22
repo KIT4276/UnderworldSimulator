@@ -2,25 +2,18 @@
 
 public class GameLoopState : IState
 {
-    private readonly GameFactory _gameFactory;
+    public event Action GameLoopStateEnter;
 
-    public event Action EnterGameLoopState;
-
-    public GameLoopState( GameFactory gameFactory)
+    public GameLoopState()
     {
-        _gameFactory = gameFactory;
     }
 
     public void Enter() 
     {
-        _gameFactory.HeroMove.Mobilize();
-        _gameFactory.CameraMove.Immobilize();
-        EnterGameLoopState?.Invoke();
+        GameLoopStateEnter?.Invoke();
     }
 
     public void Exit() 
     {
-        _gameFactory.HeroMove.Immobilize();
-        _gameFactory.CameraMove.Mobilize();
     }
 }

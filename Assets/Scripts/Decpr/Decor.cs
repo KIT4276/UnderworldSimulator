@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(DecorView), (typeof(DecorRotator)))]
 [RequireComponent(typeof(DecorDrag), (typeof(DecorPlacer)))]
-public class Decor : MonoBehaviour, IInventoryObject
+public class Decor : BaseItem
 {
     [SerializeField] private DecorType _decorType;
     [Space]
@@ -16,13 +16,12 @@ public class Decor : MonoBehaviour, IInventoryObject
     [SerializeField] protected InputActionReference _clickAction;
     [SerializeField] protected InputActionReference _cancelAction;
     [SerializeField] protected InputActionReference _rotationAction;
-    [Space]
-    [SerializeField] protected Sprite _icon;
 
+    private StateMachine _stateMachine;
     protected DecorData _decorData;
     protected DecorationSystem _decorationSystem;
     private bool _canPlace = true;
-    protected bool _isOnDecorState;
+    protected bool _isCanDecorate;
     private RotationState _currentRotationState;
 
 
@@ -40,24 +39,49 @@ public class Decor : MonoBehaviour, IInventoryObject
     public event Action<RotationState> EndRotation;
 
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
-        SpaceDeterminantor spaceDeterminantor, int id, DecorHolder decorHolder)
+        SpaceDeterminantor spaceDeterminantor, int id, DecorHolder decorHolder, StateMachine stateMachine)
     {
         if (ID == 0)
             ID = id;
         IsInside = true;
         IsDragging = true;
         _decorationSystem = decorationSystem;
+        _stateMachine = stateMachine;
         _currentRotationState = RotationState.Front;
 
-        _decorView.Initialize(this, staticData, _currentRotationState);
-        _decorDrag.Initialize(this, staticData, spaceDeterminantor);
-        _decorPlacer.Initialize(this, spaceDeterminantor, decorHolder);
-        _decorRotator.Initialize(this, _currentRotationState);
+        InitComponents(staticData, spaceDeterminantor, decorHolder);
+
         CheckCamera();
+        //_isCanDecorate = true;
+        OnStateChange(_stateMachine.ActiveState);
 
         _clickAction.action.performed += OnClick;
         _rotationAction.action.performed += OnRotate;
         _cancelAction.action.performed += OnCancel;
+
+        _stateMachine.ChangeStateAction += OnStateChange;
+
+        //Debug.Log(_isCanDecorate);
+    }
+
+    private void InitComponents(PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
+    {
+        _decorView.Initialize(this, staticData, _currentRotationState);
+        _decorDrag.Initialize(this, staticData, spaceDeterminantor);
+        _decorPlacer.Initialize(this, spaceDeterminantor, decorHolder);
+        _decorRotator.Initialize(this, _currentRotationState);
+    }
+
+    private void OnStateChange(IExitableState state)
+    {
+        if (state is DecorationState || state is WorkbenchState)
+        {
+            _isCanDecorate = true;
+        }
+        else
+        {
+            _isCanDecorate = false;
+        }
     }
 
     private void OnCancel(InputAction.CallbackContext context)
@@ -86,11 +110,10 @@ public class Decor : MonoBehaviour, IInventoryObject
         if (!CheckCamera()) return;
     }
 
-    public Sprite GetIcon()
-        => _icon;
-
-    public void SetIsOnDecorState(bool isOnDecorState) =>
-        _isOnDecorState = isOnDecorState;
+    public void SetIsCanDecorate(bool isCanDecorate)
+    {
+        _isCanDecorate = isCanDecorate;
+    }
 
     public void SetIsInside(bool isInside)
         => IsInside = isInside;
@@ -106,7 +129,8 @@ public class Decor : MonoBehaviour, IInventoryObject
 
     private void OnClick(InputAction.CallbackContext context)
     {
-        if (!_canPlace || !_isOnDecorState) return;
+        // Debug.Log(_canPlace);
+        if (!_canPlace || !_isCanDecorate) return;
         //Debug.Log("OnClick");
         Clicked?.Invoke();
     }
@@ -123,11 +147,12 @@ public class Decor : MonoBehaviour, IInventoryObject
         IsDragging = false;
         _decorationSystem.InstanriateDecor(this);
         DecorPlacedAction?.Invoke();
+        AllowActions();
     }
 
     private void OnRotate(InputAction.CallbackContext context)
     {
-        if (!IsDragging || !_isOnDecorState) return;
+        if (!IsDragging || !_isCanDecorate) return;
 
         Rotated?.Invoke(_currentRotationState);
     }
@@ -160,13 +185,14 @@ public class Decor : MonoBehaviour, IInventoryObject
             }
         }
     }
-    
 
     protected void OnDisable()
     {
-        IsDragging = false;
+        //IsDragging = false;
+
         _clickAction.action.performed -= OnClick;
         _cancelAction.action.performed -= OnCancel;
         _rotationAction.action.performed -= OnRotate;
+        _stateMachine.ChangeStateAction -= OnStateChange;
     }
 }

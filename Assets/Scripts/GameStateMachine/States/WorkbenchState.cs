@@ -1,9 +1,7 @@
-﻿
-using UnityEngine;
+﻿using System;
 
 public class WorkbenchState : IState
 {
-
     public WorkbenchState()
     {
     }
@@ -11,11 +9,9 @@ public class WorkbenchState : IState
 
     public void Enter()
     {
-        
     }
 
     public void Exit()
     {
-        
     }
 }
