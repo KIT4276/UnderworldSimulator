@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,20 +6,47 @@ public class InventoryFilters : MonoBehaviour
 {
     [SerializeField] private InventorySystem _inventorySystem;
 
-    public void OnDecorFilter()
+    private List<InventorySlotClone> _decorSlotsClones = new();
+    private List<InventorySlotClone> _lootSlotsClones = new();
+
+
+    private void Start()
     {
-        var decorSlotsClone = new List<InventorySlotClone>();
+        CreateClones();
+        _inventorySystem.ChangeSlots += CreateClones;
+    }
+
+    public void CreateClones()
+    {
+        Debug.Log("CreateClones");
+        _decorSlotsClones.Clear();
+        _lootSlotsClones.Clear();
 
         foreach (var slot in _inventorySystem.InventorySlots)
         {
-
             if (slot.IsOccupied && slot.Items[0] is Decor)
-            {
-                var strSlot = new InventorySlotClone(slot.Items[0], slot.Items.Count);
-                decorSlotsClone.Add(strSlot);
-            }
+                FillList(_decorSlotsClones, slot);
+            else if (slot.IsOccupied && slot.Items[0] is Item)
+                FillList(_lootSlotsClones, slot);
         }
+    }
 
+    public void OnDecorFilter()
+    {
+        //CreateClones();
+        FillSlots(_decorSlotsClones);
+    }
+
+    public void OnLootFilter()
+    {
+        //CreateClones();
+        Debug.Log(_lootSlotsClones.Count);
+        FillSlots(_lootSlotsClones);
+    }
+
+
+    private void FillSlots(List<InventorySlotClone> decorSlotsClone)
+    {
         _inventorySystem.ClearSlots();
 
 
@@ -29,7 +57,7 @@ public class InventoryFilters : MonoBehaviour
             {
                 if (!inventorySlot.IsOccupied)
                 {
-                    for (int i = 0; i < slotClone.ItemsCount; i ++)
+                    for (int i = 0; i < slotClone.ItemsCount; i++)
                     {
                         inventorySlot.SetItem(slotClone.Item);
                     }
@@ -38,8 +66,11 @@ public class InventoryFilters : MonoBehaviour
             }
         }
     }
-    public void OnLootFilter()
-    {
 
+    private static void FillList(List<InventorySlotClone> decorSlotsClone, InventorySlot slot)
+    {
+        var slotClone = new InventorySlotClone(slot.Items[0], slot.Items.Count);
+        Debug.Log(slotClone.ItemsCount);
+        decorSlotsClone.Add(slotClone);
     }
 }
