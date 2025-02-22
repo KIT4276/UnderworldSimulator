@@ -60,9 +60,11 @@ public class StatesTransitor
 
     private void ConditionalToWorkbenchState()
     {
-        if (_stateMachine.ActiveState is LootState || _stateMachine.ActiveState is InventoryState) return; 
-
-        if (_decorHolder.ActiveDecor == null)
+        if (_stateMachine.ActiveState is LootState || _stateMachine.ActiveState is InventoryState)
+        {
+            ToGameLoopState();
+        }
+        else if (_decorHolder.ActiveDecor == null)
         {
             ToWorkbenchState();
         }
