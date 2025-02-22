@@ -18,7 +18,7 @@ public class InventorySlot : MonoBehaviour
 
     public event Action InitializedAction;
 
-    public List<BaseItem> Items;
+    public List<BaseItem> Items { get; protected set; }
 
     protected Sprite _icon;
 
@@ -31,6 +31,7 @@ public class InventorySlot : MonoBehaviour
         SettingParameters();
         InitializedAction?.Invoke();
     }
+
     public BaseItem GetLastItems()
     {
         if (Items == null)
@@ -76,8 +77,17 @@ public class InventorySlot : MonoBehaviour
         CheckingAndShow();
     }
 
-    protected void Deactivate()
+    public void ClearSlot()
     {
+        Items.Clear();
+        IsOccupied = false;
+        CheckingAndShow();
+    }
+
+    public void Deactivate()
+    {
+        _textMeshPro.gameObject.SetActive(false);
+        _x_TextTablet.SetActive(false);
         _buttonEnterChangeImage.enabled = false;
         IsOccupied = false;
         _buttonIconImage.sprite = null;
@@ -105,5 +115,17 @@ public class InventorySlot : MonoBehaviour
                 Deactivate();
             }
         }
+    }
+}
+
+public struct InventorySlotClone
+{
+    public BaseItem Item {  get; private set; }
+    public int ItemsCount { get; private set; }
+
+    public InventorySlotClone(BaseItem item, int itemsCount)
+    {
+        Item = item;
+        ItemsCount = itemsCount;
     }
 }

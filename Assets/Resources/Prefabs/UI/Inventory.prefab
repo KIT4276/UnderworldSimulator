@@ -2038,7 +2038,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2703297656847414814}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2864875923783270907}
+        m_TargetAssemblyTypeName: InventoryFilters, Assembly-CSharp
+        m_MethodName: OnDecorFilter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8215532630559268606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5322,6 +5334,7 @@ GameObject:
   - component: {fileID: 7545290687941026150}
   - component: {fileID: 1097122670451873}
   - component: {fileID: 4385664758730827898}
+  - component: {fileID: 2864875923783270907}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -5450,6 +5463,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c5be77ae403f0488277875d0a5732c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2864875923783270907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6468375244988312855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cb7220d29dbbcf4bacfd38ba54dec28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventorySystem: {fileID: 1097122670451873}
 --- !u!1 &6551440750926847231
 GameObject:
   m_ObjectHideFlags: 0
@@ -6014,7 +6040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slot: {fileID: 4982016647594292160}
-  _count: 5
+  _count: 3
   _itemPrefab: {fileID: 5398454807080672356, guid: f1b4378526746834b9ccd1e03a14993a, type: 3}
 --- !u!114 &4982016647594292160
 MonoBehaviour:
@@ -6335,7 +6361,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5927892952156084771}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2864875923783270907}
+        m_TargetAssemblyTypeName: InventoryFilters, Assembly-CSharp
+        m_MethodName: OnLootFilter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2774322875683849733
 MonoBehaviour:
   m_ObjectHideFlags: 0

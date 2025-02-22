@@ -15,6 +15,8 @@ public class InventorySystem : MonoBehaviour
 
     public event Action Exit;
 
+    public InventorySlot[] InventorySlots { get => _inventorySlot; }
+
     [Inject]
     public void Construct(DecorationSystem decorationSystem, DecorHolder decorHolder, StateMachine stateMachine)
     {
@@ -32,6 +34,14 @@ public class InventorySystem : MonoBehaviour
     public void OnExit()
     {
         Exit?.Invoke();
+    }
+
+    public void ClearSlots()
+    {
+        foreach (var slot in _inventorySlot)
+        {
+            slot.ClearSlot();
+        }
     }
 
     private void OnChangeState(IExitableState state)
