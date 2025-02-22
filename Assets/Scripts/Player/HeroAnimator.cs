@@ -13,7 +13,7 @@ public class HeroAnimator : MonoBehaviour
 
 
     private UnityArmatureComponent _currentArmature;
-    private StateMachine _stateMachine;
+    //private StateMachine _stateMachine;
     private PersistantStaticData _staticData;
 
     private const string StandName = "stand";
@@ -22,14 +22,14 @@ public class HeroAnimator : MonoBehaviour
 
     public void Initialize(StateMachine stateMachine, PersistantStaticData staticData)
     {
-        _stateMachine = stateMachine;
+        _heroMove.Mobilize();
+        _currentArmature = _armatureFront;
+        _currentArmature.animation.Play(StandName);
+
+        //_stateMachine = stateMachine;
         _staticData = staticData;
     }
 
-    private void Update()
-    {
-        Debug.Log(_currentArmature.animationName);
-    }
 
     public void PlayLoot()
     {
@@ -38,19 +38,12 @@ public class HeroAnimator : MonoBehaviour
 
     private IEnumerator LootRoutine()
     {
-        //Debug.Log(_armatureFront.animationName);
-        var predioslyAnimation = _armatureFront.animationName;
+        var predioslyAnimation = _currentArmature.armature.animation.lastAnimationName;
         _currentArmature.animation.Play(LootName);
-        //Debug.Log(_armatureFront.animationName);
+       // Debug.Log(_currentArmature.armature.animation.lastAnimationName);
         yield return new WaitForSeconds(_staticData.LootInteractTime);
         _currentArmature.animation.Play(predioslyAnimation);
-    }
-
-    private void Start()
-    {
-        _heroMove.Mobilize();
-        _currentArmature = _armatureFront;
-        _currentArmature.animation.Play(StandName);
+       // Debug.Log(_currentArmature.armature.animation.lastAnimationName);
     }
 
     private void LateUpdate()
@@ -76,10 +69,17 @@ public class HeroAnimator : MonoBehaviour
             }
             else
             {
+                //Debug.Log(_currentArmature);
+                //Debug.Log(_currentArmature.armature);
+                //Debug.Log(_currentArmature.animation);
+                //Debug.Log(_currentArmature.animation.lastAnimationName);
+                if (_currentArmature.armature.animation.lastAnimationName == LootName) return;
                 if (_currentArmature.armature.animation.lastAnimationName == StandName) return;
-                _currentArmature.armature.animation.Play(StandName);
+                _currentArmature.animation.Play(StandName);
             }
         }
+
+        //Debug.Log(_currentArmature.armature.animation.lastAnimationName);
     }
 
     public void CrossArmatures(UnityArmatureComponent newArmature)
