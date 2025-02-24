@@ -1346,7 +1346,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4037954816504998580}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2864875923783270907}
+        m_TargetAssemblyTypeName: InventoryFilters, Assembly-CSharp
+        m_MethodName: OnQuestsFilter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5490352358055095129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1361,7 +1373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inactiveImage: {fileID: 3889336485272764646}
   _activeImage: {fileID: 5832712008347657152}
-  _isActive: 0
+  _filterType: 3
 --- !u!1 &1871401119348765407
 GameObject:
   m_ObjectHideFlags: 0
@@ -1886,7 +1898,6 @@ MonoBehaviour:
   _button: {fileID: 3370450227857788272}
   _textMeshPro: {fileID: 5594435865072325976}
   _x_TextTablet: {fileID: 302074243828521987}
-  Items: []
 --- !u!114 &2094098934449750448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2065,7 +2076,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inactiveImage: {fileID: 7356626556361080753}
   _activeImage: {fileID: 5021566666307145035}
-  _isActive: 1
+  _filterType: 1
 --- !u!1 &3064073668485062375
 GameObject:
   m_ObjectHideFlags: 0
@@ -2962,7 +2973,6 @@ MonoBehaviour:
   _button: {fileID: 6960368290380914736}
   _textMeshPro: {fileID: 839872782851734169}
   _x_TextTablet: {fileID: 4781070808405148829}
-  Items: []
 --- !u!114 &3717520992040134680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3525,7 +3535,6 @@ MonoBehaviour:
   _button: {fileID: 7439002099013731654}
   _textMeshPro: {fileID: 3485630532860297379}
   _x_TextTablet: {fileID: 5693257958211343410}
-  Items: []
 --- !u!114 &1829470875226261609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3743,7 +3752,6 @@ MonoBehaviour:
   _button: {fileID: 6488317539028249147}
   _textMeshPro: {fileID: 2126161505439961820}
   _x_TextTablet: {fileID: 1388281398611891830}
-  Items: []
 --- !u!114 &6613479525350516774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3895,7 +3903,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 84970024650147559}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2864875923783270907}
+        m_TargetAssemblyTypeName: InventoryFilters, Assembly-CSharp
+        m_MethodName: OnNoFilter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2861050646288709448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3910,7 +3930,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inactiveImage: {fileID: 6591909184443466574}
   _activeImage: {fileID: 1871401119348765407}
-  _isActive: 0
+  _filterType: 0
 --- !u!1 &4428326795803242877
 GameObject:
   m_ObjectHideFlags: 0
@@ -4083,7 +4103,6 @@ MonoBehaviour:
   _button: {fileID: 3199694016593528770}
   _textMeshPro: {fileID: 7186015213189811299}
   _x_TextTablet: {fileID: 3530810747582705282}
-  Items: []
 --- !u!114 &3720912258583938540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5335,6 +5354,7 @@ GameObject:
   - component: {fileID: 1097122670451873}
   - component: {fileID: 4385664758730827898}
   - component: {fileID: 2864875923783270907}
+  - component: {fileID: 2922213532490354279}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -5475,7 +5495,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cb7220d29dbbcf4bacfd38ba54dec28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _filterButtonSwitch: {fileID: 2922213532490354279}
   _inventorySystem: {fileID: 1097122670451873}
+--- !u!114 &2922213532490354279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6468375244988312855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3373b8f2fd9d1743aa152a3fd010ae3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buttons:
+  - {fileID: 2861050646288709448}
+  - {fileID: 8215532630559268606}
+  - {fileID: 2774322875683849733}
+  - {fileID: 5490352358055095129}
 --- !u!1 &6551440750926847231
 GameObject:
   m_ObjectHideFlags: 0
@@ -6059,7 +6097,6 @@ MonoBehaviour:
   _button: {fileID: 6036107378515801477}
   _textMeshPro: {fileID: 2705677194095741347}
   _x_TextTablet: {fileID: 203508319469539430}
-  Items: []
 --- !u!114 &4668909497426893685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6364,7 +6401,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2864875923783270907}
         m_TargetAssemblyTypeName: InventoryFilters, Assembly-CSharp
-        m_MethodName: OnLootFilter
+        m_MethodName: OnCraftFilter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6388,7 +6425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inactiveImage: {fileID: 7539646668581181732}
   _activeImage: {fileID: 3901610519367098029}
-  _isActive: 0
+  _filterType: 2
 --- !u!1 &7946090401920665834
 GameObject:
   m_ObjectHideFlags: 0
@@ -6984,7 +7021,6 @@ MonoBehaviour:
   _button: {fileID: 6958391008551005949}
   _textMeshPro: {fileID: 4110654845430663248}
   _x_TextTablet: {fileID: 4859291368389309763}
-  Items: []
 --- !u!114 &5920696227777180677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7322,7 +7358,6 @@ MonoBehaviour:
   _button: {fileID: 5725450338643804067}
   _textMeshPro: {fileID: 1313084865755658754}
   _x_TextTablet: {fileID: 8671649449176289618}
-  Items: []
 --- !u!114 &7362619003072146389
 MonoBehaviour:
   m_ObjectHideFlags: 0

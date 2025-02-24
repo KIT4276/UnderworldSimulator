@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InventoryFilters : MonoBehaviour
 {
+    [SerializeField] private FilterButtonSwitch _filterButtonSwitch;
+    [Space]
     [SerializeField] private InventorySystem _inventorySystem;
 
     private List<InventorySlotClone> _decorSlotsClones = new();
@@ -14,6 +16,8 @@ public class InventoryFilters : MonoBehaviour
     {
         CreateClones();
         _inventorySystem.ChangeSlots += CreateClones;
+       
+        _filterButtonSwitch.Switch(FilterType.NoFilter);
     }
 
     public void CreateClones()
@@ -31,25 +35,38 @@ public class InventoryFilters : MonoBehaviour
         }
     }
 
+    public void OnNoFilter()
+    {
+        FillSlots(_decorSlotsClones);
+        FillSlots(_lootSlotsClones);
+        //todo FillSlots(_questsSlotsClones);
+        _filterButtonSwitch.Switch(FilterType.NoFilter);
+    }
+
     public void OnDecorFilter()
     {
-        //CreateClones();
+        _inventorySystem.ClearSlots();
         FillSlots(_decorSlotsClones);
+        _filterButtonSwitch.Switch(FilterType.Decor);
     }
 
-    public void OnLootFilter()
+    public void OnCraftFilter()
     {
-        //CreateClones();
-        Debug.Log(_lootSlotsClones.Count);
+        //Debug.Log(_lootSlotsClones.Count);
+        _inventorySystem.ClearSlots();
         FillSlots(_lootSlotsClones);
+        _filterButtonSwitch.Switch(FilterType.Craft);
     }
 
+    public void OnQuestsFilter()
+    {
+        _inventorySystem.ClearSlots();
+        FillSlots(_lootSlotsClones);
+        _filterButtonSwitch.Switch(FilterType.Quests);
+    }
 
     private void FillSlots(List<InventorySlotClone> decorSlotsClone)
     {
-        _inventorySystem.ClearSlots();
-
-
         foreach (var slotClone in decorSlotsClone)
         {
 
@@ -70,7 +87,7 @@ public class InventoryFilters : MonoBehaviour
     private static void FillList(List<InventorySlotClone> decorSlotsClone, InventorySlot slot)
     {
         var slotClone = new InventorySlotClone(slot.Items[0], slot.Items.Count);
-        Debug.Log(slotClone.ItemsCount);
+        //Debug.Log(slotClone.ItemsCount);
         decorSlotsClone.Add(slotClone);
     }
 }

@@ -4,39 +4,22 @@ public class FilterButton : MonoBehaviour
 {
     [SerializeField] private GameObject _inactiveImage;
     [SerializeField] private GameObject _activeImage;
-    [SerializeField] public bool _isActive;
+    [SerializeField] private FilterType _filterType;
 
-    public bool IsActive { get => _isActive; }
+    public FilterType FilterType { get => _filterType; }
 
-    private void Start()
+    public void Activate(bool isActivate)
     {
-        if (_isActive)
-            Activate();
+        if (isActivate)
+        {
+            _inactiveImage.SetActive(false);
+            _activeImage.SetActive(true);
+        }
         else
-            Deactivate();
-    }
-
-    public void SwitchIsActive()
-    {
-        if (_isActive)
-            Deactivate();
-        else
-            Activate();
-    }
-
-
-    public void Activate()
-    {
-        _isActive = true;
-        _inactiveImage.SetActive(false);
-        _activeImage.SetActive(true);
-    }
-
-    public void Deactivate()
-    {
-        _isActive = false;
-        _inactiveImage.SetActive(true);
-        _activeImage.SetActive(false);
+        {
+            _activeImage.SetActive(false);
+            _inactiveImage.SetActive(true);
+        }
     }
 }
 
