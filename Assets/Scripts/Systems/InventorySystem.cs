@@ -14,6 +14,9 @@ public class InventorySystem : MonoBehaviour
     private DecorationSystem _decorationSystem;
 
     public event Action Exit;
+    public event Action ChangeSlots;
+
+    public InventorySlot[] InventorySlots { get => _inventorySlot; }
 
     [Inject]
     public void Construct(DecorationSystem decorationSystem, DecorHolder decorHolder, StateMachine stateMachine)
@@ -34,6 +37,15 @@ public class InventorySystem : MonoBehaviour
         Exit?.Invoke();
     }
 
+    public void ClearSlots()
+    {
+        foreach (var slot in _inventorySlot)
+        {
+            slot.ClearSlot();
+        }
+        //ChangeSlots?.Invoke();
+    }
+
     private void OnChangeState(IExitableState state)
     {
        if(state is LootState || state is InventoryState)
@@ -50,6 +62,8 @@ public class InventorySystem : MonoBehaviour
         {
             slot.Initialize();
         }
+
+        //ChangeSlots?.Invoke();
     }
 
 
@@ -90,6 +104,7 @@ public class InventorySystem : MonoBehaviour
             _warningSign.SetActive(true);
             StartCoroutine(HideSign());
         }
+
     }
 
     private void TryReturnDecorToInventory(Decor decor)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
@@ -137,12 +152,14 @@ public class InventorySystem : MonoBehaviour
     {
         _inventorySlot[i].SetItem(decor);
         _decorationSystem.ReturtDecorToInventory(decor);
+        ChangeSlots?.Invoke();
     }
 
     private void ReturnLootToInventory(Item loot, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть лут.
     {
         _inventorySlot[i].SetItem(loot);
         //_decorationSystem.ReturtDecorToInventory(loot);
+        ChangeSlots?.Invoke();
     }
 
     private IEnumerator HideSign()
