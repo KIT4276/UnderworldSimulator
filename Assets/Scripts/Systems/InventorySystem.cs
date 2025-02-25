@@ -112,6 +112,8 @@ public class InventorySystem : MonoBehaviour
     private void TryReturnDecorToInventory(Decor decor)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
                                                        //для лута создать свой метод
     {
+        //Debug.Log("TryReturnDecorToInventory");
+        
         bool isPlaced = false;
 
         for (int i = 0; i < _inventorySlot.Length; i++)
@@ -152,6 +154,7 @@ public class InventorySystem : MonoBehaviour
     private void ReturnDecorToInventory(Decor decor, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
                                                            //для лута создать свой метод
     {
+       // Debug.Log("ReturnDecorToInventory in Inventory Syst");
         _inventorySlot[i].SetItem(decor);
         _decorationSystem.ReturtDecorToInventory(decor);
         ChangeSlots?.Invoke();
@@ -170,10 +173,15 @@ public class InventorySystem : MonoBehaviour
         _warningSign.SetActive(false);
     }
 
+    private void OnDestroy()
+    {
+        
+        _decorationSystem.TryToRemoveDecorAction -= TryReturnDecorToInventory;
+    }
+
     private void OnDisable()
     {
         StopAllCoroutines();
         _warningSign.SetActive(false);
-        _decorationSystem.TryToRemoveDecorAction -= TryReturnDecorToInventory;
     }
 }

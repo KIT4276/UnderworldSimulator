@@ -86,9 +86,11 @@ public class Decor : BaseItem
 
     private void OnCancel(InputAction.CallbackContext context)
     {
-        //Debug.Log(IsDragging + " " + ID);
+       // Debug.Log("OnCancel");
 
         if (!IsDragging) return;
+
+       // Debug.Log("IsDragging");
 
         _decorationSystem.TryToRemoveDecor(this);
     }
