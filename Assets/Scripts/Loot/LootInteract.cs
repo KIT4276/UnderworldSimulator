@@ -41,6 +41,8 @@ public class LootInteract : InteractableObstacle
 
     private IEnumerator InteractionProgress()
     {
+        _hero.GetHero.Immobilize();
+
         float elapsedTime = 0f;
         _bar.fillAmount = 0f;
 
