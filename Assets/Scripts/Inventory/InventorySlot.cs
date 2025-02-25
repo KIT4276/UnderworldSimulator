@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ public class InventorySlot : MonoBehaviour
     public bool IsOccupied { get; protected set; }
 
     public event Action InitializedAction;
+    public event Action ChangeCount;
 
     public List<BaseItem> Items { get; protected set; }
 
@@ -45,6 +47,8 @@ public class InventorySlot : MonoBehaviour
         var inventObj = Items[^1];
         Items.Remove(Items[^1]);
         CheckingAndShow();
+
+        ChangeCount?.Invoke();
         return inventObj;
     }
 

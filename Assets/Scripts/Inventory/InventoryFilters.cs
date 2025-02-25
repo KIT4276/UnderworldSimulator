@@ -19,6 +19,9 @@ public class InventoryFilters : MonoBehaviour
         _inventorySystem.ChangeSlots += CreateClones;
         _inventorySystem.ActivateInventoryEvent += OnActivateInventory;
 
+        foreach (var slot in _inventorySystem.InventorySlots)
+            slot.ChangeCount += CreateClones;
+
         _filterButtonSwitch.Switch(FilterType.NoFilter);
     }
 
