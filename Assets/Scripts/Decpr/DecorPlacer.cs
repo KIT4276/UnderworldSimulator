@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Decor))]
@@ -105,4 +106,5 @@ public class DecorPlacer : MonoBehaviour
     {
         _decor.Clicked -= OnClicked;
     }
+
 }

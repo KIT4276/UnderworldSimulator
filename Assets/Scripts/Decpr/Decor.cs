@@ -23,10 +23,13 @@ public class Decor : BaseItem
     private bool _canPlace = true;
     protected bool _isCanDecorate;
     private RotationState _currentRotationState;
+    private Vector3 _lastPosition;
 
 
     public DecorType DecorType { get => _decorType; }
     public bool IsInside { get; private set; }
+
+
     public bool IsDragging { get; private set; }
     public Collider2D CurrentDecorCollider { get; private set; }
     public Camera MainCamera { get; private set; }
@@ -77,6 +80,7 @@ public class Decor : BaseItem
         if (state is DecorationState || state is WorkbenchState)
         {
             _isCanDecorate = true;
+            _canPlace = true;
         }
         else
         {
@@ -90,9 +94,15 @@ public class Decor : BaseItem
 
         if (!IsDragging) return;
 
-       // Debug.Log("IsDragging");
-
-        _decorationSystem.TryToRemoveDecor(this);
+        // Debug.Log("IsDragging");
+        if (_stateMachine.ActiveState is WorkbenchState)
+        {
+            GoToLastPosition();
+        }
+        else
+        {
+            _decorationSystem.TryToRemoveDecor(this);
+        }
     }
 
     public void RemoveThisDecor()
@@ -131,7 +141,8 @@ public class Decor : BaseItem
 
     private void OnClick(InputAction.CallbackContext context)
     {
-        // Debug.Log(_canPlace);
+         Debug.Log(_canPlace);
+        Debug.Log(_isCanDecorate);
         if (!_canPlace || !_isCanDecorate) return;
         //Debug.Log("OnClick");
         Clicked?.Invoke();
@@ -146,10 +157,19 @@ public class Decor : BaseItem
     public void PlaceObject()
     {
         //Debug.Log("PlaceObject");
+        _lastPosition = transform.position;
         IsDragging = false;
         _decorationSystem.InstanriateDecor(this);
         DecorPlacedAction?.Invoke();
         AllowActions();
+    }
+
+
+    private void GoToLastPosition()
+    {
+        IsDragging = false;
+        transform.position = _lastPosition;
+        PlaceObject();
     }
 
     private void OnRotate(InputAction.CallbackContext context)
