@@ -64,7 +64,8 @@ public class StatesTransitor
 
     private void OnInventory(InputAction.CallbackContext context)
     {
-        ToInventoryState();
+        if (_stateMachine.ActiveState is GameLoopState)
+            ToInventoryState();
     }
 
     private void ConditionalToWorkbenchState()
@@ -73,7 +74,8 @@ public class StatesTransitor
         //{
         //    ToGameLoopState();
         //}
-        /*else*/ if (_decorHolder.ActiveDecor == null)
+        /*else*/
+        if (_decorHolder.ActiveDecor == null)
         {
             ToWorkbenchState();
         }
