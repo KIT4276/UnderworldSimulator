@@ -141,8 +141,8 @@ public class Decor : BaseItem
 
     private void OnClick(InputAction.CallbackContext context)
     {
-         Debug.Log(_canPlace);
-        Debug.Log(_isCanDecorate);
+        // Debug.Log(_canPlace);
+        //Debug.Log(_isCanDecorate);
         if (!_canPlace || !_isCanDecorate) return;
         //Debug.Log("OnClick");
         Clicked?.Invoke();
