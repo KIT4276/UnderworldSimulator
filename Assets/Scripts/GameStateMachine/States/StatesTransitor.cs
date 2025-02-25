@@ -35,8 +35,8 @@ public class StatesTransitor
 
     private void Escape()
     {
-        Debug.Log("Escape");
-        Debug.Log(_stateMachine.ActiveState);
+        //Debug.Log("Escape");
+        //Debug.Log(_stateMachine.ActiveState);
         switch (_stateMachine.ActiveState)
         {
             case DecorationState:
@@ -58,7 +58,7 @@ public class StatesTransitor
 
     private void OnEscape(InputAction.CallbackContext context)
     {
-        Debug.Log("OnEscape");
+        //Debug.Log("OnEscape");
         Escape();
     }
 

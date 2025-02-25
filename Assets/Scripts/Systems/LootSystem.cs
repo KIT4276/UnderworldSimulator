@@ -1,3 +1,4 @@
+using DragonBones;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,6 +24,26 @@ public class LootSystem : MonoBehaviour
         _menu.SetActive(false);
 
         _stateMachine.ChangeStateAction += OnChangeState;
+    }
+
+    public void AllIsTacen()
+    {
+        bool isAll = true;
+
+        foreach (var slot in _slots)
+        {
+            if (slot.Loots.Count > 0)
+            {
+                isAll = false;
+                break;
+            }
+        }
+
+        if (isAll)
+        {
+            OffInteractiveObject();
+            OnCloseMenu();
+        }
     }
 
     public void TakeAllLoot()
