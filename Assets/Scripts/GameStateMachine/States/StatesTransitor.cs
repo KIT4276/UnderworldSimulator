@@ -35,8 +35,9 @@ public class StatesTransitor
 
     private void Escape()
     {
-        //Debug.Log("Escape");
-        //Debug.Log(_stateMachine.ActiveState);
+        Debug.Log("Escape");
+        Debug.Log(_stateMachine.ActiveState);
+
         switch (_stateMachine.ActiveState)
         {
             case DecorationState:
@@ -45,7 +46,7 @@ public class StatesTransitor
                 break;
             case WorkbenchState:
                 //ToGameLoopState();
-                ConditionalToWorkbenchState();
+                ConditionalToGameLoopState();
                 break;
             case InventoryState:
                 ToGameLoopState();
@@ -66,6 +67,20 @@ public class StatesTransitor
     {
         if (_stateMachine.ActiveState is GameLoopState)
             ToInventoryState();
+    }
+
+
+    private void ConditionalToGameLoopState()
+    {
+        if (_decorHolder.ActiveDecor == null)
+        {
+            ToGameLoopState();
+        }
+        else
+        {
+            Debug.Log("else");
+            _workbenchSystem.ShowSign();
+        }
     }
 
     private void ConditionalToWorkbenchState()
@@ -116,8 +131,8 @@ public class StatesTransitor
         _playerInput.actions["Escape"].performed -= OnEscape;
         _playerInput.actions["Inventory"].performed -= OnInventory;
         _workbenchSystem.InventoryButtonClick -= ToDecorateState;
-        _workbenchSystem.Exit -= ToGameLoopState;
-        _inventorySystem.Exit -= ConditionalToWorkbenchState;
+        _workbenchSystem.Exit -= Escape;
+        _inventorySystem.Exit -= Escape;
         _lootSystem.OpenMenuAction -= ToLootState;
         _lootSystem.CloseMenuAction -= ToGameLoopState;
 
