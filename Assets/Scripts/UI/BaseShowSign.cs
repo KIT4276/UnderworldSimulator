@@ -6,6 +6,11 @@ public class BaseShowSign : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 {
     [SerializeField] protected GameObject _signObject;
 
+    //private void Awake()
+    //{
+    //    HideSign();
+    //}
+
     protected void Start()
     {
         HideSign();
@@ -29,5 +34,10 @@ public class BaseShowSign : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     protected virtual void ShowSign()
     {
         _signObject.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        HideSign();
     }
 }

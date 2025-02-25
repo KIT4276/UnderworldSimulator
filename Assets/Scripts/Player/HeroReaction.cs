@@ -9,8 +9,6 @@ public class HeroReaction : MonoBehaviour
     [SerializeField] private float _reactionTime = 3;
     [SerializeField] private Hero _hero;
 
-    
-
     private void Start()
     {
         _reactionPanel.SetActive(false);

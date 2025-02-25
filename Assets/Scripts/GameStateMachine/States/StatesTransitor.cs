@@ -25,24 +25,27 @@ public class StatesTransitor
         playerInput.actions["Escape"].performed += OnEscape;
         playerInput.actions["Inventory"].performed += OnInventory;
         _workbenchSystem.InventoryButtonClick += ToDecorateState;
-        _workbenchSystem.Exit += ToGameLoopState;
-        _inventorySystem.Exit += ConditionalToWorkbenchState;
+        _workbenchSystem.Exit += Escape;
+        _inventorySystem.Exit += Escape;
         _lootSystem.OpenMenuAction += ToLootState;
         _lootSystem.CloseMenuAction += ToGameLoopState;
 
         _workbenchSystem.Destroyed += OnDestroyed;
     }
 
-    private void OnEscape(InputAction.CallbackContext context)
+    private void Escape()
     {
-
+        //Debug.Log("Escape");
+        //Debug.Log(_stateMachine.ActiveState);
         switch (_stateMachine.ActiveState)
         {
             case DecorationState:
                 ConditionalToWorkbenchState();
+                //ToWorkbenchState();
                 break;
             case WorkbenchState:
-                ToGameLoopState();
+                //ToGameLoopState();
+                ConditionalToWorkbenchState();
                 break;
             case InventoryState:
                 ToGameLoopState();
@@ -53,23 +56,32 @@ public class StatesTransitor
         }
     }
 
+    private void OnEscape(InputAction.CallbackContext context)
+    {
+        //Debug.Log("OnEscape");
+        Escape();
+    }
+
     private void OnInventory(InputAction.CallbackContext context)
     {
-        ToInventoryState();
+        if (_stateMachine.ActiveState is GameLoopState)
+            ToInventoryState();
     }
 
     private void ConditionalToWorkbenchState()
     {
-        if (_stateMachine.ActiveState is LootState || _stateMachine.ActiveState is InventoryState)
-        {
-            ToGameLoopState();
-        }
-        else if (_decorHolder.ActiveDecor == null)
+        //if (_stateMachine.ActiveState is LootState || _stateMachine.ActiveState is InventoryState)
+        //{
+        //    ToGameLoopState();
+        //}
+        /*else*/
+        if (_decorHolder.ActiveDecor == null)
         {
             ToWorkbenchState();
         }
         else
         {
+            Debug.Log("else");
             _workbenchSystem.ShowSign();
         }
     }

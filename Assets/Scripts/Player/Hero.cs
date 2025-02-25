@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
 
 public class Hero : MonoBehaviour
@@ -8,6 +7,13 @@ public class Hero : MonoBehaviour
     [SerializeField] private HeroMove _heroMove;
     [SerializeField] private HeroAnimator _animator;
    // [SerializeField] private PlayerInput _playerInput;
+
+   // public HeroMove HeroMove { get => _heroMove; }
+
+    public void Immobilize()
+    {
+        _heroMove.Immobilize();
+    }
 
     public void Initialize(StateMachine stateMachine, DiContainer container, PersistantStaticData staticData)
     {

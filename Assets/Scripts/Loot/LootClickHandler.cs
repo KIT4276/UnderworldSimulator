@@ -11,6 +11,12 @@ public class LootClickHandler : MonoBehaviour
     public void OntakeClick()
     {
         _lootSystem.TakeLootToInventory(_lootSlot.TakeLastItem());
+
+        if (_lootSlot.Loots.Count <= 0)
+        {
+           // Debug.Log(_lootSlot.Loots.Count);
+            _lootSystem.AllIsTacen();
+        }
     }
 
     public void OnTakeAllClick()
@@ -19,7 +25,6 @@ public class LootClickHandler : MonoBehaviour
         {
             _lootSystem.TakeLootToInventory(_lootSlot.TakeLastItem());
         }
-        _lootSystem.OffInteractiveObject();
-        _lootSystem.OnCloseMenu();
+        _lootSystem.AllIsTacen();
     }
 }
