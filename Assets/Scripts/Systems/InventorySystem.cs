@@ -10,19 +10,20 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private GameObject _warningSign;
     [SerializeField] private InputActionReference _escapeAction;
     private StateMachine _stateMachine;
-    private DecorHolder _decorHolder;
+   // private DecorHolder _decorHolder;
     private DecorationSystem _decorationSystem;
 
     public event Action Exit;
     public event Action ChangeSlots;
+    public event Action ActivateInventoryEvent;
 
     public InventorySlot[] InventorySlots { get => _inventorySlot; }
 
     [Inject]
-    public void Construct(DecorationSystem decorationSystem, DecorHolder decorHolder, StateMachine stateMachine)
+    public void Construct(DecorationSystem decorationSystem, /*DecorHolder decorHolder,*/ StateMachine stateMachine)
     {
         _stateMachine = stateMachine;
-        _decorHolder = decorHolder;
+        //_decorHolder = decorHolder;
         _decorationSystem = decorationSystem;
         _decorationSystem.TryToRemoveDecorAction += TryReturnDecorToInventory;
         _warningSign.SetActive(false);
@@ -63,6 +64,7 @@ public class InventorySystem : MonoBehaviour
             slot.Initialize();
         }
 
+        ActivateInventoryEvent?.Invoke();
         //ChangeSlots?.Invoke();
     }
 

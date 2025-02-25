@@ -297,10 +297,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8634076026275737400}
   - component: {fileID: 2965191337474689980}
-  - component: {fileID: 3323827491770189643}
   - component: {fileID: 2441257902777066172}
+  - component: {fileID: -1280169501093173506}
   m_Layer: 0
-  m_Name: Item1
+  m_Name: QuestsItem 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -368,32 +368,17 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: -3015038093722270057, guid: 51e057dff9516114d8c1e82d5456a08a, type: 3}
+  m_Sprite: {fileID: 1557823438, guid: ffc9bd7c3ee109743b269c40fd50cc79, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.08, y: 4.94}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3323827491770189643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6782332791002167624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d81c93df1571143a44cc010cb1a3bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _icon: {fileID: -3015038093722270057, guid: 51e057dff9516114d8c1e82d5456a08a, type: 3}
-  _hints: "\u0442\u0438\u043F\u0430 \u0434\u0435\u0440\u0435\u0432\u043E"
-  _type: 0
 --- !u!61 &2441257902777066172
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -432,14 +417,30 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.27, y: 1.235}
-    newSize: {x: 5.08, y: 4.94}
+    oldSize: {x: 5.12, y: 5.12}
+    newSize: {x: 5.12, y: 5.12}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 2.4638963, y: 2.3053894}
   m_EdgeRadius: 0
+--- !u!114 &-1280169501093173506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6782332791002167624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e73f984d0f2d0b41b9f5cf5ab746d96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 4333753106896139656, guid: 2c1784b7087e710479634763c1f01c9b, type: 3}
+  _hints: "\u043B\u0443\u0442 \u0434\u043B\u044F \u043A\u0432\u0435\u0441\u0442\u0430
+    3"
+  _type: 9
 --- !u!1 &6839042229254365432
 GameObject:
   m_ObjectHideFlags: 0

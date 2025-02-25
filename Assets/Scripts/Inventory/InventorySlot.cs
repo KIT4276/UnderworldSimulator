@@ -79,6 +79,8 @@ public class InventorySlot : MonoBehaviour
 
     public void ClearSlot()
     {
+        if (Items == null || Items.Count == 0) return;
+
         Items.Clear();
         IsOccupied = false;
         CheckingAndShow();
