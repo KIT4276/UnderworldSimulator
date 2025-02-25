@@ -75,11 +75,13 @@ public class DecorationSystem
 
     public void TryToRemoveDecor(Decor decor)
     {
+        //Debug.Log("TryToRemoveDecor");
         TryToRemoveDecorAction?.Invoke(decor);
     }
 
     public void ReturtDecorToInventory(Decor decor)
     {
+        //Debug.Log("ReturtDecorToInventory in DecorSyst");
         _factory.OnRemoveDecor(decor);
         _decorHolder.DeActiveDecor();
     }

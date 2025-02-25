@@ -297,10 +297,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8634076026275737400}
   - component: {fileID: 2965191337474689980}
-  - component: {fileID: 3323827491770189643}
   - component: {fileID: 2441257902777066172}
+  - component: {fileID: 7753673389152362727}
   m_Layer: 0
-  m_Name: Item 2
+  m_Name: QuestsItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -379,21 +379,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3323827491770189643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6782332791002167624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d81c93df1571143a44cc010cb1a3bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _icon: {fileID: 4333753106896139656, guid: 2c1784b7087e710479634763c1f01c9b, type: 3}
-  _hints: "\u0442\u0438\u043F\u0430 \u0441\u043C\u043E\u043B\u0430..."
-  _type: 6
 --- !u!61 &2441257902777066172
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -440,6 +425,22 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.4638963, y: 2.3053894}
   m_EdgeRadius: 0
+--- !u!114 &7753673389152362727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6782332791002167624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e73f984d0f2d0b41b9f5cf5ab746d96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 4333753106896139656, guid: 2c1784b7087e710479634763c1f01c9b, type: 3}
+  _hints: "\u043B\u0443\u0442 \u0434\u043B\u044F \u043A\u0432\u0435\u0441\u0442\u0430
+    1"
+  _type: 7
 --- !u!1 &6839042229254365432
 GameObject:
   m_ObjectHideFlags: 0
