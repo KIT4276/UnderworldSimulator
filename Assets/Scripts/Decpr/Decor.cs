@@ -64,7 +64,15 @@ public class Decor : BaseItem
 
         _stateMachine.ChangeStateAction += OnStateChange;
 
-        //Debug.Log(_isCanDecorate);
+        SetDecorLayerRecursively(this.gameObject);
+    }
+
+    private void SetDecorLayerRecursively(GameObject obj)
+    {
+        obj.layer = LayerMask.NameToLayer("Decor");
+
+        foreach (Transform child in obj.transform)
+            SetDecorLayerRecursively(child.gameObject);
     }
 
     private void InitComponents(PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
