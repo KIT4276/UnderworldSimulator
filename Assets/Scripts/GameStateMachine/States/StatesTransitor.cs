@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,8 +33,8 @@ public class StatesTransitor
 
     private void Escape()
     {
-        Debug.Log("Escape");
-        Debug.Log(_stateMachine.ActiveState);
+        //Debug.Log("Escape");
+        //Debug.Log(_stateMachine.ActiveState);
 
         switch (_stateMachine.ActiveState)
         {
@@ -135,7 +133,6 @@ public class StatesTransitor
         _inventorySystem.Exit -= Escape;
         _lootSystem.OpenMenuAction -= ToLootState;
         _lootSystem.CloseMenuAction -= ToGameLoopState;
-
         _workbenchSystem.Destroyed -= OnDestroyed;
     }
 }

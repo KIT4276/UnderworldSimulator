@@ -9,13 +9,20 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private InventorySlot[] _inventorySlot;
     [SerializeField] private GameObject _warningSign;
     [SerializeField] private InputActionReference _escapeAction;
+    [Space]
+    [SerializeField] private InventoryFilters _filters;
+
     private StateMachine _stateMachine;
    // private DecorHolder _decorHolder;
     private DecorationSystem _decorationSystem;
 
     public event Action Exit;
-    public event Action ChangeSlots;
+   // public event Action ChangeSlots;
     public event Action ActivateInventoryEvent;
+
+    public event Action ChangeDecorSlots;
+    public event Action ChangeCraftItemSlots;
+    public event Action ChangeQuestsItemSlots;
 
     public InventorySlot[] InventorySlots { get => _inventorySlot; }
 
@@ -157,14 +164,24 @@ public class InventorySystem : MonoBehaviour
        // Debug.Log("ReturnDecorToInventory in Inventory Syst");
         _inventorySlot[i].SetItem(decor);
         _decorationSystem.ReturtDecorToInventory(decor);
-        ChangeSlots?.Invoke();
+        ChangeDecorSlots?.Invoke();
+
     }
 
     private void ReturnLootToInventory(Item loot, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть лут.
     {
         _inventorySlot[i].SetItem(loot);
         //_decorationSystem.ReturtDecorToInventory(loot);
-        ChangeSlots?.Invoke();
+        //ChangeSlots?.Invoke();
+
+        if(loot is CraftItem)
+        {
+            ChangeCraftItemSlots?.Invoke();
+        }
+        else if(loot is QuestsItem)
+        {
+            ChangeQuestsItemSlots?.Invoke();
+        }
     }
 
     private IEnumerator HideSign()
@@ -175,7 +192,6 @@ public class InventorySystem : MonoBehaviour
 
     private void OnDestroy()
     {
-        
         _decorationSystem.TryToRemoveDecorAction -= TryReturnDecorToInventory;
     }
 

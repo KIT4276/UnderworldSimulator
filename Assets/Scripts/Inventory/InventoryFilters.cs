@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,19 +14,65 @@ public class InventoryFilters : MonoBehaviour
 
     private void Start()
     {
-        CreateClones();
-        _inventorySystem.ChangeSlots += CreateClones;
+        CreateAllClones();
+        // _inventorySystem.ChangeSlots += CreateClones;
+
+        _inventorySystem.ChangeDecorSlots += CreateDecorsClones;
+        _inventorySystem.ChangeCraftItemSlots += CreateCraftItemClones;
+        _inventorySystem.ChangeQuestsItemSlots += CreateQuestsItemClones;
+
         _inventorySystem.ActivateInventoryEvent += OnActivateInventory;
 
         foreach (var slot in _inventorySystem.InventorySlots)
-            slot.ChangeCount += CreateClones;
+        {
+            // slot.ChangeCount += CreateAllClones;
+            slot.ChangeDecorCount += CreateDecorsClones;
+            slot.ChangeCraftCount += CreateCraftItemClones;
+            slot.ChangeCraftCount += CreateQuestsItemClones;
+        }
 
         _filterButtonSwitch.Switch(FilterType.NoFilter);
     }
 
 
-    public void CreateClones()
+    private void CreateDecorsClones()
     {
+        _decorSlotsClones.Clear();
+
+        foreach (var slot in _inventorySystem.InventorySlots)
+        {
+            if (slot.IsOccupied && slot.Items[0] is Decor)
+                FillList(_decorSlotsClones, slot);
+        }
+    }
+
+    private void CreateCraftItemClones()
+    {
+        _craftSlotsClones.Clear();
+
+        foreach (var slot in _inventorySystem.InventorySlots)
+        {
+            if (slot.IsOccupied && slot.Items[0] is CraftItem)
+                FillList(_craftSlotsClones, slot);
+        }
+    }
+
+    private void CreateQuestsItemClones()
+    {
+        _questsSlotsClones.Clear();
+
+        foreach (var slot in _inventorySystem.InventorySlots)
+        {
+            if (slot.IsOccupied && slot.Items[0] is QuestsItem)
+                FillList(_questsSlotsClones, slot);
+        }
+    }
+
+
+    public void CreateAllClones()
+    {
+      //  Debug.Log("CreateAllClones");
+
         _decorSlotsClones.Clear();
         _craftSlotsClones.Clear();
         _questsSlotsClones.Clear();
@@ -38,7 +83,7 @@ public class InventoryFilters : MonoBehaviour
                 FillList(_decorSlotsClones, slot);
             else if (slot.IsOccupied && slot.Items[0] is CraftItem)
                 FillList(_craftSlotsClones, slot);
-            else if(slot.IsOccupied && slot.Items[0] is QuestsItem)
+            else if (slot.IsOccupied && slot.Items[0] is QuestsItem)
                 FillList(_questsSlotsClones, slot);
         }
     }
@@ -69,7 +114,7 @@ public class InventoryFilters : MonoBehaviour
     public void OnQuestsFilter()
     {
         _inventorySystem.ClearSlots();
-       FillSlots(_questsSlotsClones);
+        FillSlots(_questsSlotsClones);
         _filterButtonSwitch.Switch(FilterType.Quests);
     }
     private void OnActivateInventory()
@@ -99,5 +144,21 @@ public class InventoryFilters : MonoBehaviour
     {
         var slotClone = new InventorySlotClone(slot.Items[0], slot.Items.Count);
         decorSlotsClone.Add(slotClone);
+    }
+
+    private void OnDestroy()
+    {
+        _inventorySystem.ChangeDecorSlots -= CreateDecorsClones;
+        _inventorySystem.ChangeCraftItemSlots -= CreateCraftItemClones;
+        _inventorySystem.ChangeQuestsItemSlots -= CreateQuestsItemClones;
+
+        _inventorySystem.ActivateInventoryEvent -= OnActivateInventory;
+
+        foreach (var slot in _inventorySystem.InventorySlots)
+        {
+            slot.ChangeDecorCount += CreateDecorsClones;
+            slot.ChangeCraftCount += CreateCraftItemClones;
+            slot.ChangeCraftCount += CreateQuestsItemClones;
+        }
     }
 }
