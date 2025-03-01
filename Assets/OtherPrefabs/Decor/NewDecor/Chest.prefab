@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3436639962364182226}
   - component: {fileID: 5049724514067380993}
   - component: {fileID: 5091932151130758457}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Clickable_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 7485546208717689478}
   - component: {fileID: 8720192786341967081}
   - component: {fileID: 5568487387887968522}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,6 +245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2e049ee758468469e6ff71428d24e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: 2418894680459312807, guid: 287b423e37193fd499bb60ee3b127891, type: 3}
+  _hints: 
   _decorType: 4
   _decorView: {fileID: 6900169945544859711}
   _decorDrag: {fileID: 7485546208717689478}
@@ -253,7 +255,6 @@ MonoBehaviour:
   _clickAction: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _cancelAction: {fileID: -9184969692752736088, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _rotationAction: {fileID: -2486391391914466195, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _icon: {fileID: 2418894680459312807, guid: 287b423e37193fd499bb60ee3b127891, type: 3}
 --- !u!1 &6283782762794339253
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +266,7 @@ GameObject:
   - component: {fileID: 3009285853840183902}
   - component: {fileID: 4456599027710736601}
   - component: {fileID: 1293379731452604417}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Occupied_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,7 +400,7 @@ GameObject:
   - component: {fileID: 2699622392862120023}
   - component: {fileID: 107217118746928547}
   - component: {fileID: 6216671301042882851}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Impassable_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +533,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1693075422330955444}
   - component: {fileID: 8707181809237900671}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

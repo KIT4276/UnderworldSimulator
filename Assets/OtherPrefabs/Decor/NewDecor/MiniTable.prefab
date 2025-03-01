@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1197196544211687952}
   - component: {fileID: 6868428422287296872}
   - component: {fileID: 655633245041401183}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Occupied_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 5107458889207422215}
   - component: {fileID: 2779700928121006705}
   - component: {fileID: 1036535743813308842}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MiniTable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,6 +245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2e049ee758468469e6ff71428d24e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: 8497090734017587430, guid: 27a6274a8f5eaaa4f9436674b541e189, type: 3}
+  _hints: 
   _decorType: 2
   _decorView: {fileID: 3753527944481500913}
   _decorDrag: {fileID: 5107458889207422215}
@@ -253,7 +255,6 @@ MonoBehaviour:
   _clickAction: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _cancelAction: {fileID: -9184969692752736088, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _rotationAction: {fileID: -2486391391914466195, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _icon: {fileID: 8497090734017587430, guid: 27a6274a8f5eaaa4f9436674b541e189, type: 3}
 --- !u!1 &6595749712051014664
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,7 +265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5497005815962837000}
   - component: {fileID: 5861089028349316228}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +353,7 @@ GameObject:
   - component: {fileID: 789367155823272413}
   - component: {fileID: 6823646020967507997}
   - component: {fileID: 698872331775755852}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Clickable_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,7 +487,7 @@ GameObject:
   - component: {fileID: 1412704699364955883}
   - component: {fileID: 403175148987147380}
   - component: {fileID: 3855473117959481098}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Impassable_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}

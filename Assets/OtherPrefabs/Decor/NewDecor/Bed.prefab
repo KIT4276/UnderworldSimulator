@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7354194074278937132}
   - component: {fileID: 5767310338976014217}
   - component: {fileID: 8956982365251541254}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Occupied_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 1439453239832031691}
   - component: {fileID: 6269883104968330820}
   - component: {fileID: 3080786158346120522}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Clickable_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 6911667108342639233}
   - component: {fileID: 3349877672888648079}
   - component: {fileID: 4252274802062491428}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -382,6 +382,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2e049ee758468469e6ff71428d24e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: 219599962, guid: 2d688074399e5d847b9e9f222802c068, type: 3}
+  _hints: 
   _decorType: 1
   _decorView: {fileID: 3193545469395442901}
   _decorDrag: {fileID: 6911667108342639233}
@@ -390,7 +392,6 @@ MonoBehaviour:
   _clickAction: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _cancelAction: {fileID: -9184969692752736088, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _rotationAction: {fileID: -2486391391914466195, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _icon: {fileID: 219599962, guid: 2d688074399e5d847b9e9f222802c068, type: 3}
 --- !u!1 &3878656124293812157
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,7 +403,7 @@ GameObject:
   - component: {fileID: 6494320125567060430}
   - component: {fileID: 5037776964648118418}
   - component: {fileID: 1885645702912103540}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Impassable_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -536,7 +537,7 @@ GameObject:
   - component: {fileID: 4910926906048188420}
   - component: {fileID: 172884334195926530}
   - component: {fileID: 3625880125826464189}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Impassable_side
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -670,7 +671,7 @@ GameObject:
   - component: {fileID: 8236161175365453333}
   - component: {fileID: 5219515844578020045}
   - component: {fileID: 3495978505700616390}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Occupied_side
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -803,7 +804,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2549178247657907467}
   - component: {fileID: 5228572311050048287}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -891,7 +892,7 @@ GameObject:
   - component: {fileID: 5567533926592609540}
   - component: {fileID: 4146652873091910226}
   - component: {fileID: 2322610170543852666}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Clickable_side
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2271327183817252410}
   - component: {fileID: 7413091670197873064}
   - component: {fileID: 4448603857380190304}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Impassable_side
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 2450615052308164207}
   - component: {fileID: 3515546861779638409}
   - component: {fileID: 3387990531843633705}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Clickable_side
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -279,7 +279,7 @@ GameObject:
   - component: {fileID: 7527619920210946867}
   - component: {fileID: 994566003282788612}
   - component: {fileID: 6930601133388792903}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Impassable_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -412,7 +412,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9019904001832309537}
   - component: {fileID: 6731224963000128694}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 7610855496949475926}
   - component: {fileID: 4133996220534108886}
   - component: {fileID: 8302112484349493627}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bookshelf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -603,6 +603,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2e049ee758468469e6ff71428d24e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: -235412964504175440, guid: 2584472cd331bee469a793a65ecba196, type: 3}
+  _hints: 
   _decorType: 7
   _decorView: {fileID: 7345889779000556888}
   _decorDrag: {fileID: 7610855496949475926}
@@ -611,7 +613,6 @@ MonoBehaviour:
   _clickAction: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _cancelAction: {fileID: -9184969692752736088, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _rotationAction: {fileID: -2486391391914466195, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _icon: {fileID: -235412964504175440, guid: 2584472cd331bee469a793a65ecba196, type: 3}
 --- !u!1 &3305902488762997141
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,7 +624,7 @@ GameObject:
   - component: {fileID: 4862081030974541307}
   - component: {fileID: 6542351161364181898}
   - component: {fileID: 7469462521740004685}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Clickable_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -757,7 +758,7 @@ GameObject:
   - component: {fileID: 3153467027552616413}
   - component: {fileID: 898250293328808737}
   - component: {fileID: 4926673222394056880}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Occupied_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -891,7 +892,7 @@ GameObject:
   - component: {fileID: 4312294510126520362}
   - component: {fileID: 3188901837994949724}
   - component: {fileID: 337254023073236488}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Occupied_side
   m_TagString: Untagged
   m_Icon: {fileID: 0}

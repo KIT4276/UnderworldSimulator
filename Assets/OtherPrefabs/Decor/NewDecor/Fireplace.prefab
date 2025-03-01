@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7515263899247101883}
   - component: {fileID: 6547200697774307573}
   - component: {fileID: 3232460023199483516}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Impassable_side
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 3285053144083925354}
   - component: {fileID: 1222303603172175059}
   - component: {fileID: 3575592384982052180}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Clickable_side
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6829127096085273948}
   - component: {fileID: 5706570890747449326}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 7088068356022215576}
   - component: {fileID: 4055736754021853976}
   - component: {fileID: 6963593287829692508}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Occupied_side
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 4572466781667424312}
   - component: {fileID: 2191699019626978712}
   - component: {fileID: 8488411097033149650}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Occupied_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 1352907879944691086}
   - component: {fileID: 2094254540540318853}
   - component: {fileID: 519229881611703254}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Clickable_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -771,7 +771,7 @@ GameObject:
   - component: {fileID: 1631029865024961160}
   - component: {fileID: 1764495797491928989}
   - component: {fileID: 4874495687423384326}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fireplace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -871,6 +871,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2e049ee758468469e6ff71428d24e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: -8227080214931094891, guid: ed82b33ba4ceabf4e8904a9b420487e1, type: 3}
+  _hints: 
   _decorType: 5
   _decorView: {fileID: 6989738631067182791}
   _decorDrag: {fileID: 1631029865024961160}
@@ -879,7 +881,6 @@ MonoBehaviour:
   _clickAction: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _cancelAction: {fileID: -9184969692752736088, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _rotationAction: {fileID: -2486391391914466195, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _icon: {fileID: -8227080214931094891, guid: ed82b33ba4ceabf4e8904a9b420487e1, type: 3}
 --- !u!1 &9031135845674216056
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,7 +892,7 @@ GameObject:
   - component: {fileID: 2178080119429500162}
   - component: {fileID: 8628369111923842523}
   - component: {fileID: 5555785330818489966}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Impassable_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
