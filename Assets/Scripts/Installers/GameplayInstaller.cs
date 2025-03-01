@@ -8,6 +8,7 @@ public class GameplayInstaller : MonoInstaller
     [SerializeField] private GameObject _decorFactiryPrefab;
     [SerializeField] private GameObject _inventoryPrefab;
     [SerializeField] private GameObject _LootPrefab;
+    [SerializeField] private GameObject _craftMenuPrefab;
 
     public override void InstallBindings()
     {
@@ -25,7 +26,8 @@ public class GameplayInstaller : MonoInstaller
         Container.Bind<DecorationSystem>().FromNew().AsSingle().NonLazy();
         Container.Bind<LootSystem>().FromComponentInNewPrefab(_LootPrefab).AsSingle().NonLazy();
 
-
+        Container.Bind<CraftSystem>().FromNew().AsSingle().NonLazy();
+        Container.Bind<CraftMenu>().FromComponentInNewPrefab(_craftMenuPrefab).AsSingle().NonLazy();
     }
 
     private void InstallScriptableObjects()

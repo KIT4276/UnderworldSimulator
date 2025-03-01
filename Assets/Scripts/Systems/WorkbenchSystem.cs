@@ -18,6 +18,7 @@ public class WorkbenchSystem : MonoBehaviour
     private DecorationSystem _decorationSystem;
 
     public event Action InventoryButtonClick;
+    public event Action CraftButtonClick;
     public event Action Exit;
     public event Action Destroyed;
 
@@ -63,6 +64,11 @@ public class WorkbenchSystem : MonoBehaviour
     public void OnInventoryButtonClick()
     {
         InventoryButtonClick?.Invoke(); 
+    }
+
+    public void OnCraftButtonClick()
+    {
+        CraftButtonClick?.Invoke();
     }
 
     //private void OnEscape(InputAction.CallbackContext context)

@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 8274825699521675766}
   - component: {fileID: 3586452213243836476}
   - component: {fileID: 9001155008871408720}
+  - component: {fileID: 2028118865148259604}
   m_Layer: 5
   m_Name: Drawing_Slot
   m_TagString: Untagged
@@ -331,6 +332,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2028118865148259604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007539417799026829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36d09cfd316b4574eb5cb7b7a19f1b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1114403623437759979
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,6 +465,7 @@ GameObject:
   - component: {fileID: 8576114530845411218}
   - component: {fileID: 1807400716594133257}
   - component: {fileID: 8927339482795849932}
+  - component: {fileID: 4695574243600732455}
   m_Layer: 5
   m_Name: Drawing_Slot (3)
   m_TagString: Untagged
@@ -560,6 +574,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4695574243600732455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194730780636653527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36d09cfd316b4574eb5cb7b7a19f1b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1295777242478144162
 GameObject:
   m_ObjectHideFlags: 0
@@ -2208,7 +2234,7 @@ GameObject:
   - component: {fileID: 9202058280773451539}
   - component: {fileID: 722129626044246299}
   m_Layer: 5
-  m_Name: Drawing_Button
+  m_Name: Create_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2315,7 +2341,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9202058280773451539}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2372979549554257638}
+        m_TargetAssemblyTypeName: CraftMenu, Assembly-CSharp
+        m_MethodName: OnCreate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4329250098804563509
 GameObject:
   m_ObjectHideFlags: 0
@@ -2941,6 +2979,7 @@ GameObject:
   - component: {fileID: 6955066861536731786}
   - component: {fileID: 7797454974448942216}
   - component: {fileID: 6524911115183617407}
+  - component: {fileID: 2079160039111274760}
   m_Layer: 5
   m_Name: Drawing_Slot (2)
   m_TagString: Untagged
@@ -3049,6 +3088,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2079160039111274760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5676990196289222097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36d09cfd316b4574eb5cb7b7a19f1b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5793415965801530094
 GameObject:
   m_ObjectHideFlags: 0
@@ -3833,7 +3884,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 165726181306528881}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2372979549554257638}
+        m_TargetAssemblyTypeName: CraftMenu, Assembly-CSharp
+        m_MethodName: OnChangeCount
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6844555847620404925
 GameObject:
   m_ObjectHideFlags: 0
@@ -3921,6 +3984,7 @@ GameObject:
   - component: {fileID: 1411119639281075047}
   - component: {fileID: 6063381251455293147}
   - component: {fileID: 5117082258183766671}
+  - component: {fileID: 4137216205953147071}
   m_Layer: 5
   m_Name: Drawing_Slot (1)
   m_TagString: Untagged
@@ -4029,6 +4093,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4137216205953147071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6911278335694077333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36d09cfd316b4574eb5cb7b7a19f1b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7069139566475715236
 GameObject:
   m_ObjectHideFlags: 0
@@ -4041,6 +4117,7 @@ GameObject:
   - component: {fileID: 1428014704461068178}
   - component: {fileID: 9074699718843404061}
   - component: {fileID: 1813248535723639935}
+  - component: {fileID: 2372979549554257638}
   m_Layer: 5
   m_Name: CraftMenu
   m_TagString: Untagged
@@ -4133,6 +4210,25 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2372979549554257638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069139566475715236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb1c05dc2e92844e81ee129e25dd298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slots:
+  - {fileID: 2028118865148259604}
+  - {fileID: 4137216205953147071}
+  - {fileID: 2079160039111274760}
+  - {fileID: 4695574243600732455}
+  _count: {fileID: 3026819500959752637}
+  _menu: {fileID: 3339643189230513784}
 --- !u!1 &7439566682064713233
 GameObject:
   m_ObjectHideFlags: 0
@@ -5159,7 +5255,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2733218952121652766}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2372979549554257638}
+        m_TargetAssemblyTypeName: CraftMenu, Assembly-CSharp
+        m_MethodName: OnChangeCount
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: -1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9144719746680676309
 GameObject:
   m_ObjectHideFlags: 0
