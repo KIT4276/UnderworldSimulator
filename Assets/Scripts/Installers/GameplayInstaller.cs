@@ -4,6 +4,7 @@ using Zenject;
 public class GameplayInstaller : MonoInstaller
 {
     [SerializeField] private PersistantStaticData _persistantStaticData;
+    [SerializeField] private DrawingData _drawingData;
     [SerializeField] private GameObject _workbenchPrefab;
     [SerializeField] private GameObject _decorFactiryPrefab;
     [SerializeField] private GameObject _inventoryPrefab;
@@ -33,5 +34,6 @@ public class GameplayInstaller : MonoInstaller
     private void InstallScriptableObjects()
     {
         Container.Bind<PersistantStaticData>().FromInstance(_persistantStaticData).AsSingle().NonLazy();
+        Container.Bind<DrawingData>().FromInstance(_drawingData).AsSingle().NonLazy();
     }
 }

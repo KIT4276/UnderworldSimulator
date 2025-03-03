@@ -1,16 +1,14 @@
+using System;
 using UnityEngine;
 
-public class Drawing : MonoBehaviour
+[Serializable]
+public class Drawing
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private string _name;
+    [SerializeField] private DrawingComponent[] _drawingComponents;
+    [SerializeField] private Sprite _icon;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public DrawingComponent[] DrawingComponents { get => _drawingComponents; }
+    public string Name { get => _name; }
+    public Sprite Icon { get => _icon; }
 }
