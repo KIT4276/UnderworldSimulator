@@ -12,7 +12,8 @@ public class CraftSlot : MonoBehaviour
 
     public void OnDrawingSelected()
     {
-        
+        if(_drawing == null) return;
+
         DrawingSelected?.Invoke(_drawing);
     }
 

@@ -381,7 +381,7 @@ namespace DragonBones
         /// <private/>
         protected void _RefreshTextureAtlas(UnityTextureAtlasData textureAtlasData, bool isUGUI, bool isEditor = false)
         {
-            Material material = null;
+            UnityEngine.Material material = null;
             if (isUGUI && textureAtlasData.uiTexture == null)
             {
                 if (isEditor)
@@ -389,13 +389,13 @@ namespace DragonBones
 #if UNITY_EDITOR
                     if (!Application.isPlaying)
                     {
-                        material = AssetDatabase.LoadAssetAtPath<Material>(textureAtlasData.imagePath + "_UI_Mat.mat");
+                        material = AssetDatabase.LoadAssetAtPath<UnityEngine.Material>(textureAtlasData.imagePath + "_UI_Mat.mat");
                     }
 #endif
                 }
                 else
                 {
-                    material = Resources.Load<Material>(textureAtlasData.imagePath + "_UI_Mat");
+                    material = Resources.Load<UnityEngine.Material>(textureAtlasData.imagePath + "_UI_Mat");
                 }
 
                 if (material == null)
@@ -449,13 +449,13 @@ namespace DragonBones
 #if UNITY_EDITOR
                     if (!Application.isPlaying)
                     {
-                        material = AssetDatabase.LoadAssetAtPath<Material>(textureAtlasData.imagePath + "_Mat.mat");
+                        material = AssetDatabase.LoadAssetAtPath<UnityEngine.Material>(textureAtlasData.imagePath + "_Mat.mat");
                     }
 #endif
                 }
                 else
                 {
-                    material = Resources.Load<Material>(textureAtlasData.imagePath + "_Mat");
+                    material = Resources.Load<UnityEngine.Material>(textureAtlasData.imagePath + "_Mat");
                 }
 
                 if (material == null)
@@ -907,7 +907,7 @@ namespace DragonBones
         /// <language>zh_CN</language>
         public void ReplaceSlotDisplay(
                                         string dragonBonesName, string armatureName, string slotName, string displayName,
-                                        Slot slot, Texture2D texture, Material material = null,
+                                        Slot slot, Texture2D texture, UnityEngine.Material material = null,
                                         bool isUGUI = false, int displayIndex = -1)
         {
             var armatureData = this.GetArmatureData(armatureName, dragonBonesName);
@@ -1062,11 +1062,11 @@ namespace DragonBones
         /// <param name="materialName"></param>
         /// <param name="texture"></param>
         /// <returns></returns>
-        internal static Material GenerateMaterial(string shaderName, string materialName, Texture texture)
+        internal static UnityEngine.Material GenerateMaterial(string shaderName, string materialName, Texture texture)
         {
             //创建材质球
             Shader shader = Shader.Find(shaderName);
-            Material material = new Material(shader);
+            UnityEngine.Material material = new UnityEngine.Material(shader);
             material.name = materialName;
             material.mainTexture = texture;
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,6 +24,8 @@ public class StatesTransitor
         playerInput.actions["Escape"].performed += OnEscape;
         playerInput.actions["Inventory"].performed += OnInventory;
         _workbenchSystem.InventoryButtonClick += ToDecorateState;
+        _workbenchSystem.CraftButtonClick += ToCraftState;
+
         _workbenchSystem.Exit += Escape;
         _inventorySystem.Exit += Escape;
         _lootSystem.OpenMenuAction += ToLootState;
@@ -52,12 +55,14 @@ public class StatesTransitor
             case LootState:
                 ToGameLoopState();
                 break;
+            case CraftState:
+                    ToGameLoopState();
+                break;
         }
     }
 
     private void OnEscape(InputAction.CallbackContext context)
     {
-        //Debug.Log("OnEscape");
         Escape();
     }
 
@@ -66,7 +71,6 @@ public class StatesTransitor
         if (_stateMachine.ActiveState is GameLoopState)
             ToInventoryState();
     }
-
 
     private void ConditionalToGameLoopState()
     {
@@ -83,11 +87,6 @@ public class StatesTransitor
 
     private void ConditionalToWorkbenchState()
     {
-        //if (_stateMachine.ActiveState is LootState || _stateMachine.ActiveState is InventoryState)
-        //{
-        //    ToGameLoopState();
-        //}
-        /*else*/
         if (_decorHolder.ActiveDecor == null)
         {
             ToWorkbenchState();
@@ -99,6 +98,11 @@ public class StatesTransitor
         }
     }
 
+
+    private void ToCraftState()
+    {
+        _stateMachine.Enter<CraftState>();
+    }
     private void ToDecorateState()
     {
         _stateMachine.Enter<DecorationState>();

@@ -13,10 +13,14 @@ public class CraftMenu : MonoBehaviour
 
     [Inject] private CraftSystem _craftSystem;
     [Inject] private WorkbenchSystem _workbenchSystem;
+    [Inject] private StateMachine _machine;
 
     private void Start()
     {
         _workbenchSystem.CraftButtonClick += OpenCraftMenu;
+        _craftSystem.ChangeCount += UpdateCount;
+        _machine.ChangeStateAction += OnChangeState;
+
         foreach (var slot in _slots)
         {
             slot.DrawingSelected += ToSelectDrawing;
@@ -24,45 +28,49 @@ public class CraftMenu : MonoBehaviour
 
         if (_craftSystem.DrawingDatas.Drawings.Length > _slots.Length)
         {
-            Debug.LogWarning("Слотов меньше, чем рецептов!");
+            Debug.LogWarning("Слотов меньше, чем чертежей!");
         }
         else
         {
-            
             int i = 0;
             for (; i < _craftSystem.DrawingDatas.Drawings.Length; i++)
             {
                 _slots[i].FillDrawingData(_craftSystem.DrawingDatas.Drawings[i]);
             }
 
-            if(_craftSystem.DrawingDatas.Drawings.Length < _slots.Length)
+            if (_craftSystem.DrawingDatas.Drawings.Length < _slots.Length)
             {
-                for(;i < _slots.Length; i ++)
+                for (; i < _slots.Length; i++)
                 {
                     _slots[i].FillEmpty();
                 }
             }
         }
 
-
-        //CloseCraftMenu();
-        _craftSystem.Created += StartFill;
-    }
-
-    private void StartFill(Drawing drawing)
-    {
-        _mainDrawingSign.FillSign(drawing);
-
-        Debug.Log("start fill");// сюда не заходит!
+        StartFill(_craftSystem.ActiveDrawing);
+        UpdateCount();
+        CloseCraftMenu();
     }
 
     public void OnCreate()
     {
-        _craftSystem.Create();
+        _craftSystem.CreateDecor();
     }
+
+    private void UpdateCount()
+    {
+        _сount.text = _craftSystem.Count.ToString();
+    }
+
+    private void StartFill(Drawing drawing)
+    {
+        _mainDrawingSign.FillSign();
+    }
+
 
     public void OpenCraftMenu()
     {
+        UpdateCount();
         _menu.SetActive(true);
     }
 
@@ -73,15 +81,26 @@ public class CraftMenu : MonoBehaviour
 
     public void OnChangeCount(int count)
     {
+        _craftSystem.OnChangeCount(count);
+        UpdateCount();
+    }
 
-        _craftSystem.ChangeCount(count);
-        _сount.text = _craftSystem.Count.ToString();
+    private void OnChangeState(IExitableState state)
+    {
+        if (!(state is CraftState))
+        {
+            CloseCraftMenu();
+        }
     }
 
     private void ToSelectDrawing(Drawing drawing)
     {
         _craftSystem.SelectDrawing(drawing);
+        _mainDrawingSign.FillSign();
+    }
 
-        _mainDrawingSign.FillSign(drawing);
+    private void OnDestroy()
+    {
+        _workbenchSystem.CraftButtonClick -= OpenCraftMenu;
     }
 }

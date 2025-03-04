@@ -41,6 +41,8 @@ public class StateMachine
             .CreateState<LootState>(),
             [typeof(InventoryState)] = _stateFactory
             .CreateState<InventoryState>(),
+            [typeof(CraftState)] = _stateFactory
+            .CreateState<CraftState>(),
         };
         Enter<BootstrapState>();
         _isInited = true;

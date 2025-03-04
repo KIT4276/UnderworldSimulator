@@ -33,8 +33,8 @@ namespace DragonBones
         {
             public TextAsset textureAtlasJSON; 
             public Texture2D texture;
-            public Material material;
-            public Material uiMaterial;
+            public UnityEngine.Material material;
+            public UnityEngine.Material uiMaterial;
         }
 
         public string dataName;

@@ -41,8 +41,8 @@ namespace DragonBones
          * Unity 贴图。
          * @version DragonBones 3.0
          */
-        public Material texture;
-        public Material uiTexture;
+        public UnityEngine.Material texture;
+        public UnityEngine.Material uiTexture;
         /**
          * @private
          */
@@ -91,7 +91,7 @@ namespace DragonBones
         /// <summary>
         /// 叠加模式材质球的缓存池
         /// </summary>
-        internal Dictionary<string, Material> _cacheBlendModeMats = new Dictionary<string, Material>();
+        internal Dictionary<string, UnityEngine.Material> _cacheBlendModeMats = new Dictionary<string, UnityEngine.Material>();
 
         public UnityTextureData()
         {
@@ -116,7 +116,7 @@ namespace DragonBones
             this._cacheBlendModeMats.Clear();
         }
 
-        private Material _GetMaterial(BlendMode blendMode)
+        private UnityEngine.Material _GetMaterial(BlendMode blendMode)
         {
             //normal model, return the parent shareMaterial
             if (blendMode == BlendMode.Normal)
@@ -133,7 +133,7 @@ namespace DragonBones
 
             //framebuffer won't work in the editor mode
 #if UNITY_EDITOR
-            var newMaterial = new Material(Resources.Load<Shader>(SHADER_PATH + SHADER_GRAP));
+            var newMaterial = new UnityEngine.Material(Resources.Load<Shader>(SHADER_PATH + SHADER_GRAP));
 #else
             var newMaterial = new Material(Resources.Load<Shader>(SHADER_PATH + SHADER_GRAP));
 #endif
@@ -147,7 +147,7 @@ namespace DragonBones
             return newMaterial;
         }
 
-        private Material _GetUIMaterial(BlendMode blendMode)
+        private UnityEngine.Material _GetUIMaterial(BlendMode blendMode)
         {
             //normal model, return the parent shareMaterial
             if (blendMode == BlendMode.Normal)
@@ -164,7 +164,7 @@ namespace DragonBones
 
             //framebuffer won't work in the editor mode
 #if UNITY_EDITOR
-            var newMaterial = new Material(Resources.Load<Shader>(SHADER_PATH + UI_SHADER_GRAP));
+            var newMaterial = new UnityEngine.Material(Resources.Load<Shader>(SHADER_PATH + UI_SHADER_GRAP));
 #else
             var newMaterial = new Material(Resources.Load<Shader>(SHADER_PATH + UI_SHADER_GRAP));
 #endif
@@ -178,7 +178,7 @@ namespace DragonBones
             return newMaterial;
         }
 
-        internal Material GetMaterial(BlendMode blendMode, bool isUGUI = false)
+        internal UnityEngine.Material GetMaterial(BlendMode blendMode, bool isUGUI = false)
         {
             if (isUGUI)
             {

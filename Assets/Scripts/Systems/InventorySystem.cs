@@ -13,11 +13,9 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private InventoryFilters _filters;
 
     private StateMachine _stateMachine;
-   // private DecorHolder _decorHolder;
     private DecorationSystem _decorationSystem;
 
     public event Action Exit;
-   // public event Action ChangeSlots;
     public event Action ActivateInventoryEvent;
 
     public event Action ChangeDecorSlots;
@@ -27,16 +25,12 @@ public class InventorySystem : MonoBehaviour
     public InventorySlot[] InventorySlots { get => _inventorySlot; }
 
     [Inject]
-    public void Construct(DecorationSystem decorationSystem, /*DecorHolder decorHolder,*/ StateMachine stateMachine)
+    public void Construct(DecorationSystem decorationSystem, StateMachine stateMachine)
     {
         _stateMachine = stateMachine;
-        //_decorHolder = decorHolder;
         _decorationSystem = decorationSystem;
         _decorationSystem.TryToRemoveDecorAction += TryReturnDecorToInventory;
         _warningSign.SetActive(false);
-
-        // _escapeAction.action.performed += OnEscape;
-
         _stateMachine.ChangeStateAction += OnChangeState;
     }
 
@@ -51,17 +45,6 @@ public class InventorySystem : MonoBehaviour
         {
             slot.ClearSlot();
         }
-        //ChangeSlots?.Invoke();
-    }
-
-    private void OnChangeState(IExitableState state)
-    {
-       if(state is LootState || state is InventoryState)
-        {
-            this.gameObject.SetActive(true);
-            ActivateInventory();
-        }
-
     }
 
     public void ActivateInventory()
@@ -72,7 +55,6 @@ public class InventorySystem : MonoBehaviour
         }
 
         ActivateInventoryEvent?.Invoke();
-        //ChangeSlots?.Invoke();
     }
 
 
@@ -116,11 +98,18 @@ public class InventorySystem : MonoBehaviour
 
     }
 
-    private void TryReturnDecorToInventory(Decor decor)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
+    private void OnChangeState(IExitableState state)
+    {
+        if (state is LootState || state is InventoryState || state is CraftState) //TODO
+        {
+            this.gameObject.SetActive(true);
+            ActivateInventory();
+        }
+    }
+
+    public void TryReturnDecorToInventory(Decor decor)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
                                                        //для лута создать свой метод
     {
-        //Debug.Log("TryReturnDecorToInventory");
-        
         bool isPlaced = false;
 
         for (int i = 0; i < _inventorySlot.Length; i++)
@@ -161,7 +150,6 @@ public class InventorySystem : MonoBehaviour
     private void ReturnDecorToInventory(Decor decor, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
                                                            //для лута создать свой метод
     {
-       // Debug.Log("ReturnDecorToInventory in Inventory Syst");
         _inventorySlot[i].SetItem(decor);
         _decorationSystem.ReturtDecorToInventory(decor);
         ChangeDecorSlots?.Invoke();
@@ -171,14 +159,12 @@ public class InventorySystem : MonoBehaviour
     private void ReturnLootToInventory(Item loot, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть лут.
     {
         _inventorySlot[i].SetItem(loot);
-        //_decorationSystem.ReturtDecorToInventory(loot);
-        //ChangeSlots?.Invoke();
 
-        if(loot is CraftItem)
+        if (loot is CraftItem)
         {
             ChangeCraftItemSlots?.Invoke();
         }
-        else if(loot is QuestsItem)
+        else if (loot is QuestsItem)
         {
             ChangeQuestsItemSlots?.Invoke();
         }

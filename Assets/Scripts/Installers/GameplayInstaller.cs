@@ -10,6 +10,7 @@ public class GameplayInstaller : MonoInstaller
     [SerializeField] private GameObject _inventoryPrefab;
     [SerializeField] private GameObject _LootPrefab;
     [SerializeField] private GameObject _craftMenuPrefab;
+    [SerializeField] private MaterialsData _materialsData;
 
     public override void InstallBindings()
     {
@@ -35,5 +36,6 @@ public class GameplayInstaller : MonoInstaller
     {
         Container.Bind<PersistantStaticData>().FromInstance(_persistantStaticData).AsSingle().NonLazy();
         Container.Bind<DrawingData>().FromInstance(_drawingData).AsSingle().NonLazy();
+        Container.Bind<MaterialsData>().FromInstance(_materialsData).AsSingle().NonLazy();
     }
 }

@@ -131,8 +131,8 @@ namespace DragonBones
                     path = path.Substring(0, path.LastIndexOf(".json"));
                     ta.texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path + ".png");
                     //load material
-                    ta.material = AssetDatabase.LoadAssetAtPath<Material>(path + "_Mat.mat");
-                    ta.uiMaterial = AssetDatabase.LoadAssetAtPath<Material>(path + "_UI_Mat.mat");
+                    ta.material = AssetDatabase.LoadAssetAtPath<UnityEngine.Material>(path + "_Mat.mat");
+                    ta.uiMaterial = AssetDatabase.LoadAssetAtPath<UnityEngine.Material>(path + "_UI_Mat.mat");
                     textureAtlas[i] = ta;
                 }
 
@@ -155,8 +155,8 @@ namespace DragonBones
                 path = path.Substring(0, path.LastIndexOf(".json"));
                 ta.texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path + ".png");
                 //load material
-                ta.material = AssetDatabase.LoadAssetAtPath<Material>(path + "_Mat.mat");
-                ta.uiMaterial = AssetDatabase.LoadAssetAtPath<Material>(path + "_UI_Mat.mat");
+                ta.material = AssetDatabase.LoadAssetAtPath<UnityEngine.Material>(path + "_Mat.mat");
+                ta.uiMaterial = AssetDatabase.LoadAssetAtPath<UnityEngine.Material>(path + "_UI_Mat.mat");
                 textureAtlas[i] = ta;
             }
 
