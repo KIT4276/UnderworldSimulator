@@ -1,4 +1,8 @@
-﻿public class QuestsItem : Item
+﻿
+using System;
+
+[Serializable]
+public class QuestsItem : Item
 {
 
 }

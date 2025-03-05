@@ -511,7 +511,8 @@ GameObject:
   - component: {fileID: 2965191337474689980}
   - component: {fileID: 1121015432029204622}
   - component: {fileID: 2441257902777066172}
-  - component: {fileID: 2251281006712007549}
+  - component: {fileID: 8046612349318188377}
+  - component: {fileID: 4432661666805600811}
   m_Layer: 0
   m_Name: TestILoot
   m_TagString: Untagged
@@ -610,7 +611,8 @@ MonoBehaviour:
   _reactionText: "\u041D\u0435\u0442 \u0440\u0435\u0430\u043A\u0446\u0438\u0438"
   _progressBar: {fileID: 6839042229254365432}
   _bar: {fileID: 7166854922921513509}
-  _loot: {fileID: 2251281006712007549}
+  _craftLoot: {fileID: 8046612349318188377}
+  _questsLoot: {fileID: 4432661666805600811}
 --- !u!61 &2441257902777066172
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -645,7 +647,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.018967628, y: -0.2932384}
+  m_Offset: {x: -0.018967628, y: -0.46979618}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -655,9 +657,9 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 4.1325254, y: 2.7546363}
+  m_Size: {x: 5.0153084, y: 4.343645}
   m_EdgeRadius: 0
---- !u!114 &2251281006712007549
+--- !u!114 &8046612349318188377
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -666,14 +668,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 6782332791002167624}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a9d385196c34804ca88478bc9d65b0e, type: 3}
+  m_Script: {fileID: 11500000, guid: b2463b7aa82e9c34bb39f980ec32af45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lootSettings:
-  - _loot: {fileID: 2476521898300215715, guid: bf138c8edfe49624793837104e7ca1b6, type: 3}
-    _count: 2
-  - _loot: {fileID: -5793711160808392043, guid: 680d07cf5c426104c922c06dd660c0d1, type: 3}
-    _count: 4
+  _craftLootSettings:
+  - _count: 5
+    _loot:
+      _type: 0
+  - _count: 7
+    _loot:
+      _type: 1
+--- !u!114 &4432661666805600811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6782332791002167624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8835b6919007dd4d82af59de73b9870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _questsLootSettings: []
 --- !u!1 &6803739423014196815
 GameObject:
   m_ObjectHideFlags: 0

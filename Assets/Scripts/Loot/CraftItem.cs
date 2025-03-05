@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
+[Serializable]
 public class CraftItem : Item
 {
     //public void Construct(LootType type, Sprite icon)

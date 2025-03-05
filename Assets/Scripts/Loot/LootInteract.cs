@@ -8,7 +8,8 @@ public class LootInteract : InteractableObstacle
    // [SerializeField] private float _interactionTime = 1;
     [SerializeField] private GameObject _progressBar;
     [SerializeField] private Image _bar;
-    [SerializeField] private Loot _loot;
+    [SerializeField] private CraftLoot _craftLoot;
+    [SerializeField] private QuestsLoot _questsLoot;
 
     [Inject] private LootSystem _lootSystem;
     [Inject] private PersistantStaticData _staticData;
@@ -32,11 +33,19 @@ public class LootInteract : InteractableObstacle
             _interactionCoroutine = StartCoroutine(InteractionProgress());
         }
 
-        foreach (var lootSetting in _loot.LootSettings)
+        foreach (var lootSetting in _craftLoot.LootSettings)
         {
-            _lootSystem.FillSlot(lootSetting.Loot, lootSetting.Count, this. gameObject);
+            FillLoot(lootSetting);
         }
+        foreach (var lootSetting in _questsLoot.LootSettings)
+        {
+            FillLoot(lootSetting);
+        }
+    }
 
+    private void FillLoot(LootSettings lootSetting)
+    {
+        _lootSystem.FillSlot(lootSetting.Loot, lootSetting.Count, this.gameObject);
     }
 
     private IEnumerator InteractionProgress()

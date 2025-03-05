@@ -72,7 +72,6 @@ public class InventorySlot : MonoBehaviour
         SettingParameters();
         CheckingAndShow();
 
-        Debug.Log(Items.Count);
     }
 
     protected void SettingParameters()
