@@ -56,7 +56,7 @@ public class StatesTransitor
                 ToGameLoopState();
                 break;
             case CraftState:
-                    ToGameLoopState();
+                ToWorkbenchState();
                 break;
         }
     }

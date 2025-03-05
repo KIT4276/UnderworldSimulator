@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 using Zenject;
 
 public class CraftSystem
@@ -15,6 +17,8 @@ public class CraftSystem
     [Inject] private DecorFactory _decoratorFactory;
 
     public event Action ChangeCount;
+
+    private List<CraftItem> _availableMaterials = new();
 
     public CraftSystem(InventorySystem inventorySystem, DrawingData drawingDatas)
     {
@@ -43,14 +47,66 @@ public class CraftSystem
 
     public void CreateDecor()
     {
-       //todo check vfterials!
-        
-        for (int i = 0; i < Count; i++)
-        {
-            var decor = _decoratorFactory.SpawnDecor(_activeDrawing.Decor);
+        //todo check vfterials!
 
-            _inventorySystem.TryReturnDecorToInventory(decor);
-            //todo dectees materials in inventory!
+        if (EnoughMaterials())
+        {
+
+            for (int i = 0; i < Count; i++)
+            {
+                var decor = _decoratorFactory.SpawnDecor(_activeDrawing.Decor);
+
+                _inventorySystem.TryReturnDecorToInventory(decor);
+
+            }
+        }
+        else
+        {
+            Debug.Log("недостаточно материалов!");
+        }
+    }
+
+    private bool EnoughMaterials()
+    {
+        FillAllAvalibaleMaterials();
+
+        foreach (var mat in _activeDrawing.DrawingComponents)
+        {
+            if (mat.Count >= TakeMaterials(mat.Material))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    /// //////////////////////////////////////////////////////TODO real take materials from _inventorySystem.InventorySlots.Items!
+    private int TakeMaterials(LootType type)
+    {
+        int i = 0;
+        foreach (var mat in _availableMaterials)
+        {
+            if (mat.LootType == type)
+            {
+                _availableMaterials.Remove(mat);
+                i++;
+            }
+        }
+
+        return i;
+    }
+
+    private void FillAllAvalibaleMaterials()
+    {
+        foreach (var slot in _inventorySystem.InventorySlots)
+        {
+            if (slot.IsOccupied)
+            {
+                foreach (var item in slot.Items)
+                {
+                    if (item is CraftItem)
+                        _availableMaterials.Add((CraftItem)item);
+                }
+            }
         }
     }
 }
