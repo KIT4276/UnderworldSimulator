@@ -19,7 +19,6 @@ public class CraftSystem
     public event Action ChangeCount;
 
     private List<CraftItem> _availableMaterials = new();
-    private List<CraftItem> _uzedMaterials = new();
 
     public CraftSystem(InventorySystem inventorySystem, DrawingData drawingDatas)
     {
@@ -49,7 +48,6 @@ public class CraftSystem
     public void CreateDecor()
     {
         //todo check vfterials!
-        _uzedMaterials.Clear();
 
         if (EnoughMaterials())
         {
@@ -58,16 +56,24 @@ public class CraftSystem
                 var decor = _decoratorFactory.SpawnDecor(_activeDrawing.Decor);
 
                 _inventorySystem.TryReturnDecorToInventory(decor);
+                foreach(var mat in _activeDrawing.DrawingComponents)
+                {
+                    for(int j = 0; j < mat.Count; j++)
+                    {
+                        _inventorySystem.RemoveItems(mat.Material);
+                    }
+                }
             }
-            foreach (var mat in _uzedMaterials)
-            {
-                _inventorySystem.RemoveItems(mat/*, Count*/);//Count&//
-            }
+            //Debug.Log(_uzedMaterials.Count);
+            //foreach (var mat in _uzedMaterials)
+            //{
+            //    _inventorySystem.RemoveItems(mat/*, Count*/);//Count&//
+            //}
         }
         else
         {
             Debug.Log("недостаточно материалов!");
-            _uzedMaterials.Clear();
+            //_uzedMaterials.Clear();
         }
     }
 
@@ -92,8 +98,6 @@ public class CraftSystem
         {
             if (mat.LootType == type)
             {
-                //_availableMaterials.Remove(mat);
-                _uzedMaterials.Add(mat);
                 i++;
             }
         }

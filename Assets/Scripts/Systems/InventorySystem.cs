@@ -34,22 +34,17 @@ public class InventorySystem : MonoBehaviour
         _stateMachine.ChangeStateAction += OnChangeState;
     }
 
-    public void RemoveItems(CraftItem mater/*, int count*/)
+    public void RemoveItems(LootType lootType)
     {
-        //var i = 0;
-        Debug.Log("RemoveItems");
 
         foreach (var slot in _inventorySlot)
         {
             if (slot.IsOccupied &&
                 slot.GetLastItems() is CraftItem &&
-                mater.LootType == ((CraftItem)slot.GetLastItems()).LootType)
+                ((CraftItem)slot.GetLastItems()).LootType == lootType)
             {
                 slot.TakeLastItem();
-               // i++;
-                //Debug.Log(i);
-                //if (i == count)
-                    break;
+                break;
             }
         }
     }
