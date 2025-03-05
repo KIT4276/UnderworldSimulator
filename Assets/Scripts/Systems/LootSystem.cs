@@ -1,4 +1,3 @@
-using DragonBones;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,6 +11,7 @@ public class LootSystem : MonoBehaviour
 
     [Inject] private InventorySystem _inventorySystem;
     [Inject] private StateMachine _stateMachine;
+    [Inject] private MaterialsData _materials;
 
     private bool _isInited;
     private GameObject _interactiveObject;
@@ -108,6 +108,7 @@ public class LootSystem : MonoBehaviour
             {
                 for (int i = 0; i < count; i++)
                 {
+                    loot.Init(_materials);
                     slot.SetItem(loot);
                 }
                 _interactiveObject = interactiveObject;

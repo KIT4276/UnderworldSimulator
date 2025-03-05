@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "MaterialsData", menuName = "ScriptableObjects/MaterialsData", order = 4)]
 public class MaterialsData : ScriptableObject
@@ -15,5 +16,15 @@ public class MaterialsData : ScriptableObject
                 return mat.Icon;
         }
         return _defaultIcon;
+    }
+
+    public string GetMaterialsHint(LootType material)
+    {
+        foreach (var mat in _materials)
+        {
+            if (mat.LootType == material)
+                return mat.Hint;
+        }
+        return "No Hints";
     }
 }

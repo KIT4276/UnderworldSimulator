@@ -4,9 +4,11 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(DecorView), (typeof(DecorRotator)))]
 [RequireComponent(typeof(DecorDrag), (typeof(DecorPlacer)))]
-public class Decor : BaseItem
+public class Decor : MonoBehaviour, BaseItem
 {
     [SerializeField] private DecorType _decorType;
+    [SerializeField] protected Sprite _icon;
+      [SerializeField] protected string _hints;
     [Space]
     [SerializeField] private DecorView _decorView;
     [SerializeField] private DecorDrag _decorDrag;
@@ -16,6 +18,7 @@ public class Decor : BaseItem
     [SerializeField] protected InputActionReference _clickAction;
     [SerializeField] protected InputActionReference _cancelAction;
     [SerializeField] protected InputActionReference _rotationAction;
+   
 
     private StateMachine _stateMachine;
     protected DecorData _decorData;
@@ -195,6 +198,10 @@ public class Decor : BaseItem
 
     public void SetCurrentDecorCollider(Collider2D collider)
         => CurrentDecorCollider = collider;
+
+    public Sprite GetIcon() => _icon;
+
+    public string GetHint() => _hints;
 
     private bool CheckCamera()
     {
