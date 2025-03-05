@@ -34,6 +34,26 @@ public class InventorySystem : MonoBehaviour
         _stateMachine.ChangeStateAction += OnChangeState;
     }
 
+    public void RemoveItems(CraftItem mater/*, int count*/)
+    {
+        //var i = 0;
+        Debug.Log("RemoveItems");
+
+        foreach (var slot in _inventorySlot)
+        {
+            if (slot.IsOccupied &&
+                slot.GetLastItems() is CraftItem &&
+                mater.LootType == ((CraftItem)slot.GetLastItems()).LootType)
+            {
+                slot.TakeLastItem();
+               // i++;
+                //Debug.Log(i);
+                //if (i == count)
+                    break;
+            }
+        }
+    }
+
     public void OnExit()
     {
         Exit?.Invoke();
@@ -108,7 +128,7 @@ public class InventorySystem : MonoBehaviour
     }
 
     public void TryReturnDecorToInventory(Decor decor)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
-                                                       //для лута создать свой метод
+                                                      //для лута создать свой метод
     {
         bool isPlaced = false;
 
