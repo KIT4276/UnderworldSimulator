@@ -3580,6 +3580,7 @@ GameObject:
   - component: {fileID: 2237146183814557386}
   - component: {fileID: 6613479525350516774}
   - component: {fileID: 8169686535182566914}
+  - component: {fileID: 214966872365128978}
   m_Layer: 5
   m_Name: ContentButton
   m_TagString: Untagged
@@ -3765,6 +3766,21 @@ MonoBehaviour:
   _hint: {fileID: 446013418226698658}
   _slot: {fileID: 2237146183814557386}
   _rectTransform: {fileID: 1025786512314438593}
+--- !u!114 &214966872365128978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4055505804007410765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811c384358359554e8e82739c40506b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slot: {fileID: 2237146183814557386}
+  _count: 2
+  _itemPrefab: {fileID: 7966191041729745053, guid: 44981665709e8c14d915444c644866d3, type: 3}
 --- !u!1 &4404729270519896243
 GameObject:
   m_ObjectHideFlags: 0

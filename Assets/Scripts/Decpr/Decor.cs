@@ -47,8 +47,8 @@ public class Decor : MonoBehaviour, BaseItem
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
         SpaceDeterminantor spaceDeterminantor, int id, DecorHolder decorHolder, StateMachine stateMachine)
     {
-        if (ID == 0)
             ID = id;
+       // Debug.Log(ID);
         IsInside = true;
         IsDragging = true;
         _decorationSystem = decorationSystem;

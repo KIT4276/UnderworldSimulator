@@ -47,7 +47,6 @@ public class DecorFactory : MonoBehaviour
     {
         decor.RemoveThisDecor();
         decor.transform.position = new Vector3(0, 0, 0);
-        decor.gameObject./*transform.position = new Vector3(-100, -100, 0);*/SetActive(false);
+        decor.gameObject.SetActive(false);
     }
-
 }

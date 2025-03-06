@@ -52,8 +52,6 @@ public class StateMachine
     {
         IState state = ChangeState<TState>();
         state.Enter();
-
-       // Debug.Log( ActiveState);
     }
 
     public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadedState<TPayload>
@@ -74,7 +72,7 @@ public class StateMachine
         _activeState = state;
 
         ChangeStateAction?.Invoke( state);
-        //Debug.Log(_activeState);
+       // Debug.Log(_activeState);
         return state;
     }
 

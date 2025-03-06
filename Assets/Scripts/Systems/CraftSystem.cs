@@ -47,15 +47,14 @@ public class CraftSystem
 
     public void CreateDecor()
     {
-        //todo check vfterials!
-
-        if (EnoughMaterials())
+        if (EnoughMaterials())// TODO && EnoughSlots()!)
         {
             for (int i = 0; i < Count; i++)
             {
                 var decor = _decoratorFactory.SpawnDecor(_activeDrawing.Decor);
 
                 _inventorySystem.TryReturnDecorToInventory(decor);
+
                 foreach(var mat in _activeDrawing.DrawingComponents)
                 {
                     for(int j = 0; j < mat.Count; j++)
@@ -64,16 +63,10 @@ public class CraftSystem
                     }
                 }
             }
-            //Debug.Log(_uzedMaterials.Count);
-            //foreach (var mat in _uzedMaterials)
-            //{
-            //    _inventorySystem.RemoveItems(mat/*, Count*/);//Count&//
-            //}
         }
         else
         {
             Debug.Log("недостаточно материалов!");
-            //_uzedMaterials.Clear();
         }
     }
 
@@ -90,7 +83,7 @@ public class CraftSystem
         }
         return true;
     }
-    /// //////////////////////////////////////////////////////TODO real take materials from _inventorySystem.InventorySlots.Items!
+
     private int TakeMaterials(LootType type)
     {
         int i = 0;

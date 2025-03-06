@@ -54,6 +54,7 @@ public class DecorationSystem
 
     public void InstanriateDecor(Decor decor)
     {
+        Debug.Log("InstanriateDecor");
         _decorHolder.AddInstalledDecor(decor);
     }
 
@@ -85,5 +86,4 @@ public class DecorationSystem
         _factory.OnRemoveDecor(decor);
         _decorHolder.DeActiveDecor();
     }
-
 }
