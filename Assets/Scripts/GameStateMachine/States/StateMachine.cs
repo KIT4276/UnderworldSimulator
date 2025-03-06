@@ -74,7 +74,7 @@ public class StateMachine
         _activeState = state;
 
         ChangeStateAction?.Invoke( state);
-
+        //Debug.Log(_activeState);
         return state;
     }
 

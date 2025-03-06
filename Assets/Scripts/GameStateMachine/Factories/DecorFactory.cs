@@ -26,7 +26,6 @@ public class DecorFactory : MonoBehaviour
     public Decor SpawnDecor(Decor decorPrefab)
     {
         Decor decor;
-        _currentID++;
 
         if (!decorPrefab.gameObject.scene.IsValid())
         {
@@ -39,6 +38,7 @@ public class DecorFactory : MonoBehaviour
         }
         decor.gameObject.SetActive(true) ;
         decor.Initialize(_staticData, _decorationSystem, _spaceDeterminantor, _currentID, _decorHolder, _stateMachine);
+        _currentID++;
         return decor;
     }
 

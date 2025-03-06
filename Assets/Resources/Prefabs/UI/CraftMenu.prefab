@@ -5254,22 +5254,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: {fileID: 2596560005094316411}
   _icon: {fileID: 390687933967151768}
-  _material:
-  - {fileID: 2536795710832667433}
-  - {fileID: 4463300044253900791}
-  - {fileID: 6008141091933041564}
-  - {fileID: 5085655450985716661}
-  _materialscount:
-  - {fileID: 2441787446796735217}
-  - {fileID: 8539786367413626686}
-  - {fileID: 4403247182932685523}
-  - {fileID: 556280697539419484}
-  _availableCount: []
-  _materialsIcon:
-  - {fileID: 2359807853139963034}
-  - {fileID: 3918864237191615257}
-  - {fileID: 1843968002078551027}
-  - {fileID: 4608103398737928061}
+  _mainDrawingFields:
+  - _nameText: {fileID: 2536795710832667433}
+    _neededCount: {fileID: 2441787446796735217}
+    _materialsIcon: {fileID: 2359807853139963034}
+    _availableCount: {fileID: 6102600594641991379}
+  - _nameText: {fileID: 4463300044253900791}
+    _neededCount: {fileID: 8539786367413626686}
+    _materialsIcon: {fileID: 3918864237191615257}
+    _availableCount: {fileID: 8855644795989065312}
+  - _nameText: {fileID: 6008141091933041564}
+    _neededCount: {fileID: 4403247182932685523}
+    _materialsIcon: {fileID: 1843968002078551027}
+    _availableCount: {fileID: 9014979814044608200}
+  - _nameText: {fileID: 5085655450985716661}
+    _neededCount: {fileID: 556280697539419484}
+    _materialsIcon: {fileID: 4608103398737928061}
+    _availableCount: {fileID: 7668225060828788201}
 --- !u!1 &7229574903585302995
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using Zenject;
 
 public class InventorySystem : MonoBehaviour
 {
-    [SerializeField] private InventorySlot[] _inventorySlot;
+    [SerializeField] private InventorySlot[] _inventorySlots;
     [SerializeField] private GameObject _warningSign;
     [SerializeField] private InputActionReference _escapeAction;
     [Space]
@@ -22,7 +22,7 @@ public class InventorySystem : MonoBehaviour
     public event Action ChangeCraftItemSlots;
     public event Action ChangeQuestsItemSlots;
 
-    public InventorySlot[] InventorySlots { get => _inventorySlot; }
+    public InventorySlot[] InventorySlots { get => _inventorySlots; }
 
     [Inject]
     public void Construct(DecorationSystem decorationSystem, StateMachine stateMachine)
@@ -31,13 +31,13 @@ public class InventorySystem : MonoBehaviour
         _decorationSystem = decorationSystem;
         _decorationSystem.TryToRemoveDecorAction += TryReturnDecorToInventory;
         _warningSign.SetActive(false);
-        _stateMachine.ChangeStateAction += OnChangeState;
+        _stateMachine.ChangeStateAction += StateChanged;
     }
 
     public void RemoveItems(LootType lootType)
     {
 
-        foreach (var slot in _inventorySlot)
+        foreach (var slot in _inventorySlots)
         {
             if (slot.IsOccupied &&
                 slot.GetLastItems() is CraftItem &&
@@ -56,7 +56,7 @@ public class InventorySystem : MonoBehaviour
 
     public void ClearSlots()
     {
-        foreach (var slot in _inventorySlot)
+        foreach (var slot in _inventorySlots)
         {
             slot.ClearSlot();
         }
@@ -64,7 +64,7 @@ public class InventorySystem : MonoBehaviour
 
     public void ActivateInventory()
     {
-        foreach (var slot in _inventorySlot)
+        foreach (var slot in _inventorySlots)
         {
             slot.Initialize();
         }
@@ -75,14 +75,20 @@ public class InventorySystem : MonoBehaviour
 
     public void TryReturnLootToInventory(Item loot) /// Внимательно! Сюда обращаемся только чтобы вернуть лут
     {
+        if(_inventorySlots.Length == 0)
+        {
+            Debug.LogWarning("The links to the slots have disappeared!");
+            return;
+        }
+        
         bool isPlaced = false;
 
-        for (int i = 0; i < _inventorySlot.Length; i++)
+        for (int i = 0; i < _inventorySlots.Length; i++)
         {
-            if (_inventorySlot[i].IsOccupied)
+            if (_inventorySlots[i].IsOccupied)
             {
-                if (_inventorySlot[i].GetLastItems() is Item &&
-                    ((Item)_inventorySlot[i].GetLastItems()).LootType == loot.LootType)
+                if (_inventorySlots[i].GetLastItems() is Item &&
+                    ((Item)_inventorySlots[i].GetLastItems()).LootType == loot.LootType)
                 {
                     ReturnLootToInventory(loot, i);
                     isPlaced = true;
@@ -92,9 +98,9 @@ public class InventorySystem : MonoBehaviour
         }
         if (!isPlaced)
         {
-            for (int i = 0; i < _inventorySlot.Length; i++)
+            for (int i = 0; i < _inventorySlots.Length; i++)
             {
-                if (!_inventorySlot[i].IsOccupied)
+                if (!_inventorySlots[i].IsOccupied)
                 {
                     ReturnLootToInventory(loot, i);
                     isPlaced = true;
@@ -113,12 +119,16 @@ public class InventorySystem : MonoBehaviour
 
     }
 
-    private void OnChangeState(IExitableState state)
+    private void StateChanged(IExitableState state)
     {
         if (state is LootState || state is InventoryState || state is CraftState) //TODO
         {
             this.gameObject.SetActive(true);
             ActivateInventory();
+        }
+        else
+        {
+            this.gameObject.SetActive(false);
         }
     }
 
@@ -127,12 +137,12 @@ public class InventorySystem : MonoBehaviour
     {
         bool isPlaced = false;
 
-        for (int i = 0; i < _inventorySlot.Length; i++)
+        for (int i = 0; i < _inventorySlots.Length; i++)
         {
-            if (_inventorySlot[i].IsOccupied)
+            if (_inventorySlots[i].IsOccupied)
             {
-                if (_inventorySlot[i].GetLastItems() is Decor
-                    && ((Decor)_inventorySlot[i].GetLastItems()).DecorType == decor.DecorType)
+                if (_inventorySlots[i].GetLastItems() is Decor
+                    && ((Decor)_inventorySlots[i].GetLastItems()).DecorType == decor.DecorType)
                 {
                     ReturnDecorToInventory(decor, i);
                     isPlaced = true;
@@ -142,9 +152,9 @@ public class InventorySystem : MonoBehaviour
         }
         if (!isPlaced)
         {
-            for (int i = 0; i < _inventorySlot.Length; i++)
+            for (int i = 0; i < _inventorySlots.Length; i++)
             {
-                if (!_inventorySlot[i].IsOccupied)
+                if (!_inventorySlots[i].IsOccupied)
                 {
                     ReturnDecorToInventory(decor, i);
                     isPlaced = true;
@@ -162,10 +172,26 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
+    public int CalculateMaterial(LootType material)
+    {
+        var count = 0;
+
+        foreach (var slot in _inventorySlots)
+        {
+            if (slot.IsOccupied &&
+                slot.Items[0] is Item &&
+                ((Item)slot.Items[0]).LootType == material)
+            {
+                count += slot.Items.Count;
+            }
+        }
+        return count;
+    }
+
     private void ReturnDecorToInventory(Decor decor, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
                                                            //для лута создать свой метод
     {
-        _inventorySlot[i].SetItem(decor);
+        _inventorySlots[i].SetItem(decor);
         _decorationSystem.ReturtDecorToInventory(decor);
         ChangeDecorSlots?.Invoke();
 
@@ -173,7 +199,7 @@ public class InventorySystem : MonoBehaviour
 
     private void ReturnLootToInventory(Item loot, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть лут.
     {
-        _inventorySlot[i].SetItem(loot);
+        _inventorySlots[i].SetItem(loot);
 
         if (loot is CraftItem)
         {

@@ -110,7 +110,7 @@ public class Decor : MonoBehaviour, BaseItem
         {
             GoToLastPosition();
         }
-        else
+        else if(_stateMachine.ActiveState is DecorationState)
         {
             _decorationSystem.TryToRemoveDecor(this);
         }

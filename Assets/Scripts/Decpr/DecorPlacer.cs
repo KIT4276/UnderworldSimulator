@@ -72,7 +72,7 @@ public class DecorPlacer : MonoBehaviour
 
     private void OnClicked()
     {
-        //Debug.Log(_decor.IsDragging);
+        Debug.Log(_decor.ID.ToString() + _decor.IsDragging);
           //  Debug.Log(IsMouseOnObject());
         if (_decor.IsDragging)
         {
