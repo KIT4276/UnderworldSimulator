@@ -9,7 +9,7 @@ public class DecorFactory : MonoBehaviour
     private StateMachine _stateMachine;
     private DecorationSystem _decorationSystem;
 
-    private int _currentID;
+    private int _currentID = 1;
 
     [Inject]
     private void Construct(PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor, IAssets assets, DecorHolder decorHolder, StateMachine stateMachine)
@@ -30,9 +30,11 @@ public class DecorFactory : MonoBehaviour
         if (!decorPrefab.gameObject.scene.IsValid())
         {
             decor = Instantiate(decorPrefab);
+            //Debug.Log("SpawnDecor No Valid");
         }
         else
         {
+            //Debug.Log("SpawnDecor Valid");
             decor = decorPrefab;
             decor.gameObject.SetActive(true);
         }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using Zenject;
 
@@ -51,11 +52,11 @@ public class CraftSystem
         {
             for (int i = 0; i < Count; i++)
             {
-                var decor = _decoratorFactory.SpawnDecor(_activeDrawing.Decor);
+                // var decor = _decoratorFactory.SpawnDecor(_activeDrawing.Decor);// 
 
-                _inventorySystem.TryReturnDecorToInventory(decor);
+                _inventorySystem.TryReturnDecorToInventory(_activeDrawing.Decor); // temporary solution!
 
-                foreach(var mat in _activeDrawing.DrawingComponents)
+                foreach (var mat in _activeDrawing.DrawingComponents)
                 {
                     for(int j = 0; j < mat.Count; j++)
                     {
@@ -76,7 +77,7 @@ public class CraftSystem
 
         foreach (var mat in _activeDrawing.DrawingComponents)
         {
-            if (mat.Count * Count >= TakeMaterials(mat.Material))
+            if (mat.Count * Count > TakeMaterials(mat.Material))
             {
                 return false;
             }

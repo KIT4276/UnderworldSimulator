@@ -8,7 +8,7 @@ public class Decor : MonoBehaviour, BaseItem
 {
     [SerializeField] private DecorType _decorType;
     [SerializeField] protected Sprite _icon;
-      [SerializeField] protected string _hints;
+    [SerializeField] protected string _hints;
     [Space]
     [SerializeField] private DecorView _decorView;
     [SerializeField] private DecorDrag _decorDrag;
@@ -18,7 +18,7 @@ public class Decor : MonoBehaviour, BaseItem
     [SerializeField] protected InputActionReference _clickAction;
     [SerializeField] protected InputActionReference _cancelAction;
     [SerializeField] protected InputActionReference _rotationAction;
-   
+
 
     private StateMachine _stateMachine;
     protected DecorData _decorData;
@@ -47,8 +47,10 @@ public class Decor : MonoBehaviour, BaseItem
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
         SpaceDeterminantor spaceDeterminantor, int id, DecorHolder decorHolder, StateMachine stateMachine)
     {
+        if (ID == 0)
             ID = id;
-       // Debug.Log(ID);
+
+        Debug.Log(ID);
         IsInside = true;
         IsDragging = true;
         _decorationSystem = decorationSystem;
@@ -64,7 +66,6 @@ public class Decor : MonoBehaviour, BaseItem
         _clickAction.action.performed += OnClick;
         _rotationAction.action.performed += OnRotate;
         _cancelAction.action.performed += OnCancel;
-
         _stateMachine.ChangeStateAction += OnStateChange;
 
         SetDecorLayerRecursively(this.gameObject);
@@ -101,16 +102,17 @@ public class Decor : MonoBehaviour, BaseItem
 
     private void OnCancel(InputAction.CallbackContext context)
     {
-       // Debug.Log("OnCancel");
+        //Debug.Log("OnCancel");
 
         if (!IsDragging) return;
 
-        // Debug.Log("IsDragging");
+        Debug.Log(IsDragging +" "+ ID);
+
         if (_stateMachine.ActiveState is WorkbenchState)
         {
             GoToLastPosition();
         }
-        else if(_stateMachine.ActiveState is DecorationState)
+        else if (_stateMachine.ActiveState is DecorationState)
         {
             _decorationSystem.TryToRemoveDecor(this);
         }
@@ -118,7 +120,7 @@ public class Decor : MonoBehaviour, BaseItem
 
     public void RemoveThisDecor()
     {
-        //Debug.Log("RemoveThisDecor");
+        Debug.Log("RemoveThisDecor " + ID);
         _decorPlacer.OnRemoved();
         _decorDrag.OnRemoved();
         _decorRotator.OnRemoved();
@@ -155,7 +157,7 @@ public class Decor : MonoBehaviour, BaseItem
         // Debug.Log(_canPlace);
         //Debug.Log(_isCanDecorate);
         if (!_canPlace || !_isCanDecorate) return;
-        //Debug.Log("OnClick");
+        Debug.Log("OnClick " + ID);
         Clicked?.Invoke();
     }
 
@@ -167,7 +169,7 @@ public class Decor : MonoBehaviour, BaseItem
 
     public void PlaceObject()
     {
-        //Debug.Log("PlaceObject");
+        Debug.Log("PlaceObject " + ID);
         _lastPosition = transform.position;
         IsDragging = false;
         _decorationSystem.InstanriateDecor(this);

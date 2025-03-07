@@ -83,12 +83,14 @@ public class DecorPlacer : MonoBehaviour
         }
         else if (IsMouseOnObject())
         {
+           // Debug.Log("IsMouseOnObject");
             _decor.TakeDecorIfCan();
         }
     }
 
     private bool IsMouseOnObject()
     {
+        
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
         Ray ray = _decor.MainCamera.ScreenPointToRay(mouseScreenPos);
         RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity, LayerMask.GetMask("Decor"));
