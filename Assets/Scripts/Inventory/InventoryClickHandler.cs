@@ -12,7 +12,6 @@ public class InventoryClickHandler : MonoBehaviour
     {
         if (_slot.GetLastItems() is Decor)
         {
-            Debug.Log("OnButtonClick");
             if (_slot.IsOccupied && _stateMachine.ActiveState is DecorationState)
                 _decorationSystem.SpawnDecorIfCan((Decor)_slot.TakeLastItem());
         }

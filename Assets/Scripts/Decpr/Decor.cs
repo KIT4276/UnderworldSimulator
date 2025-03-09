@@ -50,7 +50,6 @@ public class Decor : MonoBehaviour, BaseItem
         if (ID == 0)
             ID = id;
 
-        Debug.Log(ID);
         IsInside = true;
         IsDragging = true;
         _decorationSystem = decorationSystem;
@@ -106,7 +105,6 @@ public class Decor : MonoBehaviour, BaseItem
 
         if (!IsDragging) return;
 
-        Debug.Log(IsDragging +" "+ ID);
 
         if (_stateMachine.ActiveState is WorkbenchState)
         {
@@ -157,7 +155,7 @@ public class Decor : MonoBehaviour, BaseItem
         // Debug.Log(_canPlace);
         //Debug.Log(_isCanDecorate);
         if (!_canPlace || !_isCanDecorate) return;
-        Debug.Log("OnClick " + ID);
+        //Debug.Log("OnClick " + ID);
         Clicked?.Invoke();
     }
 
@@ -169,7 +167,6 @@ public class Decor : MonoBehaviour, BaseItem
 
     public void PlaceObject()
     {
-        Debug.Log("PlaceObject " + ID);
         _lastPosition = transform.position;
         IsDragging = false;
         _decorationSystem.InstanriateDecor(this);

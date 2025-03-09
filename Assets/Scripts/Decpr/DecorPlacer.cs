@@ -81,7 +81,7 @@ public class DecorPlacer : MonoBehaviour
                 _decor.PlaceObject();
             }
         }
-        else if (IsMouseOnObject())
+        else if (IsMouseOnObject() && _decorHolder.ActiveDecor == null)
         {
            // Debug.Log("IsMouseOnObject");
             _decor.TakeDecorIfCan();
