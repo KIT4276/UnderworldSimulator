@@ -1,4 +1,8 @@
-﻿public enum LootType
+﻿using System;
+
+
+
+public enum LootType
 {
     Wood,
 

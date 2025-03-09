@@ -4,7 +4,9 @@ public class TestInventorySlot : MonoBehaviour
 {
     [SerializeField] private InventorySlot _slot;
     [SerializeField] private int _count;
-    [SerializeField] private BaseItem _itemPrefab;
+
+
+    [SerializeField] private Decor _itemPrefab;
 
     private bool _isInited;
 
@@ -19,7 +21,7 @@ public class TestInventorySlot : MonoBehaviour
 
             for (int i = 0; i < _count; i++)
             {
-                _slot.SetItem(_itemPrefab);
+            _slot.SetItem(_itemPrefab);
                 _isInited = true;
             }
     }

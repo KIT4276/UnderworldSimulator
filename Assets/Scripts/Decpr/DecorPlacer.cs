@@ -72,7 +72,7 @@ public class DecorPlacer : MonoBehaviour
 
     private void OnClicked()
     {
-        //Debug.Log(_decor.IsDragging);
+      //  Debug.Log(_decor.ID.ToString() + _decor.IsDragging);
           //  Debug.Log(IsMouseOnObject());
         if (_decor.IsDragging)
         {
@@ -81,14 +81,16 @@ public class DecorPlacer : MonoBehaviour
                 _decor.PlaceObject();
             }
         }
-        else if (IsMouseOnObject())
+        else if (IsMouseOnObject() && _decorHolder.ActiveDecor == null)
         {
+           // Debug.Log("IsMouseOnObject");
             _decor.TakeDecorIfCan();
         }
     }
 
     private bool IsMouseOnObject()
     {
+        
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
         Ray ray = _decor.MainCamera.ScreenPointToRay(mouseScreenPos);
         RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity, LayerMask.GetMask("Decor"));

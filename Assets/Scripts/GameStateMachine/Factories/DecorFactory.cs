@@ -9,7 +9,7 @@ public class DecorFactory : MonoBehaviour
     private StateMachine _stateMachine;
     private DecorationSystem _decorationSystem;
 
-    private int _currentID;
+    private int _currentID = 1;
 
     [Inject]
     private void Construct(PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor, IAssets assets, DecorHolder decorHolder, StateMachine stateMachine)
@@ -26,19 +26,21 @@ public class DecorFactory : MonoBehaviour
     public Decor SpawnDecor(Decor decorPrefab)
     {
         Decor decor;
-        _currentID++;
 
         if (!decorPrefab.gameObject.scene.IsValid())
         {
             decor = Instantiate(decorPrefab);
+            //Debug.Log("SpawnDecor No Valid");
         }
         else
         {
+            //Debug.Log("SpawnDecor Valid");
             decor = decorPrefab;
             decor.gameObject.SetActive(true);
         }
         decor.gameObject.SetActive(true) ;
         decor.Initialize(_staticData, _decorationSystem, _spaceDeterminantor, _currentID, _decorHolder, _stateMachine);
+        _currentID++;
         return decor;
     }
 
@@ -47,7 +49,6 @@ public class DecorFactory : MonoBehaviour
     {
         decor.RemoveThisDecor();
         decor.transform.position = new Vector3(0, 0, 0);
-        decor.gameObject./*transform.position = new Vector3(-100, -100, 0);*/SetActive(false);
+        decor.gameObject.SetActive(false);
     }
-
 }

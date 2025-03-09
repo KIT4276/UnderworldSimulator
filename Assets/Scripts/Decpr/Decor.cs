@@ -4,9 +4,11 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(DecorView), (typeof(DecorRotator)))]
 [RequireComponent(typeof(DecorDrag), (typeof(DecorPlacer)))]
-public class Decor : BaseItem
+public class Decor : MonoBehaviour, BaseItem
 {
     [SerializeField] private DecorType _decorType;
+    [SerializeField] protected Sprite _icon;
+    [SerializeField] protected string _hints;
     [Space]
     [SerializeField] private DecorView _decorView;
     [SerializeField] private DecorDrag _decorDrag;
@@ -16,6 +18,7 @@ public class Decor : BaseItem
     [SerializeField] protected InputActionReference _clickAction;
     [SerializeField] protected InputActionReference _cancelAction;
     [SerializeField] protected InputActionReference _rotationAction;
+
 
     private StateMachine _stateMachine;
     protected DecorData _decorData;
@@ -46,6 +49,7 @@ public class Decor : BaseItem
     {
         if (ID == 0)
             ID = id;
+
         IsInside = true;
         IsDragging = true;
         _decorationSystem = decorationSystem;
@@ -61,7 +65,6 @@ public class Decor : BaseItem
         _clickAction.action.performed += OnClick;
         _rotationAction.action.performed += OnRotate;
         _cancelAction.action.performed += OnCancel;
-
         _stateMachine.ChangeStateAction += OnStateChange;
 
         SetDecorLayerRecursively(this.gameObject);
@@ -98,16 +101,16 @@ public class Decor : BaseItem
 
     private void OnCancel(InputAction.CallbackContext context)
     {
-       // Debug.Log("OnCancel");
+        //Debug.Log("OnCancel");
 
         if (!IsDragging) return;
 
-        // Debug.Log("IsDragging");
+
         if (_stateMachine.ActiveState is WorkbenchState)
         {
             GoToLastPosition();
         }
-        else
+        else if (_stateMachine.ActiveState is DecorationState)
         {
             _decorationSystem.TryToRemoveDecor(this);
         }
@@ -115,7 +118,7 @@ public class Decor : BaseItem
 
     public void RemoveThisDecor()
     {
-        //Debug.Log("RemoveThisDecor");
+       // Debug.Log("RemoveThisDecor " + ID);
         _decorPlacer.OnRemoved();
         _decorDrag.OnRemoved();
         _decorRotator.OnRemoved();
@@ -152,7 +155,7 @@ public class Decor : BaseItem
         // Debug.Log(_canPlace);
         //Debug.Log(_isCanDecorate);
         if (!_canPlace || !_isCanDecorate) return;
-        //Debug.Log("OnClick");
+        //Debug.Log("OnClick " + ID);
         Clicked?.Invoke();
     }
 
@@ -164,7 +167,6 @@ public class Decor : BaseItem
 
     public void PlaceObject()
     {
-        //Debug.Log("PlaceObject");
         _lastPosition = transform.position;
         IsDragging = false;
         _decorationSystem.InstanriateDecor(this);
@@ -195,6 +197,10 @@ public class Decor : BaseItem
 
     public void SetCurrentDecorCollider(Collider2D collider)
         => CurrentDecorCollider = collider;
+
+    public Sprite GetIcon() => _icon;
+
+    public string GetHint() => _hints;
 
     private bool CheckCamera()
     {

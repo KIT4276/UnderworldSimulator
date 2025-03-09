@@ -123,7 +123,7 @@ namespace DragonBones
         protected bool _closeCombineMeshs;
 
         private bool _hasSortingGroup = false;
-        private Material _debugDrawer;
+        private UnityEngine.Material _debugDrawer;
 
         //
         internal int _armatureZ;
@@ -183,7 +183,7 @@ namespace DragonBones
                 // Unity has a built-in shader that is useful for drawing
                 // simple colored things.
                 Shader shader = Shader.Find("Hidden/Internal-Colored");
-                _debugDrawer = new Material(shader);
+                _debugDrawer = new UnityEngine.Material(shader);
                 _debugDrawer.hideFlags = HideFlags.HideAndDontSave;
                 // Turn on alpha blending
                 _debugDrawer.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);

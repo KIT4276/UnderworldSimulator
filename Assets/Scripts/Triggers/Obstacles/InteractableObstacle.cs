@@ -40,7 +40,11 @@ public class InteractableObstacle : MonoBehaviour
     }
     protected void OnTriggerExit2D(Collider2D collision)
     {
-        DeActivate();
+        if (collision.TryGetComponent<HeroReaction>(out var hero))
+        {
+            _hero = hero;
+            DeActivate();
+        }
     }
 
     protected void OnPlayerInputActionTriggered(InputAction.CallbackContext context)
