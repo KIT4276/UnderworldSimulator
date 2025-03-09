@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-
-public class Loot  : MonoBehaviour
+﻿public interface Loot//  : MonoBehaviour
 {
-    [SerializeField] private LootSettings[] _lootSettings;
+    // [SerializeField] private LootSettings[] _lootSettings;
 
-    public LootSettings[] LootSettings { get => _lootSettings; }
+    public LootSettings[] LootSettings { get; }/* { get => _lootSettings; }*/
 }

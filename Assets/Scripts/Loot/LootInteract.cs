@@ -5,15 +5,18 @@ using Zenject;
 
 public class LootInteract : InteractableObstacle
 {
-   // [SerializeField] private float _interactionTime = 1;
+    // [SerializeField] private float _interactionTime = 1;
     [SerializeField] private GameObject _progressBar;
     [SerializeField] private Image _bar;
-    [SerializeField] private Loot _loot;
+    [SerializeField] private CraftLoot _craftLoot;
+    [SerializeField] private QuestsLoot _questsLoot;
 
     [Inject] private LootSystem _lootSystem;
     [Inject] private PersistantStaticData _staticData;
+    [Inject] private StateMachine _machine;
 
     private Coroutine _interactionCoroutine;
+    private bool _IsFilled;
 
     private void Start()
     {
@@ -23,19 +26,33 @@ public class LootInteract : InteractableObstacle
 
     protected override void Interac()
     {
+        if (_machine.ActiveState is LootState) return;
+
         _progressBar.SetActive(true);
-        
+
 
         if (_interactionCoroutine == null)
         {
             _hero.GetHero.OnLoot();
             _interactionCoroutine = StartCoroutine(InteractionProgress());
         }
-
-        foreach (var lootSetting in _loot.LootSettings)
+        if (!_IsFilled)
         {
-            _lootSystem.FillSlot(lootSetting.Loot, lootSetting.Count, this. gameObject);
+            foreach (var lootSetting in _craftLoot.LootSettings)
+            {
+                FillLoot(lootSetting);
+            }
+            foreach (var lootSetting in _questsLoot.LootSettings)
+            {
+                FillLoot(lootSetting);
+            }
+            _IsFilled = true;
         }
+    }
+
+    private void FillLoot(LootSettings lootSetting)
+    {
+        _lootSystem.FillSlot(lootSetting.Loot, lootSetting.Count, this.gameObject);
 
     }
 

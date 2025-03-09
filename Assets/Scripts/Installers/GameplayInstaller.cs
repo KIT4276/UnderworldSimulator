@@ -4,10 +4,13 @@ using Zenject;
 public class GameplayInstaller : MonoInstaller
 {
     [SerializeField] private PersistantStaticData _persistantStaticData;
+    [SerializeField] private DrawingData _drawingData;
     [SerializeField] private GameObject _workbenchPrefab;
     [SerializeField] private GameObject _decorFactiryPrefab;
     [SerializeField] private GameObject _inventoryPrefab;
     [SerializeField] private GameObject _LootPrefab;
+    [SerializeField] private GameObject _craftMenuPrefab;
+    [SerializeField] private MaterialsData _materialsData;
 
     public override void InstallBindings()
     {
@@ -25,11 +28,14 @@ public class GameplayInstaller : MonoInstaller
         Container.Bind<DecorationSystem>().FromNew().AsSingle().NonLazy();
         Container.Bind<LootSystem>().FromComponentInNewPrefab(_LootPrefab).AsSingle().NonLazy();
 
-
+        Container.Bind<CraftSystem>().FromNew().AsSingle().NonLazy();
+        Container.Bind<CraftMenu>().FromComponentInNewPrefab(_craftMenuPrefab).AsSingle().NonLazy();
     }
 
     private void InstallScriptableObjects()
     {
         Container.Bind<PersistantStaticData>().FromInstance(_persistantStaticData).AsSingle().NonLazy();
+        Container.Bind<DrawingData>().FromInstance(_drawingData).AsSingle().NonLazy();
+        Container.Bind<MaterialsData>().FromInstance(_materialsData).AsSingle().NonLazy();
     }
 }

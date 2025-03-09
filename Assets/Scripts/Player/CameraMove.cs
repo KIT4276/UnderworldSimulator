@@ -126,11 +126,15 @@ public class CameraMove : BaseMovable
 
     private  void OnChangeState(IExitableState state)
     {
-        if(state is DecorationState || state is WorkbenchState)
+        if(state is DecorationState || state is WorkbenchState )
         {
             Mobilize();
         }
-        else /*if(!_canMove)*/
+        else if( state is CraftState)
+        {
+            base.Immobilize();
+        }
+        else 
         {
             Immobilize();
         }

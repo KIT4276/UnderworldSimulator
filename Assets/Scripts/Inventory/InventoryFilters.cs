@@ -44,6 +44,7 @@ public class InventoryFilters : MonoBehaviour
             if (slot.IsOccupied && slot.Items[0] is Decor)
                 FillList(_decorSlotsClones, slot);
         }
+        
     }
 
     private void CreateCraftItemClones()

@@ -29,7 +29,7 @@ public class Cells : MonoBehaviour
 
     private void OnChangeState(IExitableState state)
     {
-        if(state is DecorationState || state is WorkbenchState)
+        if(state is DecorationState || state is WorkbenchState || state is CraftState)
         {
             _cells.SetActive(true);
         }
