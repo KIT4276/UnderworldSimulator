@@ -70,8 +70,9 @@ public class CraftMenu : MonoBehaviour
 
     public void OpenCraftMenu()
     {
-        UpdateCount();
         _menu.SetActive(true);
+        _craftSystem.AwakeMenu();
+        UpdateCount();
         _mainDrawingSign.FillSign();
     }
 
@@ -103,5 +104,7 @@ public class CraftMenu : MonoBehaviour
     private void OnDestroy()
     {
         _workbenchSystem.CraftButtonClick -= OpenCraftMenu;
+        _craftSystem.ChangeCount -= UpdateCount;
+        _machine.ChangeStateAction -= StateChanged;
     }
 }

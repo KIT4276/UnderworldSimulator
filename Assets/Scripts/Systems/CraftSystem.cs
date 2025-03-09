@@ -30,6 +30,12 @@ public class CraftSystem
         _activeDrawing = _drawingDatas.Drawings[0];
     }
 
+    public void AwakeMenu()
+    {
+        Count = 1;
+        _activeDrawing = _drawingDatas.Drawings[0];
+    }
+
     public void SelectDrawing(Drawing drawing)
     {
         _activeDrawing = drawing;
@@ -40,8 +46,8 @@ public class CraftSystem
     public void OnChangeCount(int count)
     {
         Count += count;
-        if (Count < 0)
-            Count = 0;
+        if (Count < 1)
+            Count = 1;
 
         ChangeCount?.Invoke();
     }
