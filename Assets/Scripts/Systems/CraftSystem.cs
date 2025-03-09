@@ -18,6 +18,7 @@ public class CraftSystem
     [Inject] private DecorFactory _decoratorFactory;
 
     public event Action ChangeCount;
+    public event Action Crafted;
 
     private List<CraftItem> _availableMaterials = new();
 
@@ -75,6 +76,9 @@ public class CraftSystem
         {
             Debug.Log("недостаточно материалов!");
         }
+
+        AwakeMenu();
+        Crafted?.Invoke();
     }
 
     private bool EnoughMaterials()

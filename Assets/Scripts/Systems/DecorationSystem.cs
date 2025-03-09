@@ -30,7 +30,7 @@ public class DecorationSystem
         if (_decorHolder.ActiveDecor != null)
             // TryToRemoveDecor(decorPrefab);
             return;
-        Debug.Log("OnButtonClick");
+       // Debug.Log("OnButtonClick");
         var decor = _factory.SpawnDecor(decorPrefab);
         decor.SetIsCanDecorate(true);
         _decorHolder.SetActiveDecor(decor);

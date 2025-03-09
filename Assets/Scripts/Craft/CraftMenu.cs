@@ -20,6 +20,7 @@ public class CraftMenu : MonoBehaviour
         _workbenchSystem.CraftButtonClick += OpenCraftMenu;
         _craftSystem.ChangeCount += UpdateCount;
         _machine.ChangeStateAction += StateChanged;
+        _craftSystem.Crafted += ResetCraftMenu;
 
         foreach (var slot in _slots)
         {
@@ -72,6 +73,11 @@ public class CraftMenu : MonoBehaviour
     {
         _menu.SetActive(true);
         _craftSystem.AwakeMenu();
+        ResetCraftMenu();
+    }
+
+    private void ResetCraftMenu()
+    {
         UpdateCount();
         _mainDrawingSign.FillSign();
     }
