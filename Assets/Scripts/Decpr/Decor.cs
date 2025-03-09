@@ -120,7 +120,7 @@ public class Decor : MonoBehaviour, BaseItem
 
     public void RemoveThisDecor()
     {
-        Debug.Log("RemoveThisDecor " + ID);
+       // Debug.Log("RemoveThisDecor " + ID);
         _decorPlacer.OnRemoved();
         _decorDrag.OnRemoved();
         _decorRotator.OnRemoved();

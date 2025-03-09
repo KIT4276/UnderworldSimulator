@@ -34,6 +34,7 @@ public class InventorySystem : MonoBehaviour
         _stateMachine.ChangeStateAction += StateChanged;
     }
 
+
     public void RemoveItems(LootType lootType)
     {
 
