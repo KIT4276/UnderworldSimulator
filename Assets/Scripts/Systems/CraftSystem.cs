@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using Zenject;
 
@@ -19,6 +18,7 @@ public class CraftSystem
 
     public event Action ChangeCount;
     public event Action Crafted;
+    public event Action EscapeAction; 
 
     private List<CraftItem> _availableMaterials = new();
 
@@ -51,6 +51,11 @@ public class CraftSystem
             Count = 1;
 
         ChangeCount?.Invoke();
+    }
+
+    public void Escape()
+    {
+        EscapeAction?.Invoke();
     }
 
     public void CreateDecor()

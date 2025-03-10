@@ -1,6 +1,5 @@
 using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -50,7 +49,7 @@ public class CraftMenu : MonoBehaviour
 
         StartFill(_craftSystem.ActiveDrawing);
         UpdateCount();
-        CloseCraftMenu();
+        OnCloseCraftMenu();
     }
 
     public void OnCreate()
@@ -84,6 +83,11 @@ public class CraftMenu : MonoBehaviour
 
     public void CloseCraftMenu()
     {
+        _craftSystem.Escape();
+    }
+
+    public void OnCloseCraftMenu()
+    {
         _menu.SetActive(false);
     }
 
@@ -97,7 +101,7 @@ public class CraftMenu : MonoBehaviour
     {
         if (!(state is CraftState))
         {
-            CloseCraftMenu();
+            OnCloseCraftMenu();
         }
     }
 

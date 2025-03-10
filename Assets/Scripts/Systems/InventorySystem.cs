@@ -8,9 +8,10 @@ public class InventorySystem : MonoBehaviour
 {
     [SerializeField] private InventorySlot[] _inventorySlots;
     [SerializeField] private GameObject _warningSign;
-    [SerializeField] private InputActionReference _escapeAction;
+   // [SerializeField] private InputActionReference _escapeAction;
     [Space]
     [SerializeField] private InventoryFilters _filters;
+    [SerializeField] private GameObject _exitButton;
 
     private StateMachine _stateMachine;
     private DecorationSystem _decorationSystem;
@@ -65,6 +66,12 @@ public class InventorySystem : MonoBehaviour
 
     public void ActivateInventory()
     {
+        if(_stateMachine.ActiveState is InventoryState)
+            _exitButton.SetActive(true);
+        else
+            _exitButton.SetActive(false);
+
+
         foreach (var slot in _inventorySlots)
         {
             slot.Initialize();

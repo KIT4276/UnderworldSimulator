@@ -10,9 +10,10 @@ public class StatesTransitor
     private readonly InventorySystem _inventorySystem;
     private readonly LootSystem _lootSystem;
     private readonly PlayerInput _playerInput;
+    private readonly CraftSystem _craftSystem;
 
     public StatesTransitor(StateMachine stateMachine, PlayerInput playerInput, DecorHolder decorHolder, WorkbenchSystem workbenchSystem,
-        InventorySystem inventorySystem, LootSystem lootSystem)
+        InventorySystem inventorySystem, LootSystem lootSystem, CraftSystem craftSystem)
     {
         _stateMachine = stateMachine;
         _decorHolder = decorHolder;
@@ -20,6 +21,7 @@ public class StatesTransitor
         _inventorySystem = inventorySystem;
         _lootSystem = lootSystem;
         _playerInput = playerInput;
+        _craftSystem = craftSystem;
 
         playerInput.actions["Escape"].performed += OnEscape;
         playerInput.actions["Inventory"].performed += OnInventory;
@@ -30,6 +32,7 @@ public class StatesTransitor
         _inventorySystem.Exit += Escape;
         _lootSystem.OpenMenuAction += ToLootState;
         _lootSystem.CloseMenuAction += ToGameLoopState;
+        _craftSystem.EscapeAction += ToWorkbenchState;
 
         _workbenchSystem.Destroyed += OnDestroyed;
     }
@@ -138,5 +141,6 @@ public class StatesTransitor
         _lootSystem.OpenMenuAction -= ToLootState;
         _lootSystem.CloseMenuAction -= ToGameLoopState;
         _workbenchSystem.Destroyed -= OnDestroyed;
+        _craftSystem.EscapeAction -= ToWorkbenchState;
     }
 }
