@@ -8,6 +8,7 @@ public class LootSystem : MonoBehaviour
     [SerializeField] private InputActionReference _escapeAction;
     [SerializeField] private GameObject _menu;
     [SerializeField] private LootSlot[] _slots;
+    [SerializeField] ButtonEnterChangeImage _exitButton;
 
     [Inject] private InventorySystem _inventorySystem;
     [Inject] private StateMachine _stateMachine;
@@ -56,6 +57,7 @@ public class LootSystem : MonoBehaviour
 
     public void OpenMenu()
     {
+        _exitButton.Activate();
         _menu.SetActive(true);
         _inventorySystem.gameObject.SetActive(true);
         _inventorySystem.ActivateInventory();

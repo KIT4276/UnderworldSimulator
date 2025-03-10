@@ -9,7 +9,12 @@ public class ButtonClickChangeImage : MonoBehaviour
     [SerializeField] private Sprite _normImage;
     [SerializeField] private Sprite _highlightImage;
     [SerializeField] private Sprite _pressedImage;
-    [SerializeField] private float _delay = 1;
+     private float _delay = 1;
+
+    public void Init(float delay)
+    {
+        _delay = delay; ;
+    }
 
     public void PressedButtoneChange()
     {
@@ -33,4 +38,5 @@ public class ButtonClickChangeImage : MonoBehaviour
     {
         StopAllCoroutines();
     }
+
 }

@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -116,5 +115,6 @@ public class CraftMenu : MonoBehaviour
         _workbenchSystem.CraftButtonClick -= OpenCraftMenu;
         _craftSystem.ChangeCount -= UpdateCount;
         _machine.ChangeStateAction -= StateChanged;
+        _craftSystem.Crafted -= ResetCraftMenu;
     }
 }

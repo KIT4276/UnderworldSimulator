@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 8056320973583681857}
   - component: {fileID: 6533978300111901864}
   - component: {fileID: 4459216982049743556}
+  - component: {fileID: 1787851286742808483}
   m_Layer: 5
   m_Name: ButtonExit
   m_TagString: Untagged
@@ -207,6 +208,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1787851286742808483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455831391288088016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d968819f73313874c990554b54ae0522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _image: {fileID: 6533978300111901864}
+  _emptyImage: {fileID: 0}
+  _normImage: {fileID: 7971555713094262054, guid: 2e9786fe5914ec34e9684a8a1b034430, type: 3}
+  _highlightImage: {fileID: -8239878879449556903, guid: b030f5d963da3e045b41c9c692326051, type: 3}
 --- !u!1 &659984384769439941
 GameObject:
   m_ObjectHideFlags: 0
@@ -1820,7 +1837,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.6509434, g: 0.635591, b: 0.635591, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -1946,7 +1963,7 @@ MonoBehaviour:
   _hintText: {fileID: 7715854616836893187}
   _hintRectTransform: {fileID: 3065877910727376629}
   _indentX: 30
-  _indentY: 30
+  _indentY: 40
 --- !u!1 &3948618257507528854
 GameObject:
   m_ObjectHideFlags: 0
@@ -3021,6 +3038,7 @@ MonoBehaviour:
   - {fileID: 6180081206990633858}
   - {fileID: 8158601046516461879}
   - {fileID: 3006766550215140037}
+  _exitButton: {fileID: 1787851286742808483}
 --- !u!114 &8429760500706936242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4360,8 +4378,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 44536651024053094}
   m_HandleRect: {fileID: 8079610792819312097}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.83850294
+  m_Value: 1.0000005
+  m_Size: 0.83850306
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

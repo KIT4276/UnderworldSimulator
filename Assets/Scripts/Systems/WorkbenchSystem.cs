@@ -1,21 +1,19 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
 
 public class WorkbenchSystem : MonoBehaviour
 {
     [SerializeField] private GameObject _workbenchPanel;
-    [SerializeField] private ButtonClickChangeImage[] buttonsClick;
-    // [SerializeField] private InputActionReference _escapeAction;
+    [SerializeField] private ButtonClickChangeImage[] _buttonsClick;
     [SerializeField] private GameObject _warningSign;
-
+    [SerializeField] private float _delay = 1;
+    [SerializeField] private ButtonEnterChangeImage[] _arrows;
 
     private DecorHolder _decorHolder;
     private StateMachine _stateMachine;
     private InventorySystem _inventory;
-    private DecorationSystem _decorationSystem;
 
     public event Action InventoryButtonClick;
     public event Action CraftButtonClick;
@@ -23,23 +21,22 @@ public class WorkbenchSystem : MonoBehaviour
     public event Action Destroyed;
 
     [Inject]
-    public void Construct(StateMachine stateMachine, InventorySystem inventory, DecorationSystem decorationSystem, DecorHolder decorHolder)
+    public void Construct(StateMachine stateMachine, InventorySystem inventory, DecorHolder decorHolder)
     {
         _decorHolder = decorHolder;
         _stateMachine = stateMachine;
         _inventory = inventory;
-        _decorationSystem = decorationSystem;
         _inventory.gameObject.SetActive(false);
         _workbenchPanel.SetActive(false);
         _warningSign.SetActive(false);
 
-        foreach (var button in buttonsClick)
+        foreach (var button in _buttonsClick)
         {
-            button.GetComponent<ButtonEnterChangeImage>().Activate();
+            button.Init(_delay);
+            button.GetComponent<SlotEnterChangeImage>().Activate();
         }
 
         _stateMachine.ChangeStateAction += OnChangeState;
-        //_escapeAction.action.performed += OnEscape;
     }
 
     public void ShowSign()
@@ -57,31 +54,25 @@ public class WorkbenchSystem : MonoBehaviour
 
     public void OnExitWorkbench()
     {
-        //Debug.Log("OnExitWorkbench");
-        Exit?.Invoke();
+       
+        StartCoroutine(ButtonClickRoutine(Exit));
     }
 
     public void OnInventoryButtonClick()
     {
-        InventoryButtonClick?.Invoke(); 
+        StartCoroutine(ButtonClickRoutine(InventoryButtonClick));
     }
 
     public void OnCraftButtonClick()
     {
-        CraftButtonClick?.Invoke();
+        StartCoroutine(ButtonClickRoutine(CraftButtonClick));
     }
 
-    //private void OnEscape(InputAction.CallbackContext context)
-    //{
-    //    if (_stateMachine.ActiveState is DecorationState)
-    //    {
-    //        _stateMachine.Enter<WorkbenchState>();
-    //    }
-    //    else if (_stateMachine.ActiveState is WorkbenchState)
-    //    {
-    //        OnExitWorkbench();
-    //    }
-    //}
+    private IEnumerator ButtonClickRoutine(Action action)
+    {
+        yield return new WaitForSeconds(_delay);
+        action?.Invoke();
+    }
 
     private void OnChangeState(IExitableState state)
     {
@@ -101,27 +92,15 @@ public class WorkbenchSystem : MonoBehaviour
                 ActivateWorkbench();
                 break;
         }
-        //if (state is WorkbenchState)
-        //{
-        //    DeActivateInventory();
-        //    ActivateWorkbench();
-        //}
-        //else if (state is DecorationState)
-        //{
-        //    // todo highlight Inventory button
-        //    ActivateInventory();
-        //}
-        //else if (state is GameLoopState)
-        //{
-        //    DeActivateInventory();
-        //    DeActivateWorkbench();
-        //}
     }
 
     private void ActivateInventory()
     {
+
         _inventory.gameObject.SetActive(true);
         _inventory.ActivateInventory();
+
+        
     }
 
     private void DeActivateInventory()
@@ -133,9 +112,13 @@ public class WorkbenchSystem : MonoBehaviour
     {
         _workbenchPanel.SetActive(true);
 
-        foreach (var button in buttonsClick)
+        foreach (var button in _buttonsClick)
         {
             button.RestartView();
+        }
+        foreach (var arrow in _arrows)
+        {
+            arrow.Activate();
         }
     }
 

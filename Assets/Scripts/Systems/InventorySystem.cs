@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
 
 public class InventorySystem : MonoBehaviour
@@ -11,7 +10,7 @@ public class InventorySystem : MonoBehaviour
    // [SerializeField] private InputActionReference _escapeAction;
     [Space]
     [SerializeField] private InventoryFilters _filters;
-    [SerializeField] private GameObject _exitButton;
+    [SerializeField] private ButtonEnterChangeImage _exitButton;
 
     private StateMachine _stateMachine;
     private DecorationSystem _decorationSystem;
@@ -53,6 +52,7 @@ public class InventorySystem : MonoBehaviour
 
     public void OnExit()
     {
+        _exitButton.DeActivate();
         Exit?.Invoke();
     }
 
@@ -66,10 +66,13 @@ public class InventorySystem : MonoBehaviour
 
     public void ActivateInventory()
     {
-        if(_stateMachine.ActiveState is InventoryState)
-            _exitButton.SetActive(true);
+        if (_stateMachine.ActiveState is InventoryState)
+        {
+            _exitButton.gameObject.SetActive(true);
+            _exitButton.Activate();
+        }
         else
-            _exitButton.SetActive(false);
+            _exitButton.gameObject.SetActive(false);
 
 
         foreach (var slot in _inventorySlots)

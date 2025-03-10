@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -39,17 +38,12 @@ public class StatesTransitor
 
     private void Escape()
     {
-        //Debug.Log("Escape");
-        //Debug.Log(_stateMachine.ActiveState);
-
         switch (_stateMachine.ActiveState)
         {
             case DecorationState:
                 ConditionalToWorkbenchState();
-                //ToWorkbenchState();
                 break;
             case WorkbenchState:
-                //ToGameLoopState();
                 ConditionalToGameLoopState();
                 break;
             case InventoryState:
@@ -83,7 +77,6 @@ public class StatesTransitor
         }
         else
         {
-            Debug.Log("else");
             _workbenchSystem.ShowSign();
         }
     }
@@ -96,7 +89,6 @@ public class StatesTransitor
         }
         else
         {
-            Debug.Log("else");
             _workbenchSystem.ShowSign();
         }
     }

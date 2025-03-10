@@ -4,11 +4,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(ButtonEnterChangeImage))]
+[RequireComponent(typeof(SlotEnterChangeImage))]
 public class InventorySlot : MonoBehaviour
 {
     [SerializeField] protected Image _buttonIconImage;
-    [SerializeField] protected ButtonEnterChangeImage _buttonEnterChangeImage;
+    [SerializeField] protected SlotEnterChangeImage _buttonEnterChangeImage;
     [SerializeField] protected Button _button;
     [Space]
     [SerializeField] protected TMP_Text _textMeshPro;
@@ -103,12 +103,12 @@ public class InventorySlot : MonoBehaviour
 
     public void Deactivate()
     {
+        _buttonEnterChangeImage.DeActivate();
         _textMeshPro.gameObject.SetActive(false);
         _x_TextTablet.SetActive(false);
         _buttonEnterChangeImage.enabled = false;
         IsOccupied = false;
         _buttonIconImage.sprite = null;
-        _buttonEnterChangeImage.DeActivate();
         _buttonIconImage.gameObject.SetActive(false);
         _button.interactable = false;
         _icon = null;

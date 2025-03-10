@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(LootClickHandler), typeof (ButtonEnterChangeImage))]
+[RequireComponent(typeof(LootClickHandler), typeof (SlotEnterChangeImage))]
 public class LootSlot : InventorySlot
 {
     [SerializeField] private LootClickHandler _lootClickHandler;
