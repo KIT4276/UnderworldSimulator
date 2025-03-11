@@ -3700,7 +3700,8 @@ GameObject:
   - component: {fileID: 208500281}
   - component: {fileID: 208500283}
   - component: {fileID: 208500284}
-  m_Layer: 0
+  - component: {fileID: 208500285}
+  m_Layer: 11
   m_Name: room5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3789,6 +3790,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e0b7e2cdb588e44beaa83f26b237c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 208500283}
+  _clickHandler: {fileID: 208500285}
+  _startParameter_1: 0
+  _startParameter_2: 0
+  _startParameter_3: 0
+--- !u!114 &208500285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208500280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e421d16b63c743c4eaeca41f7af3cc59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _click: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _collider: {fileID: 208500283}
 --- !u!1001 &209658980
 PrefabInstance:
@@ -19741,7 +19760,8 @@ GameObject:
   - component: {fileID: 966721436}
   - component: {fileID: 966721438}
   - component: {fileID: 966721439}
-  m_Layer: 0
+  - component: {fileID: 966721440}
+  m_Layer: 11
   m_Name: room4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19830,6 +19850,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e0b7e2cdb588e44beaa83f26b237c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 966721438}
+  _clickHandler: {fileID: 966721440}
+  _startParameter_1: 0
+  _startParameter_2: 0
+  _startParameter_3: 0
+--- !u!114 &966721440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966721435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e421d16b63c743c4eaeca41f7af3cc59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _click: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _collider: {fileID: 966721438}
 --- !u!1001 &967740273
 PrefabInstance:
@@ -24294,7 +24332,8 @@ GameObject:
   - component: {fileID: 1001881600}
   - component: {fileID: 1001881602}
   - component: {fileID: 1001881603}
-  m_Layer: 0
+  - component: {fileID: 1001881604}
+  m_Layer: 11
   m_Name: room2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24385,6 +24424,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e0b7e2cdb588e44beaa83f26b237c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 1001881602}
+  _clickHandler: {fileID: 1001881604}
+  _startParameter_1: 0
+  _startParameter_2: 0
+  _startParameter_3: 0
+--- !u!114 &1001881604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001881599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e421d16b63c743c4eaeca41f7af3cc59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _click: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _collider: {fileID: 1001881602}
 --- !u!4 &1005698807 stripped
 Transform:
@@ -99376,7 +99433,8 @@ GameObject:
   - component: {fileID: 1544294920}
   - component: {fileID: 1544294922}
   - component: {fileID: 1544294924}
-  m_Layer: 0
+  - component: {fileID: 1544294925}
+  m_Layer: 11
   m_Name: room1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99467,6 +99525,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e0b7e2cdb588e44beaa83f26b237c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 1544294922}
+  _clickHandler: {fileID: 1544294925}
+  _startParameter_1: 1
+  _startParameter_2: 2
+  _startParameter_3: 3
+--- !u!114 &1544294925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544294919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e421d16b63c743c4eaeca41f7af3cc59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _click: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _collider: {fileID: 1544294922}
 --- !u!1001 &1548484105
 PrefabInstance:
@@ -186978,7 +187054,8 @@ GameObject:
   - component: {fileID: 1893208512}
   - component: {fileID: 1893208514}
   - component: {fileID: 1893208515}
-  m_Layer: 0
+  - component: {fileID: 1893208516}
+  m_Layer: 11
   m_Name: room3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187069,6 +187146,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e0b7e2cdb588e44beaa83f26b237c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 1893208514}
+  _clickHandler: {fileID: 1893208516}
+  _startParameter_1: 0
+  _startParameter_2: 0
+  _startParameter_3: 0
+--- !u!114 &1893208516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893208511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e421d16b63c743c4eaeca41f7af3cc59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _click: {fileID: -1017494921834160240, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _collider: {fileID: 1893208514}
 --- !u!4 &1894159394 stripped
 Transform:

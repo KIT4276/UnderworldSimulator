@@ -6,6 +6,8 @@ public class SpaceDeterminantor
 {
     public List<FloorMarker> FloorMarkers = new();
 
+    public event Action Find;
+
     public SpaceDeterminantor(StateMachine stateMachine)
     {
         stateMachine.ChangeStateAction += OnChangeState;
@@ -13,7 +15,7 @@ public class SpaceDeterminantor
 
     private void OnChangeState(IExitableState state)
     {
-        if (state is DecorationState)
+        if (state is DecorationState || state is WorkbenchState || state is CraftState)
             FindDecorableSpace();
     }
 
@@ -27,5 +29,7 @@ public class SpaceDeterminantor
         {
             FloorMarkers.Add(marker);
         }
+        //Debug.Log(FloorMarkers.Count);
+        Find?.Invoke();
     }
 }

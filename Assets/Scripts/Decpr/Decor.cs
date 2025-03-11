@@ -18,6 +18,14 @@ public class Decor : MonoBehaviour, BaseItem
     [SerializeField] protected InputActionReference _clickAction;
     [SerializeField] protected InputActionReference _cancelAction;
     [SerializeField] protected InputActionReference _rotationAction;
+    [Space, Tooltip("For room rating")]
+    [SerializeField] private int _parameter_1;
+    [SerializeField] private int _parameter_2;
+    [SerializeField] private int _parameter_3;
+
+    public int Parameter_1 { get => _parameter_1; }
+    public int Parameter_2 { get => _parameter_2; }
+    public int Parameter_3 { get => _parameter_3; }
 
     public DecorType DecorType { get => _decorType; }
     public bool IsInside { get; private set; }
@@ -90,10 +98,15 @@ public class Decor : MonoBehaviour, BaseItem
     public void SetCurrentClickableCollider(Collider2D collider2D) =>
         CurrentClickableCollider = collider2D;
 
-    public virtual void TakeDecorIfCan()
+    public virtual bool TakeDecorIfCan()
     {
         if (_decorationSystem.ActivateDecorIfCan(this))
+        {
             IsDragging = true;
+            return true;
+        }
+        else
+            return false;
     }
 
 
