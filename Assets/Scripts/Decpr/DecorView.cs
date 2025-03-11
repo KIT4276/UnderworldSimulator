@@ -22,7 +22,7 @@ public class DecorView : MonoBehaviour
         _canView = true;
         _decor = decor;
         _staticData = staticData;
-        _originalColor = new Color(1,1,1);
+        _originalColor = new Color(1,1,1,1);
 
         UpdateSprite(currenrRotationState);
         UpdateView();
