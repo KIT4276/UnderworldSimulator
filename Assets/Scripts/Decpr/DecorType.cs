@@ -9,4 +9,5 @@
     Ottoman,
     Bookshelf,
     Table,
+    Carpet,
 }

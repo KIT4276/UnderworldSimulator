@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Decor))]
@@ -24,13 +23,13 @@ public class DecorPlacer : MonoBehaviour
         _canMove = false;
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
         if (_decor.IsDragging && _canMove)
             _decor.SetIsInside(CheckPlacement());
     }
 
-    private bool CheckPlacement()
+    protected bool CheckPlacement()
     {
         bool isInside = false;
 
@@ -54,11 +53,17 @@ public class DecorPlacer : MonoBehaviour
             }
         }
 
+        isInside = CheckOtherDecor(isInside);
+        return isInside;
+    }
+
+    protected virtual bool CheckOtherDecor(bool isInside)
+    {
         if (isInside)
         {
             foreach (var otherDecor in _decorHolder.InstalledDecor)
             {
-                if (otherDecor == _decor) continue;
+                if (otherDecor == _decor || otherDecor is CarpetDecor) continue;
 
                 if (_decor.CurrentDecorCollider.bounds.Intersects(otherDecor.CurrentDecorCollider.bounds))
                 {
@@ -67,13 +72,12 @@ public class DecorPlacer : MonoBehaviour
                 }
             }
         }
+
         return isInside;
     }
 
-    private void OnClicked()
+    protected void OnClicked()
     {
-      //  Debug.Log(_decor.ID.ToString() + _decor.IsDragging);
-          //  Debug.Log(IsMouseOnObject());
         if (_decor.IsDragging)
         {
             if (_decor.IsInside)
@@ -83,12 +87,11 @@ public class DecorPlacer : MonoBehaviour
         }
         else if (IsMouseOnObject() && _decorHolder.ActiveDecor == null)
         {
-           // Debug.Log("IsMouseOnObject");
             _decor.TakeDecorIfCan();
         }
     }
 
-    private bool IsMouseOnObject()
+    protected bool IsMouseOnObject()
     {
         
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
@@ -105,9 +108,8 @@ public class DecorPlacer : MonoBehaviour
         return false;
     }
 
-    private void OnDisable()
+    protected void OnDisable()
     {
         _decor.Clicked -= OnClicked;
     }
-
 }

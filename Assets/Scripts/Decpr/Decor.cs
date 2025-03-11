@@ -6,43 +6,41 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(DecorDrag), (typeof(DecorPlacer)))]
 public class Decor : MonoBehaviour, BaseItem
 {
-    [SerializeField] private DecorType _decorType;
+    [SerializeField] protected DecorType _decorType;
     [SerializeField] protected Sprite _icon;
     [SerializeField] protected string _hints;
     [Space]
-    [SerializeField] private DecorView _decorView;
-    [SerializeField] private DecorDrag _decorDrag;
-    [SerializeField] private DecorPlacer _decorPlacer;
-    [SerializeField] private DecorRotator _decorRotator;
+    [SerializeField] protected DecorView _decorView;
+    [SerializeField] protected DecorDrag _decorDrag;
+    [SerializeField] protected DecorPlacer _decorPlacer;
+    [SerializeField] protected DecorRotator _decorRotator;
     [Space]
     [SerializeField] protected InputActionReference _clickAction;
     [SerializeField] protected InputActionReference _cancelAction;
     [SerializeField] protected InputActionReference _rotationAction;
 
-
-    private StateMachine _stateMachine;
-    protected DecorData _decorData;
-    protected DecorationSystem _decorationSystem;
-    private bool _canPlace = true;
-    protected bool _isCanDecorate;
-    private RotationState _currentRotationState;
-    private Vector3 _lastPosition;
-
-
     public DecorType DecorType { get => _decorType; }
     public bool IsInside { get; private set; }
-
 
     public bool IsDragging { get; private set; }
     public Collider2D CurrentDecorCollider { get; private set; }
     public Camera MainCamera { get; private set; }
     public Collider2D CurrentClickableCollider { get; private set; }
+    public Collider2D CurrentOccupiedZone { get; private set; }
     public int ID { get; private set; }
 
     public event Action DecorPlacedAction;
     public event Action Clicked;
     public event Action<RotationState> Rotated;
     public event Action<RotationState> EndRotation;
+
+    protected StateMachine _stateMachine;
+    protected DecorData _decorData;
+    protected DecorationSystem _decorationSystem;
+    protected bool _canPlace = true;
+    protected bool _isCanDecorate;
+    protected RotationState _currentRotationState;
+    protected Vector3 _lastPosition;
 
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
         SpaceDeterminantor spaceDeterminantor, int id, DecorHolder decorHolder, StateMachine stateMachine)
@@ -59,7 +57,6 @@ public class Decor : MonoBehaviour, BaseItem
         InitComponents(staticData, spaceDeterminantor, decorHolder);
 
         CheckCamera();
-        //_isCanDecorate = true;
         OnStateChange(_stateMachine.ActiveState);
 
         _clickAction.action.performed += OnClick;
@@ -70,55 +67,8 @@ public class Decor : MonoBehaviour, BaseItem
         SetDecorLayerRecursively(this.gameObject);
     }
 
-    private void SetDecorLayerRecursively(GameObject obj)
-    {
-        obj.layer = LayerMask.NameToLayer("Decor");
-
-        foreach (Transform child in obj.transform)
-            SetDecorLayerRecursively(child.gameObject);
-    }
-
-    private void InitComponents(PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
-    {
-        _decorView.Initialize(this, staticData, _currentRotationState);
-        _decorDrag.Initialize(this, staticData, spaceDeterminantor);
-        _decorPlacer.Initialize(this, spaceDeterminantor, decorHolder);
-        _decorRotator.Initialize(this, _currentRotationState);
-    }
-
-    private void OnStateChange(IExitableState state)
-    {
-        if (state is DecorationState || state is WorkbenchState)
-        {
-            _isCanDecorate = true;
-            _canPlace = true;
-        }
-        else
-        {
-            _isCanDecorate = false;
-        }
-    }
-
-    private void OnCancel(InputAction.CallbackContext context)
-    {
-        //Debug.Log("OnCancel");
-
-        if (!IsDragging) return;
-
-
-        if (_stateMachine.ActiveState is WorkbenchState)
-        {
-            GoToLastPosition();
-        }
-        else if (_stateMachine.ActiveState is DecorationState)
-        {
-            _decorationSystem.TryToRemoveDecor(this);
-        }
-    }
-
     public void RemoveThisDecor()
     {
-       // Debug.Log("RemoveThisDecor " + ID);
         _decorPlacer.OnRemoved();
         _decorDrag.OnRemoved();
         _decorRotator.OnRemoved();
@@ -128,10 +78,6 @@ public class Decor : MonoBehaviour, BaseItem
         IsInside = false;
     }
 
-    private void FixedUpdate()
-    {
-        if (!CheckCamera()) return;
-    }
 
     public void SetIsCanDecorate(bool isCanDecorate)
     {
@@ -144,56 +90,18 @@ public class Decor : MonoBehaviour, BaseItem
     public void SetCurrentClickableCollider(Collider2D collider2D) =>
         CurrentClickableCollider = collider2D;
 
-    public void TakeDecorIfCan()
+    public virtual void TakeDecorIfCan()
     {
         if (_decorationSystem.ActivateDecorIfCan(this))
             IsDragging = true;
     }
 
-    private void OnClick(InputAction.CallbackContext context)
-    {
-        // Debug.Log(_canPlace);
-        //Debug.Log(_isCanDecorate);
-        if (!_canPlace || !_isCanDecorate) return;
-        //Debug.Log("OnClick " + ID);
-        Clicked?.Invoke();
-    }
 
     public void BanActions() =>
         _canPlace = false;
 
     public void AllowActions() =>
          _canPlace = true;
-
-    public void PlaceObject()
-    {
-        _lastPosition = transform.position;
-        IsDragging = false;
-        _decorationSystem.InstanriateDecor(this);
-        DecorPlacedAction?.Invoke();
-        AllowActions();
-    }
-
-
-    private void GoToLastPosition()
-    {
-        IsDragging = false;
-        transform.position = _lastPosition;
-        PlaceObject();
-    }
-
-    private void OnRotate(InputAction.CallbackContext context)
-    {
-        if (!IsDragging || !_isCanDecorate) return;
-
-        Rotated?.Invoke(_currentRotationState);
-    }
-
-    public void SetRotationState(RotationState rotationState)
-    {
-        _currentRotationState = rotationState;
-        EndRotation?.Invoke(_currentRotationState);
-    }
 
     public void SetCurrentDecorCollider(Collider2D collider)
         => CurrentDecorCollider = collider;
@@ -202,7 +110,47 @@ public class Decor : MonoBehaviour, BaseItem
 
     public string GetHint() => _hints;
 
-    private bool CheckCamera()
+    public virtual void PlaceObject()
+    {
+        _lastPosition = transform.position;
+        IsDragging = false;
+        _decorationSystem.InstanriateDecor(this);
+        DecorPlacedAction?.Invoke();
+        AllowActions();
+    }
+
+    public void SetRotationState(RotationState rotationState)
+    {
+        _currentRotationState = rotationState;
+        EndRotation?.Invoke(_currentRotationState);
+    }
+
+    protected void FixedUpdate()
+    {
+        if (!CheckCamera()) return;
+    }
+
+    protected void OnClick(InputAction.CallbackContext context)
+    {
+        if (!_canPlace || !_isCanDecorate) return;
+        Clicked?.Invoke();
+    }
+
+    protected void GoToLastPosition()
+    {
+        IsDragging = false;
+        transform.position = _lastPosition;
+        PlaceObject();
+    }
+
+    protected void OnRotate(InputAction.CallbackContext context)
+    {
+        if (!IsDragging || !_isCanDecorate) return;
+
+        Rotated?.Invoke(_currentRotationState);
+    }
+
+    protected bool CheckCamera()
     {
         if (MainCamera != null)
         {
@@ -224,11 +172,52 @@ public class Decor : MonoBehaviour, BaseItem
 
     protected void OnDisable()
     {
-        //IsDragging = false;
-
         _clickAction.action.performed -= OnClick;
         _cancelAction.action.performed -= OnCancel;
         _rotationAction.action.performed -= OnRotate;
         _stateMachine.ChangeStateAction -= OnStateChange;
+    }
+
+    protected void SetDecorLayerRecursively(GameObject obj)
+    {
+        obj.layer = LayerMask.NameToLayer("Decor");
+
+        foreach (Transform child in obj.transform)
+            SetDecorLayerRecursively(child.gameObject);
+    }
+
+    protected void InitComponents(PersistantStaticData staticData, SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
+    {
+        _decorView.Initialize(this, staticData, _currentRotationState);
+        _decorDrag.Initialize(this, staticData, spaceDeterminantor);
+        _decorPlacer.Initialize(this, spaceDeterminantor, decorHolder);
+        _decorRotator.Initialize(this, _currentRotationState);
+    }
+
+    protected void OnStateChange(IExitableState state)
+    {
+        if (state is DecorationState || state is WorkbenchState)
+        {
+            _isCanDecorate = true;
+            _canPlace = true;
+        }
+        else
+        {
+            _isCanDecorate = false;
+        }
+    }
+
+    protected void OnCancel(InputAction.CallbackContext context)
+    {
+        if (!IsDragging) return;
+
+        if (_stateMachine.ActiveState is WorkbenchState)
+        {
+            GoToLastPosition();
+        }
+        else if (_stateMachine.ActiveState is DecorationState)
+        {
+            _decorationSystem.TryToRemoveDecor(this);
+        }
     }
 }
