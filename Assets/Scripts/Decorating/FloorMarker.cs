@@ -27,7 +27,6 @@ public class FloorMarker : MonoBehaviour
         InstalledDecor.Add(decor);
         UpdateParameters();
         ShowParameters();
-        Debug.Log(InstalledDecor.Count);
     }
 
     public void DeleteDecor(Decor decor)
