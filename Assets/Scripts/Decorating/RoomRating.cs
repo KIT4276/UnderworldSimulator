@@ -19,14 +19,12 @@ public class RoomRating : MonoBehaviour
 
     public void Start()
     {
-      //  Debug.Log("Start RoomRating");
         OnFindFloor();
         _spaceDeterminantor.Find += OnFindFloor;
     }
 
     private void OnFindFloor()
     {
-       // Debug.Log("OnFindFloor");
         
         foreach (var floor in _spaceDeterminantor.FloorMarkers)
         {
@@ -37,14 +35,15 @@ public class RoomRating : MonoBehaviour
 
     private void ShowParameters(FloorMarker floor)
     {
+        
         _name.text = floor.Name;
-        _nameOfParameter_1.text = floor.SetOfParameters.Parameters[0].Name;
+        _nameOfParameter_1.text = RoomParameterNames.Names[floor.SetOfParameters.Parameters[0].ParameterType];
         _parameter_1.text = floor.SetOfParameters.Parameters[0].Value.ToString();
 
-        _nameOfParameter_2.text = floor.SetOfParameters.Parameters[1].Name;
+        _nameOfParameter_2.text = RoomParameterNames.Names[floor.SetOfParameters.Parameters[1].ParameterType];
         _parameter_2.text = floor.SetOfParameters.Parameters[1].Value.ToString();
 
-        _nameOfParameter_3.text = floor.SetOfParameters.Parameters[2].Name;
+        _nameOfParameter_3.text = RoomParameterNames.Names[floor.SetOfParameters.Parameters[2].ParameterType];
         _parameter_3.text = floor.SetOfParameters.Parameters[2].Value.ToString();
     }
 

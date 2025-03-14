@@ -24,17 +24,33 @@ public class FloorMarker : MonoBehaviour
 
     public void AddDecor(Decor decor)
     {
-
         InstalledDecor.Add(decor);
-        _setOfParameters.IncreaseParameters(decor.Parameters);
+        UpdateParameters();
         ShowParameters();
+        Debug.Log(InstalledDecor.Count);
     }
 
     public void DeleteDecor(Decor decor)
     {
         InstalledDecor.Remove(decor);
-        _setOfParameters.DecreaseParameters(decor.Parameters);
+        UpdateParameters();
         ShowParameters();
+    }
+
+    private void UpdateParameters()
+    {
+        foreach(var param in _setOfParameters.Parameters)
+        {
+            param.Clear();
+        }
+
+        foreach (Decor decor in InstalledDecor)
+        {
+            foreach(var decorParam in decor.Parameters.Parameters)
+            {
+                SetOfParameters.IncreaseParameterByType(decorParam);
+            }
+        }
     }
 
     private void ShowParameters()
@@ -50,26 +66,14 @@ public class SetOfRoomParameters
 
     public RoomParameter[] Parameters { get => _parameters; }
 
-    public void IncreaseParameters(SetOfRoomParameters set)
-    {
-        for (int i = 0; i < set.Parameters.Length; i++)
-        {
-            if (set.Parameters[i].ParameterType == _parameters[i].ParameterType)
-            {
-                _parameters[i].IncreaseParametersValue(set.Parameters[i].Value);
-                break;
-            }
-        }
-    }
 
-    public void DecreaseParameters(SetOfRoomParameters set)
+    public void IncreaseParameterByType(RoomParameter param)
     {
-        for (int i = 0; i < set.Parameters.Length; i++)
+        foreach (RoomParameter foundParam in _parameters)
         {
-            if (set.Parameters[i].ParameterType == _parameters[i].ParameterType)
+            if (foundParam.ParameterType == param.ParameterType)
             {
-                _parameters[i].DecreaseParametersValue(set.Parameters[i].Value);
-                break;
+                foundParam.IncreaseParametersValue(param.Value);
             }
         }
     }
@@ -78,23 +82,17 @@ public class SetOfRoomParameters
 [Serializable]
 public class RoomParameter
 {
-    [SerializeField] private string _name;
     [SerializeField] private RoomParameterType _type;
     [SerializeField] private int _value;
 
-    public string Name { get => _name; }
     public RoomParameterType ParameterType { get => _type; }
     public int Value { get => _value; }
 
-    public void IncreaseParametersValue(int value)
-    {
+    public void IncreaseParametersValue(int value) => 
         _value += value;
-    }
 
-    public void DecreaseParametersValue(int value)
-    {
-        _value -= value;
-    }
+    public void Clear() => 
+        _value = 0;
 }
 
 public enum RoomParameterType
@@ -102,4 +100,14 @@ public enum RoomParameterType
     Leisure,
     Aesthetics,
     Comfort,
+}
+
+public static class RoomParameterNames
+{
+    public static Dictionary<RoomParameterType, string> Names = new()
+    {
+        { RoomParameterType.Leisure, "Досуг"},
+        { RoomParameterType.Aesthetics, "Эстетика"},
+        { RoomParameterType.Comfort, "Комфорт"}
+    };
 }
