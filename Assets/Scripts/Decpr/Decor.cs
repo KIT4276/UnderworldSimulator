@@ -19,13 +19,13 @@ public class Decor : MonoBehaviour, BaseItem
     [SerializeField] protected InputActionReference _cancelAction;
     [SerializeField] protected InputActionReference _rotationAction;
     [Space, Tooltip("For room rating")]
-    [SerializeField] private int _parameter_1;
-    [SerializeField] private int _parameter_2;
-    [SerializeField] private int _parameter_3;
+    [SerializeField] private SetOfRoomParameters _parameters;
+    //[SerializeField] private int _parameter_2;
+    //[SerializeField] private int _parameter_3;
 
-    public int Parameter_1 { get => _parameter_1; }
-    public int Parameter_2 { get => _parameter_2; }
-    public int Parameter_3 { get => _parameter_3; }
+    public SetOfRoomParameters Parameters { get => _parameters; }
+    //public int Parameter_2 { get => _parameter_2; }
+    //public int Parameter_3 { get => _parameter_3; }
 
     public DecorType DecorType { get => _decorType; }
     public bool IsInside { get; private set; }

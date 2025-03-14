@@ -5,8 +5,14 @@ using Zenject;
 public class RoomRating : MonoBehaviour
 {
     [SerializeField] private TMP_Text _name;
+    [Space]
+    [SerializeField] private TMP_Text _nameOfParameter_1;
     [SerializeField] private TMP_Text _parameter_1;
+    [Space]
+    [SerializeField] private TMP_Text _nameOfParameter_2;
     [SerializeField] private TMP_Text _parameter_2;
+    [Space]
+    [SerializeField] private TMP_Text _nameOfParameter_3;
     [SerializeField] private TMP_Text _parameter_3;
 
     [Inject] private SpaceDeterminantor _spaceDeterminantor;
@@ -31,10 +37,15 @@ public class RoomRating : MonoBehaviour
 
     private void ShowParameters(FloorMarker floor)
     {
-        _name.text = floor.name;
-        _parameter_1.text = floor.Parameter_1.ToString();
-        _parameter_2.text = floor.Parameter_2.ToString();
-        _parameter_3.text = floor.Parameter_3.ToString();
+        _name.text = floor.Name;
+        _nameOfParameter_1.text = floor.SetOfParameters.Parameters[0].Name;
+        _parameter_1.text = floor.SetOfParameters.Parameters[0].Value.ToString();
+
+        _nameOfParameter_2.text = floor.SetOfParameters.Parameters[1].Name;
+        _parameter_2.text = floor.SetOfParameters.Parameters[1].Value.ToString();
+
+        _nameOfParameter_3.text = floor.SetOfParameters.Parameters[2].Name;
+        _parameter_3.text = floor.SetOfParameters.Parameters[2].Value.ToString();
     }
 
 

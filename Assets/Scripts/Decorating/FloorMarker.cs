@@ -4,19 +4,15 @@ using UnityEngine;
 
 public class FloorMarker : MonoBehaviour
 {
+    [SerializeField] private string _name;
     [SerializeField] private PolygonCollider2D _collider;
     [SerializeField] private ClickHandler _clickHandler;
-    [Space]
-    [SerializeField] private int _startParameter_1;
-    [SerializeField] private int _startParameter_2;
-    [SerializeField] private int _startParameter_3;
+    [SerializeField] private SetOfRoomParameters _setOfParameters;
 
-    public PolygonCollider2D Collider {  get => _collider;}
+    public PolygonCollider2D Collider { get => _collider; }
     public List<Decor> InstalledDecor { get; private set; }
-
-    public int Parameter_1 { get; private set; }
-    public int Parameter_2 { get; private set; }
-    public int Parameter_3 { get; private set; }
+    public string Name { get => _name; }
+    public SetOfRoomParameters SetOfParameters { get => _setOfParameters; }
 
     public event Action<FloorMarker> ChangeParameter;
 
@@ -24,28 +20,20 @@ public class FloorMarker : MonoBehaviour
     {
         InstalledDecor = new();
         _clickHandler.ClickAction += ShowParameters;
-
-        Parameter_1 = _startParameter_1;
-        Parameter_2 = _startParameter_2;
-        Parameter_3 = _startParameter_3; 
     }
 
     public void AddDecor(Decor decor)
     {
 
         InstalledDecor.Add(decor);
-        Parameter_1 += decor.Parameter_1;
-        Parameter_2 += decor.Parameter_2;
-        Parameter_3 += decor.Parameter_3;
+        _setOfParameters.IncreaseParameters(decor.Parameters);
         ShowParameters();
     }
 
     public void DeleteDecor(Decor decor)
     {
         InstalledDecor.Remove(decor);
-        Parameter_1 -= decor.Parameter_1;
-        Parameter_2 -= decor.Parameter_2;
-        Parameter_3 -= decor.Parameter_3;
+        _setOfParameters.DecreaseParameters(decor.Parameters);
         ShowParameters();
     }
 
@@ -53,4 +41,65 @@ public class FloorMarker : MonoBehaviour
     {
         ChangeParameter?.Invoke(this);
     }
+}
+
+[Serializable]
+public class SetOfRoomParameters
+{
+    [SerializeField] private RoomParameter[] _parameters;
+
+    public RoomParameter[] Parameters { get => _parameters; }
+
+    public void IncreaseParameters(SetOfRoomParameters set)
+    {
+        for (int i = 0; i < set.Parameters.Length; i++)
+        {
+            if (set.Parameters[i].ParameterType == _parameters[i].ParameterType)
+            {
+                _parameters[i].IncreaseParametersValue(set.Parameters[i].Value);
+                break;
+            }
+        }
+    }
+
+    public void DecreaseParameters(SetOfRoomParameters set)
+    {
+        for (int i = 0; i < set.Parameters.Length; i++)
+        {
+            if (set.Parameters[i].ParameterType == _parameters[i].ParameterType)
+            {
+                _parameters[i].DecreaseParametersValue(set.Parameters[i].Value);
+                break;
+            }
+        }
+    }
+}
+
+[Serializable]
+public class RoomParameter
+{
+    [SerializeField] private string _name;
+    [SerializeField] private RoomParameterType _type;
+    [SerializeField] private int _value;
+
+    public string Name { get => _name; }
+    public RoomParameterType ParameterType { get => _type; }
+    public int Value { get => _value; }
+
+    public void IncreaseParametersValue(int value)
+    {
+        _value += value;
+    }
+
+    public void DecreaseParametersValue(int value)
+    {
+        _value -= value;
+    }
+}
+
+public enum RoomParameterType
+{
+    Leisure,
+    Aesthetics,
+    Comfort,
 }
