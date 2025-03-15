@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ClickHandler))]
 public class FloorMarker : MonoBehaviour
 {
     [SerializeField] private string _name;
@@ -10,61 +11,44 @@ public class FloorMarker : MonoBehaviour
     [SerializeField] private SetOfRoomParameters _setOfParameters;
 
     public PolygonCollider2D Collider { get => _collider; }
-    public List<Decor> InstalledDecor { get; private set; }
-    public string Name { get => _name; }
-    public SetOfRoomParameters SetOfParameters { get => _setOfParameters; }
 
-    public event Action<FloorMarker> ChangeParameter;
+    public Room Room { get; private set; }
 
-    private void Start()
+    public void Init()
     {
-        InstalledDecor = new();
-        _clickHandler.ClickAction += ShowParameters;
+        Room = new(_name, _setOfParameters, _clickHandler);
     }
 
     public void AddDecor(Decor decor)
     {
-        InstalledDecor.Add(decor);
-        UpdateParameters();
-        ShowParameters();
+        Room.AddDecor(decor);
     }
 
     public void DeleteDecor(Decor decor)
     {
-        InstalledDecor.Remove(decor);
-        UpdateParameters();
-        ShowParameters();
+        Room.DeleteDecor(decor);
     }
 
-    private void UpdateParameters()
-    {
-        foreach(var param in _setOfParameters.Parameters)
-        {
-            param.Clear();
-        }
-
-        foreach (Decor decor in InstalledDecor)
-        {
-            foreach(var decorParam in decor.Parameters.Parameters)
-            {
-                SetOfParameters.IncreaseParameterByType(decorParam);
-            }
-        }
-    }
-
-    private void ShowParameters()
-    {
-        ChangeParameter?.Invoke(this);
-    }
 }
 
 [Serializable]
 public class SetOfRoomParameters
 {
-    [SerializeField] private RoomParameter[] _parameters;
+    private static int _count = Enum.GetValues(typeof(RoomParameterType)).Length;
+
+    [SerializeField] private RoomParameter[] _parameters;// = new RoomParameter[count];
 
     public RoomParameter[] Parameters { get => _parameters; }
 
+    public SetOfRoomParameters()
+    {
+        _parameters = new RoomParameter[_count];
+
+        for (int i = 0; i < _count; i++)
+        {
+            _parameters[i] = new RoomParameter((RoomParameterType)i, 0);
+        }
+    }
 
     public void IncreaseParameterByType(RoomParameter param)
     {
@@ -87,10 +71,16 @@ public class RoomParameter
     public RoomParameterType ParameterType { get => _type; }
     public int Value { get => _value; }
 
-    public void IncreaseParametersValue(int value) => 
+    public RoomParameter(RoomParameterType type, int value)
+    {
+        _type = type;
+        _value = value;
+    }
+
+    public void IncreaseParametersValue(int value) =>
         _value += value;
 
-    public void Clear() => 
+    public void Clear() =>
         _value = 0;
 }
 
