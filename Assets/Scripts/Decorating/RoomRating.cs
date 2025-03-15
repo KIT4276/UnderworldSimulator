@@ -14,6 +14,8 @@ public class RoomRating : MonoBehaviour
     [Space]
     [SerializeField] private TMP_Text _nameOfParameter_3;
     [SerializeField] private TMP_Text _parameter_3;
+    [Space]
+    [SerializeField] private GuestMenu _guestMenu;
 
     [Inject] private SpaceDeterminantor _spaceDeterminantor;
 
@@ -23,9 +25,15 @@ public class RoomRating : MonoBehaviour
         _spaceDeterminantor.Find += OnFindFloor;
     }
 
+    public void GoToCheckInGuest()
+    {
+        _guestMenu.gameObject.SetActive(true);
+
+        this.gameObject.SetActive(false);
+    }
+
     private void OnFindFloor()
     {
-        
         foreach (var floor in _spaceDeterminantor.FloorMarkers)
         {
             floor.Room.ChangeParameter += ShowParameters;
@@ -46,7 +54,6 @@ public class RoomRating : MonoBehaviour
         _nameOfParameter_3.text = RoomParameterNames.Names[room.SetOfParameters.Parameters[2].ParameterType];
         _parameter_3.text = room.SetOfParameters.Parameters[2].Value.ToString();
     }
-
 
     private void OnDestroy()
     {
