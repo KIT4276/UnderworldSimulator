@@ -36,7 +36,7 @@ public class SetOfRoomParameters
 {
     private static int _count = Enum.GetValues(typeof(RoomParameterType)).Length;
 
-    [SerializeField] private RoomParameter[] _parameters;// = new RoomParameter[count];
+    [SerializeField] private RoomParameter[] _parameters;
 
     public RoomParameter[] Parameters { get => _parameters; }
 

@@ -1,17 +1,19 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GuestsSystem 
 {
-    public Guest[] Guests { get; private set; }
+    public List< Guest> Guests { get; private set; }
 
     private bool _isInited;
-    private Guest[] _guestsPrefabs;
     private IAssets _assets;
 
-    public GuestsSystem(StateMachine stateMachine, Guest[] guestsPrefabs, IAssets assets)
+    public event Action GuestsInstantiated;
+
+    public GuestsSystem(StateMachine stateMachine, IAssets assets)
     {
-        _guestsPrefabs = guestsPrefabs;
         _assets = assets;
         stateMachine.ChangeStateAction += OnChangeState;
     }
@@ -20,22 +22,25 @@ public class GuestsSystem
     {
         if (state is GameLoopState && !_isInited)
         {
-            DeterminanteGuestsPoints();
+            Guests = new();
+            DeterminanteGuests();
             _isInited = true;
         }
     }
 
-    private void DeterminanteGuestsPoints()
+    private void DeterminanteGuests()
     {
         GuestsPoint[] points = GameObject.FindObjectsByType<GuestsPoint>(FindObjectsSortMode.None);
-
-        List<Guest> prefabs = new (); 
+        
+        List<Guest> prefabs = new();
 
         Dictionary<Guest, string> prefabsDict = new();
 
-        foreach(var prefabPath in AssetPath.GuestsPaths)
+        foreach (var prefabPath in AssetPath.GuestsPaths)
         {
-            var prefab = Resources.Load<Guest>(prefabPath);
+            GameObject obj = Resources.Load<GameObject>(prefabPath);
+            Guest prefab = obj.GetComponent<Guest>();
+
             if (prefab != null)
             {
                 prefabs.Add(prefab);
@@ -43,18 +48,30 @@ public class GuestsSystem
             }
         }
 
+        InstantiatrGuestsInPoints(points, prefabs, prefabsDict);
+    }
+
+    private void InstantiatrGuestsInPoints(GuestsPoint[] points, List<Guest> prefabs, Dictionary<Guest, string> prefabsDict)
+    {
         foreach (var point in points)
         {
-            foreach(var guestsPrefab in prefabs)
+            foreach (var guestsPrefab in prefabs)
             {
-                if(guestsPrefab.GuestsType == point.Type)
+                if (guestsPrefab.GuestsType == point.Type)
                 {
-                    var guest = _assets.Instantiate(prefabsDict[guestsPrefab], point.transform.position);
-                    guest.transform.parent = point.transform;
-
+                    GameObject guestObj = _assets.Instantiate(prefabsDict[guestsPrefab], point.transform.position);
+                    guestObj.transform.parent = point.transform;
+                    Guests.Add(guestObj.GetComponent<Guest>());
                 }
             }
         }
+        Sort();
+        GuestsInstantiated?.Invoke();
+    }
+
+    private void Sort()
+    {
+      Guests = Guests.OrderByDescending(guest => guest.IsOpen).ToList();
     }
 }
 public enum GuestsType

@@ -28,7 +28,7 @@ public class RoomRating : MonoBehaviour
     public void GoToCheckInGuest()
     {
         _guestMenu.gameObject.SetActive(true);
-
+        _guestMenu.Open();
         this.gameObject.SetActive(false);
     }
 
