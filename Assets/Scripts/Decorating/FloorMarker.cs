@@ -65,6 +65,7 @@ public class SetOfRoomParameters
 [Serializable]
 public class RoomParameter
 {
+    [SerializeField] private string _name;
     [SerializeField] private RoomParameterType _type;
     [SerializeField] private int _value;
 
@@ -75,6 +76,8 @@ public class RoomParameter
     {
         _type = type;
         _value = value;
+
+        _name = RoomParameterNames.Names[_type];
     }
 
     public void IncreaseParametersValue(int value) =>
