@@ -32,7 +32,12 @@ public class GameplayInstaller : MonoInstaller
         Container.Bind<CraftSystem>().FromNew().AsSingle().NonLazy();
         Container.Bind<CraftMenu>().FromComponentInNewPrefab(_craftMenuPrefab).AsSingle().NonLazy();
         
-        Container.Bind<GuestsSystem>().FromNew().AsSingle()./*WithArguments(_guestsPrefabs).*/NonLazy();
+        Container.Bind<GuestsSystem>().FromNew().AsSingle().NonLazy();
+
+
+
+        Container.Bind<MilestoneSystem>().FromNew().AsSingle().NonLazy();
+        Container.Bind<ProgressSystem>().FromNew().AsSingle().NonLazy();
     }
 
     private void InstallScriptableObjects()
