@@ -8,7 +8,7 @@ public class GuestCard : MonoBehaviour
     [SerializeField] private TMP_Text _name;
     [SerializeField] private Image _icon;
     [Space, Tooltip("Guest requirements")]
-    [SerializeField] private TMP_Text _hotelRating;
+    //[SerializeField] private TMP_Text _hotelRating;
     [Space]
     [SerializeField] private ParamsCard[] _paramsCards;
     [SerializeField] private GameObject _lock;
@@ -19,7 +19,7 @@ public class GuestCard : MonoBehaviour
 
         _name.text = guest.Name;
         _icon.sprite = guest.Icon;
-        _hotelRating.text = guest.HotelRating.ToString();
+       //_hotelRating.text = guest.HotelRating.ToString();
 
         int i = 0;
         for (; i < guest.GuestRequirements.Parameters.Length; i++)
