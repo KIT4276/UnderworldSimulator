@@ -4,7 +4,7 @@ using Zenject;
 
 public class ProgressSystem : IProgressSystem
 {
-    private int _currentProgress = 3;
+    private int _currentProgress = 0;
     
     public int Current { get => _currentProgress; }
 
@@ -13,7 +13,7 @@ public class ProgressSystem : IProgressSystem
 
 public class MilestoneSystem : IProgressSystem
 {
-    private int _currentMilestone = 10;
+    private int _currentMilestone = 50;
 
     public int Current { get => _currentMilestone; }
 

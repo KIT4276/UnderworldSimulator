@@ -16,7 +16,6 @@ public class ProgressPanel : MonoBehaviour
 
     private void OnChange()
     {
-        Debug.Log(gameObject.name);
         _text.text = _system.Current.ToString();
     }
 }
