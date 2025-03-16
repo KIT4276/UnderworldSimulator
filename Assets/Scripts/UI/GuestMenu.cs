@@ -11,7 +11,7 @@ public class GuestMenu : MonoBehaviour
 
     private void Start()
     {
-        _guestsSystem.GuestsInstantiated += OnGuestsInstantiated;
+        _guestsSystem.GuestsChanged += OnGuestsChanged;
     }
 
     public void Open()
@@ -19,7 +19,7 @@ public class GuestMenu : MonoBehaviour
         FillCards();
     }
 
-    private void OnGuestsInstantiated()
+    private void OnGuestsChanged()
     {
         FillCards();
     }
@@ -30,7 +30,7 @@ public class GuestMenu : MonoBehaviour
         int i = 0;
         for (; i < _guestsSystem.Guests.Count; i++)
         {
-            if (_guestsSystem.Guests[i].IsOpen)
+            if (_guestsSystem.Guests[i].IsAvailable)
                 _guestCard[i].FillCard(_guestsSystem.Guests[i]);
             else
                 _guestCard[i].FillCardEmpty();

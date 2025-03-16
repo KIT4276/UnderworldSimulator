@@ -7,10 +7,10 @@ public class GuestCard : MonoBehaviour
 {
     [SerializeField] private TMP_Text _name;
     [SerializeField] private Image _icon;
-    [Space, Tooltip("Guest requirements")]
+    [Space, Tooltip("GuestSettings requirements")]
     //[SerializeField] private TMP_Text _hotelRating;
     [Space]
-    [SerializeField] private ParamsCard[] _paramsCards;
+    //[SerializeField] private ParamsCard[] _paramsCards;
     [SerializeField] private GameObject _lock;
 
     public void FillCard(Guest guest)
@@ -21,18 +21,18 @@ public class GuestCard : MonoBehaviour
         _icon.sprite = guest.Icon;
        //_hotelRating.text = guest.HotelRating.ToString();
 
-        int i = 0;
-        for (; i < guest.GuestRequirements.Parameters.Length; i++)
-        {
-            _paramsCards[i].FillCard(guest.GuestRequirements.Parameters[i]);
-        }
-        if (guest.GuestRequirements.Parameters.Length < _paramsCards.Length)
-        {
-            for (; i < _paramsCards.Length; i++)
-            {
-                _paramsCards[i].FillCardEmpty();
-            }
-        }
+        //int i = 0;
+        //for (; i < guest.GuestRequirements.Parameters.Length; i++)
+        //{
+        //    _paramsCards[i].FillCard(guest.GuestRequirements.Parameters[i]);
+        //}
+        //if (guest.GuestRequirements.Parameters.Length < _paramsCards.Length)
+        //{
+        //    for (; i < _paramsCards.Length; i++)
+        //    {
+        //        _paramsCards[i].FillCardEmpty();
+        //    }
+        //}
     }
 
     public void FillCardEmpty()
@@ -57,7 +57,7 @@ public class ParamsCard
 
     public void FillCardEmpty()
     {
-        _paramName.text = "";
-        _paramValue.text = "";
+        _paramName.text = string.Empty;
+        _paramValue.text = string.Empty;
     }
 }

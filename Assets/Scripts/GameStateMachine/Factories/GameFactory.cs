@@ -41,7 +41,7 @@ public class GameFactory : IService
         PlayerGameObject.GetComponent<Hero>().Initialize(_stateMachine, _container, _staticData);
         InitCamera();
         //_container.Bind<HeroMove>().AsSingle();
-        
+
         _container.Bind<PlayerInput>().FromInstance(PlayerGameObject.GetComponent<PlayerInput>()).AsSingle().NonLazy();
 
         PlayerCreated?.Invoke();
@@ -91,7 +91,9 @@ public class GameFactory : IService
     public void Register(ISavedProgressReader progressReader)
     {
         if (progressReader is ISavedProgress progressWriter)
+        {
             ProgressWriters.Add(progressWriter);
+        }
 
         ProgressReaders.Add(progressReader);
     }

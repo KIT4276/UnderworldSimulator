@@ -14,6 +14,4 @@ public class AssetsProvider : IAssets
         
         return Object.Instantiate(prefab, position, Quaternion.identity);
     }
-
-   
 }
