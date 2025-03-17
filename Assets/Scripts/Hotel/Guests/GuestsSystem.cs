@@ -2,24 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Zenject;
 
 public class GuestsSystem : ISavedProgress
 {
-    private List<Guest> _guests = new();
-
-    private bool _isInited;
-    private GuestsSpawner _spawner;
+    private readonly GuestsSpawner _spawner;
     private readonly IAssets _assets;
+
+    private List<Guest> _guests = new();
+    private bool _isInited;
 
     public List<Guest> Guests { get => _guests; }
 
     public event Action GuestsChanged;
 
-    public GuestsSystem(StateMachine stateMachine, IAssets assets/*, GameFactory gameFactory*/)
+    public GuestsSystem(StateMachine stateMachine, IAssets assets)
     {
-       //gameFactory.Register(this);
-
         _spawner = new();
         _assets = assets;
         stateMachine.ChangeStateAction += OnChangeState;
@@ -30,9 +27,6 @@ public class GuestsSystem : ISavedProgress
     {
         if (state is GameLoopState && !_isInited)
         {
-            // _spawner.SpawnGuests(_guests,_assets);
-            //Sort();
-            //GuestsChanged?.Invoke();
             _isInited = true;
         }
     }
@@ -59,8 +53,8 @@ public class GuestsSystem : ISavedProgress
 public enum GuestsType
 {
     Wolf,
-    Buffalo,
+    Bull,
     Monkey,
-    Hare,
+    Rabbit,
     Bear,
 }

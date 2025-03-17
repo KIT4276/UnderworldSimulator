@@ -26,12 +26,12 @@ public class GuestStaticData
         {
             case GuestsType.Wolf:
                 return AssetPath.WolfPath;
-            case GuestsType.Buffalo:
-                return AssetPath.BuffaloPath;
+            case GuestsType.Bull:
+                return AssetPath.BullPath;
             case GuestsType.Monkey:
                 return AssetPath.MonkeyPath;
-            case GuestsType.Hare:
-                return AssetPath.HarePath;
+            case GuestsType.Rabbit:
+                return AssetPath.RabbitPath;
             case GuestsType.Bear:
                 return AssetPath.BearPath;
             default:
