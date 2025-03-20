@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -16,13 +17,28 @@ public class RoomRating : MonoBehaviour
     [SerializeField] private TMP_Text _parameter_3;
     [Space]
     [SerializeField] private GuestMenu _guestMenu;
+    [SerializeField] private GameObject _roomRatingPanel;
 
     [Inject] private SpaceDeterminantor _spaceDeterminantor;
+    [Inject] private StateMachine _machine;
 
     public void Start()
     {
         OnFindFloor();
         _spaceDeterminantor.Find += OnFindFloor;
+        _machine.ChangeStateAction += OnChangeState;
+    }
+
+    private void OnChangeState(IExitableState state)
+    {
+        if (state is WorkbenchState || state is DecorationState)
+        {
+            _roomRatingPanel.SetActive(true);
+        }
+        else
+        {
+            _roomRatingPanel.SetActive(false);
+        }
     }
 
     public void GoToCheckInGuest()
@@ -43,7 +59,7 @@ public class RoomRating : MonoBehaviour
 
     private void ShowParameters(Room room)
     {
-        
+
         _name.text = room.Name;
         _nameOfParameter_1.text = RoomParameterNames.Names[room.SetOfParameters.Parameters[0].ParameterType];
         _parameter_1.text = room.SetOfParameters.Parameters[0].Value.ToString();

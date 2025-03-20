@@ -58,6 +58,7 @@ public class WorkbenchSystem : MonoBehaviour
 
     public void OnExitWorkbench()
     {
+        Debug.Log("OnExitWorkbench");
         _roomRating.gameObject.SetActive(false);
         Exit?.Invoke();
     }
