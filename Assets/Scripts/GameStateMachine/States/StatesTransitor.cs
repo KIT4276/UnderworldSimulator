@@ -34,6 +34,12 @@ public class StatesTransitor
         _workbenchSystem.Destroyed += OnDestroyed;
     }
 
+    public void ConditionalToInventoryState()
+    {
+        if (_stateMachine.ActiveState is GameLoopState)
+            ToInventoryState();
+    }
+
     private void Escape()
     {
         //Debug.Log("Escape");

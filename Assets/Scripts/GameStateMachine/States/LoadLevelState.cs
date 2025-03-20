@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class LoadLevelState : IPayloadedState<string>
 {
@@ -9,17 +10,20 @@ public class LoadLevelState : IPayloadedState<string>
     private readonly LoadingCurtain _curtain;
     private readonly GameFactory _gameFactory;
     private readonly IPersistantProgressService _progressService;
+    private readonly GuestsSystem _guestsSystem;
+
     //private readonly SpaceDeterminantor _spaceDeterminantor;
     private GameObject _playerObj;
 
     public LoadLevelState(StateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain,
-        GameFactory gameFactory, IPersistantProgressService progressService/*, SpaceDeterminantor spaceDeterminantor*/)
+        GameFactory gameFactory, IPersistantProgressService progressService, GuestsSystem guestsSystem)
     {
         _stateMachine = stateMachine;
         _sceneLoader = sceneLoader;
         _curtain = curtain;
         _gameFactory = gameFactory;
         _progressService = progressService;
+        _guestsSystem = guestsSystem;
         //_spaceDeterminantor = spaceDeterminantor;
     }
 
@@ -53,8 +57,13 @@ public class LoadLevelState : IPayloadedState<string>
     private void InitGameWorld()
     {
         _playerObj = InitPlayer();
-
+        RegisterSystems();
         InitSpawners();
+    }
+
+    private void RegisterSystems()
+    {
+        _gameFactory.Register(_guestsSystem);
     }
 
     private void InitSpawners()

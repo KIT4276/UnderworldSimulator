@@ -28,8 +28,10 @@ public class SpaceDeterminantor
         foreach (var marker in markers)
         {
             FloorMarkers.Add(marker);
+            marker.Init();
         }
         //Debug.Log(FloorMarkers.Count);
+
         Find?.Invoke();
     }
 }

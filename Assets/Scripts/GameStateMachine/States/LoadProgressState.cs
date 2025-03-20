@@ -6,14 +6,16 @@
     private readonly IPersistantProgressService _progressService;
     private readonly ISaveLoadService _saveLoadService;
     private readonly PersistantPlayerStaticData _persistantPlayerStaticData;//will be used later
+    private GuestsStaticData _guestsStaticData;
 
     public LoadProgressState(StateMachine gameStateMachine, IPersistantProgressService progressService,
-        ISaveLoadService saveLoadService, PersistantPlayerStaticData persistantPlayerStaticData)
+        ISaveLoadService saveLoadService, PersistantPlayerStaticData persistantPlayerStaticData, GuestsStaticData guestsStaticData)
     {
         _gameStateMachine = gameStateMachine;
         _progressService = progressService;
         _saveLoadService = saveLoadService;
         _persistantPlayerStaticData = persistantPlayerStaticData;//will be used later
+        _guestsStaticData = guestsStaticData;
     }
 
     public void Enter()
@@ -29,7 +31,7 @@
 
     private PlayerProgress NewProgress()
     {
-        var progress = new PlayerProgress(initialLevel: Main);
+        var progress = new PlayerProgress(initialLevel: Main, _guestsStaticData);
         return progress;
     }
 }

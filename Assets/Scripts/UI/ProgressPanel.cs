@@ -1,0 +1,21 @@
+using TMPro;
+using UnityEngine;
+
+public class ProgressPanel : MonoBehaviour
+{
+    [SerializeField] private TMP_Text _text;
+
+     private IProgressSystem _system;
+
+    public void Init(IProgressSystem system)
+    {
+        _system = system;
+        OnChange();
+        _system.Change += OnChange;
+    }
+
+    private void OnChange()
+    {
+        _text.text = _system.Current.ToString();
+    }
+}

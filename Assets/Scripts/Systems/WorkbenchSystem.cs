@@ -7,9 +7,9 @@ public class WorkbenchSystem : MonoBehaviour
 {
     [SerializeField] private GameObject _workbenchPanel;
     [SerializeField] private ButtonClickChangeImage[] buttonsClick;
-    // [SerializeField] private InputActionReference _escapeAction;
     [SerializeField] private GameObject _warningSign;
     [SerializeField] private RoomRating _roomRating;
+    [SerializeField] private GuestMenu _guestMenu;
 
 
     private DecorHolder _decorHolder;
@@ -33,6 +33,7 @@ public class WorkbenchSystem : MonoBehaviour
         _workbenchPanel.SetActive(false);
         _warningSign.SetActive(false);
         _roomRating.gameObject.SetActive(false);
+        _guestMenu.gameObject.SetActive(false);
 
         foreach (var button in buttonsClick)
         {
@@ -40,7 +41,6 @@ public class WorkbenchSystem : MonoBehaviour
         }
 
         _stateMachine.ChangeStateAction += OnChangeState;
-        //_escapeAction.action.performed += OnEscape;
     }
 
     public void ShowSign()
@@ -58,9 +58,7 @@ public class WorkbenchSystem : MonoBehaviour
 
     public void OnExitWorkbench()
     {
-        //Debug.Log("OnExitWorkbench");
         _roomRating.gameObject.SetActive(false);
-        //_roomRating.Disable();
         Exit?.Invoke();
     }
 
@@ -85,7 +83,6 @@ public class WorkbenchSystem : MonoBehaviour
                 break;
 
             case DecorationState:
-                // todo highlight Inventory button
                 ActivateInventory();
                 break;
             case WorkbenchState:
@@ -111,7 +108,6 @@ public class WorkbenchSystem : MonoBehaviour
     {
         _workbenchPanel.SetActive(true);
         _roomRating.gameObject.SetActive(true);
-        //_roomRating.Init();
 
         foreach (var button in buttonsClick)
         {

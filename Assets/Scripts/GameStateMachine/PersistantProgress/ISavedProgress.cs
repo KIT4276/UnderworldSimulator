@@ -6,5 +6,5 @@ public interface ISavedProgressReader
 
 public interface ISavedProgress : ISavedProgressReader
 {
-    void UpdateProgress(PlayerProgress progress);
+    void SaveProgress(PlayerProgress progress);
 }
