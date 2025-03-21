@@ -1,4 +1,5 @@
-﻿using DragonBones;
+﻿using DG.Tweening;
+using DragonBones;
 using System.Collections;
 using UnityEngine;
 
@@ -8,9 +9,9 @@ public class PeriodicAnimated : MonoBehaviour
     [SerializeField] private float _maxTime;
 
     private const string AnimationName = "s_walk";
-    private UnityArmatureComponent _armature;
+    protected UnityArmatureComponent _armature;
 
-    public void StartAnimate(UnityArmatureComponent armature)
+    public virtual void StartAnimate(UnityArmatureComponent armature)
     {
         _armature = armature;
 

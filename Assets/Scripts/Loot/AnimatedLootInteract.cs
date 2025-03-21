@@ -5,28 +5,35 @@ using UnityEngine;
 public class AnimatedLootInteract : LootInteract
 {
     [SerializeField] private UnityArmatureComponent _armature;
-    [SerializeField] private PeriodicAnimated _periodic;
-
-    private const string LootTacen = "loot";
-    private const string LootRespawned = "loot_rs";
 
     public override void Restart()
     {
         base.Restart();
-        _periodic.StartAnimate(_armature);
+        _armature.animation.Play("tree_idle", 0);
+        StartAnimate();
     }
 
+    private void StartAnimate() 
+    {
+        StopAllCoroutines();
+        StartCoroutine(RespawnRoutine());
+    }
 
     protected override IEnumerator RespawnRoutine()
     {
-        PlayAnimation(LootTacen);
         yield return new WaitForSeconds(_respawnTime);
-        PlayAnimation(LootRespawned);
-        Restart();
+        Debug.Log("tree_sneeze");
+        _armature.AddDBEventListener(EventObject.COMPLETE, OnMoveAnimationComplete);
+        _armature.animation.Play("tree_sneeze", 1);
+       
     }
 
-    private void PlayAnimation(string name)
+    private void OnMoveAnimationComplete(string type, EventObject eventObject)
     {
-        _armature.animation.Play(name, 1);
+        Debug.Log("OnMoveAnimationComplete");
+        _interactiveObject.SetActive(true); 
+        Restart();
+        StartAnimate();
     }
 }
+
