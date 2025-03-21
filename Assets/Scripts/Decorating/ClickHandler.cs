@@ -13,7 +13,6 @@ public class ClickHandler : MonoBehaviour
 
     private void Start()
     {
-       
         _click.action.performed += OnClick;
     }
 
