@@ -32,7 +32,7 @@ public class LootInteract : InteractableObstacle
         _progressBar.SetActive(false);
     }
 
-    public void Despawn()
+    public virtual void Despawn()
     {
         StartCoroutine(RespawnRoutine());
     }
@@ -47,6 +47,7 @@ public class LootInteract : InteractableObstacle
 
     protected override void Interac()
     {
+       // Debug.Log(_IsFilled);
         if (_machine.ActiveState is LootState) return;
 
         _progressBar.SetActive(true);
@@ -71,7 +72,7 @@ public class LootInteract : InteractableObstacle
         }
     }
 
-    protected void FillLoot(LootSettings lootSetting)
+    protected virtual void FillLoot(LootSettings lootSetting)
     {
         _lootSystem.FillSlot(lootSetting.Loot, lootSetting.Count, this, _respawnTime);
     }

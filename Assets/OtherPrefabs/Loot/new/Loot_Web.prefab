@@ -195,6 +195,7 @@ MonoBehaviour:
   _interactiveObject: {fileID: 469018624978661428}
   _armature: {fileID: 382031277437923282}
   _periodic: {fileID: 2898368498458359901}
+  _particles: {fileID: 4919339396635497038}
 --- !u!114 &2898368498458359901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1988,6 +1989,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7117405572903262440}
     m_Modifications:
+    - target: {fileID: 1112069437736730664, guid: 82ed6c0e9f1281f4eb12d501b7c0f6e4, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5536572324965699516, guid: 82ed6c0e9f1281f4eb12d501b7c0f6e4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.499
@@ -2037,6 +2042,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82ed6c0e9f1281f4eb12d501b7c0f6e4, type: 3}
+--- !u!1 &4919339396635497038 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8029314016961341918, guid: 82ed6c0e9f1281f4eb12d501b7c0f6e4, type: 3}
+  m_PrefabInstance: {fileID: 3109976957324934032}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7493146053883360300 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5536572324965699516, guid: 82ed6c0e9f1281f4eb12d501b7c0f6e4, type: 3}

@@ -2,11 +2,13 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class PeriodicAnimatedLootInteract : LootInteract
 {
     [SerializeField] private UnityArmatureComponent _armature;
     [SerializeField] private PeriodicAnimated _periodic;
+    [SerializeField] private GameObject _particles;
 
     private const string LootTacen = "loot";
     private const string LootRespawned = "loot_rs";
@@ -14,12 +16,13 @@ public class PeriodicAnimatedLootInteract : LootInteract
     public override void Restart()
     {
         base.Restart();
+        _particles.SetActive(true);
         _periodic.StartAnimate(_armature);
     }
 
-
     protected override IEnumerator RespawnRoutine()
     {
+        _particles.SetActive(false);
         PlayAnimation(LootTacen);
         yield return new WaitForSeconds(_respawnTime);
         PlayAnimation(LootRespawned);
