@@ -12,8 +12,7 @@ public class GameplayInstaller : MonoInstaller
     [SerializeField] private GameObject _craftMenuPrefab;
     [SerializeField] private MaterialsData _materialsData;
     [SerializeField] private GuestsStaticData _guestsData;
-
-    //[SerializeField] private Guest[] _guestsPrefabs;
+    [SerializeField] private MilestonesData _milestonesData;
 
     public override void InstallBindings()
     {
@@ -40,8 +39,8 @@ public class GameplayInstaller : MonoInstaller
 
 
 
-        Container.Bind<MilestoneSystem>().FromNew().AsSingle().NonLazy();
         Container.Bind<ProgressSystem>().FromNew().AsSingle().NonLazy();
+        Container.Bind<MilestoneSystem>().FromNew().AsSingle().NonLazy();
     }
 
     private void InstallScriptableObjects()
@@ -50,5 +49,6 @@ public class GameplayInstaller : MonoInstaller
         Container.Bind<DrawingData>().FromInstance(_drawingData).AsSingle().NonLazy();
         Container.Bind<MaterialsData>().FromInstance(_materialsData).AsSingle().NonLazy();
         Container.Bind<GuestsStaticData>().FromInstance(_guestsData).AsSingle().NonLazy();
+        Container.Bind<MilestonesData>().FromInstance(_milestonesData).AsSingle().NonLazy();
     }
 }

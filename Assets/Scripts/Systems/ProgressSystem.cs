@@ -1,28 +1,60 @@
 using System;
 using UnityEngine;
-using Zenject;
 
 public class ProgressSystem : IProgressSystem
 {
-    private int _currentProgress = 0;
+    private float _currentProgress = 0;
     
-    public int Current { get => _currentProgress; }
+    public float CurrentValue { get => _currentProgress; }
 
     public event Action Change;
+
+    public void UpProgress(int value)
+    {
+        _currentProgress += value;
+        Change?.Invoke();   
+    }
 }
 
 public class MilestoneSystem : IProgressSystem
 {
-    private int _currentMilestone = 50;
+    private MilestoneData _currentMilestone;
+    private readonly ProgressSystem _progressSystem;
+    private readonly MilestonesData _milestones;
 
-    public int Current { get => _currentMilestone; }
+    public float CurrentValue { get => _currentMilestone.ProgressValue; }
 
     public event Action Change;
+
+    public MilestoneSystem(ProgressSystem progressSystem, MilestonesData milestones)
+    {
+        _progressSystem = progressSystem;
+        _milestones = milestones;
+
+        _currentMilestone = _milestones.Milestones[0];
+        _progressSystem.Change += OnProgressChange;
+    }
+
+    private void OnProgressChange()
+    {
+        if(_progressSystem.CurrentValue >= _currentMilestone.ProgressValue)
+        {
+            Debug.Log(_currentMilestone.Reward);
+
+            int i = Array.IndexOf(_milestones.Milestones, _currentMilestone);
+            i++;
+            if (i < _milestones.Milestones.Length)
+            {
+                _currentMilestone = _milestones.Milestones[i];
+                Change?.Invoke();
+            }
+        }
+    }
 }
 
 public interface  IProgressSystem
 {
-    public int Current{ get; }
+    public float CurrentValue{ get; }
 
     public event Action Change;
 }
