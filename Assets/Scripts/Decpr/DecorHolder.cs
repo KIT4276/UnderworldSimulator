@@ -48,7 +48,7 @@ public class DecorHolder : ISavedProgress
         ActiveDecor = null;
     }
 
-    public void UpdateProgress(PlayerProgress progress)
+    public void SaveProgress(PlayerProgress progress)
     {
 
         foreach (var decor in InstalledDecor)

@@ -1,15 +1,15 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
 
 public class WorkbenchSystem : MonoBehaviour
 {
     [SerializeField] private GameObject _workbenchPanel;
     [SerializeField] private ButtonClickChangeImage[] buttonsClick;
-    // [SerializeField] private InputActionReference _escapeAction;
     [SerializeField] private GameObject _warningSign;
+    [SerializeField] private RoomRating _roomRating;
+    [SerializeField] private GuestMenu _guestMenu;
 
 
     private DecorHolder _decorHolder;
@@ -32,6 +32,8 @@ public class WorkbenchSystem : MonoBehaviour
         _inventory.gameObject.SetActive(false);
         _workbenchPanel.SetActive(false);
         _warningSign.SetActive(false);
+        _roomRating.gameObject.SetActive(false);
+        _guestMenu.gameObject.SetActive(false);
 
         foreach (var button in buttonsClick)
         {
@@ -39,7 +41,6 @@ public class WorkbenchSystem : MonoBehaviour
         }
 
         _stateMachine.ChangeStateAction += OnChangeState;
-        //_escapeAction.action.performed += OnEscape;
     }
 
     public void ShowSign()
@@ -57,13 +58,14 @@ public class WorkbenchSystem : MonoBehaviour
 
     public void OnExitWorkbench()
     {
-        //Debug.Log("OnExitWorkbench");
+        Debug.Log("OnExitWorkbench");
+        _roomRating.gameObject.SetActive(false);
         Exit?.Invoke();
     }
 
     public void OnInventoryButtonClick()
     {
-        InventoryButtonClick?.Invoke(); 
+        InventoryButtonClick?.Invoke();
     }
 
     public void OnCraftButtonClick()
@@ -71,18 +73,7 @@ public class WorkbenchSystem : MonoBehaviour
         CraftButtonClick?.Invoke();
     }
 
-    //private void OnEscape(InputAction.CallbackContext context)
-    //{
-    //    if (_stateMachine.ActiveState is DecorationState)
-    //    {
-    //        _stateMachine.Enter<WorkbenchState>();
-    //    }
-    //    else if (_stateMachine.ActiveState is WorkbenchState)
-    //    {
-    //        OnExitWorkbench();
-    //    }
-    //}
-
+    
     private void OnChangeState(IExitableState state)
     {
         switch (state)
@@ -93,7 +84,6 @@ public class WorkbenchSystem : MonoBehaviour
                 break;
 
             case DecorationState:
-                // todo highlight Inventory button
                 ActivateInventory();
                 break;
             case WorkbenchState:
@@ -101,21 +91,7 @@ public class WorkbenchSystem : MonoBehaviour
                 ActivateWorkbench();
                 break;
         }
-        //if (state is WorkbenchState)
-        //{
-        //    DeActivateInventory();
-        //    ActivateWorkbench();
-        //}
-        //else if (state is DecorationState)
-        //{
-        //    // todo highlight Inventory button
-        //    ActivateInventory();
-        //}
-        //else if (state is GameLoopState)
-        //{
-        //    DeActivateInventory();
-        //    DeActivateWorkbench();
-        //}
+       
     }
 
     private void ActivateInventory()
@@ -132,6 +108,7 @@ public class WorkbenchSystem : MonoBehaviour
     private void ActivateWorkbench()
     {
         _workbenchPanel.SetActive(true);
+        _roomRating.gameObject.SetActive(true);
 
         foreach (var button in buttonsClick)
         {
@@ -151,7 +128,6 @@ public class WorkbenchSystem : MonoBehaviour
     private void OnDestroy()
     {
         _stateMachine.ChangeStateAction -= OnChangeState;
-        //_escapeAction.action.performed -= OnEscape;
         Destroyed?.Invoke();
     }
 }

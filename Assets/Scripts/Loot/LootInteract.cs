@@ -5,7 +5,7 @@ using Zenject;
 
 public class LootInteract : InteractableObstacle
 {
-    // [SerializeField] private float _interactionTime = 1;
+    [SerializeField] private float _respawnTime = 3;
     [SerializeField] private GameObject _progressBar;
     [SerializeField] private Image _bar;
     [SerializeField] private CraftLoot _craftLoot;
@@ -20,7 +20,13 @@ public class LootInteract : InteractableObstacle
 
     private void Start()
     {
+        Restart();
+    }
+
+    public void Restart()
+    {
         _bar.fillAmount = 0;
+        _IsFilled = false;
         _progressBar.SetActive(false);
     }
 
@@ -52,8 +58,7 @@ public class LootInteract : InteractableObstacle
 
     private void FillLoot(LootSettings lootSetting)
     {
-        _lootSystem.FillSlot(lootSetting.Loot, lootSetting.Count, this.gameObject);
-
+        _lootSystem.FillSlot(lootSetting.Loot, lootSetting.Count, this, _respawnTime);
     }
 
     private IEnumerator InteractionProgress()

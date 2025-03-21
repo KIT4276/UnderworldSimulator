@@ -8,6 +8,7 @@ public class DecorPlacer : MonoBehaviour
     private Decor _decor;
     private SpaceDeterminantor _spaceDeterminantor;
     private DecorHolder _decorHolder;
+    private FloorMarker _floor;
 
     public void Initialize(Decor decor, SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
     {
@@ -49,6 +50,8 @@ public class DecorPlacer : MonoBehaviour
             if (allPointsInside)
             {
                 isInside = true;
+                
+                _floor = floor;
                 break;
             }
         }
@@ -83,11 +86,16 @@ public class DecorPlacer : MonoBehaviour
             if (_decor.IsInside)
             {
                 _decor.PlaceObject();
+                _floor.AddDecor(_decor);
             }
         }
         else if (IsMouseOnObject() && _decorHolder.ActiveDecor == null)
         {
-            _decor.TakeDecorIfCan();
+            if (_decor.TakeDecorIfCan())
+            {
+                _floor.DeleteDecor(_decor);
+                _floor = null;
+            }
         }
     }
 

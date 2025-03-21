@@ -9,7 +9,7 @@ public class ButtonEnterChangeImage : MonoBehaviour, IPointerEnterHandler, IPoin
     [SerializeField] private Sprite _normImage;
     [SerializeField] private Sprite _highlightImage;
 
-    private bool _isOccupied;
+    [SerializeField] private bool _isOccupied;
 
     public void Activate()
     {
