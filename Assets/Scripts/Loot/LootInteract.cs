@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,51 +5,33 @@ using Zenject;
 
 public class LootInteract : InteractableObstacle
 {
-    [SerializeField] protected float _respawnTime = 3;
-    [SerializeField] protected GameObject _progressBar;
-    [SerializeField] protected Image _bar;
-    [SerializeField] protected CraftLoot _craftLoot;
-    [SerializeField] protected QuestsLoot _questsLoot;
-    [SerializeField] protected GameObject _sprite;
-    [SerializeField] private Collider2D _interactableCollider;
+    [SerializeField] private float _respawnTime = 3;
+    [SerializeField] private GameObject _progressBar;
+    [SerializeField] private Image _bar;
+    [SerializeField] private CraftLoot _craftLoot;
+    [SerializeField] private QuestsLoot _questsLoot;
 
-    [Inject] protected LootSystem _lootSystem;
-    [Inject] protected PersistantStaticData _staticData;
-    [Inject] protected StateMachine _machine;
+    [Inject] private LootSystem _lootSystem;
+    [Inject] private PersistantStaticData _staticData;
+    [Inject] private StateMachine _machine;
 
-    protected Coroutine _interactionCoroutine;
-    protected bool _IsFilled;
+    private Coroutine _interactionCoroutine;
+    private bool _IsFilled;
 
-    protected void Start()
+    private void Start()
     {
         Restart();
     }
 
-    public virtual void Restart()
+    public void Restart()
     {
         _bar.fillAmount = 0;
         _IsFilled = false;
         _progressBar.SetActive(false);
     }
 
-    public virtual void Despawn()
-    {
-        StartCoroutine(RespawnRoutine());
-    }
-
-    protected virtual IEnumerator RespawnRoutine()
-    {
-        _sprite.SetActive(false);
-        _interactableCollider.enabled = false;
-        yield return new WaitForSeconds(_respawnTime);
-        _sprite.SetActive(true);
-        _interactableCollider.enabled = true;
-        Restart();
-    }
-
     protected override void Interac()
     {
-       // Debug.Log(_IsFilled);
         if (_machine.ActiveState is LootState) return;
 
         _progressBar.SetActive(true);
@@ -75,12 +56,12 @@ public class LootInteract : InteractableObstacle
         }
     }
 
-    protected virtual void FillLoot(LootSettings lootSetting)
+    private void FillLoot(LootSettings lootSetting)
     {
         _lootSystem.FillSlot(lootSetting.Loot, lootSetting.Count, this, _respawnTime);
     }
 
-    protected IEnumerator InteractionProgress()
+    private IEnumerator InteractionProgress()
     {
         _hero.GetHero.Immobilize();
 
@@ -98,7 +79,7 @@ public class LootInteract : InteractableObstacle
         _interactionCoroutine = null;
     }
 
-    protected void OpenMenu()
+    private void OpenMenu()
     {
         _bar.fillAmount = 1f;
         _lootSystem.OpenMenu();
