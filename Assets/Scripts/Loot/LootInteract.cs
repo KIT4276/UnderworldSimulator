@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,29 +6,48 @@ using Zenject;
 
 public class LootInteract : InteractableObstacle
 {
-    [SerializeField] private float _respawnTime = 3;
-    [SerializeField] private GameObject _progressBar;
-    [SerializeField] private Image _bar;
-    [SerializeField] private CraftLoot _craftLoot;
-    [SerializeField] private QuestsLoot _questsLoot;
+    [SerializeField] protected float _respawnTime = 3;
+    [SerializeField] protected GameObject _progressBar;
+    [SerializeField] protected Image _bar;
+    [SerializeField] protected CraftLoot _craftLoot;
+    [SerializeField] protected QuestsLoot _questsLoot;
+    [SerializeField] protected GameObject _sprite;
+    [SerializeField] private Collider2D _interactableCollider;
+    [SerializeField] private GoParticleSystem _goParticleSystem;
 
-    [Inject] private LootSystem _lootSystem;
-    [Inject] private PersistantStaticData _staticData;
-    [Inject] private StateMachine _machine;
+    [Inject] protected LootSystem _lootSystem;
+    [Inject] protected PersistantStaticData _staticData;
+    [Inject] protected StateMachine _machine;
 
-    private Coroutine _interactionCoroutine;
-    private bool _IsFilled;
+    protected Coroutine _interactionCoroutine;
+    protected bool _IsFilled;
 
-    private void Start()
+    protected void Start()
     {
         Restart();
     }
 
-    public void Restart()
+    public virtual void Restart()
     {
         _bar.fillAmount = 0;
         _IsFilled = false;
         _progressBar.SetActive(false);
+    }
+
+    public virtual void Despawn()
+    {
+        StartCoroutine(RespawnRoutine());
+    }
+
+    protected virtual IEnumerator RespawnRoutine()
+    {
+        _goParticleSystem.GoAnimate();
+        _sprite.SetActive(false);
+        _interactableCollider.enabled = false;
+        yield return new WaitForSeconds(_respawnTime);
+        _sprite.SetActive(true);
+        _interactableCollider.enabled = true;
+        Restart();
     }
 
     protected override void Interac()
@@ -56,12 +76,12 @@ public class LootInteract : InteractableObstacle
         }
     }
 
-    private void FillLoot(LootSettings lootSetting)
+    protected virtual void FillLoot(LootSettings lootSetting)
     {
-        _lootSystem.FillSlot(lootSetting.Loot, lootSetting.Count, this, _respawnTime);
+        _lootSystem.FillSlot(lootSetting.Loot, lootSetting.Count, this);
     }
 
-    private IEnumerator InteractionProgress()
+    protected IEnumerator InteractionProgress()
     {
         _hero.GetHero.Immobilize();
 
@@ -79,7 +99,7 @@ public class LootInteract : InteractableObstacle
         _interactionCoroutine = null;
     }
 
-    private void OpenMenu()
+    protected void OpenMenu()
     {
         _bar.fillAmount = 1f;
         _lootSystem.OpenMenu();

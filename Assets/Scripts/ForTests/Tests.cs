@@ -5,6 +5,7 @@ using Zenject;
 public class Tests : MonoBehaviour
 {
     [SerializeField] private InputActionReference _progressUpAction;
+
     [Inject] private ProgressSystem _progressSystem;
 
     private void Start()
@@ -14,7 +15,7 @@ public class Tests : MonoBehaviour
 
     private void OnProgressUp(InputAction.CallbackContext context)
     {
-            _progressSystem.UpProgress(10);
+        _progressSystem.UpProgress(10);
     }
 
     private void OnDestroy()

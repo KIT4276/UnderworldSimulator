@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -16,7 +15,6 @@ public class LootSystem : MonoBehaviour
 
     private bool _isInited;
     private LootInteract _interactiveObject;
-    private float _respawnTime;
 
     public event Action OpenMenuAction;
     public event Action CloseMenuAction;
@@ -97,19 +95,10 @@ public class LootSystem : MonoBehaviour
 
     public void OffInteractiveObject()
     {
-        _interactiveObject.gameObject.SetActive(false);
-        StartCoroutine(RespawnRoutine());
+        _interactiveObject.Despawn();
     }
 
-    private IEnumerator RespawnRoutine()
-    {
-       yield return new WaitForSeconds(_respawnTime);
-        _interactiveObject.gameObject.SetActive(true);
-        _isInited = false;
-        _interactiveObject.Restart();
-    }
-
-    public void FillSlot(Item loot, int count, LootInteract interactiveObject, float respawnTime)
+    public void FillSlot(Item loot, int count, LootInteract interactiveObject)
     {
         foreach (var slot in _slots)
         {
@@ -121,7 +110,6 @@ public class LootSystem : MonoBehaviour
                     slot.SetItem(loot);
                 }
                 _interactiveObject = interactiveObject;
-                _respawnTime = respawnTime;
                 break;
             }
         }
