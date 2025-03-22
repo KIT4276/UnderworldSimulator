@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -22,11 +23,26 @@ public class RoomRating : MonoBehaviour
     [Inject] private SpaceDeterminantor _spaceDeterminantor;
     [Inject] private StateMachine _machine;
 
+    private List<Room> _rooms = new();
+
+    private Room _selectedRoom;
+
     public void Start()
     {
         OnFindFloor();
         _spaceDeterminantor.Find += OnFindFloor;
         _machine.ChangeStateAction += OnChangeState;
+    }
+
+    public void SwitchUpRoom()
+    {
+        int i = _rooms.IndexOf(_selectedRoom);
+        i++;
+        if (i >= _rooms.Count)
+        {
+            i = 0;
+        }
+        ShowParameters(_rooms[i]);
     }
 
     private void OnChangeState(IExitableState state)
@@ -50,15 +66,19 @@ public class RoomRating : MonoBehaviour
 
     private void OnFindFloor()
     {
+        _rooms.Clear();
+
         foreach (var floor in _spaceDeterminantor.FloorMarkers)
         {
             floor.Room.ChangeParameter += ShowParameters;
+            _rooms.Add(floor.Room);
         }
         ShowParameters(_spaceDeterminantor.FloorMarkers[0].Room);
     }
 
     private void ShowParameters(Room room)
     {
+        _selectedRoom = room;
 
         _name.text = room.Name;
         _nameOfParameter_1.text = RoomParameterNames.Names[room.SetOfParameters.Parameters[0].ParameterType];

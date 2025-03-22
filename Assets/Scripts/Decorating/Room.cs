@@ -45,7 +45,6 @@ public class Room
         foreach (var param in SetOfParameters.Parameters)
         {
             param.Clear();
-            
         }
 
         foreach (var param in _startSetOfParameters.Parameters)
