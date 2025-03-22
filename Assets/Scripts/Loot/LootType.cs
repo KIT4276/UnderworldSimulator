@@ -9,6 +9,7 @@ public enum LootType
     Iron,
 
     Granite,
+    Ruby,
 
     Percale,
     Cobweb,
