@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class LootInteract : InteractableObstacle
     [SerializeField] protected QuestsLoot _questsLoot;
     [SerializeField] protected GameObject _sprite;
     [SerializeField] private Collider2D _interactableCollider;
+    [SerializeField] private GoParticleSystem _goParticleSystem;
 
     [Inject] protected LootSystem _lootSystem;
     [Inject] protected PersistantStaticData _staticData;
@@ -39,6 +41,7 @@ public class LootInteract : InteractableObstacle
 
     protected virtual IEnumerator RespawnRoutine()
     {
+        _goParticleSystem.GoAnimate();
         _sprite.SetActive(false);
         _interactableCollider.enabled = false;
         yield return new WaitForSeconds(_respawnTime);
@@ -75,7 +78,7 @@ public class LootInteract : InteractableObstacle
 
     protected virtual void FillLoot(LootSettings lootSetting)
     {
-        _lootSystem.FillSlot(lootSetting.Loot, lootSetting.Count, this, _respawnTime);
+        _lootSystem.FillSlot(lootSetting.Loot, lootSetting.Count, this);
     }
 
     protected IEnumerator InteractionProgress()
