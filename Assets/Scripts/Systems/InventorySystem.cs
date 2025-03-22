@@ -8,9 +8,6 @@ public class InventorySystem : MonoBehaviour
 {
     [SerializeField] private InventorySlot[] _inventorySlots;
     [SerializeField] private GameObject _warningSign;
-    [SerializeField] private InputActionReference _escapeAction;
-    [Space]
-    [SerializeField] private InventoryFilters _filters;
 
     private StateMachine _stateMachine;
     private DecorationSystem _decorationSystem;
