@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 [RequireComponent(typeof(ClickHandler))]
 public class FloorMarker : MonoBehaviour
 {
+    [SerializeField] private int _id;
     [SerializeField] private string _name;
     [SerializeField] private PolygonCollider2D _collider;
     [SerializeField] private ClickHandler _clickHandler;
@@ -13,6 +15,8 @@ public class FloorMarker : MonoBehaviour
     public PolygonCollider2D Collider { get => _collider; }
 
     public Room Room { get; private set; }
+
+    public int ID { get => _id; }
 
     public void Init()
     {

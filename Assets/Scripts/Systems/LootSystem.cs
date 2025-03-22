@@ -5,7 +5,7 @@ using Zenject;
 
 public class LootSystem : MonoBehaviour
 {
-    [SerializeField] private InputActionReference _escapeAction;
+   // [SerializeField] private InputActionReference _escapeAction;
     [SerializeField] private GameObject _menu;
     [SerializeField] private LootSlot[] _slots;
 
