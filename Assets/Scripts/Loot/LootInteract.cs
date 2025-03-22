@@ -11,7 +11,8 @@ public class LootInteract : InteractableObstacle
     [SerializeField] protected Image _bar;
     [SerializeField] protected CraftLoot _craftLoot;
     [SerializeField] protected QuestsLoot _questsLoot;
-    [SerializeField] protected GameObject _interactiveObject;
+    [SerializeField] protected GameObject _sprite;
+    [SerializeField] private Collider2D _interactableCollider;
 
     [Inject] protected LootSystem _lootSystem;
     [Inject] protected PersistantStaticData _staticData;
@@ -39,9 +40,11 @@ public class LootInteract : InteractableObstacle
 
     protected virtual IEnumerator RespawnRoutine()
     {
-        _interactiveObject.SetActive(false);
+        _sprite.SetActive(false);
+        _interactableCollider.enabled = false;
         yield return new WaitForSeconds(_respawnTime);
-        _interactiveObject.SetActive(true);
+        _sprite.SetActive(true);
+        _interactableCollider.enabled = true;
         Restart();
     }
 

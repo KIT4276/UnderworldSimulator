@@ -1,8 +1,6 @@
 ﻿using DragonBones;
-using System;
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.ParticleSystem;
 
 public class PeriodicAnimatedLootInteract : LootInteract
 {
