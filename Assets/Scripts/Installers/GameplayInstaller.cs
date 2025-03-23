@@ -36,6 +36,7 @@ public class GameplayInstaller : MonoInstaller
         Container.Bind<DrawingsHandler>().FromNew().AsSingle().NonLazy();
         Container.Bind<TasksHandler>().FromNew().AsSingle().NonLazy();
 
+        Container.Bind<RoomsSystem>().FromNew().AsSingle().NonLazy();
 
         Container.Bind<GuestsSystem>().FromNew().AsSingle().NonLazy();
 

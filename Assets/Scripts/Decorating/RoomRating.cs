@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -20,35 +18,13 @@ public class RoomRating : MonoBehaviour
     [SerializeField] private GuestMenu _guestMenu;
     [SerializeField] private GameObject _roomRatingPanel;
 
-    [Inject] private SpaceDeterminantor _spaceDeterminantor;
     [Inject] private StateMachine _machine;
-
-     private CameraMove _camera;
-
-    private List<Room> _rooms = new();
-
-    private Room _selectedRoom;
-    private Dictionary<Room, FloorMarker> _floorMarkers = new();
+    [Inject] private RoomsSystem _roomsSystem;
 
     public void Start()
     {
-        _camera = Camera.main.GetComponent<CameraMove>();   
-        OnFindFloor();
-        _spaceDeterminantor.Find += OnFindFloor;
+        _roomsSystem.RoomSelected += OnRoomSelected;
         _machine.ChangeStateAction += OnChangeState;
-    }
-
-    public void SwitchUpRoom()
-    {
-        int i = _rooms.IndexOf(_selectedRoom);
-        i++;
-        if (i >= _rooms.Count)
-        {
-            i = 0;
-        }
-        ShowParameters(_rooms[i]);
-        var positionOfFloor = _floorMarkers[_selectedRoom].transform.position;
-        _camera.MoveTo(positionOfFloor.x, positionOfFloor.y);
     }
 
     private void OnChangeState(IExitableState state)
@@ -70,24 +46,8 @@ public class RoomRating : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    private void OnFindFloor()
+    private void OnRoomSelected(Room room)
     {
-        _rooms.Clear();
-        _floorMarkers.Clear();
-
-        foreach (var floor in _spaceDeterminantor.FloorMarkers)
-        {
-            floor.Room.ChangeParameter += ShowParameters;
-            _rooms.Add(floor.Room);
-            _floorMarkers.Add(floor.Room, floor);
-        }
-        ShowParameters(_spaceDeterminantor.FloorMarkers[0].Room);
-    }
-
-    private void ShowParameters(Room room)
-    {
-        _selectedRoom = room;
-        
         _name.text = room.Name;
         _nameOfParameter_1.text = RoomParameterNames.Names[room.SetOfParameters.Parameters[0].ParameterType];
         _parameter_1.text = room.SetOfParameters.Parameters[0].Value.ToString();
@@ -97,14 +57,5 @@ public class RoomRating : MonoBehaviour
 
         _nameOfParameter_3.text = RoomParameterNames.Names[room.SetOfParameters.Parameters[2].ParameterType];
         _parameter_3.text = room.SetOfParameters.Parameters[2].Value.ToString();
-    }
-
-    private void OnDestroy()
-    {
-        _spaceDeterminantor.Find -= OnFindFloor;
-        foreach (var floor in _spaceDeterminantor.FloorMarkers)
-        {
-            floor.Room.ChangeParameter -= ShowParameters;
-        }
     }
 }

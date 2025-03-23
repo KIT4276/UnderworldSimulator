@@ -8,15 +8,17 @@ public class GuestsSystem : ISavedProgress
     private readonly GuestsSpawner _spawner;
     private readonly IAssets _assets;
 
-    private List<Guest> _guests = new();
+    //private List<Guest> _guests = new();
     private bool _isInited;
 
-    public List<Guest> Guests { get => _guests; }
+    public List<Guest> Guests { get; private set; }//{ get => _guests; }
 
     public event Action GuestsChanged;
 
     public GuestsSystem(StateMachine stateMachine, IAssets assets)
     {
+        Guests = new();
+
         _spawner = new();
         _assets = assets;
         stateMachine.ChangeStateAction += OnChangeState;
@@ -33,19 +35,19 @@ public class GuestsSystem : ISavedProgress
 
     private void Sort()
     {
-      _guests = _guests.OrderByDescending(guest => guest.IsAvailable).ToList();
+        Guests = Guests.OrderByDescending(guest => guest.IsAvailable).ToList();
     }
 
     public void SaveProgress(PlayerProgress progress)
     {
         Debug.Log("SaveProgress");
-        progress.Guests = _guests;
+        progress.Guests = Guests;
     }
 
     public void LoadProgress(PlayerProgress progress)
     {
-        _guests = progress.Guests;
-        _spawner.SpawnGuests(_guests, _assets);
+        Guests = progress.Guests;
+        _spawner.SpawnGuests(Guests, _assets);
         Sort();
         GuestsChanged?.Invoke();
     }

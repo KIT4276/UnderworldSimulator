@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class BaseHandler
 {
@@ -18,5 +19,7 @@ public abstract class BaseHandler
                 AvailableList.Add(revard);
             }
         }
+        //Debug.Log("All" + this+ ": " + _all.Length);
+        //Debug.Log("Available" + this + ": " + AvailableList.Count);
     }
 }

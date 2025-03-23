@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class TasksHandler: BaseHandler
 {
@@ -7,6 +8,9 @@ public class TasksHandler: BaseHandler
 
     public TasksHandler(TasksData tasksData)
     {
+        AvailableList = new();
+        CompletedTasks = new();
+
         _all = tasksData.Tasks;
 
         UpdateAvailable();
@@ -17,12 +21,13 @@ public class TasksHandler: BaseHandler
     {
         CompletedTasks.Clear();
 
-        foreach (Task task in _all)
+        foreach (BaseHandledReward task in _all)
         {
-            if (task.IsComplete)
+            if (((Task)task).IsComplete)
             {
-                CompletedTasks.Add(task);
+                CompletedTasks.Add((Task)task);
             }
         }
+        //Debug.Log("Completed Tasks: " + CompletedTasks.Count);
     }
 }

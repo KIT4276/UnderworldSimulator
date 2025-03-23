@@ -7,15 +7,13 @@ public class Guest
     public bool IsAvailable { get; private set; }
     public Sprite Icon { get; private set; }
     public string PrefabLink { get; private set; }
-    //public GuestSettings GuestSettings { get; private set; }
+    public Room Room { get; private set; }
 
     public Guest(GuestStaticData guestData)
     {
-        //GuestSettings = guestSettings;
         PrefabLink = guestData.PrefabLink();
         GuestsType = guestData.Type;
         Name = guestData.Name;
         Icon = guestData.Icon;
     }
-
 }
