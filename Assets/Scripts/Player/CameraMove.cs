@@ -114,6 +114,12 @@ public class CameraMove : BaseMovable
         _canZoom = canZoom;
     }
 
+    public void MoveTo(float x, float y)
+    {
+        base.Mobilize();
+        _manualCMVCamera.transform.DOMove( new Vector3(x, y, transform.position.z), _moveTime);
+    }
+
     public override void Mobilize()
     {
         base.Mobilize();

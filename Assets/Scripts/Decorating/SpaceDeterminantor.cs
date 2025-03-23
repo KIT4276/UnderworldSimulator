@@ -16,13 +16,13 @@ public class SpaceDeterminantor
     private void OnChangeState(IExitableState state)
     {
         if (state is DecorationState || state is WorkbenchState || state is CraftState)
-            FindDecorableSpace();
+        FindDecorableSpace();
     }
 
     public void FindDecorableSpace()
     {
         var markers = GameObject.FindObjectsByType<FloorMarker>(FindObjectsSortMode.None);
-        
+
         if (markers != null)
             FloorMarkers.Clear();
         foreach (var marker in markers)
@@ -31,7 +31,15 @@ public class SpaceDeterminantor
             marker.Init();
         }
         //Debug.Log(FloorMarkers.Count);
-
+        SortMarkers();
         Find?.Invoke();
+    }
+
+    private void SortMarkers()
+    {
+        if (FloorMarkers == null || FloorMarkers.Count == 0)
+            return;
+
+        FloorMarkers.Sort((a, b) => a.ID.CompareTo(b.ID));
     }
 }

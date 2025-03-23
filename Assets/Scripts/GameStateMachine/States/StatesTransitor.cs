@@ -11,6 +11,8 @@ public class StatesTransitor
     private readonly LootSystem _lootSystem;
     private readonly PlayerInput _playerInput;
 
+    public event Action EscapeGame;
+
     public StatesTransitor(StateMachine stateMachine, PlayerInput playerInput, DecorHolder decorHolder, WorkbenchSystem workbenchSystem,
         InventorySystem inventorySystem, LootSystem lootSystem)
     {
@@ -63,6 +65,9 @@ public class StatesTransitor
                 break;
             case CraftState:
                 ToWorkbenchState();
+                break;
+            case GameLoopState:
+                EscapeGame?.Invoke();
                 break;
         }
     }

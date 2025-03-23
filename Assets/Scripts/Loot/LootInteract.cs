@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +9,7 @@ public class LootInteract : InteractableObstacle
     [SerializeField] protected GameObject _progressBar;
     [SerializeField] protected Image _bar;
     [SerializeField] protected CraftLoot _craftLoot;
-    [SerializeField] protected QuestsLoot _questsLoot;
+   // [SerializeField] protected QuestsLoot _questsLoot;
     [SerializeField] protected GameObject _sprite;
     [SerializeField] private Collider2D _interactableCollider;
     [SerializeField] private GoParticleSystem _goParticleSystem;
@@ -68,10 +67,10 @@ public class LootInteract : InteractableObstacle
             {
                 FillLoot(lootSetting);
             }
-            foreach (var lootSetting in _questsLoot.LootSettings)
-            {
-                FillLoot(lootSetting);
-            }
+            //foreach (var lootSetting in _questsLoot.LootSettings)
+            //{
+            //    FillLoot(lootSetting);
+            //}
             _IsFilled = true;
         }
     }
