@@ -13,6 +13,7 @@ public class RoomsSystem
     public Room SelectedRoom { get; private set; }
     public Dictionary<Room, FloorMarker> FloorMarkers { get; private set; }
 
+    public event Action<Room> RoomsParamsChanged;
     public event Action<Room> RoomSelected;
 
     public RoomsSystem(SpaceDeterminantor spaceDeterminantor, ICoroutineRunner coroutineRunner)
@@ -33,17 +34,24 @@ public class RoomsSystem
 
         foreach (var floor in _spaceDeterminantor.FloorMarkers)
         {
-            floor.Room.ChangeParameter += ShowParameters;
+            floor.Room.ChangeParameter += OnRoomsParamsChanged;
+            floor.Room.RoomSelected += OnRoomsParamsChanged;
+
             Rooms.Add(floor.Room);
             FloorMarkers.Add(floor.Room, floor);
         }
-        ShowParameters(_spaceDeterminantor.FloorMarkers[0].Room);
+        OnRoomSelected(_spaceDeterminantor.FloorMarkers[0].Room);
     }
 
-    private void ShowParameters(Room room)
+    private void OnRoomSelected(Room room)
     {
         SelectedRoom = room;
         RoomSelected?.Invoke(SelectedRoom);
+    }
+
+    private void OnRoomsParamsChanged(Room room)
+    {
+        RoomsParamsChanged?.Invoke(room);
     }
 
     public void SwitchUpRoom()
@@ -55,7 +63,7 @@ public class RoomsSystem
             i = 0;
         }
 
-        ShowParameters(Rooms[i]);
+        OnRoomSelected(Rooms[i]);
         var positionOfFloor = FloorMarkers[SelectedRoom].transform.position;
 
         if (_camera == null)

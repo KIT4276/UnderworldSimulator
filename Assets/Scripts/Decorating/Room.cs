@@ -11,6 +11,7 @@ public class Room
     public SetOfRoomParameters SetOfParameters { get; private set; }
 
     public event Action<Room> ChangeParameter;
+    public event Action<Room> RoomSelected;
 
     public Room(string name, SetOfRoomParameters setOfParameters, ClickHandler clickHandler)
     {
@@ -21,7 +22,13 @@ public class Room
         SetOfParameters = new();
         _clickHandler = clickHandler;
         UpdateParameters();
-        _clickHandler.ClickAction += ShowParameters;
+        _clickHandler.ClickAction += OnRoomSelected;
+            //ShowParameters;
+    }
+
+    private void OnRoomSelected()
+    {
+        RoomSelected?.Invoke(this);
     }
 
     public void AddDecor(Decor decor)
@@ -29,7 +36,7 @@ public class Room
         InstalledDecor.Add(decor);
         UpdateParameters();
 
-        ShowParameters();
+        OnChangeParameter();
     }
 
     public void DeleteDecor(Decor decor)
@@ -37,7 +44,7 @@ public class Room
         InstalledDecor.Remove(decor);
         UpdateParameters();
 
-        ShowParameters();
+        OnChangeParameter();
     }
 
     private void UpdateParameters()
@@ -61,7 +68,7 @@ public class Room
         }
     }
 
-    private void ShowParameters()
+    private void OnChangeParameter()
     {
         ChangeParameter?.Invoke(this);
     }

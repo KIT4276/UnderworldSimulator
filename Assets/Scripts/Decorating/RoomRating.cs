@@ -23,7 +23,7 @@ public class RoomRating : MonoBehaviour
 
     public void Start()
     {
-        _roomsSystem.RoomSelected += OnRoomSelected;
+        _roomsSystem.RoomsParamsChanged += OnRoomSelected;
         _machine.ChangeStateAction += OnChangeState;
     }
 
