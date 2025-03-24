@@ -25,5 +25,6 @@ public class TasksSystem
     public void OnRoomsParamsChanged(Room room)
     {
         //TODO
+        _tasksHandler.CheckAvalibleTasks(room);
     }
 }

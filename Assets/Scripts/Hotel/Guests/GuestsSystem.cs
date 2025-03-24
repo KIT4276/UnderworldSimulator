@@ -51,6 +51,19 @@ public class GuestsSystem : ISavedProgress
         Sort();
         GuestsChanged?.Invoke();
     }
+
+    public Guest FindGuestByRoom(Room room)
+    {
+        foreach (var guest in Guests)
+        {
+            if (guest.IsAvailable && guest.Room == room)
+            {
+                return guest;
+            }
+
+        }
+        return null;
+    }
 }
 public enum GuestsType
 {
