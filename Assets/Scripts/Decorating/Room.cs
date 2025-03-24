@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Room
 {
@@ -9,6 +10,7 @@ public class Room
     public List<Decor> InstalledDecor { get; private set; }
     public string Name { get; private set; }
     public SetOfRoomParameters SetOfParameters { get; private set; }
+    public Guest Guest { get; private set; }
 
     public event Action<Room> ChangeParameter;
     public event Action<Room> RoomSelected;
@@ -24,6 +26,18 @@ public class Room
         UpdateParameters();
         _clickHandler.ClickAction += OnRoomSelected;
             //ShowParameters;
+    }
+
+    public void CheckInTheRoom(Guest guest)
+    {
+        Guest = guest;
+        Debug.Log(Name + " is CheckedIn");
+    }
+
+    public void VacateTheRoom()
+    {
+        Guest = null;
+        Debug.Log(Name + " is Vacate");
     }
 
     private void OnRoomSelected()

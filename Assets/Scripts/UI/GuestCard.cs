@@ -2,37 +2,40 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class GuestCard : MonoBehaviour
 {
     [SerializeField] private TMP_Text _name;
     [SerializeField] private Image _icon;
     [Space, Tooltip("GuestSettings requirements")]
-    //[SerializeField] private TMP_Text _hotelRating;
     [Space]
-    //[SerializeField] private ParamsCard[] _paramsCards;
     [SerializeField] private GameObject _lock;
+
+    [Inject]private RoomsSystem _roomsSystem;
+
+    private Guest _guest;
 
     public void FillCard(Guest guest)
     {
         _lock.SetActive(false);
-
+        _guest = guest;
         _name.text = guest.Name;
         _icon.sprite = guest.Icon;
-       //_hotelRating.text = guest.HotelRating.ToString();
+    }
 
-        //int i = 0;
-        //for (; i < guest.GuestRequirements.Parameters.Length; i++)
-        //{
-        //    _paramsCards[i].FillCard(guest.GuestRequirements.Parameters[i]);
-        //}
-        //if (guest.GuestRequirements.Parameters.Length < _paramsCards.Length)
-        //{
-        //    for (; i < _paramsCards.Length; i++)
-        //    {
-        //        _paramsCards[i].FillCardEmpty();
-        //    }
-        //}
+    public void CheckInGuest()
+    {
+        //_guest.CheckInGuest(_roomsSystem.SelectedRoom);
+
+        //TODO
+        _roomsSystem.TryToCheckInGuest(_guest);
+        //
+    }
+
+    public void EvictGuest()
+    {
+        _guest.EvictGuest();
     }
 
     public void FillCardEmpty()

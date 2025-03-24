@@ -8,6 +8,7 @@ public class GuestMenu : MonoBehaviour
     [SerializeField] private GuestCard[] _guestCard;
 
     [Inject] private GuestsSystem _guestsSystem;
+    [Inject] private RoomsSystem _roomsSystem;
 
     private void Start()
     {
@@ -26,12 +27,14 @@ public class GuestMenu : MonoBehaviour
 
     private void FillCards() 
     {
-
         int i = 0;
         for (; i < _guestsSystem.Guests.Count; i++)
         {
             if (_guestsSystem.Guests[i].IsAvailable)
+            {
                 _guestCard[i].FillCard(_guestsSystem.Guests[i]);
+               // _guestCard[i].PushCheckIn += OnPushedCheckIn;
+            }
             else
                 _guestCard[i].FillCardEmpty();
         }
@@ -44,6 +47,11 @@ public class GuestMenu : MonoBehaviour
             }
         }
     }
+
+    //private void OnPushedCheckIn(Guest guest)
+    //{
+    //    guest.CheckInGuest(_roomsSystem.SelectedRoom);
+    //}
 
     public void Back()
     {

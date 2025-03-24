@@ -34,7 +34,7 @@ public class RoomsSystem
         foreach (var floor in _spaceDeterminantor.FloorMarkers)
         {
             floor.Room.ChangeParameter += OnRoomsParamsChanged;
-            floor.Room.RoomSelected += OnRoomsParamsChanged;
+            floor.Room.RoomSelected += OnRoomSelected;
 
             Rooms.Add(floor.Room);
             FloorMarkers.Add(floor.Room, floor);
@@ -53,15 +53,24 @@ public class RoomsSystem
         RoomsParamsChanged?.Invoke(room);
     }
 
+    public void TryToCheckInGuest(Guest guest)
+    {
+        if (SelectedRoom.Guest != null)
+        {
+            SelectedRoom.Guest.EvictGuest();
+        }
+        guest.CheckInGuest(SelectedRoom);
+    }
+
     public void SwitchUpRoom()
     {
-        if(SelectedRoom == null)
+        if (SelectedRoom == null)
         {
             SelectedRoom = Rooms[0];
             RoomSelected?.Invoke(SelectedRoom);
             return;
         }
-        
+
         int i = Rooms.IndexOf(SelectedRoom);
         i++;
         if (i >= Rooms.Count)

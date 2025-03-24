@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Guest
 {
@@ -15,5 +16,30 @@ public class Guest
         GuestsType = guestData.Type;
         Name = guestData.Name;
         Icon = guestData.Icon;
+
+        MakeAvailable();  // for tests
+    }
+
+    public void MakeAvailable()
+    {
+        IsAvailable = true;
+    }
+
+    public void CheckInGuest(Room selectedRoom)
+    {
+        if (Room != null)
+            EvictGuest();
+        Room = selectedRoom;
+        Debug.Log("CheckIn " + Name + " " + "to " + Room.Name);
+        Room.CheckInTheRoom(this);
+        //TODO effects
+    }
+
+    public void EvictGuest()
+    {
+        Debug.Log("VacateTheRoom " + Name + " " + "to " + Room.Name);
+        Room.VacateTheRoom();
+        Room = null;
+        //TODO effects
     }
 }

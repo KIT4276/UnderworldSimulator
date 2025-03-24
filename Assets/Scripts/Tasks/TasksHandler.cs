@@ -31,7 +31,8 @@ public class TasksHandler: BaseHandler
         List<Task> guestsTasks = new();
         
         foreach (BaseHandledReward task in AvailableList) 
-        { 
+        {
+            Debug.Log(task);
             if(((Task)task).GuestsType == guest.GuestsType)
             {
                 guestsTasks.Add((Task)task);
