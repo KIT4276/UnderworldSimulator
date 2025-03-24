@@ -16,6 +16,7 @@ public class Room
 
     public event Action<Room> ChangeParameter;
     public event Action<Room> RoomSelected;
+    public event Action CheckIn;
 
     public Room(string name, SetOfRoomParameters setOfParameters, ClickHandler clickHandler, Sprite icon, int id)
     {
@@ -35,13 +36,16 @@ public class Room
     public void CheckInTheRoom(Guest guest)
     {
         Guest = guest;
-        Debug.Log(Name + " is CheckedIn");
+        //Debug.Log(Name + " is CheckedIn");
+        ChangeParameter?.Invoke(this);
+        CheckIn?.Invoke();
     }
 
     public void VacateTheRoom()
     {
         Guest = null;
-        Debug.Log(Name + " is Vacate");
+       // Debug.Log(Name + " is Vacate");
+        ChangeParameter?.Invoke(this);
     }
 
     private void OnRoomSelected()
