@@ -4,7 +4,7 @@ using Zenject;
 
 public class GuestMenu : MonoBehaviour
 {
-    [SerializeField] private RoomRating _roomRating;
+    [SerializeField] private RoomMenu _roomRating;
     [SerializeField] private GuestCard[] _guestCard;
 
     [Inject] private GuestsSystem _guestsSystem;

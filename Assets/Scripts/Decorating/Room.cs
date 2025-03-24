@@ -11,11 +11,13 @@ public class Room
     public string Name { get; private set; }
     public SetOfRoomParameters SetOfParameters { get; private set; }
     public Guest Guest { get; private set; }
+    public Sprite Icon { get; private set; }
+    public int ID { get; private set; }
 
     public event Action<Room> ChangeParameter;
     public event Action<Room> RoomSelected;
 
-    public Room(string name, SetOfRoomParameters setOfParameters, ClickHandler clickHandler)
+    public Room(string name, SetOfRoomParameters setOfParameters, ClickHandler clickHandler, Sprite icon, int id)
     {
         InstalledDecor = new();
 
@@ -25,7 +27,9 @@ public class Room
         _clickHandler = clickHandler;
         UpdateParameters();
         _clickHandler.ClickAction += OnRoomSelected;
-            //ShowParameters;
+        Icon = icon;
+        ID = id;
+        //ShowParameters;
     }
 
     public void CheckInTheRoom(Guest guest)

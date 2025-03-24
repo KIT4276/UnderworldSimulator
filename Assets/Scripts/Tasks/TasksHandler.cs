@@ -29,11 +29,11 @@ public class TasksHandler: BaseHandler
     private List<Task> FindAvailableTaskByGuest(Guest guest)
     {
         List<Task> guestsTasks = new();
-        
+        Debug.Log(AvailableList.Count);
         foreach (BaseHandledReward task in AvailableList) 
         {
             Debug.Log(task);
-            if(((Task)task).GuestsType == guest.GuestsType)
+            if(((Task)task) != null && ((Task)task).GuestsType == guest.GuestsType)
             {
                 guestsTasks.Add((Task)task);
             }

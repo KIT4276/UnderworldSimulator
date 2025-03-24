@@ -8,7 +8,7 @@ public class WorkbenchSystem : MonoBehaviour
     [SerializeField] private GameObject _workbenchPanel;
     [SerializeField] private ButtonClickChangeImage[] buttonsClick;
     [SerializeField] private GameObject _warningSign;
-    [SerializeField] private RoomRating _roomRating;
+    [SerializeField] private RoomMenu _roomRating;
     [SerializeField] private GuestMenu _guestMenu;
 
 

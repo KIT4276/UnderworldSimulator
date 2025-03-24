@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-public class RoomRating : MonoBehaviour
+public class RoomMenu : MonoBehaviour
 {
     [SerializeField] private TMP_Text _name;
     [Space]
@@ -64,5 +64,12 @@ public class RoomRating : MonoBehaviour
 
         _nameOfParameter_3.text = RoomParameterNames.Names[room.SetOfParameters.Parameters[2].ParameterType];
         _parameter_3.text = room.SetOfParameters.Parameters[2].Value.ToString();
+    }
+
+    private void OnDestroy()
+    {
+        _roomsSystem.RoomsParamsChanged -= UpdateParams;
+        _roomsSystem.RoomSelected -= UpdateParams;
+        _machine.ChangeStateAction -= OnChangeState;
     }
 }

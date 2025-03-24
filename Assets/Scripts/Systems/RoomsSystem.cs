@@ -15,6 +15,7 @@ public class RoomsSystem
 
     public event Action<Room> RoomsParamsChanged;
     public event Action<Room> RoomSelected;
+    public event Action Inited;
 
     public RoomsSystem(SpaceDeterminantor spaceDeterminantor, ICoroutineRunner coroutineRunner)
     {
@@ -40,12 +41,14 @@ public class RoomsSystem
             FloorMarkers.Add(floor.Room, floor);
         }
         OnRoomSelected(_spaceDeterminantor.FloorMarkers[0].Room);
+        Inited?.Invoke();   
     }
 
-    private void OnRoomSelected(Room room)
+    public void OnRoomSelected(Room room)
     {
         SelectedRoom = room;
         RoomSelected?.Invoke(SelectedRoom);
+        //OnRoomsParamsChanged(room);
     }
 
     private void OnRoomsParamsChanged(Room room)
