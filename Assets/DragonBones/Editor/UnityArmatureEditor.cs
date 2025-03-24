@@ -372,7 +372,7 @@ namespace DragonBones
                     {
                         this._closeCombineMeshsPro.boolValue = EditorGUILayout.Toggle("CloseCombineMeshs", this._closeCombineMeshsPro.boolValue);
 
-                        if (GUILayout.Button("Show Slots"))
+                        if (GUILayout.Button("RoomsParamsChanged Slots"))
                         {
                             ShowSlotsWindow.OpenWindow(this._armatureComponent);
                         }

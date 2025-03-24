@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Room
 {
@@ -9,10 +10,15 @@ public class Room
     public List<Decor> InstalledDecor { get; private set; }
     public string Name { get; private set; }
     public SetOfRoomParameters SetOfParameters { get; private set; }
+    public Guest Guest { get; private set; }
+    public Sprite Icon { get; private set; }
+    public int ID { get; private set; }
 
     public event Action<Room> ChangeParameter;
+    public event Action<Room> RoomSelected;
+    public event Action CheckIn;
 
-    public Room(string name, SetOfRoomParameters setOfParameters, ClickHandler clickHandler)
+    public Room(string name, SetOfRoomParameters setOfParameters, ClickHandler clickHandler, Sprite icon, int id)
     {
         InstalledDecor = new();
 
@@ -21,7 +27,30 @@ public class Room
         SetOfParameters = new();
         _clickHandler = clickHandler;
         UpdateParameters();
-        _clickHandler.ClickAction += ShowParameters;
+        _clickHandler.ClickAction += OnRoomSelected;
+        Icon = icon;
+        ID = id;
+        //ShowParameters;
+    }
+
+    public void CheckInTheRoom(Guest guest)
+    {
+        Guest = guest;
+        //Debug.Log(Name + " is CheckedIn");
+        ChangeParameter?.Invoke(this);
+        CheckIn?.Invoke();
+    }
+
+    public void VacateTheRoom()
+    {
+        Guest = null;
+       // Debug.Log(Name + " is Vacate");
+        ChangeParameter?.Invoke(this);
+    }
+
+    private void OnRoomSelected()
+    {
+        RoomSelected?.Invoke(this);
     }
 
     public void AddDecor(Decor decor)
@@ -29,7 +58,7 @@ public class Room
         InstalledDecor.Add(decor);
         UpdateParameters();
 
-        ShowParameters();
+        OnChangeParameter();
     }
 
     public void DeleteDecor(Decor decor)
@@ -37,7 +66,7 @@ public class Room
         InstalledDecor.Remove(decor);
         UpdateParameters();
 
-        ShowParameters();
+        OnChangeParameter();
     }
 
     private void UpdateParameters()
@@ -61,7 +90,7 @@ public class Room
         }
     }
 
-    private void ShowParameters()
+    private void OnChangeParameter()
     {
         ChangeParameter?.Invoke(this);
     }

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using Zenject;
 
-public class RoomRating : MonoBehaviour
+public class RoomMenu : MonoBehaviour
 {
     [SerializeField] private TMP_Text _name;
     [Space]
@@ -19,43 +19,43 @@ public class RoomRating : MonoBehaviour
     [Space]
     [SerializeField] private GuestMenu _guestMenu;
     [SerializeField] private GameObject _roomRatingPanel;
+    [SerializeField] private RoomButton[] _roomButtons;
 
-    [Inject] private SpaceDeterminantor _spaceDeterminantor;
     [Inject] private StateMachine _machine;
-
-     private CameraMove _camera;
-
-    private List<Room> _rooms = new();
-
-    private Room _selectedRoom;
-    private Dictionary<Room, FloorMarker> _floorMarkers = new();
+    [Inject] private RoomsSystem _roomsSystem;
 
     public void Start()
     {
-        _camera = Camera.main.GetComponent<CameraMove>();   
-        OnFindFloor();
-        _spaceDeterminantor.Find += OnFindFloor;
+        _roomsSystem.RoomsParamsChanged += UpdateParams;
+        _roomsSystem.RoomSelected += UpdateParams;
         _machine.ChangeStateAction += OnChangeState;
+        _roomRatingPanel.SetActive(false);
+        FillButtons();
     }
 
-    public void SwitchUpRoom()
+    //public void SwitchUpRoom()
+    //{
+    //    _roomsSystem.SwitchUpRoom();
+    //}
+
+    private void FillButtons()
     {
-        int i = _rooms.IndexOf(_selectedRoom);
-        i++;
-        if (i >= _rooms.Count)
+        for (int i = 0; i < _roomsSystem.Rooms.Count; i++)
         {
-            i = 0;
+            //Debug.Log(_roomButtons[i].name);
+            _roomButtons[i].FillButton(_roomsSystem.Rooms[i]);
         }
-        ShowParameters(_rooms[i]);
-        var positionOfFloor = _floorMarkers[_selectedRoom].transform.position;
-        _camera.MoveTo(positionOfFloor.x, positionOfFloor.y);
     }
 
     private void OnChangeState(IExitableState state)
     {
         if (state is WorkbenchState || state is DecorationState)
         {
-            _roomRatingPanel.SetActive(true);
+           // _roomRatingPanel.SetActive(true);
+            //_roomsSystem.SwitchUpRoom();
+
+        //Debug.Log(state);
+           
         }
         else
         {
@@ -70,24 +70,9 @@ public class RoomRating : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    private void OnFindFloor()
+    private void UpdateParams(Room room)
     {
-        _rooms.Clear();
-        _floorMarkers.Clear();
-
-        foreach (var floor in _spaceDeterminantor.FloorMarkers)
-        {
-            floor.Room.ChangeParameter += ShowParameters;
-            _rooms.Add(floor.Room);
-            _floorMarkers.Add(floor.Room, floor);
-        }
-        ShowParameters(_spaceDeterminantor.FloorMarkers[0].Room);
-    }
-
-    private void ShowParameters(Room room)
-    {
-        _selectedRoom = room;
-        
+        _roomRatingPanel.SetActive(true);
         _name.text = room.Name;
         _nameOfParameter_1.text = RoomParameterNames.Names[room.SetOfParameters.Parameters[0].ParameterType];
         _parameter_1.text = room.SetOfParameters.Parameters[0].Value.ToString();
@@ -101,10 +86,8 @@ public class RoomRating : MonoBehaviour
 
     private void OnDestroy()
     {
-        _spaceDeterminantor.Find -= OnFindFloor;
-        foreach (var floor in _spaceDeterminantor.FloorMarkers)
-        {
-            floor.Room.ChangeParameter -= ShowParameters;
-        }
+        _roomsSystem.RoomsParamsChanged -= UpdateParams;
+        _roomsSystem.RoomSelected -= UpdateParams;
+        _machine.ChangeStateAction -= OnChangeState;
     }
 }
