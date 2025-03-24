@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -26,6 +24,7 @@ public class ClickHandler : MonoBehaviour
     private void OnClick(InputAction.CallbackContext context)
     {
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+        CheckCamera();
 
         if (_raycasters == null || _raycasters.Length == 0)
         {
@@ -33,7 +32,7 @@ public class ClickHandler : MonoBehaviour
         }
 
         if (IsPointerOverUI(mouseScreenPos)) return;
-        CheckCamera();
+
         Ray ray = _camera.ScreenPointToRay(mouseScreenPos);
         RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity, LayerMask.GetMask("Floor"));
 
@@ -46,7 +45,6 @@ public class ClickHandler : MonoBehaviour
             }
         }
     }
-
 
     private bool IsPointerOverUI(Vector2 screenPosition)
     {

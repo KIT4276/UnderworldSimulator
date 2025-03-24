@@ -41,9 +41,5 @@ public class SpaceDeterminantor
             return;
 
         FloorMarkers.Sort((a, b) => a.ID.CompareTo(b.ID));
-        //foreach(var r in FloorMarkers)
-        //{
-        //    Debug.Log(r.ID);
-        //}
     }
 }

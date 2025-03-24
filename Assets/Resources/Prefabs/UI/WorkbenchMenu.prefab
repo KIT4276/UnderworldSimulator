@@ -598,7 +598,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -0.1, y: 0}
   m_SizeDelta: {x: 38.94, y: 37.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7801625474323870122
@@ -682,19 +682,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7092472167435952438}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1919663119241352668}
-        m_TargetAssemblyTypeName: RoomButton, Assembly-CSharp
-        m_MethodName: RoomSelectedButtonDown
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1919663119241352668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -991,7 +979,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 114, y: 0}
+  m_AnchoredPosition: {x: 58.5, y: 0}
   m_SizeDelta: {x: 38.94, y: 37.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1090835346639300287
@@ -1075,19 +1063,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2025528122513127977}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 651287552846119342}
-        m_TargetAssemblyTypeName: RoomButton, Assembly-CSharp
-        m_MethodName: RoomSelectedButtonDown
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &651287552846119342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2246,7 +2222,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -59.7, y: 0}
+  m_AnchoredPosition: {x: 117.2, y: 0}
   m_SizeDelta: {x: 38.94, y: 37.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3636851058251891363
@@ -2330,19 +2306,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7842331931144765702}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7594802743157250688}
-        m_TargetAssemblyTypeName: RoomButton, Assembly-CSharp
-        m_MethodName: RoomSelectedButtonDown
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &7594802743157250688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2668,12 +2632,6 @@ MonoBehaviour:
   _parameter_3: {fileID: 2598201582220157454}
   _guestMenu: {fileID: 7304268647882525660}
   _roomRatingPanel: {fileID: 4070728950496998955}
-  _roomButtons:
-  - {fileID: 1157146987663003690}
-  - {fileID: 7594802743157250688}
-  - {fileID: 1919663119241352668}
-  - {fileID: 8957828893259226652}
-  - {fileID: 651287552846119342}
 --- !u!1 &1920750236291122568
 GameObject:
   m_ObjectHideFlags: 0
@@ -6666,7 +6624,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8527438024641961063}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.64817744
+  m_Size: 0.6481774
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6710,7 +6668,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 58, y: 0}
+  m_AnchoredPosition: {x: -59.2, y: 0}
   m_SizeDelta: {x: 38.94, y: 37.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8563811361658118516
@@ -6794,19 +6752,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2572547257135500175}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8957828893259226652}
-        m_TargetAssemblyTypeName: RoomButton, Assembly-CSharp
-        m_MethodName: RoomSelectedButtonDown
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &8957828893259226652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8123,7 +8069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d18ae7b1044e2fe40a877585cecc805e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roomRating: {fileID: 4918191082859765412}
+  _roomRating: {fileID: 0}
   _guestCard:
   - {fileID: 3211648630909532084}
   - {fileID: 129403698869328572}
@@ -8225,7 +8171,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1405621437151277872
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11285,19 +11231,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8035901217265952585}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1157146987663003690}
-        m_TargetAssemblyTypeName: RoomButton, Assembly-CSharp
-        m_MethodName: RoomSelectedButtonDown
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1157146987663003690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11463,7 +11397,7 @@ GameObject:
   - component: {fileID: 8562471955588530186}
   - component: {fileID: 6587554804985624856}
   m_Layer: 5
-  m_Name: CheckInButton
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11571,8 +11505,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4918191082859765412}
-        m_TargetAssemblyTypeName: RoomMenu, Assembly-CSharp
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: RoomRating, Assembly-CSharp
         m_MethodName: GoToCheckInGuest
         m_Mode: 1
         m_Arguments:
