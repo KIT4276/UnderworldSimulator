@@ -24,7 +24,6 @@ public class RoomsSystem
         FloorMarkers = new();
 
         _spaceDeterminantor.Find += OnFindFloor;
-
     }
 
     private void OnFindFloor()
@@ -56,6 +55,13 @@ public class RoomsSystem
 
     public void SwitchUpRoom()
     {
+        if(SelectedRoom == null)
+        {
+            SelectedRoom = Rooms[0];
+            RoomSelected?.Invoke(SelectedRoom);
+            return;
+        }
+        
         int i = Rooms.IndexOf(SelectedRoom);
         i++;
         if (i >= Rooms.Count)

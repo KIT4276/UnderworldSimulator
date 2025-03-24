@@ -23,8 +23,14 @@ public class RoomRating : MonoBehaviour
 
     public void Start()
     {
-        _roomsSystem.RoomsParamsChanged += OnRoomSelected;
+        _roomsSystem.RoomsParamsChanged += UpdateParams;
+        _roomsSystem.RoomSelected += UpdateParams;
         _machine.ChangeStateAction += OnChangeState;
+    }
+
+    public void SwitchUpRoom()
+    {
+        _roomsSystem.SwitchUpRoom();
     }
 
     private void OnChangeState(IExitableState state)
@@ -32,6 +38,7 @@ public class RoomRating : MonoBehaviour
         if (state is WorkbenchState || state is DecorationState)
         {
             _roomRatingPanel.SetActive(true);
+            _roomsSystem.SwitchUpRoom();
         }
         else
         {
@@ -46,7 +53,7 @@ public class RoomRating : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    private void OnRoomSelected(Room room)
+    private void UpdateParams(Room room)
     {
         _name.text = room.Name;
         _nameOfParameter_1.text = RoomParameterNames.Names[room.SetOfParameters.Parameters[0].ParameterType];
