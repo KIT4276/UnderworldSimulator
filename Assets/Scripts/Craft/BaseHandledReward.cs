@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public abstract class BaseHandledReward
 {
@@ -11,12 +12,13 @@ public abstract class BaseHandledReward
     public abstract string Name { get; } //{ get /*=> _name*/; }
     public bool IsAvailable { get /*=> _isAvalible*/; private set; }
 
-
+    public event Action<BaseHandledReward> BecameAvailable;
 
     public void MakeAvailable()
     {
         /*_isAvalible*/
         IsAvailable = true;
-        Debug.Log("MakeAvailable " + Name);
+        // Debug.Log("MakeAvailable " + Name);
+        BecameAvailable?.Invoke(this);
     }
 }

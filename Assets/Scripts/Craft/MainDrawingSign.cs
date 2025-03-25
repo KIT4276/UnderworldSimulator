@@ -25,6 +25,7 @@ public class MainDrawingSign : MonoBehaviour
 
     public void FillSign()
     {
+        //Debug.Log(_craftSystem.ActiveDrawing);
         _name.text = _craftSystem.ActiveDrawing.Name;
         _icon.sprite = _craftSystem.ActiveDrawing.Icon;
 
