@@ -14,29 +14,23 @@ public class RoomButton : MonoBehaviour
 
     [Inject] private RoomsSystem _system;
 
-    private void Start()
+    public void FillButton(Room room)
     {
-        _system.Inited += OnRoomsSystemInit;
-    }
-
-    private void OnRoomsSystemInit()
-    {
-        foreach (Room room in _system.Rooms)
-        {
-            Debug.Log("OnRoomsSystemInit"); // сюда не заходит!
-            FillButton(room);
-        }
-    }
-
-    private void FillButton(Room room)
-    {
+        _room = room;
         _name.text = room.ID.ToString();
-        _icon.sprite = room.Icon; 
+        _icon.sprite = room.Icon;
 
-        if(room.Guest != null)
+        CheckGuest();
+
+        _room.CheckIn += CheckGuest;
+    }
+
+    private void CheckGuest()
+    {
+        if (_room.Guest != null)
         {
             _gustIcon.gameObject.SetActive(true);
-            _gustIcon.sprite = room.Guest.Icon;
+            _gustIcon.sprite = _room.Guest.Icon;
         }
         else
         {
@@ -47,5 +41,6 @@ public class RoomButton : MonoBehaviour
     public void RoomSelectedButtonDown()
     {
         _system.OnRoomSelected(_room);
+
     }
 }

@@ -73,7 +73,7 @@ public class WorkbenchSystem : MonoBehaviour
         CraftButtonClick?.Invoke();
     }
 
-    
+
     private void OnChangeState(IExitableState state)
     {
         switch (state)
@@ -91,7 +91,7 @@ public class WorkbenchSystem : MonoBehaviour
                 ActivateWorkbench();
                 break;
         }
-       
+
     }
 
     private void ActivateInventory()

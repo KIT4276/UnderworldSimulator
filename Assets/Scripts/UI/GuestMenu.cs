@@ -8,11 +8,20 @@ public class GuestMenu : MonoBehaviour
     [SerializeField] private GuestCard[] _guestCard;
 
     [Inject] private GuestsSystem _guestsSystem;
-    [Inject] private RoomsSystem _roomsSystem;
+    [Inject] private StateMachine _stateMachine;
 
     private void Start()
     {
         _guestsSystem.GuestsChanged += OnGuestsChanged;
+        _stateMachine.ChangeStateAction += OnChangeState;
+    }
+
+    private void OnChangeState(IExitableState state)
+    {
+        if (state is GameLoopState)
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 
     public void Open()
@@ -25,7 +34,7 @@ public class GuestMenu : MonoBehaviour
         FillCards();
     }
 
-    private void FillCards() 
+    private void FillCards()
     {
         int i = 0;
         for (; i < _guestsSystem.Guests.Count; i++)
@@ -33,7 +42,6 @@ public class GuestMenu : MonoBehaviour
             if (_guestsSystem.Guests[i].IsAvailable)
             {
                 _guestCard[i].FillCard(_guestsSystem.Guests[i]);
-               // _guestCard[i].PushCheckIn += OnPushedCheckIn;
             }
             else
                 _guestCard[i].FillCardEmpty();
@@ -48,14 +56,15 @@ public class GuestMenu : MonoBehaviour
         }
     }
 
-    //private void OnPushedCheckIn(Guest guest)
-    //{
-    //    guest.CheckInGuest(_roomsSystem.SelectedRoom);
-    //}
-
     public void Back()
     {
         _roomRating.gameObject.SetActive(true);
         this.gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        _guestsSystem.GuestsChanged -= OnGuestsChanged;
+        _stateMachine.ChangeStateAction -= OnChangeState;
     }
 }

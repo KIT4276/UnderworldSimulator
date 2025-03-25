@@ -10,7 +10,7 @@ public class TasksHandler: BaseHandler
 
     public TasksHandler(TasksData tasksData, GuestsSystem guestsSystem)
     {
-       _guestsSystem = guestsSystem;
+        _guestsSystem = guestsSystem;
         AvailableList = new();
         CompletedTasks = new();
 
@@ -30,10 +30,10 @@ public class TasksHandler: BaseHandler
     {
         List<Task> guestsTasks = new();
         Debug.Log(AvailableList.Count);
-        foreach (BaseHandledReward task in AvailableList) 
+        foreach (BaseHandledReward task in AvailableList)
         {
             Debug.Log(task);
-            if(((Task)task) != null && ((Task)task).GuestsType == guest.GuestsType)
+            if (((Task)task) != null && ((Task)task).GuestsType == guest.GuestsType)
             {
                 guestsTasks.Add((Task)task);
             }

@@ -17,6 +17,8 @@ public class RoomMenu : MonoBehaviour
     [Space]
     [SerializeField] private GuestMenu _guestMenu;
     [SerializeField] private GameObject _roomRatingPanel;
+    [Space]
+    [SerializeField] private RoomButton[] _roomButtons;
 
     [Inject] private StateMachine _machine;
     [Inject] private RoomsSystem _roomsSystem;
@@ -26,19 +28,33 @@ public class RoomMenu : MonoBehaviour
         _roomsSystem.RoomsParamsChanged += UpdateParams;
         _roomsSystem.RoomSelected += UpdateParams;
         _machine.ChangeStateAction += OnChangeState;
+        _roomRatingPanel.SetActive(false);
+        FillButtons();
     }
 
-    public void SwitchUpRoom()
+    //public void SwitchUpRoom()
+    //{
+    //    _roomsSystem.SwitchUpRoom();
+    //}
+
+    private void FillButtons()
     {
-        _roomsSystem.SwitchUpRoom();
+        for (int i = 0; i < _roomsSystem.Rooms.Count; i++)
+        {
+            //Debug.Log(_roomButtons[i].name);
+            _roomButtons[i].FillButton(_roomsSystem.Rooms[i]);
+        }
     }
 
     private void OnChangeState(IExitableState state)
     {
         if (state is WorkbenchState || state is DecorationState)
         {
-            _roomRatingPanel.SetActive(true);
-            _roomsSystem.SwitchUpRoom();
+            // _roomRatingPanel.SetActive(true);
+            //_roomsSystem.SwitchUpRoom();
+
+            //Debug.Log(state);
+
         }
         else
         {
@@ -55,6 +71,7 @@ public class RoomMenu : MonoBehaviour
 
     private void UpdateParams(Room room)
     {
+        _roomRatingPanel.SetActive(true);
         _name.text = room.Name;
         _nameOfParameter_1.text = RoomParameterNames.Names[room.SetOfParameters.Parameters[0].ParameterType];
         _parameter_1.text = room.SetOfParameters.Parameters[0].Value.ToString();
