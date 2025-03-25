@@ -14,7 +14,7 @@ public abstract class BaseHandler
 
         foreach (BaseHandledReward revard in _all)
         {
-            if (revard.IsAvalible)
+            if (revard.IsAvailable)
             {
                 AvailableList.Add(revard);
             }

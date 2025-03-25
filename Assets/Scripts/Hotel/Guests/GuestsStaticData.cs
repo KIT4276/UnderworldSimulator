@@ -4,9 +4,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GuestsData", menuName = "ScriptableObjects/GuestsData", order = 5)]
 public class GuestsStaticData : ScriptableObject
 {
-    [SerializeField] private GuestStaticData[] _guests;
+    //[SerializeField] private GuestStaticData[] _guests;
 
-    public GuestStaticData[] Guests { get => _guests; }
+    //public GuestStaticData[] Guests { get => _guests; }
+
+    [SerializeField] private Guest[] _guest;
+
+    public Guest[] Guests { get => _guest; }
 }
 
 [Serializable]

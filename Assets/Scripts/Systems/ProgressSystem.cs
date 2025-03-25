@@ -9,42 +9,44 @@ public class ProgressSystem : IProgressSystem
 
     public event Action Change;
 
-    public void UpProgress(int value)
+    public void ChangeProgress(int value)
     {
         _currentProgress += value;
         Change?.Invoke();   
     }
+
 }
 
 public class MilestoneSystem : IProgressSystem
 {
-    private MilestoneData _currentMilestone;
     private readonly ProgressSystem _progressSystem;
-    private readonly MilestonesData _milestones;
+    private readonly MilestonesData _milestonesData;
 
-    public float CurrentValue { get => _currentMilestone.ProgressValue; }
+    public Milestone CurrentMilestone { get; private set; }
+
+    public float CurrentValue { get => CurrentMilestone.ProgressValue; }
 
     public event Action Change;
 
     public MilestoneSystem(ProgressSystem progressSystem, MilestonesData milestones)
     {
         _progressSystem = progressSystem;
-        _milestones = milestones;
+        _milestonesData = milestones;
 
-        _currentMilestone = _milestones.Milestones[0];
+        CurrentMilestone = _milestonesData.Milestones[0];
         _progressSystem.Change += OnProgressChange;
     }
 
     private void OnProgressChange()
     {
-        if(_progressSystem.CurrentValue >= _currentMilestone.ProgressValue)
+        if(_progressSystem.CurrentValue >= CurrentMilestone.ProgressValue)
         {
             GiveReward();
-            int i = Array.IndexOf(_milestones.Milestones, _currentMilestone);
+            int i = Array.IndexOf(_milestonesData.Milestones, CurrentMilestone);
             i++;
-            if (i < _milestones.Milestones.Length)
+            if (i < _milestonesData.Milestones.Length)
             {
-                _currentMilestone = _milestones.Milestones[i];
+                CurrentMilestone = _milestonesData.Milestones[i];
                 Change?.Invoke();
             }
         }
@@ -52,9 +54,8 @@ public class MilestoneSystem : IProgressSystem
 
     private void GiveReward()
     {
-      Debug.Log(_currentMilestone.Reward);
-
-        //TODO milestonesHandler.currentReward.Drawing.MakeDrawingAvailable();
+      Debug.Log(CurrentMilestone.Reward);
+       
     }
 }
 
