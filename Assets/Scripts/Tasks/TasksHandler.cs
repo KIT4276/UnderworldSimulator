@@ -5,7 +5,6 @@ using UnityEngine;
 public class TasksHandler: BaseHandler
 {
     private readonly GuestsSystem _guestsSystem;
-    //private readonly MilestoneSystem _milestoneSystem;
 
     public List<Task> CompletedTasks { get; private set; }
 
@@ -33,7 +32,6 @@ public class TasksHandler: BaseHandler
     private List<Task> FindAvailableTaskByGuest(Guest guest)
     {
         List<Task> guestsTasks = new();
-        //Debug.Log(AvailableList.Count);
         foreach (BaseHandledReward task in AvailableList)
         {
             Debug.Log(task);
@@ -57,17 +55,5 @@ public class TasksHandler: BaseHandler
                 AvailableList.Remove(task);
             }
         }
-        //Debug.Log("Completed Tasks: " + CompletedTasks.Count);
     }
-
-    //protected override void CheckAvalible()
-    //{
-    //    foreach (var item in _all)
-    //    {
-    //        if (item.MilestonesIndex == _milestoneSystem.CurrentMilestonesIndex() - 1)
-    //        {
-    //            item.MakeAvailable();
-    //        }
-    //    }
-    //}
 }

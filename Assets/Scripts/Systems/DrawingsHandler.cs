@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class DrawingsHandler : BaseHandler
 {
-    //private readonly MilestoneSystem _milestoneSystem;
-
     public DrawingsHandler(DrawingData drawingData, MilestoneSystem milestoneSystem)
     {
         AvailableList = new();
@@ -18,6 +16,4 @@ public class DrawingsHandler : BaseHandler
 
         UpdateAvailable();
     }
-
-   
 }
