@@ -6,15 +6,21 @@ public class MilestonesData : ScriptableObject
 {
     [SerializeField] private MilestoneData[] _milestones;
 
-    public MilestoneData[] Milestones {  get { return _milestones; } }
+    public MilestoneData[] Milestones { get { return _milestones; } }
 }
 
 [Serializable]
 public class MilestoneData
 {
+    [SerializeField] private int _id;
     [SerializeField] private int _progressValue;
-    [SerializeField] private string _reward; //TODO real reward
+    [SerializeField] private string _reward;
+
+    //[SerializeField] private RewardData _reward; //TODO real reward
 
     public int ProgressValue { get { return _progressValue; } }
     public string Reward { get { return _reward; } }
+    public int ID { get { return _id; } }
+    //public RewardData Reward { get { return _reward; } }
 }
+
