@@ -8,6 +8,7 @@ public class FloorMarker : MonoBehaviour
 {
     [SerializeField] private int _id;
     [SerializeField] private string _name;
+    [SerializeField] private Sprite _icon;
     [SerializeField] private PolygonCollider2D _collider;
     [SerializeField] private ClickHandler _clickHandler;
     [SerializeField] private SetOfRoomParameters _setOfParameters;
@@ -20,7 +21,7 @@ public class FloorMarker : MonoBehaviour
 
     public void Init()
     {
-        Room = new(_name, _setOfParameters, _clickHandler);
+        Room = new(_name, _setOfParameters, _clickHandler, _icon, ID);
     }
 
     public void AddDecor(Decor decor)

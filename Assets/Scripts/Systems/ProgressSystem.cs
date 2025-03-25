@@ -39,8 +39,7 @@ public class MilestoneSystem : IProgressSystem
     {
         if(_progressSystem.CurrentValue >= _currentMilestone.ProgressValue)
         {
-            Debug.Log(_currentMilestone.Reward);
-
+            GiveReward();
             int i = Array.IndexOf(_milestones.Milestones, _currentMilestone);
             i++;
             if (i < _milestones.Milestones.Length)
@@ -49,6 +48,13 @@ public class MilestoneSystem : IProgressSystem
                 Change?.Invoke();
             }
         }
+    }
+
+    private void GiveReward()
+    {
+      Debug.Log(_currentMilestone.Reward);
+
+        //TODO milestonesHandler.currentReward.Drawing.MakeDrawingAvailable();
     }
 }
 

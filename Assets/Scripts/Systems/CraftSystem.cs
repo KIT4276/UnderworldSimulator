@@ -5,16 +5,14 @@ using Zenject;
 
 public class CraftSystem
 {
-    public int Count { get; private set; }
-
     private Drawing _activeDrawing;
     private InventorySystem _inventorySystem;
-    private DrawingData _drawingDatas;
-
-    public DrawingData DrawingDatas { get => _drawingDatas; }
-    public Drawing ActiveDrawing { get => _activeDrawing; }
 
     [Inject] private DecorFactory _decoratorFactory;
+
+    public DrawingData DrawingDatas { get; private set; }
+    public Drawing ActiveDrawing { get => _activeDrawing; }
+    public int Count { get; private set; }
 
     public event Action ChangeCount;
     public event Action Crafted;
@@ -25,15 +23,15 @@ public class CraftSystem
     {
         Count = 1;
         _inventorySystem = inventorySystem;
-        _drawingDatas = drawingDatas;
+        DrawingDatas = drawingDatas;
 
-        _activeDrawing = _drawingDatas.Drawings[0];
+        _activeDrawing = DrawingDatas.Drawings[0];
     }
 
     public void AwakeMenu()
     {
         Count = 1;
-        _activeDrawing = _drawingDatas.Drawings[0];
+        _activeDrawing = DrawingDatas.Drawings[0];
     }
 
     public void SelectDrawing(Drawing drawing)
