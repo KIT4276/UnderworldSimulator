@@ -11,6 +11,7 @@ public class GuestCard : MonoBehaviour
     [Space, Tooltip("GuestSettings requirements")]
     [Space]
     [SerializeField] private GameObject _lock;
+    [SerializeField] private RoomMenu _roomMenu;
 
     [Inject]private RoomsSystem _roomsSystem;
 
@@ -30,6 +31,9 @@ public class GuestCard : MonoBehaviour
 
         //TODO
         _roomsSystem.TryToCheckInGuest(_guest);
+
+        _roomMenu.gameObject.SetActive(true);
+       _roomMenu.BackToRooms();
         //
     }
 

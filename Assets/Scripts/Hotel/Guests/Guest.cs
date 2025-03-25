@@ -4,35 +4,6 @@ using UnityEngine;
 [Serializable]
 public class Guest : BaseHandledReward
 {
-    //public GuestsType GuestsType { get; private set; }
-    //public bool IsAvailable { get; private set; }
-    //public Sprite Icon { get; private set; }
-    //public string PrefabLink { get; private set; }
-
-    //public override string Name { get => _name; }
-
-    //private string _name;
-
-    public Guest()
-    {
-        if (MilestonesIndex == 0)
-            MakeAvailable();
-    }
-    //{
-    //    PrefabLink = guestData.PrefabLink();
-    //    GuestsType = guestData.Type;
-    //    _name = guestData.Name;
-    //    Icon = guestData.Icon;
-    //    IsAvailable = guestData.IsAvailable;
-
-    //    MakeAvailable();  // for tests
-    //}
-
-    //public void MakeAvailable()
-    //{
-    //    IsAvailable = true;
-    //}
-
     [SerializeField] private GuestsType _type;
     [SerializeField] private string _name;
     [SerializeField] private Sprite _icon;
@@ -41,8 +12,6 @@ public class Guest : BaseHandledReward
     public Sprite Icon { get => _icon; }
     public override string Name { get => _name; }
     public Room Room { get; private set; }
-
-    //public string Name { get => _name; }
 
     public string PrefabLink()// remove, make it a simple string
     {

@@ -13,6 +13,10 @@ public abstract class BaseHandledReward
 
 
 
-    public void MakeAvailable() =>
-       /*_isAvalible*/ IsAvailable= true;
+    public void MakeAvailable()
+    {
+        /*_isAvalible*/
+        IsAvailable = true;
+        Debug.Log("MakeAvailable " + Name);
+    }
 }
