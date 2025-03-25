@@ -19,25 +19,35 @@ public class CraftMenu : MonoBehaviour
         _craftSystem.ChangeCount += UpdateCount;
         _machine.ChangeStateAction += StateChanged;
         _craftSystem.Crafted += ResetCraftMenu;
+        _craftSystem.DrawingAdded += FillSlots;
 
         foreach (var slot in _slots)
         {
             slot.DrawingSelected += ToSelectDrawing;
         }
 
-        if (_craftSystem.DrawingDatas.Drawings.Length > _slots.Length)
+        FillSlots();
+
+        StartFill(_craftSystem.ActiveDrawing);
+        UpdateCount();
+        CloseCraftMenu();
+    }
+
+    private void FillSlots()
+    {
+        if (_craftSystem.AvailableDrawings.Count > _slots.Length)
         {
             Debug.LogWarning("Слотов меньше, чем чертежей!");
         }
         else
         {
             int i = 0;
-            for (; i < _craftSystem.DrawingDatas.Drawings.Length; i++)
+            for (; i < _craftSystem.AvailableDrawings.Count; i++)
             {
-                _slots[i].FillDrawingData(_craftSystem.DrawingDatas.Drawings[i]);
+                _slots[i].FillDrawingData(_craftSystem.AvailableDrawings[i]);
             }
 
-            if (_craftSystem.DrawingDatas.Drawings.Length < _slots.Length)
+            if (_craftSystem.AvailableDrawings.Count < _slots.Length)
             {
                 for (; i < _slots.Length; i++)
                 {
@@ -45,10 +55,6 @@ public class CraftMenu : MonoBehaviour
                 }
             }
         }
-
-        StartFill(_craftSystem.ActiveDrawing);
-        UpdateCount();
-        CloseCraftMenu();
     }
 
     public void OnCreate()

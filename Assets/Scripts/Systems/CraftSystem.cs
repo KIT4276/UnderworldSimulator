@@ -7,31 +7,54 @@ public class CraftSystem
 {
     private Drawing _activeDrawing;
     private InventorySystem _inventorySystem;
+    private DrawingData _drawingDatas;
 
     [Inject] private DecorFactory _decoratorFactory;
 
-    public DrawingData DrawingDatas { get; private set; }
     public Drawing ActiveDrawing { get => _activeDrawing; }
+    public List<Drawing> AvailableDrawings { get; private set; }
     public int Count { get; private set; }
 
     public event Action ChangeCount;
     public event Action Crafted;
+    public event Action DrawingAdded;
 
     private List<CraftItem> _availableMaterials = new();
 
     public CraftSystem(InventorySystem inventorySystem, DrawingData drawingDatas)
     {
+        AvailableDrawings = new();
+
+        foreach (var draw in drawingDatas.Drawings)
+        {
+            if (draw.IsAvailable)
+            {
+                Debug.Log(draw.Name);
+                AvailableDrawings.Add(draw);
+            }
+        }
+
         Count = 1;
         _inventorySystem = inventorySystem;
-        DrawingDatas = drawingDatas;
+        _drawingDatas = drawingDatas;
 
-        _activeDrawing = DrawingDatas.Drawings[0];
+        //_activeDrawing = AvailableDrawings[0];
+
     }
+
+    public void AddDrawing(Drawing drawing)
+    {
+        DrawingAdded?.Invoke();
+        AvailableDrawings.Add(drawing);
+    }
+
 
     public void AwakeMenu()
     {
+        Debug.Log("AwakeMenu");
         Count = 1;
-        _activeDrawing = DrawingDatas.Drawings[0];
+        Debug.Log(AvailableDrawings.Count);
+        //_activeDrawing = AvailableDrawings[0];
     }
 
     public void SelectDrawing(Drawing drawing)
@@ -62,7 +85,7 @@ public class CraftSystem
 
                 foreach (var mat in _activeDrawing.DrawingComponents)
                 {
-                    for(int j = 0; j < mat.Count; j++)
+                    for (int j = 0; j < mat.Count; j++)
                     {
                         _inventorySystem.RemoveItems(mat.Material);
                     }
