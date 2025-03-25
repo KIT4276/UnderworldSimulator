@@ -8,6 +8,7 @@ public class Tests : MonoBehaviour
 
     [Inject] private ProgressSystem _progressSystem;
 
+
     private void Start()
     {
         _progressUpAction.action.performed += OnProgressUp;
@@ -16,6 +17,7 @@ public class Tests : MonoBehaviour
     private void OnProgressUp(InputAction.CallbackContext context)
     {
         _progressSystem.UpProgress(10);
+
     }
 
     private void OnDestroy()
