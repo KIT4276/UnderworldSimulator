@@ -37,6 +37,11 @@ public class MilestoneSystem : IProgressSystem
         _progressSystem.Change += OnProgressChange;
     }
 
+    public int CurrentMilestonesIndex()
+    {
+        return Array.IndexOf(_milestonesData.Milestones, CurrentMilestone);
+    }
+
     private void OnProgressChange()
     {
         if(_progressSystem.CurrentValue >= CurrentMilestone.ProgressValue)

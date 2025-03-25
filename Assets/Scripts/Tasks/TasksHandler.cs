@@ -5,16 +5,20 @@ using UnityEngine;
 public class TasksHandler: BaseHandler
 {
     private readonly GuestsSystem _guestsSystem;
+    //private readonly MilestoneSystem _milestoneSystem;
 
     public List<Task> CompletedTasks { get; private set; }
 
-    public TasksHandler(TasksData tasksData, GuestsSystem guestsSystem)
+    public TasksHandler(TasksData tasksData, GuestsSystem guestsSystem, MilestoneSystem milestoneSystem)
     {
         _guestsSystem = guestsSystem;
+        _milestoneSystem = milestoneSystem;
         AvailableList = new();
         CompletedTasks = new();
 
         _all = tasksData.Tasks;
+
+        milestoneSystem.Change += CheckAvalible;
 
         UpdateAvailable();
         UpdateCompleted();
@@ -55,4 +59,15 @@ public class TasksHandler: BaseHandler
         }
         //Debug.Log("Completed Tasks: " + CompletedTasks.Count);
     }
+
+    //protected override void CheckAvalible()
+    //{
+    //    foreach (var item in _all)
+    //    {
+    //        if (item.MilestonesIndex == _milestoneSystem.CurrentMilestonesIndex() - 1)
+    //        {
+    //            item.MakeAvailable();
+    //        }
+    //    }
+    //}
 }
