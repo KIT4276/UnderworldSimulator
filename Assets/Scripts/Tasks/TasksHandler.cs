@@ -33,7 +33,7 @@ public class TasksHandler: BaseHandler
         foreach (BaseHandledReward task in AvailableList)
         {
             Debug.Log(task);
-            if (((Task)task) != null && ((Task)task).GuestsType == guest.GuestsType)
+            if (((Task)task) != null && ((Task)task).GuestsType == guest.Type)
             {
                 guestsTasks.Add((Task)task);
             }

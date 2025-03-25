@@ -3,11 +3,16 @@
 public abstract class BaseHandledReward
 {
     //[SerializeField] protected string _name;
-    [SerializeField, Tooltip("Is it avalible on start")] protected bool _isAvalible;
+    //[SerializeField, Tooltip("Is it avalible on start")] protected bool _isAvalible;
+    [SerializeField, Tooltip("At what milestone does it become available. -1 - available on start")] protected int _milestonesIndex;
+
+    public int MilestonesIndex { get => _milestonesIndex; }
 
     public abstract string Name { get; } //{ get /*=> _name*/; }
-    public bool IsAvalible { get => _isAvalible; }
+    public bool IsAvailable { get /*=> _isAvalible*/; private set; }
+
+
 
     public void MakeAvailable() =>
-       _isAvalible = true;
+       /*_isAvalible*/ IsAvailable= true;
 }

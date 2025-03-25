@@ -24,9 +24,9 @@ public class PlayerProgress
     {
         List<Guest> guests = new();
 
-        foreach(var data in guestsStaticData.Guests)
+        foreach(var guest in guestsStaticData.Guests)
         {
-            Guest guest = new(data);
+            //Guest guest = new(data);
             guests.Add(guest);
         }
         return guests;

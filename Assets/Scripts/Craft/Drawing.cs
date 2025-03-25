@@ -13,4 +13,5 @@ public class Drawing : BaseHandledReward
     public Decor Decor { get => _decor; }
 
     public override string Name { get => _name; }
+
 }
