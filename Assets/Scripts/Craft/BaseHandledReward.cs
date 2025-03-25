@@ -2,10 +2,10 @@
 
 public abstract class BaseHandledReward
 {
-    [SerializeField] protected string _name;
+    //[SerializeField] protected string _name;
     [SerializeField, Tooltip("Is it avalible on start")] protected bool _isAvalible;
 
-    public string Name { get => _name; }
+    public abstract string Name { get; } //{ get /*=> _name*/; }
     public bool IsAvalible { get => _isAvalible; }
 
     public void MakeAvailable() =>
