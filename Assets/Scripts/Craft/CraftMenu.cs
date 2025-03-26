@@ -8,7 +8,7 @@ public class CraftMenu : MonoBehaviour
     [SerializeField] private CraftSlot[] _slots;
     [SerializeField] private GameObject _menu;
     [SerializeField] private MainDrawingSign _mainDrawingSign;
-    [SerializeField] private TMP_Text _ñount;
+    [SerializeField] private TMP_Text _count;
     [SerializeField] private FadeInSign _notEnoughSign;
 
     [Inject] private CraftSystem _craftSystem;
@@ -76,7 +76,7 @@ public class CraftMenu : MonoBehaviour
 
     private void UpdateCount()
     {
-        _ñount.text = _craftSystem.Count.ToString();
+        _count.text = _craftSystem.Count.ToString();
         //_notEnoughSign.gameObject.SetActive(false);
     }
 
