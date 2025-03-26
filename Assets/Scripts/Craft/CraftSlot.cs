@@ -21,6 +21,7 @@ public class CraftSlot : MonoBehaviour
     {
         _drawing = drawing;
         _nameText.text = drawing.Name;
+      //  Debug.Log("FillDrawingData " + drawing.Name);
     }
 
     public void FillEmpty()

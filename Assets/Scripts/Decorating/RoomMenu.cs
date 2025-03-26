@@ -1,10 +1,14 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public class RoomMenu : MonoBehaviour
 {
     [SerializeField] private TMP_Text _name;
+    [SerializeField] private Image _guestsIcon;
+    [SerializeField] private TMP_Text _guest;
     [Space]
     [SerializeField] private TMP_Text _nameOfParameter_1;
     [SerializeField] private TMP_Text _parameter_1;
@@ -69,10 +73,28 @@ public class RoomMenu : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+    public void BackToRooms()
+    {
+        _guestMenu.gameObject.SetActive(false);
+    }
+
     private void UpdateParams(Room room)
     {
         _roomRatingPanel.SetActive(true);
         _name.text = room.Name;
+
+        if (room.Guest == null)
+        {
+            _guest.text = string.Empty;
+            _guestsIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            _guest.text = room.Guest.Name;
+            _guestsIcon.gameObject.SetActive(true);
+            _guestsIcon.sprite = room.Guest.Icon;
+        }
+
         _nameOfParameter_1.text = RoomParameterNames.Names[room.SetOfParameters.Parameters[0].ParameterType];
         _parameter_1.text = room.SetOfParameters.Parameters[0].Value.ToString();
 
