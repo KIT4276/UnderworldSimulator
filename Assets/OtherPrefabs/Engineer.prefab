@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: -5875254413962080706, guid: d43445f148111c949b9f388f53afb971, type: 3}
+  m_Sprite: {fileID: 5682839796978562485, guid: ee75fc75359f97e42a7013262cd64dfb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -168,7 +168,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: -5875254413962080706, guid: d43445f148111c949b9f388f53afb971, type: 3}
+  m_Sprite: {fileID: 5682839796978562485, guid: ee75fc75359f97e42a7013262cd64dfb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -229,6 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sign: {fileID: 6283044890345253264}
+  _reactionText: "\u0420\u0435\u0430\u043A\u0446\u0438\u044F \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u0436\u0430..."
 --- !u!61 &8417203073780194397
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -266,8 +267,8 @@ BoxCollider2D:
   m_Offset: {x: 0.0057840347, y: -0.45396996}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.38}
-    oldSize: {x: 9.21, y: 8.2}
+    pivot: {x: 0.5, y: 0.3508576}
+    oldSize: {x: 10.76, y: 9}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -317,7 +318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1747333871138251832, guid: bddcdd86c3416d441a1c59757a4b7cfa, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 6
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 1747333871138251832, guid: bddcdd86c3416d441a1c59757a4b7cfa, type: 3}
       propertyPath: m_LocalPosition.x
