@@ -8,11 +8,13 @@ public class GuestCard : MonoBehaviour
 {
     [SerializeField] private TMP_Text _name;
     [SerializeField] private Image _icon;
-    [Space, Tooltip("GuestSettings requirements")]
+    //[SerializeField] private Image _roomIcon;
+    [SerializeField] private TMP_Text _roomName;
     [Space]
     [SerializeField] private GameObject _lock;
+    [SerializeField] private RoomMenu _roomMenu;
 
-    [Inject]private RoomsSystem _roomsSystem;
+    [Inject] private RoomsSystem _roomsSystem;
 
     private Guest _guest;
 
@@ -22,6 +24,21 @@ public class GuestCard : MonoBehaviour
         _guest = guest;
         _name.text = guest.Name;
         _icon.sprite = guest.Icon;
+
+        if (guest.Room == null)
+        {
+            //_roomIcon.gameObject.SetActive(false);
+            _roomName.text = string.Empty;
+        }
+        else
+        {
+            //_roomIcon.gameObject.SetActive(true);
+            _roomName.text = guest.Room.Name;
+           // _roomIcon.sprite = guest.Room.Icon;
+        }
+
+        //TODO Icon and Name of guest
+
     }
 
     public void CheckInGuest()
@@ -30,6 +47,9 @@ public class GuestCard : MonoBehaviour
 
         //TODO
         _roomsSystem.TryToCheckInGuest(_guest);
+
+        _roomMenu.gameObject.SetActive(true);
+        _roomMenu.BackToRooms();
         //
     }
 
@@ -44,23 +64,23 @@ public class GuestCard : MonoBehaviour
     }
 }
 
-[Serializable]
-public class ParamsCard
-{
-    [SerializeField] private TMP_Text _paramName;
-    [SerializeField] private TMP_Text _paramValue;
+//[Serializable]
+//public class ParamsCard
+//{
+//    [SerializeField] private TMP_Text _paramName;
+//    [SerializeField] private TMP_Text _paramValue;
 
-    //TODO Icon??
+//    //TODO Icon??
 
-    public void FillCard(RoomParameter parameter)
-    {
-        _paramName.text = RoomParameterNames.Names[parameter.ParameterType];
-        _paramValue.text = parameter.Value.ToString();
-    }
+//    public void FillCard(RoomParameter parameter)
+//    {
+//        _paramName.text = RoomParameterNames.Names[parameter.ParameterType];
+//        _paramValue.text = parameter.Value.ToString();
+//    }
 
-    public void FillCardEmpty()
-    {
-        _paramName.text = string.Empty;
-        _paramValue.text = string.Empty;
-    }
-}
+//    public void FillCardEmpty()
+//    {
+//        _paramName.text = string.Empty;
+//        _paramValue.text = string.Empty;
+//    }
+//}

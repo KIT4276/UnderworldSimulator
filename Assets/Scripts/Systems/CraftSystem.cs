@@ -1,44 +1,59 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 public class CraftSystem
 {
-    private Drawing _activeDrawing;
+    //private Drawing _activeDrawing;
     private InventorySystem _inventorySystem;
 
-    [Inject] private DecorFactory _decoratorFactory;
-
-    public DrawingData DrawingDatas { get; private set; }
-    public Drawing ActiveDrawing { get => _activeDrawing; }
+    public Drawing ActiveDrawing { get; private set; }
+    public List<Drawing> AvailableDrawings { get; private set; }
     public int Count { get; private set; }
 
     public event Action ChangeCount;
     public event Action Crafted;
+    public event Action DrawingAdded;
+    public event Action NotEnoughMaterials; 
 
     private List<CraftItem> _availableMaterials = new();
 
     public CraftSystem(InventorySystem inventorySystem, DrawingData drawingDatas)
     {
+        AvailableDrawings = new();
+
+        foreach (var draw in drawingDatas.Drawings)
+        {
+            draw.BecameAvailable += OnBecameAvailable;
+        }
+
         Count = 1;
         _inventorySystem = inventorySystem;
-        DrawingDatas = drawingDatas;
+    }
 
-        _activeDrawing = DrawingDatas.Drawings[0];
+    private void OnBecameAvailable(BaseHandledReward reward)
+    {
+        if(AvailableDrawings.Count == 0)
+        {
+            ActiveDrawing = (Drawing)reward;
+        }
+        AvailableDrawings.Add((Drawing)reward);
+       // Debug.Log(AvailableDrawings.Count);
+        DrawingAdded?.Invoke();
     }
 
     public void AwakeMenu()
     {
         Count = 1;
-        _activeDrawing = DrawingDatas.Drawings[0];
+        //Debug.Log(AvailableDrawings.Count);
     }
 
     public void SelectDrawing(Drawing drawing)
     {
-        _activeDrawing = drawing;
+        ActiveDrawing = drawing;
         Count = 1;
         ChangeCount?.Invoke();
+       // Debug.Log("SelectDrawing");
     }
 
     public void OnChangeCount(int count)
@@ -48,6 +63,7 @@ public class CraftSystem
             Count = 1;
 
         ChangeCount?.Invoke();
+        //Debug.Log("OnChangeCount");
     }
 
     public void CreateDecor()
@@ -58,11 +74,11 @@ public class CraftSystem
             {
                 // var decor = _decoratorFactory.SpawnDecor(_activeDrawing.Decor);// 
 
-                _inventorySystem.TryReturnDecorToInventory(_activeDrawing.Decor); // temporary solution!
+                _inventorySystem.TryReturnDecorToInventory(ActiveDrawing.Decor); // temporary solution!
 
-                foreach (var mat in _activeDrawing.DrawingComponents)
+                foreach (var mat in ActiveDrawing.DrawingComponents)
                 {
-                    for(int j = 0; j < mat.Count; j++)
+                    for (int j = 0; j < mat.Count; j++)
                     {
                         _inventorySystem.RemoveItems(mat.Material);
                     }
@@ -71,18 +87,19 @@ public class CraftSystem
         }
         else
         {
-            Debug.Log("недостаточно материалов!");
+            NotEnoughMaterials?.Invoke();
         }
 
-        AwakeMenu();
+        Count = 1;
         Crafted?.Invoke();
+       // Debug.Log("Crafted");
     }
 
     private bool EnoughMaterials()
     {
         FillAllAvalibaleMaterials();
 
-        foreach (var mat in _activeDrawing.DrawingComponents)
+        foreach (var mat in ActiveDrawing.DrawingComponents)
         {
             if (mat.Count * Count > TakeMaterials(mat.Material))
             {
