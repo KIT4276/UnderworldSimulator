@@ -8,13 +8,16 @@ public class TasksHandler: BaseHandler
 
     public List<Task> CompletedTasks { get; private set; }
 
-    public TasksHandler(TasksData tasksData, GuestsSystem guestsSystem)
+    public TasksHandler(TasksData tasksData, GuestsSystem guestsSystem, MilestoneSystem milestoneSystem)
     {
         _guestsSystem = guestsSystem;
+        _milestoneSystem = milestoneSystem;
         AvailableList = new();
         CompletedTasks = new();
 
         _all = tasksData.Tasks;
+
+        milestoneSystem.Change += CheckAvalible;
 
         UpdateAvailable();
         UpdateCompleted();
@@ -29,7 +32,6 @@ public class TasksHandler: BaseHandler
     private List<Task> FindAvailableTaskByGuest(Guest guest)
     {
         List<Task> guestsTasks = new();
-        //Debug.Log(AvailableList.Count);
         foreach (BaseHandledReward task in AvailableList)
         {
             Debug.Log(task);
@@ -53,6 +55,5 @@ public class TasksHandler: BaseHandler
                 AvailableList.Remove(task);
             }
         }
-        //Debug.Log("Completed Tasks: " + CompletedTasks.Count);
     }
 }
