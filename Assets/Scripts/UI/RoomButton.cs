@@ -24,6 +24,7 @@ public class RoomButton : MonoBehaviour
         CheckGuest();
 
         _room.CheckIn += CheckGuest;
+        _room.Evicted += CheckGuest;
     }
 
     private void CheckGuest()
@@ -43,5 +44,10 @@ public class RoomButton : MonoBehaviour
     {
         _system.OnRoomSelected(_room);
         
+    }
+
+    private void OnDestroy()
+    {
+        _room.CheckIn -= CheckGuest;
     }
 }

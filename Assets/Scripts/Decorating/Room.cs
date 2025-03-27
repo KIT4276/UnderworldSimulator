@@ -17,6 +17,7 @@ public class Room
     public event Action<Room> ChangeParameter;
     public event Action<Room> RoomSelected;
     public event Action CheckIn;
+    public event Action Evicted;
 
     public Room(string name, SetOfRoomParameters setOfParameters, ClickHandler clickHandler, Sprite icon, int id)
     {
@@ -46,6 +47,7 @@ public class Room
         Guest = null;
         // Debug.Log(Name + " is Vacate");
         ChangeParameter?.Invoke(this);
+        Evicted?.Invoke();
     }
 
     private void OnRoomSelected()
