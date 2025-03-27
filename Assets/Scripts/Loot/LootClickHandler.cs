@@ -1,12 +1,25 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class LootClickHandler : MonoBehaviour
 {
     [SerializeField] private LootSlot _lootSlot;
-   
+    [SerializeField] private InputActionReference _E_pressedAction;
+
 
     [Inject] private LootSystem _lootSystem;
+
+    private void Start()
+    {
+        _E_pressedAction.action.started += OnEPressed;
+    }
+
+    private void OnEPressed(InputAction.CallbackContext context)
+    {
+        OnTakeAllClick();
+    }
 
     public void OntakeClick()
     {
@@ -26,5 +39,10 @@ public class LootClickHandler : MonoBehaviour
             _lootSystem.TakeLootToInventory(_lootSlot.TakeLastItem());
         }
         _lootSystem.AllIsTacen();
+    }
+
+    private void OnDestroy()
+    {
+        _E_pressedAction.action.performed -= OnEPressed;
     }
 }
