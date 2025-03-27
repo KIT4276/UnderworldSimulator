@@ -15,10 +15,15 @@ public class RoomButton : MonoBehaviour
 
     [Inject] private RoomsSystem _system;
 
+    private void Start()
+    {
+        _name.gameObject.SetActive(true);   
+    }
+
     public void FillButton(Room room)
     {
         _room = room;
-        _name.text = room.ID.ToString();
+        //_name.text = room.ID.ToString();
         _icon.sprite = room.Icon;
 
         CheckGuest();
