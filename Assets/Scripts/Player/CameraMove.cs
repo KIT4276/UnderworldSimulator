@@ -117,7 +117,7 @@ public class CameraMove : BaseMovable
     public void MoveTo(float x, float y)
     {
         base.Mobilize();
-        _manualCMVCamera.transform.DOMove( new Vector3(x, y, transform.position.z), _moveTime);
+        _manualCMVCamera.transform.DOMove(new Vector3(x, y, transform.position.z), _moveTime);
     }
 
     public override void Mobilize()
@@ -130,17 +130,24 @@ public class CameraMove : BaseMovable
         _followCMVCamera.Priority = 0;
     }
 
-    private  void OnChangeState(IExitableState state)
+    private void OnChangeState(IExitableState state)
     {
-        if(state is DecorationState || state is WorkbenchState )
+        if ((state is DecorationState && _stateMachine.PredioslyState is WorkbenchState) ||
+            (state is WorkbenchState && _stateMachine.PredioslyState is DecorationState))
+        {
+
+            return;
+        }
+
+        if (state is DecorationState || state is WorkbenchState)
         {
             Mobilize();
         }
-        else if( state is CraftState)
+        else if (state is CraftState)
         {
             base.Immobilize();
         }
-        else 
+        else
         {
             Immobilize();
         }
