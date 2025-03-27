@@ -21,6 +21,7 @@ public class RoomMenu : MonoBehaviour
     [Space]
     [SerializeField] private GuestMenu _guestMenu;
     [SerializeField] private GameObject _roomRatingPanel;
+    [SerializeField] private GameObject _bottomRoomsPanel;
     [Space]
     [SerializeField] private RoomButton[] _roomButtons;
 
@@ -36,11 +37,6 @@ public class RoomMenu : MonoBehaviour
         FillButtons();
     }
 
-    //public void SwitchUpRoom()
-    //{
-    //    _roomsSystem.SwitchUpRoom();
-    //}
-
     private void FillButtons()
     {
         for (int i = 0; i < _roomsSystem.Rooms.Count; i++)
@@ -52,17 +48,20 @@ public class RoomMenu : MonoBehaviour
 
     private void OnChangeState(IExitableState state)
     {
-        if (state is WorkbenchState || state is DecorationState)
-        {
-            // _roomRatingPanel.SetActive(true);
-            //_roomsSystem.SwitchUpRoom();
+        //if (state is WorkbenchState || state is DecorationState)
+        //{
+        //    _roomRatingPanel.SetActive(false);
 
-            //Debug.Log(state);
+        //}
+        //else
+        //{
+        //    _roomRatingPanel.SetActive(false);
+        //}
 
-        }
-        else
+        if(!(state is WorkbenchState))
         {
             _roomRatingPanel.SetActive(false);
+            _bottomRoomsPanel.SetActive(false);
         }
     }
 

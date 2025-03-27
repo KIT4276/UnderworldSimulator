@@ -8,7 +8,8 @@ public class WorkbenchSystem : MonoBehaviour
     [SerializeField] private GameObject _workbenchPanel;
     [SerializeField] private ButtonClickChangeImage[] buttonsClick;
     [SerializeField] private GameObject _warningSign;
-    [SerializeField] private RoomMenu _roomRating;
+    [SerializeField] private GameObject _bottomRoomsPanel;
+    [SerializeField] private GameObject _roomRatingPanel;
     [SerializeField] private GuestMenu _guestMenu;
 
 
@@ -32,7 +33,8 @@ public class WorkbenchSystem : MonoBehaviour
         _inventory.gameObject.SetActive(false);
         _workbenchPanel.SetActive(false);
         _warningSign.SetActive(false);
-        _roomRating.gameObject.SetActive(false);
+        _roomRatingPanel.SetActive(false);
+        _bottomRoomsPanel.SetActive(false);
         _guestMenu.gameObject.SetActive(false);
 
         foreach (var button in buttonsClick)
@@ -58,8 +60,8 @@ public class WorkbenchSystem : MonoBehaviour
 
     public void OnExitWorkbench()
     {
-        Debug.Log("OnExitWorkbench");
-        _roomRating.gameObject.SetActive(false);
+        //Debug.Log("OnExitWorkbench");
+        
         Exit?.Invoke();
     }
 
@@ -98,17 +100,24 @@ public class WorkbenchSystem : MonoBehaviour
     {
         _inventory.gameObject.SetActive(true);
         _inventory.ActivateInventory();
+
+        _roomRatingPanel.gameObject.SetActive(false);
+        _bottomRoomsPanel.gameObject.SetActive(false);
     }
 
     private void DeActivateInventory()
     {
         _inventory.gameObject.SetActive(false);
+
+        //_roomRatingPanel.gameObject.SetActive(true);
+        //_bottomRoomsPanel.gameObject.SetActive(true);
     }
 
     private void ActivateWorkbench()
     {
         _workbenchPanel.SetActive(true);
-        _roomRating.gameObject.SetActive(true);
+        _roomRatingPanel.gameObject.SetActive(true);
+        _bottomRoomsPanel.gameObject.SetActive(true);
 
         foreach (var button in buttonsClick)
         {
