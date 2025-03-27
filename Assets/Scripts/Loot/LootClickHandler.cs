@@ -10,6 +10,7 @@ public class LootClickHandler : MonoBehaviour
 
 
     [Inject] private LootSystem _lootSystem;
+    [Inject] private StateMachine _stateMachine;
 
     private void Start()
     {
@@ -18,7 +19,10 @@ public class LootClickHandler : MonoBehaviour
 
     private void OnEPressed(InputAction.CallbackContext context)
     {
-        OnTakeAllClick();
+        if (_stateMachine.ActiveState is LootState)
+        {
+            OnTakeAllClick();
+        }
     }
 
     public void OntakeClick()
