@@ -7,6 +7,7 @@ public class LootClickHandler : MonoBehaviour
 {
     [SerializeField] private LootSlot _lootSlot;
     [SerializeField] private InputActionReference _E_pressedAction;
+    private CraftLoot _craftLoot;
 
 
     [Inject] private LootSystem _lootSystem;
@@ -27,13 +28,17 @@ public class LootClickHandler : MonoBehaviour
 
     public void OntakeClick()
     {
-        //_lootSystem.TakeLootToInventory(_lootSlot.TakeLastItem());
+        BaseItem takenLoot = _lootSlot.TakeLastItem();
+        _lootSystem.TakeLootToInventory(takenLoot);
 
-        //if (_lootSlot.Loots.Count <= 0)
-        //{
-        //   // Debug.Log(_lootSlot.Loots.Count);
-        //    _lootSystem.AllIsTacen();
-        //}
+        _craftLoot.TakeItem(((Item)takenLoot).LootType, 1);
+
+
+        if (_lootSlot.Loots.Count <= 0)
+        {
+            // Debug.Log(_lootSlot.Loots.Count);
+            _lootSystem.AllIsTacen();
+        }
     }
 
     public void OnTakeAllClick()
@@ -48,5 +53,10 @@ public class LootClickHandler : MonoBehaviour
     private void OnDestroy()
     {
         _E_pressedAction.action.performed -= OnEPressed;
+    }
+
+    public void AddCraftLoot(CraftLoot craftLoot)
+    {
+        _craftLoot = craftLoot;
     }
 }

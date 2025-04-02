@@ -1,35 +1,46 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
-public abstract class LootSettings /*: MonoBehaviour*/
+public abstract class LootSettings 
 {
-    //[SerializeField] private Item _loot;
     [SerializeField] protected int _count;
-
 
     public abstract Item Loot { get; }
     public int Count { get => _count; }
+
+   
 }
 
 [Serializable]
 public class CraftLootSettings : LootSettings
 {
     [SerializeField] private CraftItem _loot;
-    //[SerializeField] private int _count;
 
+    public int CurrentCount { get; private set; }
     public override Item Loot => _loot;
+    
+    public void Init()
+    {
+        CurrentCount = _count;
+    }
 
-    //public int Count => _count;
+    public void DecreaseCount(int value)
+    {
+        CurrentCount -= value;
+    }
+
+    public void RestartCount()
+    {
+        CurrentCount = _count;
+    }
 }
 
 [Serializable]
 public class QuestsLootSettings : LootSettings
 {
     [SerializeField] private QuestsItem _loot;
-   // [SerializeField] private int _count;
 
     public override Item Loot => _loot;
-
-   // public int Count => _count;
 }
