@@ -131,11 +131,11 @@ public class Decor : MonoBehaviour, BaseItem
         DecorPlacedAction?.Invoke();
         AllowActions();
 
-        foreach (var param in _parameters.Parameters)
-        {
-            Debug.Log(param.ParameterType);
-            Debug.Log(param.Value);
-        }
+        //foreach (var param in _parameters.Parameters)
+        //{
+        //    Debug.Log(param.ParameterType);
+        //    Debug.Log(param.Value);
+        //}
     }
 
     public void SetRotationState(RotationState rotationState)

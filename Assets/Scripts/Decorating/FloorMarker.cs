@@ -86,6 +86,8 @@ public class RoomParameter
     public RoomParameterType ParameterType { get => _type; }
     public int Value { get => _value; }
 
+    public string Name {  get => _name; }
+
     public RoomParameter(RoomParameterType type, int value)
     {
         _type = type;

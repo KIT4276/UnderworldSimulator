@@ -35,7 +35,6 @@ public class CheatCodes
 
     private void AddAllDecor(InputAction.CallbackContext context)
     {
-        Debug.Log("AddAllDecor");
 
         for (int i = 0; i < _inventory.InventorySlots.Length; i++)
         {

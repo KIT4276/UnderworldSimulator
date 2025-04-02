@@ -6,27 +6,24 @@ public class Room
 {
     private ClickHandler _clickHandler;
     private readonly RoomsSystem _roomsSystem;
-   // private SetOfRoomParameters _startSetOfParameters;
 
-    public List<Decor> InstalledDecor { get; private set; }
     public string Name { get; private set; }
-    public SetOfRoomParameters SetOfParameters { get; private set; }
-    public Guest Guest { get; private set; }
     public Sprite Icon { get; private set; }
     public int ID { get; private set; }
 
-   // public event Action<Room> ChangeParameter;
-  // public event Action<Room> RoomSelected;
+    public List<Decor> InstalledDecor { get; private set; }
+    public SetOfRoomParameters SetOfParameters { get; private set; }
+    public Guest Guest { get; private set; }
+
     public event Action CheckIn;
     public event Action Evicted;
 
-    public Room(string name,/* SetOfRoomParameters setOfParameters,*/ ClickHandler clickHandler, 
+    public Room(string name, ClickHandler clickHandler, 
         Sprite icon, int id, RoomsSystem roomsSystem)
     {
         InstalledDecor = new();
 
         Name = name;
-       // _startSetOfParameters = setOfParameters;
         SetOfParameters = new();
         _clickHandler = clickHandler;
         UpdateParameters();
@@ -34,14 +31,11 @@ public class Room
         Icon = icon;
         ID = id;
         _roomsSystem = roomsSystem;
-        //ShowParameters;
     }
 
     public void CheckInTheRoom(Guest guest)
     {
         Guest = guest;
-        //Debug.Log(Name + " is CheckedIn");
-        //ChangeParameter?.Invoke(this);
         _roomsSystem.OnRoomsParamsChanged(this);
         CheckIn?.Invoke();
     }
@@ -81,11 +75,6 @@ public class Room
         {
             param.Clear();
         }
-
-        //foreach (var param in _startSetOfParameters.Parameters)
-        //{
-        //    SetOfParameters.IncreaseParameterByType(param);
-        //}
 
         foreach (Decor decor in InstalledDecor)
         {
