@@ -25,16 +25,24 @@ public class RoomMenu : MonoBehaviour
     [Space]
     [SerializeField] private RoomButton[] _roomButtons;
 
-    [Inject] private StateMachine _machine;
-    [Inject] private RoomsSystem _roomsSystem;
+    private StateMachine _machine;
+    private RoomsSystem _roomsSystem;
+
+    [Inject]
+    private void Construct(StateMachine machine, RoomsSystem roomsSystem)
+    {
+        _machine = machine;
+        _roomsSystem = roomsSystem;
+    }
 
     public void Start()
     {
         _roomsSystem.RoomsParamsChanged += UpdateParams;
         _roomsSystem.RoomSelected += UpdateParams;
         _machine.ChangeStateAction += OnChangeState;
-        _roomRatingPanel.SetActive(false);
-        FillButtons();
+        //_roomRatingPanel.SetActive(false);
+        //FillButtons();
+        _roomsSystem.Inited += FillButtons;
     }
 
     private void FillButtons()
@@ -58,7 +66,13 @@ public class RoomMenu : MonoBehaviour
         //    _roomRatingPanel.SetActive(false);
         //}
 
-        if(!(state is WorkbenchState))
+        //if(!(state is WorkbenchState) || !(state is DecorationState))
+        //{
+        //    _roomRatingPanel.SetActive(false);
+        //    _bottomRoomsPanel.SetActive(false);
+        //}
+
+        if (state is GameLoopState)
         {
             _roomRatingPanel.SetActive(false);
             _bottomRoomsPanel.SetActive(false);

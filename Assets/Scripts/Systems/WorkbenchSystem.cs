@@ -33,8 +33,8 @@ public class WorkbenchSystem : MonoBehaviour
         _inventory.gameObject.SetActive(false);
         _workbenchPanel.SetActive(false);
         _warningSign.SetActive(false);
-        _roomRatingPanel.SetActive(false);
-        _bottomRoomsPanel.SetActive(false);
+        //_roomRatingPanel.SetActive(false);
+        //_bottomRoomsPanel.SetActive(false);
         _guestMenu.gameObject.SetActive(false);
 
         foreach (var button in buttonsClick)
@@ -101,8 +101,8 @@ public class WorkbenchSystem : MonoBehaviour
         _inventory.gameObject.SetActive(true);
         _inventory.ActivateInventory();
 
-        _roomRatingPanel.gameObject.SetActive(false);
-        _bottomRoomsPanel.gameObject.SetActive(false);
+        _roomRatingPanel.gameObject.SetActive(true);
+        _bottomRoomsPanel.gameObject.SetActive(true);
     }
 
     private void DeActivateInventory()

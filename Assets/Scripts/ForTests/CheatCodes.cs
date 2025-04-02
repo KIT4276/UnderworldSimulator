@@ -42,14 +42,5 @@ public class CheatCodes
             if(i < _decors.Length)
             _inventory.InventorySlots[i].SetItem(_decors[i]);
         }
-
-        //foreach (var slot in _inventory.InventorySlots)
-        //{
-            
-            
-        //    //var test = slot.GetComponent<TestInventorySlot>();
-        //    //if (test != null)
-        //    //    test.InitTestSlot();
-        //}
     }
 }

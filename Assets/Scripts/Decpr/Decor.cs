@@ -130,6 +130,12 @@ public class Decor : MonoBehaviour, BaseItem
         _decorationSystem.InstanriateDecor(this);
         DecorPlacedAction?.Invoke();
         AllowActions();
+
+        foreach (var param in _parameters.Parameters)
+        {
+            Debug.Log(param.ParameterType);
+            Debug.Log(param.Value);
+        }
     }
 
     public void SetRotationState(RotationState rotationState)
