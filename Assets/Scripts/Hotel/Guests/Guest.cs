@@ -32,6 +32,8 @@ public class Guest : BaseHandledReward
         }
     }
 
+   
+
     public void CheckInGuest(Room selectedRoom)
     {
         if (Room != null)

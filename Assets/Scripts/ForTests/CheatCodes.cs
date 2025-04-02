@@ -12,12 +12,22 @@ public class CheatCodes
 
     private readonly Decor[] _decors;
     private readonly InventorySystem _inventory;
+    private readonly DrawingData _drawingData;
+    private readonly GuestsStaticData _guestsData;
+    //private readonly CraftSystem _craftSystem;
+    private bool _drawingsInited;
 
-    public CheatCodes(InventorySystem inventory, InputActionReference test_1,
+    public CheatCodes(InventorySystem inventory, DrawingData drawingData, GuestsStaticData guestsData, /*CraftSystem craftSystem,*/
+
+        InputActionReference test_1,
         InputActionReference test_2, InputActionReference test_3,
         InputActionReference test_4, InputActionReference test_5, Decor[] decors)
     {
         _inventory = inventory;
+        _drawingData = drawingData;
+        _guestsData = guestsData;
+        //_craftSystem = craftSystem;
+
         _test_1 = test_1;
         _test_2 = test_2;
         _test_3 = test_3;
@@ -31,6 +41,32 @@ public class CheatCodes
     private void Subscribe()
     {
         _test_1.action.started += AddAllDecor;
+        _test_2.action.started += AddAllDrawings;
+        _test_3.action.started += AddAllGuests;
+    }
+
+    private void AddAllGuests(InputAction.CallbackContext context)
+    {
+        foreach (var guest in _guestsData.Guests)
+        {
+            if (!guest.IsAvailable)
+                guest.MakeAvailable();
+        }
+    }
+
+    private void AddAllDrawings(InputAction.CallbackContext context)
+    {
+        if (!_drawingsInited)
+        {
+            foreach (var drawing in _drawingData.Drawings)
+            {
+                if (!drawing.IsAvailable /*!_craftSystem.AvailableDrawings.Contains(drawing)*/)
+                {
+                    drawing.MakeAvailable();
+                }
+            }
+            _drawingsInited = true;
+        }
     }
 
     private void AddAllDecor(InputAction.CallbackContext context)
@@ -38,8 +74,8 @@ public class CheatCodes
 
         for (int i = 0; i < _inventory.InventorySlots.Length; i++)
         {
-            if(i < _decors.Length)
-            _inventory.InventorySlots[i].SetItem(_decors[i]);
+            if (i < _decors.Length)
+                _inventory.InventorySlots[i].SetItem(_decors[i]);
         }
     }
 }

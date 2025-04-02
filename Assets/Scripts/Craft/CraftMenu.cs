@@ -134,5 +134,7 @@ public class CraftMenu : MonoBehaviour
         _craftSystem.Crafted -= ResetCraftMenu;
         _craftSystem.DrawingAdded -= FillSlots;
         _craftSystem.NotEnoughMaterials -= NotEnough;
+
+        _craftSystem.OnDestroy();
     }
 }

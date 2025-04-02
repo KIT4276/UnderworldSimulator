@@ -15,7 +15,12 @@ public abstract class BaseHandledReward
     public void MakeAvailable()
     {
         IsAvailable = true;
-        //Debug.Log("MakeAvailable " + Name);
+       // Debug.Log("MakeAvailable " + Name);
         BecameAvailable?.Invoke(this);
+    }
+
+    public void MakeUnavailable()
+    {
+        IsAvailable = false;
     }
 }
