@@ -65,17 +65,17 @@ public class CameraMove : BaseMovable
                 _manualCMVCamera.transform.position += new Vector3(0, 0, deltaZ) * _moveSpeed * Time.deltaTime;
             }
 
-            if (Camera.main.transform.position.z >= _maxGameLoopZoom && _scrollValue >= 0)
+            if (Camera.main.transform.position.z >= _maxDecoratingZoom && _scrollValue >= 0)
             {
                 _manualCMVCamera.transform.position =
-                    new Vector3(FindCameraPos(_manualCMVCamera).x, FindCameraPos(_manualCMVCamera).y, _maxGameLoopZoom);
+                    new Vector3(FindCameraPos(_manualCMVCamera).x, FindCameraPos(_manualCMVCamera).y, _maxDecoratingZoom);
 
 
             }
-            else if (Camera.main.transform.position.z <= _minGameLoopZoom && _scrollValue <= 0)
+            else if (Camera.main.transform.position.z <= _mainDecoratingZoom && _scrollValue <= 0)
             {
                 _manualCMVCamera.transform.position =
-                   new Vector3(FindCameraPos(_manualCMVCamera).x, FindCameraPos(_manualCMVCamera).y, _minGameLoopZoom);
+                   new Vector3(FindCameraPos(_manualCMVCamera).x, FindCameraPos(_manualCMVCamera).y, _mainDecoratingZoom);
             }
 
         }
@@ -83,13 +83,13 @@ public class CameraMove : BaseMovable
         {
             _positionComposer.CameraDistance -= _scrollValue * (_scrollSpeed / 10);
 
-            if (Camera.main.transform.position.z >= _maxDecoratingZoom && _scrollValue >= 0)
+            if (Camera.main.transform.position.z >= _maxGameLoopZoom && _scrollValue >= 0)
             {
-                _positionComposer.CameraDistance = -_maxDecoratingZoom;
+                _positionComposer.CameraDistance = -_maxGameLoopZoom;
             }
-            else if (Camera.main.transform.position.z < _mainDecoratingZoom && _scrollValue <= 0)
+            else if (Camera.main.transform.position.z < _minGameLoopZoom && _scrollValue <= 0)
             {
-                _positionComposer.CameraDistance = -_mainDecoratingZoom;
+                _positionComposer.CameraDistance = -_minGameLoopZoom;
             }
         }
 
