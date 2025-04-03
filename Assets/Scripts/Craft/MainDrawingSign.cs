@@ -42,7 +42,7 @@ public class MainDrawingSign : MonoBehaviour
             int i = 0;
             for (; i < _craftSystem.ActiveDrawing.DrawingComponents.Length; i++)
             {
-                _mainDrawingFields[i].Material.text = _craftSystem.ActiveDrawing.DrawingComponents[i].Material.ToString();
+                _mainDrawingFields[i].Material.text = _materialsData.GetMaterialsHint(_craftSystem.ActiveDrawing.DrawingComponents[i].Material)/*.ToString()*/;
                 _mainDrawingFields[i].MaterialsCount.text = (_craftSystem.ActiveDrawing.DrawingComponents[i].Count * _craftSystem.Count).ToString();
                 _mainDrawingFields[i].MaterialsIcon.gameObject.SetActive(true);
                 _mainDrawingFields[i].MaterialsIcon.sprite = _materialsData.GetMaterialsIcon(_craftSystem.ActiveDrawing.DrawingComponents[i].Material);
