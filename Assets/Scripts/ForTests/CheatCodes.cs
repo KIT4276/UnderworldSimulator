@@ -14,10 +14,9 @@ public class CheatCodes
     private readonly InventorySystem _inventory;
     private readonly DrawingData _drawingData;
     private readonly GuestsStaticData _guestsData;
-    //private readonly CraftSystem _craftSystem;
     private bool _drawingsInited;
 
-    public CheatCodes(InventorySystem inventory, DrawingData drawingData, GuestsStaticData guestsData, /*CraftSystem craftSystem,*/
+    public CheatCodes(InventorySystem inventory, DrawingData drawingData, GuestsStaticData guestsData,
 
         InputActionReference test_1,
         InputActionReference test_2, InputActionReference test_3,
@@ -26,14 +25,13 @@ public class CheatCodes
         _inventory = inventory;
         _drawingData = drawingData;
         _guestsData = guestsData;
-        //_craftSystem = craftSystem;
+        _decors = decors;
 
         _test_1 = test_1;
         _test_2 = test_2;
         _test_3 = test_3;
         _test_4 = test_4;
         _test_5 = test_5;
-        _decors = decors;
 
         Subscribe();
     }

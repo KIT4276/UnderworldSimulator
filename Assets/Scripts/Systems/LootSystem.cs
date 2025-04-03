@@ -6,10 +6,10 @@ using Zenject;
 
 public class LootSystem : MonoBehaviour
 {
-   // [SerializeField] private InputActionReference _escapeAction;
+    // [SerializeField] private InputActionReference _escapeAction;
     [SerializeField] private GameObject _menu;
     [SerializeField] private LootSlot[] _slots;
-    
+
 
     [Inject] private InventorySystem _inventorySystem;
     [Inject] private StateMachine _stateMachine;
@@ -104,22 +104,24 @@ public class LootSystem : MonoBehaviour
         _interactiveObject.Despawn();
     }
 
-    public void FillSlot(Item loot, int count, LootInteract interactiveObject, CraftLoot craftLoot)
+    public void CleanAllSlots()
     {
-        foreach(var slot in _slots)
-        {
-            slot.ClearSlot();
-            slot.LootClickHandler.AddCraftLoot(craftLoot);
-        }
-        
         foreach (var slot in _slots)
         {
-            
+            slot.ClearSlot();
+        }
+    }
 
+    public void FillSlot(Item loot, int count, LootInteract interactiveObject, CraftLoot craftLoot)
+    {
+
+        foreach (var slot in _slots)
+        {
             if (!slot.IsOccupied)
             {
                 for (int i = 0; i < count; i++)
                 {
+                    slot.LootClickHandler.AddCraftLoot(craftLoot);
                     loot.Init(_materials);
                     slot.SetItem(loot);
                 }

@@ -9,7 +9,7 @@ public class LootInteract : InteractableObstacle
     [SerializeField] protected GameObject _progressBar;
     [SerializeField] protected Image _bar;
     [SerializeField] protected CraftLoot _craftLoot;
-   // [SerializeField] protected QuestsLoot _questsLoot;
+    // [SerializeField] protected QuestsLoot _questsLoot;
     [SerializeField] protected GameObject _sprite;
     [SerializeField] private Collider2D _interactableCollider;
     [SerializeField] private GoParticleSystem _goParticleSystem;
@@ -60,14 +60,18 @@ public class LootInteract : InteractableObstacle
             _hero.GetHero.OnLoot();
             _interactionCoroutine = StartCoroutine(InteractionProgress());
         }
-            foreach (var lootSetting in _craftLoot.LootSettings)
-            {
-                FillLoot(lootSetting);
-            }
+
+        _lootSystem.CleanAllSlots();
+
+        foreach (var lootSetting in _craftLoot.LootSettings)
+        {
+            FillLoot(lootSetting);
+        }
     }
 
     protected virtual void FillLoot(LootSettings lootSetting)
     {
+
         _lootSystem.FillSlot(lootSetting.Loot, ((CraftLootSettings)lootSetting).CurrentCount, this, _craftLoot);
     }
 
