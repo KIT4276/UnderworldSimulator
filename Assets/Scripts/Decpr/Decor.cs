@@ -220,6 +220,14 @@ public class Decor : MonoBehaviour, BaseItem
             _isCanDecorate = true;
             _canPlace = true;
         }
+        //else if (state is CraftState)
+        //{
+        //    if (IsDragging)
+        //    {
+        //        Debug.Log("TryToRemoveDecor");
+        //        _decorationSystem.TryToRemoveDecor(this);
+        //    }
+        //}
         else
         {
             _isCanDecorate = false;
@@ -227,6 +235,11 @@ public class Decor : MonoBehaviour, BaseItem
     }
 
     protected void OnCancel(InputAction.CallbackContext context)
+    {
+        GetRidOfDecor();
+    }
+
+    protected void GetRidOfDecor()
     {
         if (!IsDragging) return;
 

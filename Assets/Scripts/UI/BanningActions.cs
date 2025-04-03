@@ -14,6 +14,7 @@ public class BanningActions : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         
         if (_cameraMove == null)
             FindCamera();
+        if (_cameraMove == null) return;
 
         _cameraMove.SetCanZoom(false);
     }
@@ -21,6 +22,7 @@ public class BanningActions : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerExit(PointerEventData eventData)
     {
         _decorationSystem.AllowActions();
+        if(_cameraMove == null) return; 
         _cameraMove.SetCanZoom(true);
     }
 
