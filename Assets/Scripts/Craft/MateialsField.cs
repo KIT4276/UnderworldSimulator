@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using DG.Tweening.Core.Easing;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 //[Serializable]
@@ -10,10 +12,41 @@ public class MateialsField : MonoBehaviour
     [Space]
     [SerializeField] private TMP_Text _availableCount;
     [SerializeField] private GameObject _slash;
+    [Space]
+    [SerializeField] private Image _checkImage;
+    [SerializeField] private Sprite _availableIcon;
+    [SerializeField] private Sprite _notAvailableIcon;
 
-    public TMP_Text Material { get => _nameText; }
-    public TMP_Text MaterialsCount { get => _neededCount; }
-    public Image MaterialsIcon { get => _materialsIcon; }
-    public TMP_Text AvailableCount { get => _availableCount; }
-    public GameObject Slash {  get => _slash; }
+    public void Fill(string matName, Sprite matIcon, float neededCount, float availableCount)
+    {
+        _materialsIcon.gameObject.SetActive(true);
+        _checkImage.gameObject.SetActive(true);
+        _slash.SetActive(true);
+
+        _nameText.text = matName;
+        _materialsIcon.sprite = matIcon;
+        _availableCount.text = availableCount.ToString();
+        _neededCount.text = neededCount.ToString();
+
+        if (availableCount >= neededCount)
+        {
+            _checkImage.sprite = _availableIcon;
+        }
+        else
+        {
+            _checkImage.sprite = _notAvailableIcon;
+        }
+
+    }
+
+    public void FillEmpty()
+    {
+        _materialsIcon.gameObject.SetActive(false);
+        _checkImage.gameObject.SetActive(false);
+        _slash.SetActive(false);
+
+        _nameText.text = string.Empty;
+        _availableCount.text = string.Empty;
+        _neededCount.text = string.Empty;
+    }
 }
