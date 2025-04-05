@@ -26,7 +26,7 @@ public class StatesTransitor
         playerInput.actions["Escape"].performed += OnEscape;
         playerInput.actions["Inventory"].performed += OnInventory;
         _workbenchSystem.InventoryButtonClick += ToDecorateState;
-        _workbenchSystem.CraftButtonClick += ToCraftState;
+        _workbenchSystem.CraftButtonClick += ConditionalToCraftState;
 
         _workbenchSystem.Exit += Escape;
         _inventorySystem.Exit += Escape;
@@ -109,11 +109,25 @@ public class StatesTransitor
         }
     }
 
+    private void ConditionalToCraftState()
+    {
+        if (_decorHolder.ActiveDecor == null)
+        {
+            ToCraftState();
+        }
+        else
+        {
+            Debug.Log("else");
+            _workbenchSystem.ShowSign();
+        }
+    }
+
 
     private void ToCraftState()
     {
         _stateMachine.Enter<CraftState>();
     }
+
     private void ToDecorateState()
     {
         _stateMachine.Enter<DecorationState>();

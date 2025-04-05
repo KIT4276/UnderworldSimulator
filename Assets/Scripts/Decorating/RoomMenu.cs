@@ -24,41 +24,40 @@ public class RoomMenu : MonoBehaviour
     [SerializeField] private GameObject _bottomRoomsPanel;
     [Space]
     [SerializeField] private RoomButton[] _roomButtons;
+    [Space]
+    [SerializeField] private DecorInRoom _decorInRoom;
+    
 
-    [Inject] private StateMachine _machine;
-    [Inject] private RoomsSystem _roomsSystem;
+    private StateMachine _machine;
+    private RoomsSystem _roomsSystem;
+
+    [Inject]
+    private void Construct(StateMachine machine, RoomsSystem roomsSystem)
+    {
+        _machine = machine;
+        _roomsSystem = roomsSystem;
+    }
 
     public void Start()
     {
         _roomsSystem.RoomsParamsChanged += UpdateParams;
         _roomsSystem.RoomSelected += UpdateParams;
         _machine.ChangeStateAction += OnChangeState;
-        _roomRatingPanel.SetActive(false);
-        FillButtons();
+        _roomsSystem.Inited += FillButtons;
     }
 
     private void FillButtons()
     {
         for (int i = 0; i < _roomsSystem.Rooms.Count; i++)
         {
-            //Debug.Log(_roomButtons[i].name);
             _roomButtons[i].FillButton(_roomsSystem.Rooms[i]);
         }
     }
 
     private void OnChangeState(IExitableState state)
     {
-        //if (state is WorkbenchState || state is DecorationState)
-        //{
-        //    _roomRatingPanel.SetActive(false);
 
-        //}
-        //else
-        //{
-        //    _roomRatingPanel.SetActive(false);
-        //}
-
-        if(!(state is WorkbenchState))
+        if (state is GameLoopState)
         {
             _roomRatingPanel.SetActive(false);
             _bottomRoomsPanel.SetActive(false);
@@ -77,7 +76,7 @@ public class RoomMenu : MonoBehaviour
         _guestMenu.gameObject.SetActive(false);
     }
 
-    private void UpdateParams(Room room)
+    public void UpdateParams(Room room)
     {
         _roomRatingPanel.SetActive(true);
         _name.text = room.Name;
@@ -102,6 +101,11 @@ public class RoomMenu : MonoBehaviour
 
         _nameOfParameter_3.text = RoomParameterNames.Names[room.SetOfParameters.Parameters[2].ParameterType];
         _parameter_3.text = room.SetOfParameters.Parameters[2].Value.ToString();
+
+        Decor[] decors = new Decor[room.InstalledDecor.Count]  ;
+        room.InstalledDecor.CopyTo(decors);
+
+        _decorInRoom.Fill(decors);
     }
 
     private void OnDestroy()
@@ -109,5 +113,6 @@ public class RoomMenu : MonoBehaviour
         _roomsSystem.RoomsParamsChanged -= UpdateParams;
         _roomsSystem.RoomSelected -= UpdateParams;
         _machine.ChangeStateAction -= OnChangeState;
+        _roomsSystem.Inited -= FillButtons;
     }
 }

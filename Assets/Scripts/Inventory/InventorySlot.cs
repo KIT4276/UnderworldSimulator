@@ -71,7 +71,6 @@ public class InventorySlot : MonoBehaviour
         Items.Add(item);
         SettingParameters();
         CheckingAndShow();
-
     }
 
     protected void SettingParameters()
@@ -94,7 +93,7 @@ public class InventorySlot : MonoBehaviour
 
     public void ClearSlot()
     {
-        if (Items == null || Items.Count == 0) return;
+        if (Items == null /*|| Items.Count == 0*/) return;
 
         Items.Clear();
         IsOccupied = false;
@@ -137,7 +136,7 @@ public class InventorySlot : MonoBehaviour
 
 public struct InventorySlotClone
 {
-    public BaseItem Item {  get; private set; }
+    public BaseItem Item { get; private set; }
     public int ItemsCount { get; private set; }
 
     public InventorySlotClone(BaseItem item, int itemsCount)

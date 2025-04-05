@@ -33,6 +33,8 @@ public class ClickHandler : MonoBehaviour
         if (IsPointerOverUI(mouseScreenPos)) return;
 
         CheckCamera();
+        if (_camera == null) return;
+
         Ray ray = _camera.ScreenPointToRay(mouseScreenPos);
         RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity, LayerMask.GetMask("Floor"));
 

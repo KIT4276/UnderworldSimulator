@@ -17,7 +17,8 @@ public class CraftMenu : MonoBehaviour
 
     private void Start()
     {
-        _workbenchSystem.CraftButtonClick += OpenCraftMenu;
+        //_workbenchSystem.CraftButtonClick += OpenCraftMenu;//todo to state change
+
         _craftSystem.ChangeCount += UpdateCount;
         _machine.ChangeStateAction += StateChanged;
         _craftSystem.Crafted += ResetCraftMenu;
@@ -118,6 +119,10 @@ public class CraftMenu : MonoBehaviour
         {
             CloseCraftMenu();
         }
+        else
+        {
+            OpenCraftMenu();
+        }
     }
 
     private void ToSelectDrawing(Drawing drawing)
@@ -134,5 +139,7 @@ public class CraftMenu : MonoBehaviour
         _craftSystem.Crafted -= ResetCraftMenu;
         _craftSystem.DrawingAdded -= FillSlots;
         _craftSystem.NotEnoughMaterials -= NotEnough;
+
+        _craftSystem.OnDestroy();
     }
 }

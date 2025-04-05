@@ -32,19 +32,21 @@ public class Guest : BaseHandledReward
         }
     }
 
+   
+
     public void CheckInGuest(Room selectedRoom)
     {
         if (Room != null)
             EvictGuest();
         Room = selectedRoom;
-        Debug.Log("CheckIn " + _name + " " + "to " + Room.Name);
+        //Debug.Log("CheckIn " + _name + " " + "to " + Room.Name);
         Room.CheckInTheRoom(this);
         //TODO effects
     }
 
     public void EvictGuest()
     {
-        Debug.Log("VacateTheRoom " + _name + " " + "to " + Room.Name);
+       // Debug.Log("VacateTheRoom " + _name + " " + "to " + Room.Name);
         Room.VacateTheRoom();
         Room = null;
         //TODO effects

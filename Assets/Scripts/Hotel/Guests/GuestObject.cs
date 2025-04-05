@@ -8,4 +8,9 @@ public class GuestObject : MonoBehaviour
     {
         Guest = guest;
     }
+
+    private void OnDestroy()
+    {
+        Guest.MakeUnavailable();
+    }
 }

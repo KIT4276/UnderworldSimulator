@@ -9,7 +9,7 @@ public class LootInteract : InteractableObstacle
     [SerializeField] protected GameObject _progressBar;
     [SerializeField] protected Image _bar;
     [SerializeField] protected CraftLoot _craftLoot;
-   // [SerializeField] protected QuestsLoot _questsLoot;
+    // [SerializeField] protected QuestsLoot _questsLoot;
     [SerializeField] protected GameObject _sprite;
     [SerializeField] private Collider2D _interactableCollider;
     [SerializeField] private GoParticleSystem _goParticleSystem;
@@ -19,7 +19,6 @@ public class LootInteract : InteractableObstacle
     [Inject] protected StateMachine _machine;
 
     protected Coroutine _interactionCoroutine;
-    protected bool _IsFilled;
 
     protected void Start()
     {
@@ -29,7 +28,6 @@ public class LootInteract : InteractableObstacle
     public virtual void Restart()
     {
         _bar.fillAmount = 0;
-        _IsFilled = false;
         _progressBar.SetActive(false);
     }
 
@@ -47,6 +45,7 @@ public class LootInteract : InteractableObstacle
         _sprite.SetActive(true);
         _interactableCollider.enabled = true;
         Restart();
+        _craftLoot.Restart();
     }
 
     protected override void Interac()
@@ -61,23 +60,19 @@ public class LootInteract : InteractableObstacle
             _hero.GetHero.OnLoot();
             _interactionCoroutine = StartCoroutine(InteractionProgress());
         }
-        if (!_IsFilled)
+
+        _lootSystem.CleanAllSlots();
+
+        foreach (var lootSetting in _craftLoot.LootSettings)
         {
-            foreach (var lootSetting in _craftLoot.LootSettings)
-            {
-                FillLoot(lootSetting);
-            }
-            //foreach (var lootSetting in _questsLoot.LootSettings)
-            //{
-            //    FillLoot(lootSetting);
-            //}
-            _IsFilled = true;
+            FillLoot(lootSetting);
         }
     }
 
     protected virtual void FillLoot(LootSettings lootSetting)
     {
-        _lootSystem.FillSlot(lootSetting.Loot, lootSetting.Count, this);
+
+        _lootSystem.FillSlot(lootSetting.Loot, ((CraftLootSettings)lootSetting).CurrentCount, this, _craftLoot);
     }
 
     protected IEnumerator InteractionProgress()

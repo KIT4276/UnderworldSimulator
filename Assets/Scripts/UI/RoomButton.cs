@@ -14,6 +14,7 @@ public class RoomButton : MonoBehaviour
     private Room _room;
 
     [Inject] private RoomsSystem _system;
+    private bool _inited;
 
     private void Start()
     {
@@ -30,6 +31,7 @@ public class RoomButton : MonoBehaviour
 
         _room.CheckIn += CheckGuest;
         _room.Evicted += CheckGuest;
+        _inited = true;
     }
 
     private void CheckGuest()
@@ -53,6 +55,10 @@ public class RoomButton : MonoBehaviour
 
     private void OnDestroy()
     {
-        _room.CheckIn -= CheckGuest;
+        if (_inited)
+        {
+            _room.CheckIn -= CheckGuest;
+            _room.Evicted -= CheckGuest;
+        }
     }
 }

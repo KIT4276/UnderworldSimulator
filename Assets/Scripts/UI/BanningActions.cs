@@ -14,19 +14,29 @@ public class BanningActions : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         
         if (_cameraMove == null)
             FindCamera();
+        if (_cameraMove == null) return;
 
         _cameraMove.SetCanZoom(false);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (_cameraMove == null)
+            FindCamera();
+        if (_cameraMove == null) return;
+
         _decorationSystem.AllowActions();
         _cameraMove.SetCanZoom(true);
     }
 
     private void FindCamera()
     {
-        _cameraMove = Camera.main.GetComponent<CameraMove>(); //Crutch!!!
+        if (Camera.main == null) return;
+        // _cameraMove = 
+        Camera.main.TryGetComponent<CameraMove>(out _cameraMove);
+
+
+           // Camera.main.GetComponent<CameraMove>(); //Crutch!!!
     }
 
     private void OnDisable()

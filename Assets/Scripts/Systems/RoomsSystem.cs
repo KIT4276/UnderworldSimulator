@@ -34,8 +34,8 @@ public class RoomsSystem
 
         foreach (var floor in _spaceDeterminantor.FloorMarkers)
         {
-            floor.Room.ChangeParameter += OnRoomsParamsChanged;
-            floor.Room.RoomSelected += OnRoomSelected;
+           // floor.Room.ChangeParameter += OnRoomsParamsChanged;
+            //floor.Room.RoomSelected += OnRoomSelected;
 
             Rooms.Add(floor.Room);
             FloorMarkers.Add(floor.Room, floor);
@@ -56,7 +56,7 @@ public class RoomsSystem
         //OnRoomsParamsChanged(room);
     }
 
-    private void OnRoomsParamsChanged(Room room)
+    public void OnRoomsParamsChanged(Room room)
     {
         RoomsParamsChanged?.Invoke(room);
     }

@@ -1,3 +1,4 @@
+using DragonBones;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,9 +6,10 @@ using Zenject;
 
 public class LootSystem : MonoBehaviour
 {
-   // [SerializeField] private InputActionReference _escapeAction;
+    // [SerializeField] private InputActionReference _escapeAction;
     [SerializeField] private GameObject _menu;
     [SerializeField] private LootSlot[] _slots;
+
 
     [Inject] private InventorySystem _inventorySystem;
     [Inject] private StateMachine _stateMachine;
@@ -66,6 +68,11 @@ public class LootSystem : MonoBehaviour
             {
                 slot.Initialize();
             }
+
+            //foreach (var clickHandler in _clickHandlers)
+            //{
+            //    clickHandler.Init(_craftLoot);
+            //}
             _isInited = true;
         }
         OpenMenuAction?.Invoke();
@@ -80,7 +87,6 @@ public class LootSystem : MonoBehaviour
     public void OnCloseMenu()
     {
         CloseMenuAction?.Invoke();
-
     }
 
     private void CloseMenu()
@@ -98,14 +104,24 @@ public class LootSystem : MonoBehaviour
         _interactiveObject.Despawn();
     }
 
-    public void FillSlot(Item loot, int count, LootInteract interactiveObject)
+    public void CleanAllSlots()
     {
+        foreach (var slot in _slots)
+        {
+            slot.ClearSlot();
+        }
+    }
+
+    public void FillSlot(Item loot, int count, LootInteract interactiveObject, CraftLoot craftLoot)
+    {
+
         foreach (var slot in _slots)
         {
             if (!slot.IsOccupied)
             {
                 for (int i = 0; i < count; i++)
                 {
+                    slot.LootClickHandler.AddCraftLoot(craftLoot);
                     loot.Init(_materials);
                     slot.SetItem(loot);
                 }

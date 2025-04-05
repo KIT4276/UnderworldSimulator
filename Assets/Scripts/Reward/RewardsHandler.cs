@@ -14,7 +14,7 @@ public class RewardsHandler
         _guestsStaticData = guestsStaticData;
         _drawingData = drawingData;
         _tasksData = tasksData;
-
+        
         InitRewards(_guestsStaticData.Guests);
         InitRewards(_drawingData.Drawings);
         InitRewards(_tasksData.Tasks);

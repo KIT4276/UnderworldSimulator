@@ -11,8 +11,8 @@ public class WorkbenchSystem : MonoBehaviour
     [SerializeField] private GameObject _bottomRoomsPanel;
     [SerializeField] private GameObject _roomRatingPanel;
     [SerializeField] private GuestMenu _guestMenu;
-
-
+    [SerializeField]private RoomMenu _roomMenu;
+    private RoomsSystem _roomsSystem;
     private DecorHolder _decorHolder;
     private StateMachine _stateMachine;
     private InventorySystem _inventory;
@@ -24,17 +24,19 @@ public class WorkbenchSystem : MonoBehaviour
     public event Action Destroyed;
 
     [Inject]
-    public void Construct(StateMachine stateMachine, InventorySystem inventory, DecorationSystem decorationSystem, DecorHolder decorHolder)
+    public void Construct(StateMachine stateMachine, InventorySystem inventory, DecorationSystem decorationSystem, 
+        DecorHolder decorHolder, RoomsSystem roomsSystem)
     {
-        _decorHolder = decorHolder;
+        _roomsSystem = roomsSystem;
+         _decorHolder = decorHolder;
         _stateMachine = stateMachine;
         _inventory = inventory;
         _decorationSystem = decorationSystem;
         _inventory.gameObject.SetActive(false);
         _workbenchPanel.SetActive(false);
         _warningSign.SetActive(false);
-        _roomRatingPanel.SetActive(false);
-        _bottomRoomsPanel.SetActive(false);
+        //_roomRatingPanel.SetActive(false);
+        //_bottomRoomsPanel.SetActive(false);
         _guestMenu.gameObject.SetActive(false);
 
         foreach (var button in buttonsClick)
@@ -60,8 +62,6 @@ public class WorkbenchSystem : MonoBehaviour
 
     public void OnExitWorkbench()
     {
-        //Debug.Log("OnExitWorkbench");
-        
         Exit?.Invoke();
     }
 
@@ -101,16 +101,15 @@ public class WorkbenchSystem : MonoBehaviour
         _inventory.gameObject.SetActive(true);
         _inventory.ActivateInventory();
 
-        _roomRatingPanel.gameObject.SetActive(false);
-        _bottomRoomsPanel.gameObject.SetActive(false);
+        _roomRatingPanel.gameObject.SetActive(true);
+        _bottomRoomsPanel.gameObject.SetActive(true);
+
+        _roomMenu.UpdateParams(_roomsSystem.SelectedRoom);
     }
 
     private void DeActivateInventory()
     {
         _inventory.gameObject.SetActive(false);
-
-        //_roomRatingPanel.gameObject.SetActive(true);
-        //_bottomRoomsPanel.gameObject.SetActive(true);
     }
 
     private void ActivateWorkbench()

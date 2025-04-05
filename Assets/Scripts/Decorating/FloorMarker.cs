@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(ClickHandler))]
 public class FloorMarker : MonoBehaviour
@@ -11,7 +12,9 @@ public class FloorMarker : MonoBehaviour
     [SerializeField] private Sprite _icon;
     [SerializeField] private PolygonCollider2D _collider;
     [SerializeField] private ClickHandler _clickHandler;
-    [SerializeField] private SetOfRoomParameters _setOfParameters;
+   // [SerializeField] private SetOfRoomParameters _setOfParameters;
+
+    private RoomsSystem _roomsSystem;
 
     public PolygonCollider2D Collider { get => _collider; }
 
@@ -19,9 +22,15 @@ public class FloorMarker : MonoBehaviour
 
     public int ID { get => _id; }
 
+    [Inject]
+    private void Construct(RoomsSystem roomsSystem)
+    {
+        _roomsSystem = roomsSystem;
+    }
+
     public void Init()
     {
-        Room = new(_name, _setOfParameters, _clickHandler, _icon, ID);
+        Room = new(_name, /*_setOfParameters, */_clickHandler, _icon, ID, _roomsSystem);
     }
 
     public void AddDecor(Decor decor)
@@ -76,6 +85,8 @@ public class RoomParameter
 
     public RoomParameterType ParameterType { get => _type; }
     public int Value { get => _value; }
+
+    public string Name {  get => _name; }
 
     public RoomParameter(RoomParameterType type, int value)
     {

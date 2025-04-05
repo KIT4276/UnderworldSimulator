@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TasksHandler: BaseHandler
+public class TasksHandler : BaseHandler
 {
     private readonly GuestsSystem _guestsSystem;
 
@@ -26,7 +26,11 @@ public class TasksHandler: BaseHandler
     public void CheckAvalibleTasks(Room room)
     {
         Guest guest = _guestsSystem.FindGuestByRoom(room);
-        List<Task> guestsTasks = FindAvailableTaskByGuest(guest);
+        if (guest != null)
+        {
+            List<Task> guestsTasks = FindAvailableTaskByGuest(guest);
+
+        }
     }
 
     private List<Task> FindAvailableTaskByGuest(Guest guest)
