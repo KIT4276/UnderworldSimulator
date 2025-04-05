@@ -46,7 +46,7 @@ public class MainDrawingSign : MonoBehaviour
                 _mainDrawingFields[i].MaterialsCount.text = (_craftSystem.ActiveDrawing.DrawingComponents[i].Count * _craftSystem.Count).ToString();
                 _mainDrawingFields[i].MaterialsIcon.gameObject.SetActive(true);
                 _mainDrawingFields[i].MaterialsIcon.sprite = _materialsData.GetMaterialsIcon(_craftSystem.ActiveDrawing.DrawingComponents[i].Material);
-                _mainDrawingFields[i].AvailableCount.text = _inventorySystem.CalculateMaterial(_craftSystem.ActiveDrawing.DrawingComponents[i].Material).ToString();
+                _mainDrawingFields[i].AvailableCount.text = _inventorySystem.CalculateAvailableMaterial(_craftSystem.ActiveDrawing.DrawingComponents[i].Material).ToString();
                 _mainDrawingFields[i].Slash.SetActive(true);
             }
 

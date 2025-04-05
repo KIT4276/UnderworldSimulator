@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -20,6 +21,8 @@ public class InventorySystem : MonoBehaviour
 
     public InventorySlot[] InventorySlots { get => _inventorySlots; }
 
+    private InventoryHolder _inventoryHolder;
+
     [Inject]
     public void Construct(DecorationSystem decorationSystem, StateMachine stateMachine)
     {
@@ -28,6 +31,8 @@ public class InventorySystem : MonoBehaviour
         _decorationSystem.TryToRemoveDecorAction += TryReturnDecorToInventory;
         _warningSign.SetActive(false);
         _stateMachine.ChangeStateAction += StateChanged;
+
+        _inventoryHolder = new();
     }
 
 
@@ -40,7 +45,8 @@ public class InventorySystem : MonoBehaviour
                 slot.GetLastItems() is CraftItem &&
                 ((CraftItem)slot.GetLastItems()).LootType == lootType)
             {
-                slot.TakeLastItem();
+                var item = slot.TakeLastItem();
+                _inventoryHolder.Remove(item);
                 break;
             }
         }
@@ -72,12 +78,12 @@ public class InventorySystem : MonoBehaviour
 
     public void TryReturnLootToInventory(Item loot) /// Внимательно! Сюда обращаемся только чтобы вернуть лут
     {
-        if(_inventorySlots.Length == 0)
+        if (_inventorySlots.Length == 0)
         {
             Debug.LogWarning("The links to the slots have disappeared!");
             return;
         }
-        
+
         bool isPlaced = false;
 
         for (int i = 0; i < _inventorySlots.Length; i++)
@@ -113,7 +119,6 @@ public class InventorySystem : MonoBehaviour
             _warningSign.SetActive(true);
             StartCoroutine(HideSign());
         }
-
     }
 
     private void StateChanged(IExitableState state)
@@ -130,7 +135,6 @@ public class InventorySystem : MonoBehaviour
     }
 
     public void TryReturnDecorToInventory(Decor decor)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
-                                                      //для лута создать свой метод
     {
         bool isPlaced = false;
 
@@ -142,6 +146,7 @@ public class InventorySystem : MonoBehaviour
                     && ((Decor)_inventorySlots[i].GetLastItems()).DecorType == decor.DecorType)
                 {
                     ReturnDecorToInventory(decor, i);
+
                     isPlaced = true;
                     break;
                 }
@@ -154,6 +159,7 @@ public class InventorySystem : MonoBehaviour
                 if (!_inventorySlots[i].IsOccupied)
                 {
                     ReturnDecorToInventory(decor, i);
+
                     isPlaced = true;
                     break;
                 }
@@ -169,19 +175,9 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public int CalculateMaterial(LootType material)
+    public int CalculateAvailableMaterial(LootType material)
     {
-        var count = 0;
-
-        foreach (var slot in _inventorySlots)
-        {
-            if (slot.IsOccupied &&
-                slot.Items[0] is Item &&
-                ((Item)slot.Items[0]).LootType == material)
-            {
-                count += slot.Items.Count;
-            }
-        }
+        var count = _inventoryHolder.CalculateMaterial(material);
         return count;
     }
 
@@ -190,6 +186,7 @@ public class InventorySystem : MonoBehaviour
     {
         _inventorySlots[i].SetItem(decor);
         _decorationSystem.ReturtDecorToInventory(decor);
+        _inventoryHolder.Add(decor);
         ChangeDecorSlots?.Invoke();
 
     }
@@ -206,6 +203,7 @@ public class InventorySystem : MonoBehaviour
         {
             ChangeQuestsItemSlots?.Invoke();
         }
+        _inventoryHolder.Add(loot);
     }
 
     private IEnumerator HideSign()
@@ -223,5 +221,56 @@ public class InventorySystem : MonoBehaviour
     {
         StopAllCoroutines();
         _warningSign.SetActive(false);
+    }
+}
+
+public class InventoryHolder
+{
+    //private List<BaseItem> _allDecorInInventory = new(); 
+    private List<BaseItem> _allMaterialsInInventory = new();
+
+    public void Add(BaseItem item)
+    {
+        if (item is Item)
+        {
+            _allMaterialsInInventory.Add(item);
+        }
+        //else if (item is Decor)
+        //{
+        //        _allDecorInInventory.Add(item);
+        //}
+        //Debug.Log("Materials " + _allMaterialsInInventory.Count);
+    }
+
+    public void Remove(BaseItem item)
+    {
+        if (item is Item)
+        {
+            _allMaterialsInInventory.Remove(item);
+        }
+        //else if (item is Decor)
+        //{
+        //    _allDecorInInventory.Remove(item);
+        //}
+
+       // Debug.Log("Materials " + _allMaterialsInInventory.Count);
+    }
+
+    public int CalculateMaterial(LootType material)
+    {
+        int count = 0;
+
+        foreach (BaseItem item in _allMaterialsInInventory)
+        {
+            if (item is Item)
+            {
+                if (((Item)item).LootType == material)
+                {
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
 }
