@@ -8,6 +8,8 @@ public class TasksHandler : BaseHandler
 
     public List<Task> CompletedTasks { get; private set; }
 
+    public event Action BecameAvailable;
+
     public TasksHandler(TasksData tasksData, GuestsSystem guestsSystem, MilestoneSystem milestoneSystem)
     {
         _guestsSystem = guestsSystem;
@@ -18,6 +20,7 @@ public class TasksHandler : BaseHandler
         _all = tasksData.Tasks;
 
         milestoneSystem.Change += CheckAvalible;
+
 
         UpdateAvailable();
         UpdateCompleted();
@@ -57,6 +60,14 @@ public class TasksHandler : BaseHandler
                 CompletedTasks.Add((Task)task);
                 AvailableList.Remove(task);
             }
+        }
+    }
+
+    public void OnDestroy()
+    {
+        foreach(var task in _all)
+        {
+            task.MakeUnavailable();
         }
     }
 }

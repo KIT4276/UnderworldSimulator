@@ -49,7 +49,6 @@ public class GuestsSystem : ISavedProgress
         _spawner.SpawnGuests(Guests, _assets);
         Sort();
         GuestsChanged?.Invoke();
-        Debug.Log("LoadProgress");
     }
 
     public Guest FindGuestByRoom(Room room)
@@ -67,7 +66,6 @@ public class GuestsSystem : ISavedProgress
 
     public Guest FindGuestByType(GuestsType type)
     {
-        Debug.Log(Guests.Count);
         Guest currGuest = Guests[0];
 
         foreach (var guest in Guests)

@@ -22,6 +22,7 @@ public class ParameterSlot : MonoBehaviour
 
     public void FillEmpty()
     {
+        Debug.Log("FillEmpty");
         _image.gameObject.SetActive(false);
         _checkImage.SetActive(false);
 

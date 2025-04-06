@@ -27,6 +27,7 @@ public class RewardsHandler
             if (reward.MilestonesIndex < 0)
             {
                 reward.MakeAvailable();
+
             }
         }
     }

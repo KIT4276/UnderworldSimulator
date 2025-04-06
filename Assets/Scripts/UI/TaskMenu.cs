@@ -14,36 +14,53 @@ public class TaskMenu : MonoBehaviour
     private void  Construct(TasksHandler tasksHandler, StateMachine stateMachine)
     {
         _tasksHandler = tasksHandler;
-        stateMachine.ChangeStateAction += OnChangeState;
         _stateMachine = stateMachine;
+    }
 
-       
+    private void Start()
+    {
+        _stateMachine.ChangeStateAction += OnChangeState;
+        _tasksHandler.AvailableUpdate += OnAvailableUpdate;
+        foreach(var task in _tasksHandler.All)
+        {
+            task.BecameAvailable += OnBecameAvailable;
+        }
+        
+        Fill();
+    }
+
+    private void OnBecameAvailable(BaseHandledReward reward)
+    {
+        Fill();
+    }
+
+    private void OnAvailableUpdate()
+    {
+        Fill();
     }
 
     private void OnChangeState(IExitableState state)
     {
-        if (!_isInit && state is GameLoopState) 
-        {
-            Fill();
-            _isInit = true;
-        }
-
+        //if (!_isInit && state is GameLoopState) 
+        //{
+        //    Fill();
+        //    _isInit = true;
+        //}
     }
 
     private void Fill()
     {
         for (int i = 0; i < _parametersSlots.Length; i++)
         {
-            Debug.Log(_tasksHandler.AvailableList.Count);
 
-            if (_tasksHandler.AvailableList.Count > i)
+            if (_tasksHandler.AvailableList.Count >i)
             {
                 _parametersSlots[i].FillSlot((Task)_tasksHandler.AvailableList[i]);
             }
-            else
-            {
-                _parametersSlots[i].FillEmpty();
-            }
+            //else
+            //{
+            //    _parametersSlots[i].FillEmpty();
+            //}
         }
 
     }
@@ -51,5 +68,7 @@ public class TaskMenu : MonoBehaviour
     private void OnDestroy()
     {
         _stateMachine.ChangeStateAction -= OnChangeState;
+        _tasksHandler.AvailableUpdate -= OnAvailableUpdate;
+        _tasksHandler.OnDestroy();
     }
 }
