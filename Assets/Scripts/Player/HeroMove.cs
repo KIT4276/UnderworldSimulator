@@ -23,7 +23,7 @@ public class HeroMove : BaseMovable
 
     private void OnChangeState(IExitableState state)
     {
-        if (state is GameLoopState)
+        if (state is GameLoopState|| state is  InventoryState)
         {
             Mobilize();
         }
