@@ -14,17 +14,17 @@ public class TasksSystem
         _tasksHandler = tasksHandler;
 
         _roomsSystem.RoomsParamsChanged += OnRoomsParamsChanged;
-        _guestsSystem.GuestsChanged += OnGuestsChanged;
+        _guestsSystem.GuestsChanged += OnAvailableGuestsChanged;
     }
 
-    private void OnGuestsChanged()
+    private void OnAvailableGuestsChanged()
     {
-       //TODO
+        Debug.Log("OnAvailableGuestsChanged");
     }
 
     public void OnRoomsParamsChanged(Room room)
     {
-        //TODO
+        Debug.Log("OnRoomsParamsChanged");
         _tasksHandler.CheckAvalibleTasks(room);
     }
 }

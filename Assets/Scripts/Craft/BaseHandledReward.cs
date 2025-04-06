@@ -12,7 +12,7 @@ public abstract class BaseHandledReward
 
     public event Action<BaseHandledReward> BecameAvailable;
 
-    public void MakeAvailable()
+    public virtual void MakeAvailable()
     {
         IsAvailable = true;
        // Debug.Log("MakeAvailable " + Name);

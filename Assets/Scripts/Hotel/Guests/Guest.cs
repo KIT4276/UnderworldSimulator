@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Zenject;
 
 [Serializable]
 public class Guest : BaseHandledReward
@@ -12,6 +13,14 @@ public class Guest : BaseHandledReward
     public Sprite Icon { get => _icon; }
     public override string Name { get => _name; }
     public Room Room { get; private set; }
+
+    private GuestsSystem _guestsSystem;
+
+    [Inject]
+    private void Construct(GuestsSystem guestsSystem)
+    {
+        _guestsSystem = guestsSystem;
+    }
 
     public string PrefabLink()// remove, make it a simple string
     {
@@ -32,8 +41,6 @@ public class Guest : BaseHandledReward
         }
     }
 
-   
-
     public void CheckInGuest(Room selectedRoom)
     {
         if (Room != null)
@@ -46,7 +53,7 @@ public class Guest : BaseHandledReward
 
     public void EvictGuest()
     {
-       // Debug.Log("VacateTheRoom " + _name + " " + "to " + Room.Name);
+        // Debug.Log("VacateTheRoom " + _name + " " + "to " + Room.Name);
         Room.VacateTheRoom();
         Room = null;
         //TODO effects

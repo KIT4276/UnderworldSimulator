@@ -29,7 +29,6 @@ public class TasksHandler : BaseHandler
         if (guest != null)
         {
             List<Task> guestsTasks = FindAvailableTaskByGuest(guest);
-
         }
     }
 
