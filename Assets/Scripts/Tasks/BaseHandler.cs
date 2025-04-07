@@ -30,11 +30,11 @@ public abstract class BaseHandler
 
     protected void CheckAvalible()
     {
-        if (this is TasksHandler)
-        {
-            Debug.Log("CheckAvalible");
-        }
-        Debug.Log(_all.Length);
+        //if (this is TasksHandler)
+        //{
+        //    Debug.Log("CheckAvalible");
+        //}
+        //Debug.Log(_all.Length);
         foreach (var item in _all)
         {
             if (item.MilestonesIndex <= _milestoneSystem.CurrentMilestonesIndex() - 1)
