@@ -45,7 +45,7 @@ public class RoomsSystem
     public void OnRoomSelected(Room room)
     {
         SelectedRoom = room;
-        RoomSelected?.Invoke(SelectedRoom);
+        RoomSelected?.Invoke(SelectedRoom); 
     }
 
     public void OnRoomsParamsChanged(Room room)

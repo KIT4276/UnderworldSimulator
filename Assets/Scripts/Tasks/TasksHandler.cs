@@ -5,64 +5,39 @@ using UnityEngine;
 public class TasksHandler : BaseHandler
 {
     private readonly GuestsSystem _guestsSystem;
+    private RoomsSystem _roomsSystem;
 
-    public List<Task> CompletedTasks { get; private set; }
+    public event Action<Task, Room> UpdateTask;
 
-    public event Action BecameAvailable;
-
-    public TasksHandler(TasksData tasksData, GuestsSystem guestsSystem, MilestoneSystem milestoneSystem)
+    public TasksHandler(TasksData tasksData, GuestsSystem guestsSystem, MilestoneSystem milestoneSystem, RoomsSystem roomsSystem)
     {
         _guestsSystem = guestsSystem;
         _milestoneSystem = milestoneSystem;
+        _roomsSystem = roomsSystem;
         AvailableList = new();
-        CompletedTasks = new();
 
         _all = tasksData.Tasks;
 
+        _roomsSystem.RoomsParamsChanged += UpdateRooms;
+        _roomsSystem.RoomSelected += UpdateRooms;
         milestoneSystem.Change += CheckAvalible;
 
         CheckAvalible();
     }
 
-
-
-
-    //public void CheckAvalibleTasks(Room room)
-    //{
-    //    Guest guest = _guestsSystem.FindGuestByRoom(room);
-    //    if (guest != null)
-    //    {
-    //        List<Task> guestsTasks = FindAvailableTaskByGuest(guest);
-    //    }
-    //}
-
-    //private List<Task> FindAvailableTaskByGuest(Guest guest)
-    //{
-    //    List<Task> guestsTasks = new();
-    //    foreach (BaseHandledReward task in AvailableList)
-    //    {
-    //        Debug.Log(task);
-    //        if (((Task)task) != null && ((Task)task).GuestsType == guest.Type)
-    //        {
-    //            guestsTasks.Add((Task)task);
-    //        }
-    //    }
-    //    return guestsTasks;
-    //}
-
-    //private void UpdateCompleted()
-    //{
-    //    CompletedTasks.Clear();
-
-    //    foreach (BaseHandledReward task in AvailableList)
-    //    {
-    //        if (((Task)task).IsComplete)
-    //        {
-    //            CompletedTasks.Add((Task)task);
-    //            AvailableList.Remove(task);
-    //        }
-    //    }
-    //}
+    private void UpdateRooms(Room room)
+    {
+        if(room.Guest != null)
+        {
+            foreach(var task in AvailableList)
+            {
+                if(((Task)task).GuestsType == room.Guest.Type)
+                {
+                    UpdateTask?.Invoke(((Task)task), room);
+                }
+            }
+        } 
+    }
 
     public void OnDestroy()
     {

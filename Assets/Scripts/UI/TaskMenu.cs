@@ -21,6 +21,7 @@ public class TaskMenu : MonoBehaviour
     {
         _stateMachine.ChangeStateAction += OnChangeState;
         _tasksHandler.AvailableUpdate += OnAvailableUpdate;
+
         foreach(var task in _tasksHandler.All)
         {
             task.BecameAvailable += OnBecameAvailable;
