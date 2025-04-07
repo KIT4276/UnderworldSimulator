@@ -26,7 +26,7 @@ public class TaskMenu : MonoBehaviour
             task.BecameAvailable += OnBecameAvailable;
         }
         
-        Fill();
+        //Fill();
     }
 
     private void OnBecameAvailable(BaseHandledReward reward)
@@ -41,11 +41,11 @@ public class TaskMenu : MonoBehaviour
 
     private void OnChangeState(IExitableState state)
     {
-        //if (!_isInit && state is GameLoopState) 
-        //{
-        //    Fill();
-        //    _isInit = true;
-        //}
+        if (!_isInit && state is GameLoopState)
+        {
+            Fill();
+            _isInit = true;
+        }
     }
 
     private void Fill()
@@ -57,10 +57,10 @@ public class TaskMenu : MonoBehaviour
             {
                 _parametersSlots[i].FillSlot((Task)_tasksHandler.AvailableList[i]);
             }
-            //else
-            //{
-            //    _parametersSlots[i].FillEmpty();
-            //}
+            else
+            {
+                _parametersSlots[i].FillEmpty();
+            }
         }
 
     }

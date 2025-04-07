@@ -24,6 +24,10 @@ public abstract class BaseHandledReward
 
     public void MakeUnavailable()
     {
+        if (this is Task)
+        {
+            Debug.Log("Unavailable " + Name);
+        }
         IsAvailable = false;
     }
 }

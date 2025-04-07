@@ -33,7 +33,7 @@ public class ParameterSlot : MonoBehaviour
     public void FillSlot(Task task)
     {
         Debug.Log("FillSlot");
-        _image.gameObject.SetActive(false);
+        _checkImage.SetActive(false);
         _image.gameObject.SetActive(true);
         _image.sprite = _guestsSystem.FindGuestByType(task.GuestsType).Icon; //decor.GetIcon();
 

@@ -22,23 +22,30 @@ public abstract class BaseHandler
             if (revard.IsAvailable)
             {
                 AvailableList.Add(revard);
-                //AvailableUpdate?.Invoke();
+                AvailableUpdate?.Invoke();
             }
         }
-        //Debug.Log("All" + this+ ": " + _all.Length);
-        //if (this is TasksHandler)
-        //    Debug.Log("Available" + this + ": " + AvailableList.Count);
     }
 
 
     protected void CheckAvalible()
     {
+        if (this is TasksHandler)
+        {
+            Debug.Log("CheckAvalible");
+        }
+        Debug.Log(_all.Length);
         foreach (var item in _all)
         {
-            if (item.MilestonesIndex == _milestoneSystem.CurrentMilestonesIndex() - 1)
+            if (item.MilestonesIndex <= _milestoneSystem.CurrentMilestonesIndex() - 1)
             {
                 item.MakeAvailable();
-                AvailableUpdate?.Invoke();
+                UpdateAvailable();
+            }
+            else
+            {
+                item.MakeUnavailable();
+                UpdateAvailable();
             }
         }
     }

@@ -8,10 +8,10 @@ public class SingleInstance : MonoBehaviour
 
     void Awake()
     {
-#if UNITY_EDITOR
-        Debug.Log("»гра запущена в редакторе. ћножественные экземпл€ры разрешены.");
-        return;
-#endif
+//#if UNITY_EDITOR
+//        Debug.Log("»гра запущена в редакторе. ћножественные экземпл€ры разрешены.");
+//        return;
+//#endif
 
         mutex = new Mutex(true, "UniqueApplicationMutexID", out createdNew);
 

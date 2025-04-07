@@ -21,47 +21,48 @@ public class TasksHandler : BaseHandler
 
         milestoneSystem.Change += CheckAvalible;
 
-
-        UpdateAvailable();
-        UpdateCompleted();
+        CheckAvalible();
     }
 
-    public void CheckAvalibleTasks(Room room)
-    {
-        Guest guest = _guestsSystem.FindGuestByRoom(room);
-        if (guest != null)
-        {
-            List<Task> guestsTasks = FindAvailableTaskByGuest(guest);
-        }
-    }
 
-    private List<Task> FindAvailableTaskByGuest(Guest guest)
-    {
-        List<Task> guestsTasks = new();
-        foreach (BaseHandledReward task in AvailableList)
-        {
-            Debug.Log(task);
-            if (((Task)task) != null && ((Task)task).GuestsType == guest.Type)
-            {
-                guestsTasks.Add((Task)task);
-            }
-        }
-        return guestsTasks;
-    }
 
-    private void UpdateCompleted()
-    {
-        CompletedTasks.Clear();
 
-        foreach (BaseHandledReward task in AvailableList)
-        {
-            if (((Task)task).IsComplete)
-            {
-                CompletedTasks.Add((Task)task);
-                AvailableList.Remove(task);
-            }
-        }
-    }
+    //public void CheckAvalibleTasks(Room room)
+    //{
+    //    Guest guest = _guestsSystem.FindGuestByRoom(room);
+    //    if (guest != null)
+    //    {
+    //        List<Task> guestsTasks = FindAvailableTaskByGuest(guest);
+    //    }
+    //}
+
+    //private List<Task> FindAvailableTaskByGuest(Guest guest)
+    //{
+    //    List<Task> guestsTasks = new();
+    //    foreach (BaseHandledReward task in AvailableList)
+    //    {
+    //        Debug.Log(task);
+    //        if (((Task)task) != null && ((Task)task).GuestsType == guest.Type)
+    //        {
+    //            guestsTasks.Add((Task)task);
+    //        }
+    //    }
+    //    return guestsTasks;
+    //}
+
+    //private void UpdateCompleted()
+    //{
+    //    CompletedTasks.Clear();
+
+    //    foreach (BaseHandledReward task in AvailableList)
+    //    {
+    //        if (((Task)task).IsComplete)
+    //        {
+    //            CompletedTasks.Add((Task)task);
+    //            AvailableList.Remove(task);
+    //        }
+    //    }
+    //}
 
     public void OnDestroy()
     {
