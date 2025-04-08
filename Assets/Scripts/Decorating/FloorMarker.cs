@@ -74,6 +74,17 @@ public class SetOfRoomParameters
             }
         }
     }
+
+    public float GetParamValueByType(RoomParameterType parameterType)
+    {
+        float result = 0;
+        foreach (RoomParameter foundParam in _parameters) 
+        { 
+            if(foundParam.ParameterType == parameterType)
+                return foundParam.Value;
+        }
+        return result;
+    }
 }
 
 [Serializable]

@@ -16,7 +16,7 @@ public class Tests : MonoBehaviour
 
     private void OnProgressUp(InputAction.CallbackContext context)
     {
-        _progressSystem.ChangeProgress(10);
+        //_progressSystem.ChangeProgress(10);
 
     }
 

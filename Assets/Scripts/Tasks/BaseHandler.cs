@@ -28,7 +28,7 @@ public abstract class BaseHandler
     }
 
 
-    protected void CheckAvalible()
+    protected virtual void CheckAvalible()
     {
         //if (this is TasksHandler)
         //{
