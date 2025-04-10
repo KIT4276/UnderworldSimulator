@@ -46,6 +46,8 @@ public class GameplayInstaller : MonoInstaller
         Container.Bind<MilestoneSystem>().FromNew().AsSingle().NonLazy();
 
         Container.Bind<RewardsHandler>().FromNew().AsSingle().NonLazy();
+
+        Container.Bind<WallsSystem>().FromNew().AsSingle().NonLazy();
     }
 
     private void InstallScriptableObjects()

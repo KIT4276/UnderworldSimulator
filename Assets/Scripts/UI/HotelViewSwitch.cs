@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class HotelViewSwitch : MonoBehaviour
 {
@@ -10,6 +11,13 @@ public class HotelViewSwitch : MonoBehaviour
     [SerializeField] private Sprite _withFloorSprite;
 
     private HotelViewState _currentlViewState;
+    private WallsSystem _wallsSystem;
+
+    [Inject]
+    private void Construct(WallsSystem wallsSystem)
+    {
+        _wallsSystem = wallsSystem;
+    }
 
     private void Start() => 
         _currentlViewState = HotelViewState.Roof;
@@ -18,12 +26,14 @@ public class HotelViewSwitch : MonoBehaviour
     {
         _currentlViewState = (HotelViewState)(((int)_currentlViewState + 1) % 3);
         UpdateImage();
+        UpdateObjects();
     }
 
     public void SwitchDownViewState()
     {
         _currentlViewState = (HotelViewState)(((int)_currentlViewState - 1 + 3) % 3);
         UpdateImage();
+        UpdateObjects();
     }
 
     private void UpdateImage()
@@ -42,7 +52,21 @@ public class HotelViewSwitch : MonoBehaviour
         }
     }
 
-
+    private void UpdateObjects()
+    {
+        switch (_currentlViewState)
+        {
+            case HotelViewState.Roof:
+                _wallsSystem.SwitchToRoof();
+                break;
+            case HotelViewState.Walls:
+                _wallsSystem.SwitchToBig();
+                break;
+            case HotelViewState.Floor:
+                _wallsSystem.SwitchToSmall();
+                break;
+        }
+    }
 }
 
 public enum HotelViewState
