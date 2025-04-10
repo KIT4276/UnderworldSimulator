@@ -1,20 +1,44 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ProgressSystem : IProgressSystem
 {
     private float _currentProgress = 0;
+    private List<Task> _completedTasks = new();
     
     public float CurrentValue { get => _currentProgress; }
 
+
     public event Action Change;
 
-    public void ChangeProgress(int value)
+    public void RemoveCompletedTask(Task task)
     {
-        _currentProgress += value;
-        Change?.Invoke();   
+        if (_completedTasks.Contains(task))
+        {
+            _completedTasks.Remove(task);
+            UpdateProgress();
+        }
     }
 
+    public void AddCompletedTask(Task task)
+    {
+        if (!_completedTasks.Contains(task))
+        {
+            _completedTasks.Add(task);
+            UpdateProgress();
+        }
+    }
+
+    public void UpdateProgress()
+    {
+        _currentProgress = 0;
+        foreach (var task in _completedTasks)
+        {
+            _currentProgress += task.XP;
+        }
+        Change?.Invoke();
+    }
 }
 
 public class MilestoneSystem : IProgressSystem

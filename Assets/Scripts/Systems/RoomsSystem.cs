@@ -34,16 +34,10 @@ public class RoomsSystem
 
         foreach (var floor in _spaceDeterminantor.FloorMarkers)
         {
-           // floor.Room.ChangeParameter += OnRoomsParamsChanged;
-            //floor.Room.RoomSelected += OnRoomSelected;
-
             Rooms.Add(floor.Room);
             FloorMarkers.Add(floor.Room, floor);
         }
-        //foreach (var room in Rooms)
-        //{
-        //    Debug.Log(room.ID);
-        //}
+
         OnRoomSelected(_spaceDeterminantor.FloorMarkers[0].Room);
         Inited?.Invoke();
     }
@@ -51,9 +45,7 @@ public class RoomsSystem
     public void OnRoomSelected(Room room)
     {
         SelectedRoom = room;
-        //Debug.Log(SelectedRoom);
-        RoomSelected?.Invoke(SelectedRoom);
-        //OnRoomsParamsChanged(room);
+        RoomSelected?.Invoke(SelectedRoom); 
     }
 
     public void OnRoomsParamsChanged(Room room)
@@ -69,32 +61,6 @@ public class RoomsSystem
         }
         guest.CheckInGuest(SelectedRoom);
     }
-
-    //public void SwitchUpRoom()
-    //{
-    //    if (SelectedRoom == null)
-    //    {
-    //        SelectedRoom = Rooms[0];
-    //        RoomSelected?.Invoke(SelectedRoom);
-    //        return;
-    //    }
-
-    //    int i = Rooms.IndexOf(SelectedRoom);
-    //    i++;
-    //    if (i >= Rooms.Count)
-    //    {
-    //        i = 0;
-    //    }
-
-    //    OnRoomSelected(Rooms[i]);
-    //    var positionOfFloor = FloorMarkers[SelectedRoom].transform.position;
-
-    //    if (_camera == null)
-    //    {
-    //        _coroutineRunner.StartCoroutine(FindCamera());
-    //    }
-    //    _camera.MoveTo(positionOfFloor.x, positionOfFloor.y);
-    //}
 
     private IEnumerator FindCamera()
     {

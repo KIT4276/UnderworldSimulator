@@ -8,10 +8,9 @@ public class GuestsSystem : ISavedProgress
     private readonly GuestsSpawner _spawner;
     private readonly IAssets _assets;
 
-    //private List<Guest> _guests = new();
     private bool _isInited;
 
-    public List<Guest> Guests { get; private set; }//{ get => _guests; }
+    public List<Guest> Guests { get; private set; }
 
     public event Action GuestsChanged;
 
@@ -63,6 +62,20 @@ public class GuestsSystem : ISavedProgress
 
         }
         return null;
+    }
+
+    public Guest FindGuestByType(GuestsType type)
+    {
+        Guest currGuest = Guests[0];
+
+        foreach (var guest in Guests)
+        {
+            if (guest.Type == type)
+            {
+                currGuest = guest;
+            }
+        }
+        return currGuest;
     }
 }
 public enum GuestsType

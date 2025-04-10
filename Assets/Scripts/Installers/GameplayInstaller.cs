@@ -44,7 +44,6 @@ public class GameplayInstaller : MonoInstaller
 
         Container.Bind<ProgressSystem>().FromNew().AsSingle().NonLazy();
         Container.Bind<MilestoneSystem>().FromNew().AsSingle().NonLazy();
-        Container.Bind<TasksSystem>().FromNew().AsSingle().NonLazy();
 
         Container.Bind<RewardsHandler>().FromNew().AsSingle().NonLazy();
     }

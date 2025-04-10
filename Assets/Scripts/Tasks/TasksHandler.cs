@@ -1,63 +1,88 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TasksHandler : BaseHandler
 {
     private readonly GuestsSystem _guestsSystem;
+    private RoomsSystem _roomsSystem;
+    private ProgressSystem _progressSystem;
 
-    public List<Task> CompletedTasks { get; private set; }
+    public event Action<Task, Room> UpdateTask;
 
-    public TasksHandler(TasksData tasksData, GuestsSystem guestsSystem, MilestoneSystem milestoneSystem)
+    public TasksHandler(TasksData tasksData, GuestsSystem guestsSystem, MilestoneSystem milestoneSystem, 
+        RoomsSystem roomsSystem, ProgressSystem progressSystem)
     {
         _guestsSystem = guestsSystem;
         _milestoneSystem = milestoneSystem;
+        _roomsSystem = roomsSystem;
+        _progressSystem = progressSystem;
         AvailableList = new();
-        CompletedTasks = new();
 
         _all = tasksData.Tasks;
 
+        _roomsSystem.RoomsParamsChanged += UpdateRooms;
+        _roomsSystem.RoomSelected += UpdateRooms;
         milestoneSystem.Change += CheckAvalible;
 
-        UpdateAvailable();
-        UpdateCompleted();
+        CheckAvalible();
     }
 
-    public void CheckAvalibleTasks(Room room)
-    {
-        Guest guest = _guestsSystem.FindGuestByRoom(room);
-        if (guest != null)
-        {
-            List<Task> guestsTasks = FindAvailableTaskByGuest(guest);
+    //protected override void CheckAvalible()
+    //{
+    //    base.CheckAvalible();
+    //    CheckAllCopmlete();
+    //}
 
+
+    private void CheckAllCopmlete()
+    {
+        if (AvailableList == null || AvailableList.Count == 0) return;
+
+        foreach (var task in AvailableList)
+        {
+            CheckCopmlete((Task)task);
         }
     }
 
-    private List<Task> FindAvailableTaskByGuest(Guest guest)
+    private void CheckCopmlete(Task task)
     {
-        List<Task> guestsTasks = new();
-        foreach (BaseHandledReward task in AvailableList)
+        var guest = _guestsSystem.FindGuestByType(task.GuestsType);
+        if (guest.Room == null) return;
+
+        var currentValue = guest.Room.SetOfParameters.GetParamValueByType(task.ParameterType);
+
+
+        if (/*task.IsAvailable &&*/ task.Value <= currentValue)
         {
-            Debug.Log(task);
-            if (((Task)task) != null && ((Task)task).GuestsType == guest.Type)
-            {
-                guestsTasks.Add((Task)task);
-            }
+            _progressSystem.AddCompletedTask(task);
         }
-        return guestsTasks;
+        else
+        {
+            _progressSystem.RemoveCompletedTask(task);
+        }
     }
 
-    private void UpdateCompleted()
+    private void UpdateRooms(Room room)
     {
-        CompletedTasks.Clear();
-
-        foreach (BaseHandledReward task in AvailableList)
+        if(room.Guest != null)
         {
-            if (((Task)task).IsComplete)
+            foreach(var task in AvailableList)
             {
-                CompletedTasks.Add((Task)task);
-                AvailableList.Remove(task);
+                if(((Task)task).GuestsType == room.Guest.Type)
+                {
+                    UpdateTask?.Invoke(((Task)task), room);
+                }
             }
+        }
+
+        CheckAllCopmlete();
+    }
+
+    public void OnDestroy()
+    {
+        foreach(var task in _all)
+        {
+            task.MakeUnavailable();
         }
     }
 }
