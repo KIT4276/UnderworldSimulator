@@ -30,7 +30,7 @@ public class Walls : MonoBehaviour
         {
             _wallsSystem.InitWithWalls(_smallWalls, _bigWalls, _roof);
             _isInit = true;
-            Debug.Log("OnChangeState GameLoopState");
+            //Debug.Log("OnChangeState GameLoopState");
         }
     }
 }

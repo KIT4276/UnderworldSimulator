@@ -39,6 +39,12 @@ public class ProgressSystem : IProgressSystem
         }
         Change?.Invoke();
     }
+
+    public void ChangeProgress(int v)
+    {
+        _currentProgress += v;
+        Change?.Invoke();
+    }
 }
 
 public class MilestoneSystem : IProgressSystem
@@ -83,7 +89,7 @@ public class MilestoneSystem : IProgressSystem
 
     private void GiveReward()
     {
-      Debug.Log(CurrentMilestone.Reward);
+      //Debug.Log(CurrentMilestone.Reward);
        
     }
 }
