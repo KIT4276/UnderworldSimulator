@@ -12,11 +12,14 @@ public class GuestsSystem : ISavedProgress
 
     public List<Guest> Guests { get; private set; }
 
+    private readonly StateMachine _stateMachine;
+
     public event Action GuestsChanged;
 
     public GuestsSystem(StateMachine stateMachine, IAssets assets)
     {
         Guests = new();
+        _stateMachine = stateMachine;
 
         _spawner = new();
         _assets = assets;
@@ -46,7 +49,7 @@ public class GuestsSystem : ISavedProgress
     public void LoadProgress(PlayerProgress progress)
     {
         Guests = progress.Guests;
-        _spawner.SpawnGuests(Guests, _assets);
+        _spawner.SpawnGuests(Guests, _assets, _stateMachine);
         Sort();
         GuestsChanged?.Invoke();
     }

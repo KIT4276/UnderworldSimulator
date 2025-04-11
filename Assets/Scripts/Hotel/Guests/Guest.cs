@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using Zenject;
+using static UnityEngine.InputSystem.PlayerInput;
 
 [Serializable]
 public class Guest : BaseHandledReward
@@ -15,6 +16,9 @@ public class Guest : BaseHandledReward
     public Room Room { get; private set; }
 
     private GuestsSystem _guestsSystem;
+
+    public event Action<Room> CheckIn;
+    public event Action Evict;
 
     [Inject]
     private void Construct(GuestsSystem guestsSystem)
@@ -49,6 +53,8 @@ public class Guest : BaseHandledReward
         //Debug.Log("CheckIn " + _name + " " + "to " + Room.Name);
         Room.CheckInTheRoom(this);
         //TODO effects
+
+        CheckIn?.Invoke(Room);
     }
 
     public void EvictGuest()
@@ -57,5 +63,6 @@ public class Guest : BaseHandledReward
         Room.VacateTheRoom();
         Room = null;
         //TODO effects
+        Evict?.Invoke();
     }
 }

@@ -13,10 +13,10 @@ public class NPCPeriodicAnimations : MonoBehaviour
     protected string _idle = "stand";
     protected string _move = "idel_animation";
 
-    protected void Start()
+    private void Awake()
     {
-        
         StartPeriodicMove();
+        Debug.Log("Awake");
     }
 
     protected void StartPeriodicMove()
@@ -53,6 +53,12 @@ public class NPCPeriodicAnimations : MonoBehaviour
     {
         var r = UnityEngine.Random.Range(_minTime, _maxTime);
         return r;
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        Debug.Log("OnDisable");
     }
 
     protected void OnDestroy()

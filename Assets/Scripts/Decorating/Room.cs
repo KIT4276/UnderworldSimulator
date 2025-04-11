@@ -8,22 +8,28 @@ public class Room
     private readonly RoomsSystem _roomsSystem;
 
     public string Name { get; private set; }
+
+
     public Sprite Icon { get; private set; }
     public int ID { get; private set; }
 
     public List<Decor> InstalledDecor { get; private set; }
     public SetOfRoomParameters SetOfParameters { get; private set; }
     public Guest Guest { get; private set; }
+    public Transform GuestsPoint { get; private set; }
+
 
     public event Action CheckIn;
     public event Action Evicted;
 
     public Room(string name, ClickHandler clickHandler, 
-        Sprite icon, int id, RoomsSystem roomsSystem)
+        Sprite icon, int id, RoomsSystem roomsSystem, Transform guestsPoint)
     {
         InstalledDecor = new();
 
         Name = name;
+        GuestsPoint = guestsPoint;
+
         SetOfParameters = new();
         _clickHandler = clickHandler;
         UpdateParameters();
