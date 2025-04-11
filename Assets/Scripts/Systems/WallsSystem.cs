@@ -15,7 +15,7 @@ public class WallsSystem
         _bigWalls = bigWalls;
         _roof = roof;
 
-        Debug.Log("InitWithWalls");
+        //Debug.Log("InitWithWalls");
         SwitchToRoof();
     }
 
@@ -23,7 +23,7 @@ public class WallsSystem
     {
         if (_smallWalls == null || _bigWalls == null || _roof == null)
         {
-            Debug.Log("WallsSystem Not Inited!");
+            //Debug.Log("WallsSystem Not Inited!");
             return;
         }
 
@@ -34,7 +34,7 @@ public class WallsSystem
     {
         if (_smallWalls == null || _bigWalls == null || _roof == null)
         {
-            Debug.Log("WallsSystem Not Inited!");
+            //Debug.Log("WallsSystem Not Inited!");
             return;
         }
 
@@ -45,7 +45,7 @@ public class WallsSystem
     {
         if (_smallWalls == null || _bigWalls == null || _roof == null)
         {
-            Debug.Log("WallsSystem Not Inited!");
+           // Debug.Log("WallsSystem Not Inited!");
             return;
         }
         SwitchGameObjects(_smallWalls, _bigWalls, true);

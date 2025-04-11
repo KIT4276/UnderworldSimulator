@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class LoadingCurtain : MonoBehaviour
 {
-    [SerializeField] private CanvasGroup _curtain;
-    [SerializeField] private float _alpraStep = 0.03f;
+    [SerializeField] protected CanvasGroup _curtain;
+    [SerializeField] protected float _alpraStep = 0.03f;
 
-    public void Show()
+    public virtual void Show()
     {
         gameObject.SetActive(true);
         _curtain.alpha = 1;
@@ -15,7 +15,7 @@ public class LoadingCurtain : MonoBehaviour
     public void Hide() =>
         StartCoroutine(DoFadeIn());
 
-    private IEnumerator DoFadeIn()
+    protected IEnumerator DoFadeIn()
     {
         while (_curtain.alpha > 0)
         {
