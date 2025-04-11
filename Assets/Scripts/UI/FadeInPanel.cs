@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class FadeInPanel : LoadingCurtain
@@ -17,6 +15,12 @@ public class FadeInPanel : LoadingCurtain
         _gameObject.SetActive(true);
         _curtain.alpha = 1;
 
+    }
+
+    protected override void OffGameObject()
+    {
+
+        _gameObject.SetActive(false);
     }
 
 }
