@@ -13,6 +13,8 @@ public class NPCPeriodicAnimations : MonoBehaviour
     protected string _idle = "stand";
     protected string _move = "idel_animation";
 
+    private Coroutine _coroutine;
+
     private void Awake()
     {
         StartPeriodicMove();
@@ -21,8 +23,12 @@ public class NPCPeriodicAnimations : MonoBehaviour
 
     protected void StartPeriodicMove()
     {
-        StopAllCoroutines();
-        StartCoroutine(PeriodicMove());
+        if (!gameObject.activeInHierarchy) return;
+
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        _coroutine = StartCoroutine(PeriodicMove());
     }
 
     protected virtual IEnumerator PeriodicMove()
@@ -30,20 +36,19 @@ public class NPCPeriodicAnimations : MonoBehaviour
         yield return new WaitForSeconds(RandomTime());
 
         _armatureComponent.AddDBEventListener(EventObject.COMPLETE, OnMoveAnimationComplete);
+
         AnimateMove();
     }
 
     protected virtual void AnimateMove()
     {
         _armatureComponent.animation.FadeIn(_move, _fadeInTime, 1);
-
     }
 
     protected virtual void OnMoveAnimationComplete(string type, EventObject eventObject)
     {
         if (eventObject.animationState.name == _move)
         {
-            
             _armatureComponent.animation.Play(_idle, 0);
             StartPeriodicMove();
         }
@@ -57,12 +62,13 @@ public class NPCPeriodicAnimations : MonoBehaviour
 
     private void OnDisable()
     {
-        StopAllCoroutines();
-        Debug.Log("OnDisable");
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
     }
 
     protected void OnDestroy()
     {
-        StopAllCoroutines();
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
     }
 }

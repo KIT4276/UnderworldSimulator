@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FadeInPanel : LoadingCurtain
 {
-    [SerializeField] private float _fadeDelay = 2;
+   // [SerializeField] private float _fadeDelay = 2;
     [SerializeField] private GameObject _gameObject;
 
     private void Start()

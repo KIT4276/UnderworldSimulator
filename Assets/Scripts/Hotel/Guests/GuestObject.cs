@@ -1,14 +1,11 @@
 using System;
 using UnityEngine;
-using Zenject;
 
 public class GuestObject : MonoBehaviour
 {
     private StateMachine _stateMachine;
 
-    public Guest Guest {  get; private set; }
-
-
+    public Guest Guest { get; private set; }
 
     public void Init(Guest guest, StateMachine stateMachine)
     {
@@ -22,16 +19,13 @@ public class GuestObject : MonoBehaviour
 
     private void OnChangeState(IExitableState state)
     {
-        Debug.Log(state);
-        
-        if(state is DecorationState)
+        if (state is DecorationState)
         {
             gameObject.SetActive(false);
         }
-       else
+        else
         {
             gameObject.SetActive(true);
-
         }
     }
 
@@ -48,6 +42,5 @@ public class GuestObject : MonoBehaviour
     private void OnDestroy()
     {
         Guest.MakeUnavailable();
-        //_stateMachine.ChangeStateAction -= OnChangeState;
     }
 }
