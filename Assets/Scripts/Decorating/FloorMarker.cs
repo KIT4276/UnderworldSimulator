@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +11,7 @@ public class FloorMarker : MonoBehaviour
     [SerializeField] private Sprite _icon;
     [SerializeField] private PolygonCollider2D _collider;
     [SerializeField] private ClickHandler _clickHandler;
+    [SerializeField] private Transform _guestsPoint;
    // [SerializeField] private SetOfRoomParameters _setOfParameters;
 
     private RoomsSystem _roomsSystem;
@@ -30,7 +30,7 @@ public class FloorMarker : MonoBehaviour
 
     public void Init()
     {
-        Room = new(_name, /*_setOfParameters, */_clickHandler, _icon, ID, _roomsSystem);
+        Room = new(_name, /*_setOfParameters, */_clickHandler, _icon, ID, _roomsSystem, _guestsPoint);
     }
 
     public void AddDecor(Decor decor)

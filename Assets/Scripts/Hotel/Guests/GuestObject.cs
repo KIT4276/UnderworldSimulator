@@ -1,12 +1,42 @@
+using System;
 using UnityEngine;
 
 public class GuestObject : MonoBehaviour
 {
-    public Guest Guest {  get; private set; }
+    private StateMachine _stateMachine;
 
-    public void Init(Guest guest)
+    public Guest Guest { get; private set; }
+
+    public void Init(Guest guest, StateMachine stateMachine)
     {
         Guest = guest;
+        _stateMachine = stateMachine;
+
+        Guest.CheckIn += OnCheckIn;
+        Guest.Evict += OnEvict;
+        _stateMachine.ChangeStateAction += OnChangeState;
+    }
+
+    private void OnChangeState(IExitableState state)
+    {
+        if (state is DecorationState)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
+    }
+
+    private void OnEvict()
+    {
+        transform.position = transform.parent.position;
+    }
+
+    private void OnCheckIn(Room room)
+    {
+        transform.position = room.GuestsPoint.position;
     }
 
     private void OnDestroy()

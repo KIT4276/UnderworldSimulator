@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -22,5 +23,14 @@ public class LoadingCurtain : MonoBehaviour
             _curtain.alpha -= _alpraStep;
             yield return new WaitForSeconds(_alpraStep);
         }
+        if (_curtain.alpha <= 0)
+        {
+            OffGameObject();
+        }
+    }
+
+    protected virtual void OffGameObject()
+    {
+        gameObject.SetActive(false);
     }
 }

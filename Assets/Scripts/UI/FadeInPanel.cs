@@ -1,10 +1,8 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class FadeInPanel : LoadingCurtain
 {
-    [SerializeField] private float _fadeDelay = 2;
+   // [SerializeField] private float _fadeDelay = 2;
     [SerializeField] private GameObject _gameObject;
 
     private void Start()
@@ -17,6 +15,12 @@ public class FadeInPanel : LoadingCurtain
         _gameObject.SetActive(true);
         _curtain.alpha = 1;
 
+    }
+
+    protected override void OffGameObject()
+    {
+
+        _gameObject.SetActive(false);
     }
 
 }
