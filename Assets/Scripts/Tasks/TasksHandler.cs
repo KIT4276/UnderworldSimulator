@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class TasksHandler : BaseHandler
@@ -33,7 +34,7 @@ public class TasksHandler : BaseHandler
     {
         if (AvailableList == null || AvailableList.Count == 0) return;
 
-        foreach (var task in AvailableList)
+        foreach (var task in AvailableList.ToList())
         {
             CheckCopmlete((Task)task);
         }
