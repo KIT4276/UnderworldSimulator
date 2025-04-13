@@ -17,6 +17,7 @@ public class ProgressSystem : IProgressSystem
         if (_completedTasks.Contains(task))
         {
             _completedTasks.Remove(task);
+           /// Debug.Log("RemoveCompletedTask " + task);
             UpdateProgress();
         }
     }
@@ -26,6 +27,7 @@ public class ProgressSystem : IProgressSystem
         if (!_completedTasks.Contains(task))
         {
             _completedTasks.Add(task);
+            //Debug.Log("AddCompletedTask " + task);
             UpdateProgress();
         }
     }
@@ -35,6 +37,7 @@ public class ProgressSystem : IProgressSystem
         _currentProgress = 0;
         foreach (var task in _completedTasks)
         {
+            //Debug.Log(task);
             _currentProgress += task.XP;
         }
         Change?.Invoke();

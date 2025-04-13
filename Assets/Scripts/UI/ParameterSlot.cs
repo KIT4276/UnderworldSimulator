@@ -48,27 +48,66 @@ public class ParameterSlot : MonoBehaviour
 
         if (task != _task || room.Guest == null) return;
 
-        float currentValue = 0;
-        foreach (var param in room.SetOfParameters.Parameters)
+        if (task is ParameterTask)
         {
-            if (param.ParameterType == task.ParameterType)
+            float currentValue = 0;
+            foreach (var param in room.SetOfParameters.Parameters)
             {
-                currentValue = param.Value;
+                if (param.ParameterType == ((ParameterTask)task).ParameterType)
+                {
+                    currentValue = param.Value;
+                }
+            }
+            var v = currentValue / ((ParameterTask)task).Value;
+            _bar.fillAmount = v;
+        }
+        else if (task is SpecificTask)
+        {
+
+            //TODO
+            if (task.GuestsType == room.Guest.Type)
+            {
+                foreach (var decor in room.InstalledDecor)
+                {
+                    if (((SpecificTask)task).DecorType != decor.DecorType)
+                    {
+                        _bar.fillAmount = 0;
+                        //Debug.Log("UnDone");
+                    }
+                }
+
+                foreach (var decor in room.InstalledDecor)
+                {
+                    if (((SpecificTask)task).DecorType == decor.DecorType)
+                    {
+                        _bar.fillAmount = 1;
+                        //Debug.Log("Done");
+                    }
+                }
             }
         }
-        var v = currentValue / task.Value;
-        _bar.fillAmount = v;
     }
 
     public void FillSlot(Task task)
     {
         _task = task;
-
+        // Debug.Log("0");
         _image.gameObject.SetActive(true);
         _image.sprite = _guestsSystem.FindGuestByType(task.GuestsType).Icon;
 
-        _paramName.text = RoomParameterNames.Names[task.ParameterType];
-        _paramValue.text = task.Value.ToString();
+        if (task is ParameterTask)
+        {
+            //Debug.Log("1");
+            _paramName.text = RoomParameterNames.Names[((ParameterTask)task).ParameterType];
+            _paramValue.text = ((ParameterTask)task).Value.ToString();
+        }
+        else
+        {
+            //Debug.Log("2");
+            _paramName.text = string.Empty;
+            _paramValue.text = ((SpecificTask)task).DecorType.ToString();
+            //TODO
+        }
 
         if (!CheckIfGuestHasRoom(task))
         {
@@ -82,7 +121,7 @@ public class ParameterSlot : MonoBehaviour
     {
         foreach (Room room in _roomsSystem.Rooms)
         {
-            if (_task!= null && room.Guest != null && room.Guest != null)
+            if (_task != null && room.Guest != null && room.Guest != null)
             {
                 if (room.Guest.Type == _task.GuestsType)
                 {
@@ -108,6 +147,7 @@ public class ParameterSlot : MonoBehaviour
 
     public void FillEmpty()
     {
+        //Debug.Log("FillEmpty");
         _task = null;
         _image.gameObject.SetActive(false);
 
