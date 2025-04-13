@@ -17,7 +17,10 @@ public class RewardsHandler
         
         InitRewards(_guestsStaticData.Guests);
         InitRewards(_drawingData.Drawings);
-        InitRewards(_tasksData.Tasks);
+
+        InitRewards(_tasksData.GetAllTask());
+
+        //InitRewards(_tasksData.SpecificTasks);
     }
 
     private void InitRewards(BaseHandledReward[] rewards)
@@ -27,7 +30,6 @@ public class RewardsHandler
             if (reward.MilestonesIndex < 0)
             {
                 reward.MakeAvailable();
-
             }
         }
     }
