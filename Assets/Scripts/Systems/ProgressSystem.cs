@@ -55,6 +55,7 @@ public class MilestoneSystem : IProgressSystem
     private readonly ProgressSystem _progressSystem;
     private readonly MilestonesData _milestonesData;
 
+    public Milestone ReachedMilestone { get; private set; }
     public Milestone CurrentMilestone { get; private set; }
 
     public float CurrentValue { get => CurrentMilestone.ProgressValue; }
@@ -84,8 +85,9 @@ public class MilestoneSystem : IProgressSystem
             i++;
             if (i < _milestonesData.Milestones.Length)
             {
-                Change?.Invoke();
+                ReachedMilestone = _milestonesData.Milestones[i-1];
                 CurrentMilestone = _milestonesData.Milestones[i];
+                Change?.Invoke();
             }
         }
     }

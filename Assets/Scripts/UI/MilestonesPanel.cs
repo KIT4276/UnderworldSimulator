@@ -41,7 +41,7 @@ public class MilestonesPanel : MonoBehaviour
     private void ShowPanel()
     {
         _fadeInSign.Show();
-        _rewardText.text = _milestoneSystem.CurrentMilestone.Reward;
+        _rewardText.text =  _milestoneSystem.ReachedMilestone.Reward;
         _xp.text = _progressSystem.CurrentValue.ToString();
     }
 

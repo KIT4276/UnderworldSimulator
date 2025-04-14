@@ -33,8 +33,10 @@ public class GameplayInstaller : MonoInstaller
 
         Container.Bind<CraftSystem>().FromNew().AsSingle().NonLazy();
         Container.Bind<CraftMenu>().FromComponentInNewPrefab(_craftMenuPrefab).AsSingle().NonLazy();
+
         Container.Bind<DrawingsHandler>().FromNew().AsSingle().NonLazy();
         Container.Bind<TasksHandler>().FromNew().AsSingle().NonLazy();
+        Container.Bind<GuestsHandler>().FromNew().AsSingle().NonLazy();
 
         Container.Bind<RoomsSystem>().FromNew().AsSingle().NonLazy();
 
