@@ -84,8 +84,8 @@ public class MilestoneSystem : IProgressSystem
             i++;
             if (i < _milestonesData.Milestones.Length)
             {
-                CurrentMilestone = _milestonesData.Milestones[i];
                 Change?.Invoke();
+                CurrentMilestone = _milestonesData.Milestones[i];
             }
         }
     }
