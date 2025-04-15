@@ -14,6 +14,7 @@ public class GameplayInstaller : MonoInstaller
     [SerializeField] private GuestsStaticData _guestsData;
     [SerializeField] private MilestonesData _milestonesData;
     [SerializeField] private TasksData _tasksData;
+    [SerializeField] private ParameterData _parametersData;
 
     public override void InstallBindings()
     {
@@ -54,6 +55,7 @@ public class GameplayInstaller : MonoInstaller
 
     private void InstallScriptableObjects()
     {
+        Container.Bind<ParameterData>().FromInstance(_parametersData).AsSingle().NonLazy();
         Container.Bind<PersistantStaticData>().FromInstance(_persistantStaticData).AsSingle().NonLazy();
         Container.Bind<DrawingData>().FromInstance(_drawingData).AsSingle().NonLazy();
         Container.Bind<MaterialsData>().FromInstance(_materialsData).AsSingle().NonLazy();

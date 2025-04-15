@@ -16,16 +16,18 @@ public class ParameterSlot : MonoBehaviour
     //private ProgressSystem _progressSystem;
     private TasksHandler _tasksHandler;
     private RoomsSystem _roomsSystem;
+    private ParameterData _parameterData;
     private Task _task;
 
     [Inject]
     private void Construct(GuestsSystem guestsSystem, /*ProgressSystem progressSystem,*/ TasksHandler tasksHandler,
-        RoomsSystem roomsSystem)
+        RoomsSystem roomsSystem, ParameterData parameterData)
     {
         _guestsSystem = guestsSystem;
         //_progressSystem = progressSystem;
         _tasksHandler = tasksHandler;
         _roomsSystem = roomsSystem;
+        _parameterData = parameterData;
 
         tasksHandler.UpdateTask += OnUpdate;
         guestsSystem.GuestsChanged += UpdateSlot;
@@ -98,7 +100,7 @@ public class ParameterSlot : MonoBehaviour
         if (task is ParameterTask)
         {
             //Debug.Log("1");
-            _paramName.text = RoomParameterNames.Names[((ParameterTask)task).ParameterType];
+            _paramName.text = _parameterData.FintParamByType(((ParameterTask)task).ParameterType).Name;
             _paramValue.text = ((ParameterTask)task).Value.ToString();
         }
         else

@@ -12,7 +12,7 @@ public class FloorMarker : MonoBehaviour
     [SerializeField] private PolygonCollider2D _collider;
     [SerializeField] private ClickHandler _clickHandler;
     [SerializeField] private Transform _guestsPoint;
-   // [SerializeField] private SetOfRoomParameters _setOfParameters;
+    // [SerializeField] private SetOfRoomParameters _setOfParameters;
 
     private RoomsSystem _roomsSystem;
 
@@ -78,9 +78,9 @@ public class SetOfRoomParameters
     public float GetParamValueByType(RoomParameterType parameterType)
     {
         float result = 0;
-        foreach (RoomParameter foundParam in _parameters) 
-        { 
-            if(foundParam.ParameterType == parameterType)
+        foreach (RoomParameter foundParam in _parameters)
+        {
+            if (foundParam.ParameterType == parameterType)
                 return foundParam.Value;
         }
         return result;
@@ -90,21 +90,36 @@ public class SetOfRoomParameters
 [Serializable]
 public class RoomParameter
 {
-    [SerializeField] private string _name;
+    //[SerializeField] private string _name;
     [SerializeField] private RoomParameterType _type;
     [SerializeField] private int _value;
 
     public RoomParameterType ParameterType { get => _type; }
     public int Value { get => _value; }
 
-    public string Name {  get => _name; }
+    public string Name { get; private set; }
+
+    public Sprite Icon { get; private set; }
+
+    [Inject]
+    private void Construct(ParameterData parameterData)
+    {
+        Debug.Log("PseudoConstruct");
+
+        Parameter param = parameterData.FintParamByType(ParameterType);
+
+        Name = param.Name;
+        Icon = param.Icon;
+
+    }
 
     public RoomParameter(RoomParameterType type, int value)
     {
+        Debug.Log("Construct");
         _type = type;
         _value = value;
 
-        _name = RoomParameterNames.Names[_type];
+        //_name = RoomParameterNames.Names[_type];
     }
 
     public void IncreaseParametersValue(int value) =>
@@ -116,17 +131,17 @@ public class RoomParameter
 
 public enum RoomParameterType
 {
+    Comfort,
     Leisure,
     Aesthetics,
-    Comfort,
 }
 
-public static class RoomParameterNames
-{
-    public static Dictionary<RoomParameterType, string> Names = new()
-    {
-        { RoomParameterType.Leisure, "Досуг"},
-        { RoomParameterType.Aesthetics, "Эстетика"},
-        { RoomParameterType.Comfort, "Комфорт"}
-    };
-}
+//public static class RoomParameterNames
+//{
+//    public static Dictionary<RoomParameterType, string> Names = new()
+//    {
+//        { RoomParameterType.Leisure, "Досуг"},
+//        { RoomParameterType.Aesthetics, "Эстетика"},
+//        { RoomParameterType.Comfort, "Комфорт"}
+//    };
+//}

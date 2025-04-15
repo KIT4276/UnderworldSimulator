@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Zenject;
 
 [Serializable]
 public class Task : BaseHandledReward
@@ -30,6 +31,13 @@ public class ParameterTask : Task
 
     public RoomParameterType ParameterType { get => _parameterType; }
     public int Value { get => _value; }
+    public Parameter Parameter { get; private set; }
+
+    [Inject]
+    private void Construect(ParameterData parameterData)
+    {
+        Parameter = parameterData.FintParamByType(_parameterType);
+    }
 }
 
 [Serializable]

@@ -93,13 +93,13 @@ public class RoomMenu : MonoBehaviour
             _guestsIcon.sprite = room.Guest.Icon;
         }
 
-        _nameOfParameter_1.text = RoomParameterNames.Names[room.SetOfParameters.Parameters[0].ParameterType];
+        _nameOfParameter_1.text = /*RoomParameterNames.Names[*/room.SetOfParameters.Parameters[0].Name;
         _parameter_1.text = room.SetOfParameters.Parameters[0].Value.ToString();
 
-        _nameOfParameter_2.text = RoomParameterNames.Names[room.SetOfParameters.Parameters[1].ParameterType];
+        _nameOfParameter_2.text = /*RoomParameterNames.*/room.SetOfParameters.Parameters[1].Name;
         _parameter_2.text = room.SetOfParameters.Parameters[1].Value.ToString();
 
-        _nameOfParameter_3.text = RoomParameterNames.Names[room.SetOfParameters.Parameters[2].ParameterType];
+        _nameOfParameter_3.text = room.SetOfParameters.Parameters[2].Name;
         _parameter_3.text = room.SetOfParameters.Parameters[2].Value.ToString();
 
         Decor[] decors = new Decor[room.InstalledDecor.Count]  ;
