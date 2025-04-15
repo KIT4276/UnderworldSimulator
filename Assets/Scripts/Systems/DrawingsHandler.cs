@@ -9,7 +9,7 @@ public class DrawingsHandler : BaseHandler
         AvailableList = new();
 
         _all = drawingData.Drawings;
-        AvailableList = new();
+        //AvailableList = new();
 
         _milestoneSystem = milestoneSystem;
         milestoneSystem.Change += CheckAvalible;

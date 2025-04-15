@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CraftSystem
@@ -15,7 +16,7 @@ public class CraftSystem
     public event Action ChangeCount;
     public event Action Crafted;
     public event Action DrawingAdded;
-    public event Action NotEnoughMaterials; 
+    public event Action NotEnoughMaterials;
 
     private List<CraftItem> _availableMaterials = new();
 
@@ -35,7 +36,7 @@ public class CraftSystem
 
     public void OnDestroy()
     {
-        foreach(var draw in _drawingDatas.Drawings)
+        foreach (var draw in _drawingDatas.Drawings)
         {
             draw.MakeUnavailable();
         }
@@ -43,12 +44,13 @@ public class CraftSystem
 
     private void OnBecameAvailable(BaseHandledReward reward)
     {
-        if(AvailableDrawings.Count == 0)
+        if (AvailableDrawings.Count == 0)
         {
             ActiveDrawing = (Drawing)reward;
         }
-        AvailableDrawings.Add((Drawing)reward);
-       // Debug.Log(AvailableDrawings.Count);
+        if (!AvailableDrawings.Contains(reward))
+            AvailableDrawings.Add((Drawing)reward);
+        // Debug.Log(AvailableDrawings.Count);
         DrawingAdded?.Invoke();
     }
 
@@ -63,7 +65,7 @@ public class CraftSystem
         ActiveDrawing = drawing;
         Count = 1;
         ChangeCount?.Invoke();
-       // Debug.Log("SelectDrawing");
+        // Debug.Log("SelectDrawing");
     }
 
     public void OnChangeCount(int count)
@@ -102,7 +104,7 @@ public class CraftSystem
 
         Count = 1;
         Crafted?.Invoke();
-       // Debug.Log("Crafted");
+        // Debug.Log("Crafted");
     }
 
     private bool EnoughMaterials()

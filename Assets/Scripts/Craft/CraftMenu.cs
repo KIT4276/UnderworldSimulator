@@ -47,7 +47,7 @@ public class CraftMenu : MonoBehaviour
 
     private void FillSlots()
     {
-       // Debug.Log("FillSlots");
+        Debug.Log(_craftSystem.AvailableDrawings.Count);
         if (_craftSystem.AvailableDrawings.Count > _slots.Length)
         {
             Debug.LogWarning("Слотов меньше, чем чертежей!");
