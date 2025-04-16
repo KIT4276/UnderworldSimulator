@@ -16,6 +16,7 @@ public class MainDrawingSign : MonoBehaviour
     [Inject] private CraftSystem _craftSystem;
     [Inject] private MaterialsData _materialsData;
     [Inject] private InventorySystem _inventorySystem;
+    [Inject] private ParameterData _parameterData;
 
     private void Start()
     {
@@ -48,7 +49,7 @@ public class MainDrawingSign : MonoBehaviour
             for (int j = 0; j < _parameters.Length; j++)
             {
                 if (_craftSystem.ActiveDrawing.Decor.Parameters.Parameters[j].Value > 0)
-                    _parameters[j].Fill(_craftSystem.ActiveDrawing.Decor.Parameters.Parameters[j]);
+                    _parameters[j].Fill(_craftSystem.ActiveDrawing.Decor.Parameters.Parameters[j], _parameterData);
             }
 
             int i = 0;

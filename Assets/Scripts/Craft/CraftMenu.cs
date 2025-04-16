@@ -63,7 +63,7 @@ public class CraftMenu : MonoBehaviour
             int i = 0;
             for (; i < _craftSystem.AvailableDrawings.Count; i++)
             {
-                _slots[i].FillDrawingData(_craftSystem.AvailableDrawings[i]);
+                _slots[i].FillDrawingData(_craftSystem.AvailableDrawings[i], _parameterData);
             }
 
             //if (_craftSystem.AvailableDrawings.Count < _slots.Length)

@@ -12,6 +12,7 @@ public class CraftSlot : MonoBehaviour
 
 
     private Drawing _drawing;
+    private ParameterData _parameterData;
 
     public event Action<Drawing> DrawingSelected;
 
@@ -22,10 +23,16 @@ public class CraftSlot : MonoBehaviour
         DrawingSelected?.Invoke(_drawing);
     }
 
-    public void FillDrawingData(Drawing drawing)
+    public void FillDrawingData(Drawing drawing, ParameterData parameterData)
     {
         //Debug.Log(drawing.Name);
-        
+        if (_parameterData == null)
+        {
+            _parameterData = parameterData;
+        }
+
+        _draft.gameObject.SetActive(true);
+
         _drawing = drawing;
         _name.text = drawing.Name;
         _description.text = drawing.Description;
@@ -39,7 +46,7 @@ public class CraftSlot : MonoBehaviour
 
         for (int i = 0; i < drawing.Decor.Parameters.Parameters.Length; i++)
         {
-            _draftParameterUnits[i].Fill(drawing.Decor.Parameters.Parameters[i]);
+            _draftParameterUnits[i].Fill(drawing.Decor.Parameters.Parameters[i], _parameterData);
         }
     }
 
@@ -47,6 +54,13 @@ public class CraftSlot : MonoBehaviour
     {
         _drawing = null;
         _name.text = string.Empty;
+        _description.text = string.Empty;
+        _draft.gameObject.SetActive(false);
         //Debug.Log("FillEmpty");
+
+        foreach(var unit in _draftParameterUnits)
+        {
+            unit.FillEmpty();
+        }
     }
 }
