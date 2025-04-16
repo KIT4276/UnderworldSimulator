@@ -16,8 +16,13 @@ public class DraftParameterUnit : MonoBehaviour
         _parameterData = parameterData;
     }
 
-    public virtual void Fill(RoomParameter roomParameter)
+    public virtual void Fill(RoomParameter roomParameter, ParameterData parameterData)
     {
+        if (_parameterData == null)
+        {
+            _parameterData = parameterData;
+        }
+        
         _icon.gameObject.SetActive(true);
         _icon.sprite = _parameterData.FindParamByType(roomParameter.ParameterType).Icon; //roomParameter.Icon;
         _count.gameObject.SetActive(true);
