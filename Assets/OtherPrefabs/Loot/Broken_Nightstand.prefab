@@ -831,7 +831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sign: {fileID: 896418532193461659}
   _reactionText: "\u041D\u0435\u0442 \u0440\u0435\u0430\u043A\u0446\u0438\u0438"
-  _respawnTime: 900
+  _respawnTime: 300
   _progressBar: {fileID: 4383452936202911840}
   _bar: {fileID: 6940839677947901658}
   _craftLoot: {fileID: 7527524652085792730}
@@ -897,9 +897,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _craftLootSettings:
-  - _count: 4
+  - _count: 2
     _loot:
       _type: 0
+  - _count: 2
+    _loot:
+      _type: 5
+  - _count: 2
+    _loot:
+      _type: 9
 --- !u!114 &6279468294280739741
 MonoBehaviour:
   m_ObjectHideFlags: 0
