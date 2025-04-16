@@ -10,6 +10,8 @@ public class MainDrawingSign : MonoBehaviour
     [SerializeField] private Image _icon;
     [Space, Tooltip("Материалы")]
     [SerializeField] private MateialsField[] _mainDrawingFields;
+    [Space]
+    [SerializeField] private ParameterUnit[] _parameters;
 
     [Inject] private CraftSystem _craftSystem;
     [Inject] private MaterialsData _materialsData;
@@ -37,7 +39,17 @@ public class MainDrawingSign : MonoBehaviour
             _icon.gameObject.SetActive(true);
             _name.text = _craftSystem.ActiveDrawing.Name;
             _icon.sprite = _craftSystem.ActiveDrawing.Icon;
+            Debug.Log(_parameters.Length);
+            foreach (var param in _parameters)
+            {
+                param.FillEmpty();
+            }
 
+            for (int j = 0; j < _parameters.Length; j++)
+            {
+                if (_craftSystem.ActiveDrawing.Decor.Parameters.Parameters[j].Value > 0)
+                    _parameters[j].Fill(_craftSystem.ActiveDrawing.Decor.Parameters.Parameters[j]);
+            }
 
             int i = 0;
             for (; i < _craftSystem.ActiveDrawing.DrawingComponents.Length; i++)
@@ -53,6 +65,8 @@ public class MainDrawingSign : MonoBehaviour
                 Sprite matIcon = _materialsData.GetMaterialsIcon(_craftSystem.ActiveDrawing.DrawingComponents[i].Material);
                 float neededCount = (_craftSystem.ActiveDrawing.DrawingComponents[i].Count * _craftSystem.Count);
                 float AvailableCount = _inventorySystem.CalculateAvailableMaterial(_craftSystem.ActiveDrawing.DrawingComponents[i].Material);
+
+
 
                 _mainDrawingFields[i].Fill(matName, matIcon, neededCount, AvailableCount);
             }

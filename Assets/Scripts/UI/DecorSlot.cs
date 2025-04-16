@@ -13,18 +13,18 @@ public class DecorSlot : MonoBehaviour
     [SerializeField] private TMP_Text _paramName_3;
     [SerializeField] private TMP_Text _paramValue_3;
 
-    public void FillSlot(Decor decor)
+    public void FillSlot(Decor decor, ParameterData parameterData)
     {
         _image.gameObject.SetActive(true);
         _image.sprite = decor.GetIcon();
 
-        _paramName_1.text = decor.Parameters.Parameters[0].Name;
+        _paramName_1.text = parameterData.FindParamByType(decor.Parameters.Parameters[0].ParameterType).Name;
         _paramValue_1.text = decor.Parameters.Parameters[0].Value.ToString();
 
-        _paramName_2.text = decor.Parameters.Parameters[1].Name;
+        _paramName_2.text = parameterData.FindParamByType(decor.Parameters.Parameters[1].ParameterType).Name;
         _paramValue_2.text = decor.Parameters.Parameters[1].Value.ToString();
 
-        _paramName_3.text = decor.Parameters.Parameters[2].Name;
+        _paramName_3.text = parameterData.FindParamByType(decor.Parameters.Parameters[2].ParameterType).Name;
         _paramValue_3.text = decor.Parameters.Parameters[2].Value.ToString();
     }
 

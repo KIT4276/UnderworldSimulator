@@ -9,7 +9,7 @@ public class ParameterData : ScriptableObject
 
     public Parameter[] Parameters { get { return _parameters; } }
 
-    public Parameter FintParamByType(RoomParameterType parameterType)
+    public Parameter FindParamByType(RoomParameterType parameterType)
     {
         Parameter param = _parameters[0];
 

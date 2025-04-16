@@ -4,7 +4,7 @@ public class DecorInRoom : MonoBehaviour
 {
     [SerializeField] private DecorSlot[] _decorSlots;
 
-    public void Fill(Decor[] decors)
+    public void Fill(Decor[] decors, ParameterData parameterData)
     {
         int i = 0;
 
@@ -12,7 +12,7 @@ public class DecorInRoom : MonoBehaviour
         {
             if (i < _decorSlots.Length)
             {
-                _decorSlots[i].FillSlot(decors[i]);
+                _decorSlots[i].FillSlot(decors[i], parameterData);
             }
             else
             {

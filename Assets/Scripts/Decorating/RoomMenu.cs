@@ -1,6 +1,7 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Zenject;
 
@@ -30,12 +31,14 @@ public class RoomMenu : MonoBehaviour
 
     private StateMachine _machine;
     private RoomsSystem _roomsSystem;
+    private ParameterData _parameterData;
 
     [Inject]
-    private void Construct(StateMachine machine, RoomsSystem roomsSystem)
+    private void Construct(StateMachine machine, RoomsSystem roomsSystem, ParameterData parameterData)
     {
         _machine = machine;
         _roomsSystem = roomsSystem;
+        _parameterData = parameterData;
     }
 
     public void Start()
@@ -54,10 +57,10 @@ public class RoomMenu : MonoBehaviour
         }
     }
 
-    private void OnChangeState(IExitableState state)
+    private void OnChangeState(IExitableState state  )
     {
 
-        if (state is GameLoopState)
+        if (state is GameLoopState || state is  CraftState)
         {
             _roomRatingPanel.SetActive(false);
             _bottomRoomsPanel.SetActive(false);
@@ -93,19 +96,19 @@ public class RoomMenu : MonoBehaviour
             _guestsIcon.sprite = room.Guest.Icon;
         }
 
-        _nameOfParameter_1.text = /*RoomParameterNames.Names[*/room.SetOfParameters.Parameters[0].Name;
+        _nameOfParameter_1.text =_parameterData.FindParamByType(room.SetOfParameters.Parameters[0].ParameterType).Name;
         _parameter_1.text = room.SetOfParameters.Parameters[0].Value.ToString();
 
-        _nameOfParameter_2.text = /*RoomParameterNames.*/room.SetOfParameters.Parameters[1].Name;
+        _nameOfParameter_2.text = _parameterData.FindParamByType(room.SetOfParameters.Parameters[1].ParameterType).Name;
         _parameter_2.text = room.SetOfParameters.Parameters[1].Value.ToString();
 
-        _nameOfParameter_3.text = room.SetOfParameters.Parameters[2].Name;
+        _nameOfParameter_3.text = _parameterData.FindParamByType(room.SetOfParameters.Parameters[2].ParameterType).Name;
         _parameter_3.text = room.SetOfParameters.Parameters[2].Value.ToString();
 
         Decor[] decors = new Decor[room.InstalledDecor.Count]  ;
         room.InstalledDecor.CopyTo(decors);
 
-        _decorInRoom.Fill(decors);
+        _decorInRoom.Fill(decors, _parameterData);
     }
 
     private void OnDestroy()

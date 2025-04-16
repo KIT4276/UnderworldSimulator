@@ -24,6 +24,8 @@ public class CraftSlot : MonoBehaviour
 
     public void FillDrawingData(Drawing drawing)
     {
+        //Debug.Log(drawing.Name);
+        
         _drawing = drawing;
         _name.text = drawing.Name;
         _description.text = drawing.Description;
@@ -32,18 +34,19 @@ public class CraftSlot : MonoBehaviour
 
         foreach (var unit in _draftParameterUnits)
         {
-            FillEmpty();
+            unit.FillEmpty();
         }
 
-        //for (int i = 0; i < drawing.Decor.Parameters.Parameters.Length; i++)
-        //{
-        //    _draftParameterUnits[i].Fill(drawing.Decor.Parameters.Parameters[i]);
-        //}
+        for (int i = 0; i < drawing.Decor.Parameters.Parameters.Length; i++)
+        {
+            _draftParameterUnits[i].Fill(drawing.Decor.Parameters.Parameters[i]);
+        }
     }
 
     public void FillEmpty()
     {
         _drawing = null;
-        _name.text = "";
+        _name.text = string.Empty;
+        //Debug.Log("FillEmpty");
     }
 }

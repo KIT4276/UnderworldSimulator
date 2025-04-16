@@ -14,6 +14,7 @@ public class CraftMenu : MonoBehaviour
     [Inject] private CraftSystem _craftSystem;
     [Inject] private WorkbenchSystem _workbenchSystem;
     [Inject] private StateMachine _machine;
+    [Inject] private ParameterData _parameterData;
 
     private void Start()
     {
@@ -47,26 +48,31 @@ public class CraftMenu : MonoBehaviour
 
     private void FillSlots()
     {
-        //Debug.Log(_craftSystem.AvailableDrawings.Count);
+       // Debug.Log(_craftSystem.AvailableDrawings.Count);
         if (_craftSystem.AvailableDrawings.Count > _slots.Length)
         {
             Debug.LogWarning("Слотов меньше, чем чертежей!");
         }
         else
         {
+            foreach (var slot in _slots)
+            {
+                slot.FillEmpty();
+            }
+            
             int i = 0;
             for (; i < _craftSystem.AvailableDrawings.Count; i++)
             {
                 _slots[i].FillDrawingData(_craftSystem.AvailableDrawings[i]);
             }
 
-            if (_craftSystem.AvailableDrawings.Count < _slots.Length)
-            {
-                for (; i < _slots.Length; i++)
-                {
-                    _slots[i].FillEmpty();
-                }
-            }
+            //if (_craftSystem.AvailableDrawings.Count < _slots.Length)
+            //{
+            //    for (; i < _slots.Length; i++)
+            //    {
+            //        _slots[i].FillEmpty();
+            //    }
+            //}
         }
     }
 

@@ -12,6 +12,7 @@ public class FloorMarker : MonoBehaviour
     [SerializeField] private PolygonCollider2D _collider;
     [SerializeField] private ClickHandler _clickHandler;
     [SerializeField] private Transform _guestsPoint;
+    //[SerializeField] private ParameterData _parameterData;
     // [SerializeField] private SetOfRoomParameters _setOfParameters;
 
     private RoomsSystem _roomsSystem;
@@ -51,6 +52,7 @@ public class SetOfRoomParameters
     private static int _count = Enum.GetValues(typeof(RoomParameterType)).Length;
 
     [SerializeField] private RoomParameter[] _parameters;
+    [SerializeField] private ParameterData _parameterData;
 
     public RoomParameter[] Parameters { get => _parameters; }
 
@@ -97,27 +99,35 @@ public class RoomParameter
     public RoomParameterType ParameterType { get => _type; }
     public int Value { get => _value; }
 
-    public string Name { get; private set; }
+    //public string Name { get; private set; }
 
-    public Sprite Icon { get; private set; }
+    //public Sprite Icon { get; private set; }
 
-    [Inject]
-    private void Construct(ParameterData parameterData)
+    //public ParameterData _parameterData;
+
+    //[Inject]
+    //private void Construct(ParameterData parameterData)
+    //{
+    //    //Debug.Log("PseudoConstruct");
+    //    _parameterData = parameterData;
+    //    Parameter param = parameterData.FindParamByType(ParameterType);
+
+    //    Name = param.Name;
+    //    Icon = param.Icon;
+
+    //}
+
+    public RoomParameter(RoomParameterType type, int value/*, ParameterData parameterData*/)
     {
-        Debug.Log("PseudoConstruct");
-
-        Parameter param = parameterData.FintParamByType(ParameterType);
-
-        Name = param.Name;
-        Icon = param.Icon;
-
-    }
-
-    public RoomParameter(RoomParameterType type, int value)
-    {
-        Debug.Log("Construct");
+        //Debug.Log("Construct");
         _type = type;
         _value = value;
+
+        //_parameterData = parameterData;
+        //Parameter param = parameterData.FindParamByType(ParameterType);
+
+        //Name = param.Name;
+        //Icon = param.Icon;
 
         //_name = RoomParameterNames.Names[_type];
     }

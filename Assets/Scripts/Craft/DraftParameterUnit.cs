@@ -1,20 +1,29 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class DraftParameterUnit : MonoBehaviour
 {
-    [SerializeField] private Image _icon;
-    [SerializeField] private TMP_Text _count;
+    [SerializeField] protected Image _icon;
+    [SerializeField] protected TMP_Text _count;
 
-    public void Fill(RoomParameter roomParameter)
+    protected ParameterData _parameterData;
+
+    [Inject]
+    protected void Construct(ParameterData parameterData)
+    {
+        _parameterData = parameterData;
+    }
+
+    public virtual void Fill(RoomParameter roomParameter)
     {
         _icon.gameObject.SetActive(true);
-        _icon.sprite = roomParameter.Icon;
+        _icon.sprite = _parameterData.FindParamByType(roomParameter.ParameterType).Icon; //roomParameter.Icon;
         _count.gameObject.SetActive(true);
-        _count.text = roomParameter.Value.ToString();
+        _count.text = "+ " + roomParameter.Value.ToString();
     }
-    public void FillEmpty()
+    public virtual void FillEmpty()
     {
         _icon.gameObject.SetActive(false);
         _count.gameObject.SetActive(false);

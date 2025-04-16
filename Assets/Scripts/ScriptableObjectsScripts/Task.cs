@@ -36,7 +36,7 @@ public class ParameterTask : Task
     [Inject]
     private void Construect(ParameterData parameterData)
     {
-        Parameter = parameterData.FintParamByType(_parameterType);
+        Parameter = parameterData.FindParamByType(_parameterType);
     }
 }
 
