@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -9,8 +8,6 @@ public abstract class LootSettings
 
     public abstract Item Loot { get; }
     public int Count { get => _count; }
-
-   
 }
 
 [Serializable]

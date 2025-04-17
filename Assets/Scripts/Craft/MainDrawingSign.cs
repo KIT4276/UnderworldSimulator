@@ -40,7 +40,7 @@ public class MainDrawingSign : MonoBehaviour
             _icon.gameObject.SetActive(true);
             _name.text = _craftSystem.ActiveDrawing.Name;
             _icon.sprite = _craftSystem.ActiveDrawing.Icon;
-            Debug.Log(_parameters.Length);
+            //Debug.Log(_parameters.Length);
             foreach (var param in _parameters)
             {
                 param.FillEmpty();

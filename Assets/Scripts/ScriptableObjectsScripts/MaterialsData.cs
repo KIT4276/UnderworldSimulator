@@ -8,6 +8,8 @@ public class MaterialsData : ScriptableObject
     [Space]
     [SerializeField] private LootMaterial[] _materials;
 
+    public LootMaterial[] Mterials { get { return _materials; } }
+
     public Sprite GetMaterialsIcon(LootType material)
     {
         foreach (var mat in _materials)
