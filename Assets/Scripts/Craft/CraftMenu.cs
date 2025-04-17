@@ -41,7 +41,7 @@ public class CraftMenu : MonoBehaviour
 
     private void NotEnough()
     {
-        Debug.Log("NotEnough");
+        //Debug.Log("NotEnough");
         _notEnoughSign.gameObject.SetActive(true);
         _notEnoughSign.StartFadeIn();
     }

@@ -12,6 +12,7 @@ public class MateialsField : MonoBehaviour
     [Space]
     [SerializeField] private TMP_Text _availableCount;
     [SerializeField] private GameObject _slash;
+    [SerializeField] private GameObject _iconSubstrate;
     [Space]
     [SerializeField] private Image _checkImage;
     [SerializeField] private Sprite _availableIcon;
@@ -19,9 +20,10 @@ public class MateialsField : MonoBehaviour
 
     public void Fill(string matName, Sprite matIcon, float neededCount, float availableCount)
     {
-        _materialsIcon.gameObject.SetActive(true);
+        //_materialsIcon.gameObject.SetActive(true);
         _checkImage.gameObject.SetActive(true);
         _slash.SetActive(true);
+        _iconSubstrate.SetActive(true);
 
         _nameText.text = matName;
         _materialsIcon.sprite = matIcon;
@@ -41,9 +43,10 @@ public class MateialsField : MonoBehaviour
 
     public void FillEmpty()
     {
-        _materialsIcon.gameObject.SetActive(false);
+        //_materialsIcon.gameObject.SetActive(false);
         _checkImage.gameObject.SetActive(false);
         _slash.SetActive(false);
+        _iconSubstrate.SetActive(false);
 
         _nameText.text = string.Empty;
         _availableCount.text = string.Empty;
