@@ -11,7 +11,7 @@ using UnityEngine;
 
 public interface BaseItem
 {
-    public Sprite GetIcon() ;
+    public Sprite GetIcon();
 
     public string GetHint();
 }

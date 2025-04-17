@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ public class InventorySystem : MonoBehaviour
     public InventorySlot[] InventorySlots { get => _inventorySlots; }
 
     private InventoryHolder _inventoryHolder;
+   // private InventoryFiller _inventoryFiller;
+
 
     [Inject]
     public void Construct(DecorationSystem decorationSystem, StateMachine stateMachine)
@@ -33,12 +36,12 @@ public class InventorySystem : MonoBehaviour
         _stateMachine.ChangeStateAction += StateChanged;
 
         _inventoryHolder = new();
+       // _inventoryFiller = new(this, _inventoryHolder);
     }
 
 
     public void RemoveItems(LootType lootType)
     {
-
         foreach (var slot in _inventorySlots)
         {
             if (slot.IsOccupied &&
@@ -222,45 +225,100 @@ public class InventorySystem : MonoBehaviour
         StopAllCoroutines();
         _warningSign.SetActive(false);
     }
+
+
+
+
+
+
+    public void FillDecorItems()
+    {
+        List<BaseItem> itemsClone = Clone();
+
+        foreach (var item in itemsClone)
+        {
+            if(item is Decor)
+            {
+               if(FindPlaceForItem(item))
+                    itemsClone.Remove(item);
+            }
+        }
+    }
+
+    public void FillCraftItems()
+    {
+        List<BaseItem> itemsClone = Clone();
+
+        for (var i = 0; i< itemsClone.Count; i++)
+        {
+            if (itemsClone[i] is CraftItem)
+            {
+                if (FindPlaceForItem(itemsClone[i]))
+                    itemsClone.Remove(itemsClone[i]);
+            }
+        }
+    }
+
+    private List<BaseItem> Clone()
+    {
+        List<BaseItem> itemsClone = new List<BaseItem>();
+
+        foreach (var item in _inventoryHolder.AllItemsInInventory)
+        {
+            itemsClone.Add(item);
+        }
+        return itemsClone;
+    }
+
+    private bool FindPlaceForItem(BaseItem item)
+    {
+        foreach (var slot in InventorySlots)
+        {
+            if (!slot.IsOccupied || (slot.IsOccupied && slot.Items[0].GetIcon() == item.GetIcon()))// костылище пока что
+            {
+                slot.SetItem(item);
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 public class InventoryHolder
 {
-    //private List<BaseItem> _allDecorInInventory = new(); 
-    private List<BaseItem> _allMaterialsInInventory = new();
+    public List<BaseItem> AllItemsInInventory { get; private set; }
 
     public void Add(BaseItem item)
     {
+        if (AllItemsInInventory == null)
+            AllItemsInInventory = new();
+
+
         if (item is Item)
         {
-            _allMaterialsInInventory.Add(item);
+            AllItemsInInventory.Add(item);
         }
-        //else if (item is Decor)
-        //{
-        //        _allDecorInInventory.Add(item);
-        //}
-        //Debug.Log("Materials " + _allMaterialsInInventory.Count);
     }
 
     public void Remove(BaseItem item)
     {
+        if (AllItemsInInventory == null)
+            AllItemsInInventory = new();
+
         if (item is Item)
         {
-            _allMaterialsInInventory.Remove(item);
+            AllItemsInInventory.Remove(item);
         }
-        //else if (item is Decor)
-        //{
-        //    _allDecorInInventory.Remove(item);
-        //}
-
-       // Debug.Log("Materials " + _allMaterialsInInventory.Count);
     }
 
     public int CalculateMaterial(LootType material)
     {
+        if (AllItemsInInventory == null)
+            AllItemsInInventory = new();
+
         int count = 0;
 
-        foreach (BaseItem item in _allMaterialsInInventory)
+        foreach (BaseItem item in AllItemsInInventory)
         {
             if (item is Item)
             {
@@ -274,3 +332,21 @@ public class InventoryHolder
         return count;
     }
 }
+
+//public class InventoryFiller
+//{
+//    private InventorySystem _inventorySystem;
+//    private InventoryHolder _inventoryHolder;
+
+//    public InventoryFiller(InventorySystem inventorySystem, InventoryHolder inventoryHolder)
+//    {
+//        _inventorySystem = inventorySystem;
+//        _inventoryHolder = inventoryHolder;
+//    }
+
+//    internal void Fill(BaseItem baseItem)
+//    {
+        
+//    }
+//}
+

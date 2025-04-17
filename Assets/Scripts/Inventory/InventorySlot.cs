@@ -145,3 +145,4 @@ public struct InventorySlotClone
         ItemsCount = itemsCount;
     }
 }
+
