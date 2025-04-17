@@ -550,6 +550,7 @@ GameObject:
   - component: {fileID: 5223529913579707751}
   - component: {fileID: 4502433825833626241}
   - component: {fileID: 610915573608135863}
+  - component: {fileID: -4209451308530721935}
   m_Layer: 8
   m_Name: Light_music
   m_TagString: Untagged
@@ -662,15 +663,35 @@ MonoBehaviour:
   _rotationAction: {fileID: -2486391391914466195, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _parameters:
     _parameters:
-    - _name: "\u0414\u043E\u0441\u0443\u0433"
-      _type: 0
+    - _type: 0
       _value: 10
-    - _name: "\u042D\u0441\u0442\u0435\u0442\u0438\u043A\u0430"
-      _type: 1
+    - _type: 1
       _value: 1
-    - _name: "\u041A\u043E\u043C\u0444\u043E\u0440\u0442"
-      _type: 2
+    - _type: 2
       _value: 0
+    _parameterData: {fileID: 0}
+--- !u!95 &-4209451308530721935
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3132589917377380954}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5f98697429972c847a3a9ca52e1a086c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4636548762650349048
 GameObject:
   m_ObjectHideFlags: 0

@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 3416665271289926960}
   - component: {fileID: 7824082684889004187}
   - component: {fileID: 8860317081422855882}
+  - component: {fileID: 3479496837821755713}
   m_Layer: 8
   m_Name: Stool
   m_TagString: Untagged
@@ -261,15 +262,35 @@ MonoBehaviour:
   _rotationAction: {fileID: -2486391391914466195, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _parameters:
     _parameters:
-    - _name: "\u0414\u043E\u0441\u0443\u0433"
-      _type: 0
+    - _type: 0
       _value: 0
-    - _name: "\u042D\u0441\u0442\u0435\u0442\u0438\u043A\u0430"
-      _type: 1
+    - _type: 1
       _value: 3
-    - _name: "\u041A\u043E\u043C\u0444\u043E\u0440\u0442"
-      _type: 2
+    - _type: 2
       _value: 2
+    _parameterData: {fileID: 0}
+--- !u!95 &3479496837821755713
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165298712714061687}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5f98697429972c847a3a9ca52e1a086c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1366945701105024573
 GameObject:
   m_ObjectHideFlags: 0
