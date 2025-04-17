@@ -29,6 +29,7 @@ public class ButtonClickChangeImage : MonoBehaviour
 
     private void OnDisable()
     {
+        _image.sprite = _normImage;
         StopAllCoroutines();
     }
 }

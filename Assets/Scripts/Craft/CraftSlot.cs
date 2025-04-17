@@ -9,6 +9,7 @@ public class CraftSlot : MonoBehaviour
     [SerializeField] private TMP_Text _description;
     [SerializeField] private Image _draft;
     [SerializeField] private DraftParameterUnit[] _draftParameterUnits;
+    [SerializeField] private ButtonEnterChangeImage _enterChangeImage;
 
 
     private Drawing _drawing;
@@ -48,6 +49,7 @@ public class CraftSlot : MonoBehaviour
         {
             _draftParameterUnits[i].Fill(drawing.Decor.Parameters.Parameters[i], _parameterData);
         }
+        _enterChangeImage.Activate();
     }
 
     public void FillEmpty()
@@ -57,8 +59,9 @@ public class CraftSlot : MonoBehaviour
         _description.text = string.Empty;
         _draft.gameObject.SetActive(false);
         //Debug.Log("FillEmpty");
+        _enterChangeImage.DeActivate();
 
-        foreach(var unit in _draftParameterUnits)
+        foreach (var unit in _draftParameterUnits)
         {
             unit.FillEmpty();
         }
