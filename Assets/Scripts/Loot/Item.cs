@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Zenject;
 
 [Serializable]
 public class Item : BaseItem
@@ -11,12 +10,6 @@ public class Item : BaseItem
 
     public LootType LootType { get => _type; }
 
-    //[Inject]
-    //private void Construct(MaterialsData materialsData)
-    //{
-    //    Debug.Log(_materialsData);
-    //    _materialsData = materialsData;
-    //}
 
     public void Init(MaterialsData materialsData)
     {

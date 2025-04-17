@@ -4,43 +4,105 @@ using UnityEngine.InputSystem;
 
 public class CheatCodes
 {
-    private InputActionReference _test_1;
-    private InputActionReference _test_2;
-    private InputActionReference _test_3;
-    private InputActionReference _test_4;
-    private InputActionReference _test_5;
-
+    private InputActionReference[] _tests;
+    private InputActionReference[] _mat_tests;
     private readonly Decor[] _decors;
+    CraftLootSettings[] _craftLootSettings;
+    private readonly MaterialsData _materialsData;
     private readonly InventorySystem _inventory;
     private readonly DrawingData _drawingData;
     private readonly GuestsStaticData _guestsData;
     private bool _drawingsInited;
 
-    public CheatCodes(InventorySystem inventory, DrawingData drawingData, GuestsStaticData guestsData,
+    public CheatCodes(InventorySystem inventory, DrawingData drawingData, GuestsStaticData guestsData, MaterialsData materialsData,
 
-        InputActionReference test_1,
-        InputActionReference test_2, InputActionReference test_3,
-        InputActionReference test_4, InputActionReference test_5, Decor[] decors)
+        InputActionReference[] tests,
+        InputActionReference[] mat_tests,
+        CraftLootSettings[] craftLootSettings, Decor[] decors)
     {
+
+        _craftLootSettings = craftLootSettings;
         _inventory = inventory;
         _drawingData = drawingData;
         _guestsData = guestsData;
         _decors = decors;
+        _materialsData = materialsData;
 
-        _test_1 = test_1;
-        _test_2 = test_2;
-        _test_3 = test_3;
-        _test_4 = test_4;
-        _test_5 = test_5;
+        _tests = tests;
+        _mat_tests = mat_tests;
 
         Subscribe();
     }
 
     private void Subscribe()
     {
-        _test_1.action.started += AddAllDecor;
-        _test_2.action.started += AddAllDrawings;
-        _test_3.action.started += AddAllGuests;
+        _tests[0].action.started += AddAllDecor;
+        _tests[1].action.started += AddAllDrawings;
+        _tests[2].action.started += AddAllGuests;
+
+
+
+        for(int i = 0;  i < _mat_tests.Length; i++)
+        {
+            _mat_tests[i].action.started += AddMaterial;
+        }
+    }
+
+    private void AddMaterial(InputAction.CallbackContext context)
+    {
+        switch (context.action.name)
+        {
+            case "Craft_Test_1":
+                Debug.Log(_craftLootSettings[0].Loot.LootType);
+                AddMaterials(_craftLootSettings[0].Loot);
+                break;
+            case "Craft_Test_2":
+                Debug.Log(_craftLootSettings[1].Loot.LootType);
+                AddMaterials(_craftLootSettings[1].Loot);
+                break;
+            case "Craft_Test_3":
+                Debug.Log(_craftLootSettings[2].Loot.LootType);
+                AddMaterials(_craftLootSettings[2].Loot);
+                break;
+            case "Craft_Test_4":
+                Debug.Log(_craftLootSettings[3].Loot.LootType);
+                AddMaterials(_craftLootSettings[3].Loot);
+                break;
+            case "Craft_Test_5":
+                Debug.Log(_craftLootSettings[4].Loot.LootType);
+                AddMaterials(_craftLootSettings[4].Loot);
+                break;
+            case "Craft_Test_6":
+                Debug.Log(_craftLootSettings[5].Loot.LootType);
+                AddMaterials(_craftLootSettings[5].Loot);
+                break;
+            case "Craft_Test_7":
+                Debug.Log(_craftLootSettings[6].Loot.LootType);
+                AddMaterials(_craftLootSettings[6].Loot);
+                break;
+            case "Craft_Test_8":
+                Debug.Log(_craftLootSettings[7].Loot.LootType);
+                AddMaterials(_craftLootSettings[7].Loot);
+                break;
+            case "Craft_Test_9":
+                Debug.Log(_craftLootSettings[8].Loot.LootType);
+                AddMaterials(_craftLootSettings[8].Loot);
+                break;
+            case "Craft_Test_10":
+                Debug.Log(_craftLootSettings[9].Loot.LootType);
+                AddMaterials(_craftLootSettings[9].Loot);
+                break;
+            case "Craft_Test_11":
+                Debug.Log(_craftLootSettings[10].Loot.LootType);
+                AddMaterials(_craftLootSettings[10].Loot);
+                break;
+        }
+    }
+
+    private void AddMaterials(Item item)
+    {
+        item.Init(_materialsData);
+        _inventory.TryReturnLootToInventory(item);
     }
 
     private void AddAllGuests(InputAction.CallbackContext context)
@@ -58,7 +120,7 @@ public class CheatCodes
         {
             foreach (var drawing in _drawingData.Drawings)
             {
-                if (!drawing.IsAvailable /*!_craftSystem.AvailableDrawings.Contains(drawing)*/)
+                if (!drawing.IsAvailable)
                 {
                     drawing.MakeAvailable();
                 }

@@ -18,6 +18,6 @@ public class ParameterUnit : DraftParameterUnit
     {
         base.FillEmpty();
         _name.gameObject.SetActive(false);
-        Debug.Log("FillEmpty");
+       // Debug.Log("FillEmpty");
     }
 }
