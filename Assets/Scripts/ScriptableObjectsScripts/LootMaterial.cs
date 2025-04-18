@@ -10,7 +10,7 @@ public class LootMaterial
 
     public LootType LootType { get => _material; }
     public Sprite Icon { get => _icon; }
-    public string Hint { get => _hints; }   
+    public string Hint { get => _hints; }  
 
 }
 

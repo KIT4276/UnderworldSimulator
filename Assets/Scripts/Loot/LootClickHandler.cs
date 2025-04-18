@@ -28,7 +28,7 @@ public class LootClickHandler : MonoBehaviour
 
     public void OntakeClick()
     {
-        BaseItem takenLoot = _lootSlot.TakeLastItem();
+        IBaseItem takenLoot = _lootSlot.TakeLastItem();
         _lootSystem.TakeLootToInventory(takenLoot);
 
         _craftLoot.TakeItem(((Item)takenLoot).LootType, 1);

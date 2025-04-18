@@ -22,7 +22,7 @@ public class InventorySlot : MonoBehaviour
     public event Action ChangeCraftCount;
     public event Action ChangeQuestCount;
 
-    public List<BaseItem> Items { get; protected set; }
+    public List<IBaseItem> Items { get; protected set; }
 
     protected Sprite _icon;
 
@@ -30,13 +30,13 @@ public class InventorySlot : MonoBehaviour
     {
         if (Items == null)
         {
-            Items = new List<BaseItem>();
+            Items = new List<IBaseItem>();
         }
         SettingParameters();
         InitializedAction?.Invoke();
     }
 
-    public BaseItem GetLastItems()
+    public IBaseItem GetLastItems()
     {
         if (Items == null)
             Initialize();
@@ -44,13 +44,11 @@ public class InventorySlot : MonoBehaviour
         return item;
     }
 
-    public BaseItem TakeLastItem()
+    public IBaseItem TakeLastItem()
     {
         var inventObj = Items[^1];
         Items.Remove(Items[^1]);
         CheckingAndShow();
-
-        //ChangeCount?.Invoke();
 
         if(inventObj is Decor)
             ChangeDecorCount?.Invoke();
@@ -62,32 +60,15 @@ public class InventorySlot : MonoBehaviour
         return inventObj;
     }
 
-    public void SetItem(BaseItem item)
+    public void SetItem(IBaseItem item)
     {
-        Items ??= new List<BaseItem>();
+        if (Items == null)
+            Initialize();
 
         IsOccupied = true;
         _icon = item.GetIcon();
         Items.Add(item);
         SettingParameters();
-        CheckingAndShow();
-    }
-
-    protected void SettingParameters()
-    {
-        if (IsOccupied)
-        {
-            _button.interactable = true;
-            _button.enabled = true;
-            _buttonIconImage.gameObject.SetActive(true);
-            _buttonEnterChangeImage.enabled = true;
-            _buttonEnterChangeImage.Activate();
-            _buttonIconImage.sprite = _icon;
-        }
-        else
-        {
-            Deactivate();
-        }
         CheckingAndShow();
     }
 
@@ -113,6 +94,25 @@ public class InventorySlot : MonoBehaviour
         _icon = null;
     }
 
+
+    protected void SettingParameters()
+    {
+        if (IsOccupied)
+        {
+            _button.interactable = true;
+            _button.enabled = true;
+            _buttonIconImage.gameObject.SetActive(true);
+            _buttonEnterChangeImage.enabled = true;
+            _buttonEnterChangeImage.Activate();
+            _buttonIconImage.sprite = _icon;
+        }
+        else
+        {
+            Deactivate();
+        }
+        CheckingAndShow();
+    }
+
     protected void CheckingAndShow()
     {
         if (Items.Count > 1)
@@ -131,18 +131,6 @@ public class InventorySlot : MonoBehaviour
                 Deactivate();
             }
         }
-    }
-}
-
-public struct InventorySlotClone
-{
-    public BaseItem Item { get; private set; }
-    public int ItemsCount { get; private set; }
-
-    public InventorySlotClone(BaseItem item, int itemsCount)
-    {
-        Item = item;
-        ItemsCount = itemsCount;
     }
 }
 

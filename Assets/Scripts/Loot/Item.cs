@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class Item : BaseItem
+public class Item : IBaseItem
 {
     [SerializeField] protected LootType _type;
 
@@ -10,6 +10,7 @@ public class Item : BaseItem
 
     public LootType LootType { get => _type; }
 
+    protected int _id;
 
     public void Init(MaterialsData materialsData)
     {
@@ -20,4 +21,5 @@ public class Item : BaseItem
 
     public Sprite GetIcon() => _materialsData.GetMaterialsIcon(_type);
 
+   
 }
