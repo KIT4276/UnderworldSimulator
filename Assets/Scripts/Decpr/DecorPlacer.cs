@@ -9,6 +9,7 @@ public class DecorPlacer : MonoBehaviour
     private SpaceDeterminantor _spaceDeterminantor;
     private DecorHolder _decorHolder;
     private FloorMarker _floor;
+    private Animator _animator;
 
     public void Initialize(Decor decor, SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
     {
@@ -17,6 +18,11 @@ public class DecorPlacer : MonoBehaviour
         _spaceDeterminantor = spaceDeterminantor;
         _decorHolder = decorHolder;
         _decor.Clicked += OnClicked;
+        _animator = decor.GetComponent<Animator>();
+        if (_animator == null)
+        {
+            Debug.LogWarning("No Animator component found on the Decor. Please add it.");
+        }
     }
 
     public void OnRemoved()
@@ -87,6 +93,10 @@ public class DecorPlacer : MonoBehaviour
             {
                 _decor.PlaceObject();
                 _floor.AddDecor(_decor);
+                if (_animator != null)
+                {
+                    _animator.SetTrigger("MakeScale");
+                }
             }
         }
         else if (IsMouseOnObject() && _decorHolder.ActiveDecor == null)

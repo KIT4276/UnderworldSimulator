@@ -282,6 +282,7 @@ GameObject:
   - component: {fileID: 5223529913579707751}
   - component: {fileID: 4502433825833626241}
   - component: {fileID: 610915573608135863}
+  - component: {fileID: 11365655114396354}
   m_Layer: 8
   m_Name: Chair_01
   m_TagString: Untagged
@@ -395,12 +396,34 @@ MonoBehaviour:
   _parameters:
     _parameters:
     - _type: 0
-      _value: 0
+      _value: 2
     - _type: 1
       _value: 0
     - _type: 2
-      _value: 2
+      _value: 0
     _parameterData: {fileID: 0}
+--- !u!95 &11365655114396354
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3132589917377380954}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5f98697429972c847a3a9ca52e1a086c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4313184041231722923
 GameObject:
   m_ObjectHideFlags: 0
