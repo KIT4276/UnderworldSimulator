@@ -23,6 +23,7 @@ public class InventorySystem : MonoBehaviour
 
     private InventoryHolder _inventoryHolder;
 
+
     [Inject]
     public void Construct(DecorationSystem decorationSystem, StateMachine stateMachine)
     {
@@ -35,10 +36,8 @@ public class InventorySystem : MonoBehaviour
         _inventoryHolder = new();
     }
 
-
     public void RemoveItems(LootType lootType)
     {
-
         foreach (var slot in _inventorySlots)
         {
             if (slot.IsOccupied &&
@@ -74,7 +73,6 @@ public class InventorySystem : MonoBehaviour
 
         ActivateInventoryEvent?.Invoke();
     }
-
 
     public void TryReturnLootToInventory(Item loot) /// Внимательно! Сюда обращаемся только чтобы вернуть лут
     {
@@ -118,19 +116,6 @@ public class InventorySystem : MonoBehaviour
             StopAllCoroutines();
             _warningSign.SetActive(true);
             StartCoroutine(HideSign());
-        }
-    }
-
-    private void StateChanged(IExitableState state)
-    {
-        if (state is LootState || state is InventoryState || state is CraftState) //TODO
-        {
-            this.gameObject.SetActive(true);
-            ActivateInventory();
-        }
-        else
-        {
-            this.gameObject.SetActive(false);
         }
     }
 
@@ -181,6 +166,41 @@ public class InventorySystem : MonoBehaviour
         return count;
     }
 
+    public void FillDecorItems()
+    {
+        foreach (var item in _inventoryHolder.AllItemsInInventory)
+        {
+            if (item is Decor)
+            {
+                FindPlaceForItem(item);
+            }
+        }
+    }
+
+    public void FillCraftItems()
+    {
+        foreach (var item in _inventoryHolder.AllItemsInInventory)
+        {
+            if (item is CraftItem)
+            {
+                FindPlaceForItem(item);
+            }
+        }
+    }
+
+    private void StateChanged(IExitableState state)
+    {
+        if (state is LootState || state is InventoryState || state is CraftState) //TODO
+        {
+            this.gameObject.SetActive(true);
+            ActivateInventory();
+        }
+        else
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
+
     private void ReturnDecorToInventory(Decor decor, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
                                                            //для лута создать свой метод
     {
@@ -212,55 +232,68 @@ public class InventorySystem : MonoBehaviour
         _warningSign.SetActive(false);
     }
 
-    private void OnDestroy()
-    {
-        _decorationSystem.TryToRemoveDecorAction -= TryReturnDecorToInventory;
-    }
-
     private void OnDisable()
     {
         StopAllCoroutines();
         _warningSign.SetActive(false);
     }
+
+
+    private void OnDestroy()
+    {
+        _decorationSystem.TryToRemoveDecorAction -= TryReturnDecorToInventory;
+    }
+
+
+    private bool FindPlaceForItem(IBaseItem item)
+    {
+        foreach (var slot in InventorySlots)
+        {
+            if (!slot.IsOccupied || (slot.IsOccupied && slot.Items[0].GetIcon() == item.GetIcon()))// костылище пока что
+            {
+                slot.SetItem(item);
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 public class InventoryHolder
 {
-    //private List<BaseItem> _allDecorInInventory = new(); 
-    private List<BaseItem> _allMaterialsInInventory = new();
+    public List<IBaseItem> AllItemsInInventory { get; private set; }
 
-    public void Add(BaseItem item)
+    public event Action Change;
+
+    public void Add(IBaseItem item)
     {
-        if (item is Item)
-        {
-            _allMaterialsInInventory.Add(item);
-        }
-        //else if (item is Decor)
-        //{
-        //        _allDecorInInventory.Add(item);
-        //}
-        //Debug.Log("Materials " + _allMaterialsInInventory.Count);
+        if (AllItemsInInventory == null)
+            AllItemsInInventory = new();
+
+
+        AllItemsInInventory.Add(item);
+
+        Change?.Invoke();
     }
 
-    public void Remove(BaseItem item)
+    public void Remove(IBaseItem item)
     {
-        if (item is Item)
-        {
-            _allMaterialsInInventory.Remove(item);
-        }
-        //else if (item is Decor)
-        //{
-        //    _allDecorInInventory.Remove(item);
-        //}
+        if (AllItemsInInventory == null)
+            AllItemsInInventory = new();
 
-       // Debug.Log("Materials " + _allMaterialsInInventory.Count);
+        AllItemsInInventory.Remove(item);
+
+        Change?.Invoke();
     }
 
     public int CalculateMaterial(LootType material)
     {
+        if (AllItemsInInventory == null)
+            AllItemsInInventory = new();
+
         int count = 0;
 
-        foreach (BaseItem item in _allMaterialsInInventory)
+        foreach (IBaseItem item in AllItemsInInventory)
         {
             if (item is Item)
             {
@@ -274,3 +307,4 @@ public class InventoryHolder
         return count;
     }
 }
+

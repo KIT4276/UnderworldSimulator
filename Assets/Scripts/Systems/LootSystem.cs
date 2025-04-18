@@ -94,7 +94,7 @@ public class LootSystem : MonoBehaviour
         _menu.SetActive(false);
     }
 
-    public void TakeLootToInventory(BaseItem item)
+    public void TakeLootToInventory(IBaseItem item)
     {
         _inventorySystem.TryReturnLootToInventory((Item)item);
     }

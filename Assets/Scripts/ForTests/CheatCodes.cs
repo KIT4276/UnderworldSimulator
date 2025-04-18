@@ -1,18 +1,17 @@
-using System;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CheatCodes
 {
-    private InputActionReference[] _tests;
-    private InputActionReference[] _mat_tests;
+    private readonly InputActionReference[] _tests;
+    private readonly InputActionReference[] _mat_tests;
     private readonly Decor[] _decors;
-    CraftLootSettings[] _craftLootSettings;
+    private readonly CraftLootSettings[] _craftLootSettings;
     private readonly MaterialsData _materialsData;
     private readonly InventorySystem _inventory;
     private readonly DrawingData _drawingData;
     private readonly GuestsStaticData _guestsData;
-    private bool _drawingsInited;
+
+    private  bool _drawingsInited;
 
     public CheatCodes(InventorySystem inventory, DrawingData drawingData, GuestsStaticData guestsData, MaterialsData materialsData,
 
@@ -53,47 +52,47 @@ public class CheatCodes
         switch (context.action.name)
         {
             case "Craft_Test_1":
-                Debug.Log(_craftLootSettings[0].Loot.LootType);
+               // Debug.Log(_craftLootSettings[0].Loot.LootType);
                 AddMaterials(_craftLootSettings[0].Loot);
                 break;
             case "Craft_Test_2":
-                Debug.Log(_craftLootSettings[1].Loot.LootType);
+               // Debug.Log(_craftLootSettings[1].Loot.LootType);
                 AddMaterials(_craftLootSettings[1].Loot);
                 break;
             case "Craft_Test_3":
-                Debug.Log(_craftLootSettings[2].Loot.LootType);
+               // Debug.Log(_craftLootSettings[2].Loot.LootType);
                 AddMaterials(_craftLootSettings[2].Loot);
                 break;
             case "Craft_Test_4":
-                Debug.Log(_craftLootSettings[3].Loot.LootType);
+               // Debug.Log(_craftLootSettings[3].Loot.LootType);
                 AddMaterials(_craftLootSettings[3].Loot);
                 break;
             case "Craft_Test_5":
-                Debug.Log(_craftLootSettings[4].Loot.LootType);
+                //Debug.Log(_craftLootSettings[4].Loot.LootType);
                 AddMaterials(_craftLootSettings[4].Loot);
                 break;
             case "Craft_Test_6":
-                Debug.Log(_craftLootSettings[5].Loot.LootType);
+               // Debug.Log(_craftLootSettings[5].Loot.LootType);
                 AddMaterials(_craftLootSettings[5].Loot);
                 break;
             case "Craft_Test_7":
-                Debug.Log(_craftLootSettings[6].Loot.LootType);
+               // Debug.Log(_craftLootSettings[6].Loot.LootType);
                 AddMaterials(_craftLootSettings[6].Loot);
                 break;
             case "Craft_Test_8":
-                Debug.Log(_craftLootSettings[7].Loot.LootType);
+               // Debug.Log(_craftLootSettings[7].Loot.LootType);
                 AddMaterials(_craftLootSettings[7].Loot);
                 break;
             case "Craft_Test_9":
-                Debug.Log(_craftLootSettings[8].Loot.LootType);
+               // Debug.Log(_craftLootSettings[8].Loot.LootType);
                 AddMaterials(_craftLootSettings[8].Loot);
                 break;
             case "Craft_Test_10":
-                Debug.Log(_craftLootSettings[9].Loot.LootType);
+               // Debug.Log(_craftLootSettings[9].Loot.LootType);
                 AddMaterials(_craftLootSettings[9].Loot);
                 break;
             case "Craft_Test_11":
-                Debug.Log(_craftLootSettings[10].Loot.LootType);
+               // Debug.Log(_craftLootSettings[10].Loot.LootType);
                 AddMaterials(_craftLootSettings[10].Loot);
                 break;
         }
