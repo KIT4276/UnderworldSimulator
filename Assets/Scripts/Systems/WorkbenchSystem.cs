@@ -45,6 +45,9 @@ public class WorkbenchSystem : MonoBehaviour
         }
 
         _stateMachine.ChangeStateAction += OnChangeState;
+
+        _roomMenu.gameObject.SetActive(false);
+        _bottomRoomsPanel.SetActive(false);
     }
 
     public void ShowSign()
