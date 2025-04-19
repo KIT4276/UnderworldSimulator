@@ -8,6 +8,8 @@ public class EscapeMenu : MonoBehaviour
 {
     [SerializeField] private InputActionReference _escapeAction;
     [SerializeField] private GameObject _panel;
+    [SerializeField] private GameObject _settingsPanel;
+    [SerializeField] private GameObject _buttons;
 
     [Inject] private StateMachine _machine;
     [Inject] private StatesTransitor _statesTransitor;
@@ -19,14 +21,32 @@ public class EscapeMenu : MonoBehaviour
         _statesTransitor.EscapeGame += OnEscape;
     }
 
-    private void OnEscape()
+    public void OnEscape()
     {
-        _panel.SetActive(true);
+        if (_panel.activeSelf)
+        {
+            ReturnToGame();
+        }
+        else
+        {
+            _panel.SetActive(true);
+        }
     }
 
     public void ReturnToGame()
     {
         _panel.SetActive(false);
+    }
+
+    public void Settings()
+    {
+        _settingsPanel.SetActive(true);
+        _buttons.SetActive(false);
+    }
+
+    public void EscapeSettings()
+    {
+
     }
 
     public void QuitGame()
