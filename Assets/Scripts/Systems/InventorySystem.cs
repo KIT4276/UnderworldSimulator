@@ -168,6 +168,8 @@ public class InventorySystem : MonoBehaviour
 
     public void FillDecorItems()
     {
+        if (_inventoryHolder.AllItemsInInventory == null || _inventoryHolder.AllItemsInInventory.Count == 0) return;
+        
         foreach (var item in _inventoryHolder.AllItemsInInventory)
         {
             if (item is Decor)
@@ -179,6 +181,8 @@ public class InventorySystem : MonoBehaviour
 
     public void FillCraftItems()
     {
+        if (_inventoryHolder.AllItemsInInventory == null || _inventoryHolder.AllItemsInInventory.Count == 0) return;
+
         foreach (var item in _inventoryHolder.AllItemsInInventory)
         {
             if (item is CraftItem)

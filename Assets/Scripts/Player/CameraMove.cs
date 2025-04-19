@@ -132,6 +132,16 @@ public class CameraMove : BaseMovable
 
     private void OnChangeState(IExitableState state)
     {
+        if (state is CraftState)
+        {
+            base.Immobilize();
+        }
+
+        if (_stateMachine.PredioslyState is CraftState && (state is DecorationState || state is WorkbenchState))
+        {
+            base.Mobilize();
+        }
+
         if ((state is DecorationState && _stateMachine.PredioslyState is WorkbenchState) ||
             (state is WorkbenchState && _stateMachine.PredioslyState is DecorationState) ||
             (state is CraftState && _stateMachine.PredioslyState is DecorationState) ||
@@ -142,19 +152,16 @@ public class CameraMove : BaseMovable
 
             return;
         }
-            if (state is DecorationState || state is WorkbenchState)
-            {
-                Mobilize();
-            }
-            else if (state is CraftState)
-            {
-                base.Immobilize();
-            }
-            else
-            {
-                Immobilize();
-            }
-        
+        if (state is DecorationState || state is WorkbenchState)
+        {
+            Mobilize();
+        }
+
+        else
+        {
+            Immobilize();
+        }
+
     }
 
     private void ChekHotelPoint()
