@@ -75,4 +75,9 @@ public class ClickHandler : MonoBehaviour
     {
         ClickAction?.Invoke();
     }
+
+    private void OnDestroy()
+    {
+        _click.action.performed -= OnClick;
+    }
 }

@@ -18,6 +18,8 @@ public class EscapeMenu : MonoBehaviour
     private void Start()
     {
         _panel.SetActive(false);
+        _buttons.SetActive(false);
+        _settingsPanel.SetActive(false);
         _statesTransitor.EscapeGame += OnEscape;
     }
 

@@ -4,12 +4,14 @@ public class WallsSystem
 {
     private GameObject[] _smallWalls;
     private GameObject[] _bigWalls;
-    private GameObject _roof;
+    private GameObject[] _roof;
 
-    public void InitWithWalls(GameObject[] smallWalls, GameObject[] bigWalls, GameObject roof)
+
+    public void InitWithWalls(GameObject[] smallWalls, GameObject[] bigWalls, GameObject[] roof)
     {
         _smallWalls = new GameObject[smallWalls.Length];
         _bigWalls = new GameObject[bigWalls.Length];
+        _roof = new GameObject[roof.Length];
 
         _smallWalls = smallWalls;
         _bigWalls = bigWalls;
@@ -27,7 +29,7 @@ public class WallsSystem
             return;
         }
 
-        SwitchGameObjects(_smallWalls, _bigWalls,false);
+        SwitchGameObjects(null, _bigWalls,false);
     }
 
     public void SwitchToSmall()
@@ -43,20 +45,24 @@ public class WallsSystem
 
     public void SwitchToRoof()
     {
-        if (_smallWalls == null || _bigWalls == null || _roof == null)
+        if (_smallWalls == null || _bigWalls == null || _roof == null )
         {
            // Debug.Log("WallsSystem Not Inited!");
             return;
         }
-        SwitchGameObjects(_smallWalls, _bigWalls, true);
+        SwitchGameObjects(null, _bigWalls, true);
     }
 
     private void SwitchGameObjects(GameObject[] offWalls, GameObject[] onWalls, bool isRoof)
     {
-        foreach (var wall in offWalls)
+        if (offWalls != null)
         {
-            wall.SetActive(false);
+            foreach (var wall in offWalls)
+            {
+                wall.SetActive(false);
+            }
         }
+
         foreach (var wall in onWalls)
         {
             wall.SetActive(true);
@@ -64,11 +70,13 @@ public class WallsSystem
 
         if (isRoof)
         {
-            _roof.SetActive(true);
+            foreach(var roof in _roof)
+            roof.SetActive(true);
         }
         else
         {
-            _roof.SetActive(false);
+            foreach (var roof in _roof)
+                roof.SetActive(false);
         }
     }
 }
