@@ -1,7 +1,6 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Zenject;
 
@@ -39,10 +38,7 @@ public class RoomMenu : MonoBehaviour
         _machine = machine;
         _roomsSystem = roomsSystem;
         _parameterData = parameterData;
-    }
 
-    public void Start()
-    {
         _roomsSystem.RoomsParamsChanged += UpdateParams;
         _roomsSystem.RoomSelected += UpdateParams;
         _machine.ChangeStateAction += OnChangeState;
