@@ -49,6 +49,11 @@ public class RoomMenu : MonoBehaviour
         _roomsSystem.Inited += FillButtons;
     }
 
+    private void Awake()
+    {
+        UpdateParams(_roomsSystem.SelectedRoom);
+    }
+
     private void FillButtons()
     {
         for (int i = 0; i < _roomsSystem.Rooms.Count; i++)

@@ -27,7 +27,12 @@ public class TaskMenu : MonoBehaviour
             task.BecameAvailable += OnBecameAvailable;
         }
         
-        //Fill();
+       
+    }
+
+    private void Awake()
+    {
+        Fill();
     }
 
     private void OnBecameAvailable(BaseHandledReward reward)
@@ -63,7 +68,6 @@ public class TaskMenu : MonoBehaviour
                 _parametersSlots[i].FillEmpty();
             }
         }
-
     }
 
     private void OnDestroy()
