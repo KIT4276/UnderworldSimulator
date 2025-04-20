@@ -1,18 +1,18 @@
 ﻿using System;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
+using UnityEditor;
 
 public class EscapeMenu : MonoBehaviour
 {
-    [SerializeField] private InputActionReference _escapeAction;
     [SerializeField] private GameObject _panel;
     [SerializeField] private GameObject _settingsPanel;
     [SerializeField] private GameObject _buttons;
+    [SerializeField] private GameObject _goToMainPanel;
+    [SerializeField] private GameObject _exitGamePanel;
 
-    [Inject] private StateMachine _machine;
     [Inject] private StatesTransitor _statesTransitor;
+    [Inject] private StateMachine _stateMachine;
 
 
     private void Start()
@@ -20,6 +20,8 @@ public class EscapeMenu : MonoBehaviour
         _panel.SetActive(false);
         _buttons.SetActive(false);
         _settingsPanel.SetActive(false);
+        _goToMainPanel.SetActive(false);
+        _exitGamePanel.SetActive(false);
         _statesTransitor.EscapeGame += OnEscape;
     }
 
@@ -32,12 +34,15 @@ public class EscapeMenu : MonoBehaviour
         else
         {
             _panel.SetActive(true);
+            _buttons.SetActive(true);
         }
     }
 
     public void ReturnToGame()
     {
         _panel.SetActive(false);
+        _buttons.SetActive(false);
+        _settingsPanel.SetActive(false);
     }
 
     public void Settings()
@@ -48,10 +53,44 @@ public class EscapeMenu : MonoBehaviour
 
     public void EscapeSettings()
     {
+        _settingsPanel.SetActive(false);
+        _buttons.SetActive(true);
+    }
+
+    public void GoToMain()
+    {
+        _goToMainPanel.SetActive(true) ;
+        _buttons.SetActive(false);
+    }
+
+    public void EscapeGoToMain()
+    {
+        _goToMainPanel.SetActive(false);
+        _buttons.SetActive(true);
+    }
+
+
+    public void SaveAndGoToBootstrap()
+    {
+        //TODO save
+
+        _stateMachine.Enter<BootstrapState>();
 
     }
 
-    public void QuitGame()
+    public void OpenExitGameMenu()
+    {
+        _exitGamePanel.SetActive(true);
+        _buttons.SetActive(false);
+    }
+
+    public void EscapeExit()
+    {
+        _exitGamePanel.SetActive(false);
+        _buttons.SetActive(true);
+    }
+
+    public void ExitGame()
     {
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
