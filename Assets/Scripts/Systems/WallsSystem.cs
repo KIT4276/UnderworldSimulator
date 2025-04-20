@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class WallsSystem
@@ -5,6 +6,10 @@ public class WallsSystem
     private GameObject[] _smallWalls;
     private GameObject[] _bigWalls;
     private GameObject[] _roof;
+
+    public HotelViewState CurrentlViewState { get; private set; }
+
+    public event Action WallsStateChange;
 
 
     public void InitWithWalls(GameObject[] smallWalls, GameObject[] bigWalls, GameObject[] roof)
@@ -21,7 +26,38 @@ public class WallsSystem
         SwitchToRoof();
     }
 
-    public void SwitchToBig()
+    public void SwitchUpViewState()
+    {
+        CurrentlViewState = (HotelViewState)(((int)CurrentlViewState + 1) % 3);
+        
+        UpdateObjects();
+        WallsStateChange?.Invoke();
+    }
+
+    public void SwitchDownViewState()
+    {
+        CurrentlViewState = (HotelViewState)(((int)CurrentlViewState - 1 + 3) % 3);
+        UpdateObjects();
+        WallsStateChange?.Invoke();
+    }
+
+    private void UpdateObjects()
+    {
+        switch (CurrentlViewState)
+        {
+            case HotelViewState.Roof:
+                SwitchToRoof();
+                break;
+            case HotelViewState.Walls:
+                SwitchToBig();
+                break;
+            case HotelViewState.Floor:
+                SwitchToSmall();
+                break;
+        }
+    }
+
+    private void SwitchToBig()
     {
         if (_smallWalls == null || _bigWalls == null || _roof == null)
         {
@@ -29,10 +65,10 @@ public class WallsSystem
             return;
         }
 
-        SwitchGameObjects(null, _bigWalls,false);
+        SwitchGameObjects(null, _bigWalls, false);
     }
 
-    public void SwitchToSmall()
+    private void SwitchToSmall()
     {
         if (_smallWalls == null || _bigWalls == null || _roof == null)
         {
@@ -40,14 +76,14 @@ public class WallsSystem
             return;
         }
 
-        SwitchGameObjects(_bigWalls , _smallWalls, false);
+        SwitchGameObjects(_bigWalls, _smallWalls, false);
     }
 
-    public void SwitchToRoof()
+    private void SwitchToRoof()
     {
-        if (_smallWalls == null || _bigWalls == null || _roof == null )
+        if (_smallWalls == null || _bigWalls == null || _roof == null)
         {
-           // Debug.Log("WallsSystem Not Inited!");
+            // Debug.Log("WallsSystem Not Inited!");
             return;
         }
         SwitchGameObjects(null, _bigWalls, true);
@@ -70,8 +106,8 @@ public class WallsSystem
 
         if (isRoof)
         {
-            foreach(var roof in _roof)
-            roof.SetActive(true);
+            foreach (var roof in _roof)
+                roof.SetActive(true);
         }
         else
         {

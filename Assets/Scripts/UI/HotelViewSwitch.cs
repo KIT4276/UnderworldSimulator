@@ -10,7 +10,7 @@ public class HotelViewSwitch : MonoBehaviour
     [SerializeField] private Sprite _withWallsSprite;
     [SerializeField] private Sprite _withFloorSprite;
 
-    private HotelViewState _currentlViewState;
+
     private WallsSystem _wallsSystem;
 
     [Inject]
@@ -19,26 +19,27 @@ public class HotelViewSwitch : MonoBehaviour
         _wallsSystem = wallsSystem;
     }
 
-    private void Start() => 
-        _currentlViewState = HotelViewState.Roof;
+    private void Start()
+    {
+        _wallsSystem.WallsStateChange += UpdateImage;
+    }
+
 
     public void SwitchUpViewState()
     {
-        _currentlViewState = (HotelViewState)(((int)_currentlViewState + 1) % 3);
+        _wallsSystem.SwitchUpViewState();
         UpdateImage();
-        UpdateObjects();
     }
 
     public void SwitchDownViewState()
     {
-        _currentlViewState = (HotelViewState)(((int)_currentlViewState - 1 + 3) % 3);
+        _wallsSystem.SwitchDownViewState();
         UpdateImage();
-        UpdateObjects();
     }
 
     private void UpdateImage()
     {
-        switch (_currentlViewState)
+        switch (_wallsSystem.CurrentlViewState)
         {
             case HotelViewState.Roof:
                 _hotelViewImage.sprite = _withRoofSprite;
@@ -52,20 +53,9 @@ public class HotelViewSwitch : MonoBehaviour
         }
     }
 
-    private void UpdateObjects()
+    private void OnDestroy()
     {
-        switch (_currentlViewState)
-        {
-            case HotelViewState.Roof:
-                _wallsSystem.SwitchToRoof();
-                break;
-            case HotelViewState.Walls:
-                _wallsSystem.SwitchToBig();
-                break;
-            case HotelViewState.Floor:
-                _wallsSystem.SwitchToSmall();
-                break;
-        }
+        _wallsSystem.WallsStateChange -= UpdateImage;
     }
 }
 
