@@ -2,6 +2,8 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 
 public class StartMenu : MonoBehaviour
 {
@@ -17,6 +19,8 @@ public class StartMenu : MonoBehaviour
 
     private void Start()
     {
+        if(SceneManager.GetActiveScene().name != "Initial") return;
+        
         EscapeAboutTheAuthors();
         _panelNewGame.SetActive(false);
         _panelExit.SetActive(false);
@@ -104,5 +108,12 @@ public class StartMenu : MonoBehaviour
     {
         _buttons.SetActive(true);
         _menuAuthors.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        if (SceneManager.GetActiveScene().name != "Initial") return;
+
+        _escapeAction.action.started -= OnEscape;
     }
 }

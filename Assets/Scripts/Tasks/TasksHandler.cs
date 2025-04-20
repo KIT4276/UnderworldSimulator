@@ -118,6 +118,7 @@ public class TasksHandler : BaseHandler
 
     private void UpdateRooms(Room room)
     {
+        if (room == null) return;
         if (room.Guest != null)
         {
             foreach (var task in AvailableList)

@@ -5,7 +5,7 @@ public class Walls : MonoBehaviour
 {
     [SerializeField] private GameObject[] _bigWalls;
     [SerializeField] private GameObject[] _smallWalls;
-    [SerializeField] private GameObject _roof;
+    [SerializeField] private GameObject[] _roof;
 
     private WallsSystem _wallsSystem;
     private StateMachine _stateMachine;
@@ -32,5 +32,10 @@ public class Walls : MonoBehaviour
             _isInit = true;
             //Debug.Log("OnChangeState GameLoopState");
         }
+    }
+
+    private void OnDestroy()
+    {
+        _stateMachine.ChangeStateAction -= OnChangeState;
     }
 }
