@@ -23,7 +23,7 @@ public class RoomButton : MonoBehaviour
 
     public void FillButton(Room room)
     {
-        Debug.Log("FillButton");
+       // Debug.Log("FillButton");
         _room = room;
         _name.text = room.ID.ToString();
         _icon.sprite = room.Icon;
