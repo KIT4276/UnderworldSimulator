@@ -63,6 +63,7 @@ public class LootInteract : InteractableObstacle
 
         _lootSystem.CleanAllSlots();
 
+        _lootSystem.FillName(_craftLoot.Nane);
         foreach (var lootSetting in _craftLoot.LootSettings)
         {
             FillLoot(lootSetting);
@@ -71,7 +72,7 @@ public class LootInteract : InteractableObstacle
 
     protected virtual void FillLoot(LootSettings lootSetting)
     {
-
+       
         _lootSystem.FillSlot(lootSetting.Loot, ((CraftLootSettings)lootSetting).CurrentCount, this, _craftLoot);
     }
 

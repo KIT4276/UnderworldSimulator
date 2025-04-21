@@ -1,5 +1,6 @@
 using DragonBones;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -9,6 +10,7 @@ public class LootSystem : MonoBehaviour
     // [SerializeField] private InputActionReference _escapeAction;
     [SerializeField] private GameObject _menu;
     [SerializeField] private LootSlot[] _slots;
+    [SerializeField] private TMP_Text _name;
 
 
     [Inject] private InventorySystem _inventorySystem;
@@ -106,6 +108,8 @@ public class LootSystem : MonoBehaviour
 
     public void CleanAllSlots()
     {
+        _name.text = string.Empty;
+
         foreach (var slot in _slots)
         {
             slot.ClearSlot();
@@ -130,10 +134,15 @@ public class LootSystem : MonoBehaviour
             }
         }
     }
+    internal void FillName(string name)
+    {
+        _name.text = name;
+    }
 
 
     private void OnDestroy()
     {
         _stateMachine.ChangeStateAction -= OnChangeState;
     }
+
 }

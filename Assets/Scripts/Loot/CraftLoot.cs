@@ -2,8 +2,10 @@
 
 public class CraftLoot : MonoBehaviour, Loot
 {
+    [SerializeField] private string _nane;
     [SerializeField] private CraftLootSettings[] _craftLootSettings;
 
+    public string Nane {  get { return _nane; } }
     public LootSettings[] LootSettings => _craftLootSettings;
 
     private void Start()
