@@ -73,6 +73,8 @@ public class CraftSystem
         Count += count;
         if (Count < 1)
             Count = 1;
+        if(Count > 5)
+            Count = 5;
 
         ChangeCount?.Invoke();
         //Debug.Log("OnChangeCount");
