@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 public class WallsSystem
 {
@@ -7,9 +8,18 @@ public class WallsSystem
     private GameObject[] _bigWalls;
     private GameObject[] _roof;
 
+    private StateMachine _stateMachine;
+
     public HotelViewState CurrentlViewState { get; private set; }
 
     public event Action WallsStateChange;
+
+    [Inject]
+    private void Construct(StateMachine stateMachine)
+    {
+        _stateMachine = stateMachine;
+        _stateMachine.ChangeStateAction += OnChangeState;
+    }
 
 
     public void InitWithWalls(GameObject[] smallWalls, GameObject[] bigWalls, GameObject[] roof)
@@ -26,10 +36,26 @@ public class WallsSystem
         SwitchToRoof();
     }
 
+    private void OnChangeState(IExitableState state)
+    {
+        if (state is WorkbenchState && _stateMachine.PredioslyState is GameLoopState)
+        {
+            CurrentlViewState = HotelViewState.Floor;
+            UpdateObjects();
+            WallsStateChange?.Invoke();
+        }
+        if (state is GameLoopState && _stateMachine.PredioslyState is WorkbenchState)
+        {
+            CurrentlViewState = HotelViewState.Roof;
+            UpdateObjects();
+            WallsStateChange?.Invoke();
+        }
+    }
+
     public void SwitchUpViewState()
     {
         CurrentlViewState = (HotelViewState)(((int)CurrentlViewState + 1) % 3);
-        
+
         UpdateObjects();
         WallsStateChange?.Invoke();
     }
