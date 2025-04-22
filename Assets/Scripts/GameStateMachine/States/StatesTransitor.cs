@@ -38,7 +38,7 @@ public class StatesTransitor
 
     public void ConditionalToInventoryState()
     {
-        if (_stateMachine.ActiveState is GameLoopState)
+        if (_stateMachine.ActiveState is GameLoopState || _stateMachine.ActiveState is PseudoCraftState)
             ToInventoryState();
     }
 
@@ -88,7 +88,7 @@ public class StatesTransitor
 
     private void OnInventory(InputAction.CallbackContext context)
     {
-        if (_stateMachine.ActiveState is GameLoopState)
+        if (_stateMachine.ActiveState is GameLoopState || _stateMachine.ActiveState is PseudoCraftState)
             ToInventoryState();
     }
 
