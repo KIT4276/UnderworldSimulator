@@ -42,6 +42,12 @@ public class StatesTransitor
             ToInventoryState();
     }
 
+
+    public void ToPseudoCraft()
+    {
+        _stateMachine.Enter<PseudoCraftState>();
+    }
+
     private void Escape()
     {
         //Debug.Log("Escape");
@@ -68,6 +74,9 @@ public class StatesTransitor
                 break;
             case GameLoopState:
                 EscapeGame?.Invoke();
+                break;
+            case PseudoCraftState:
+                ToGameLoopState();
                 break;
         }
     }
@@ -164,4 +173,5 @@ public class StatesTransitor
         _lootSystem.CloseMenuAction -= ToGameLoopState;
         _workbenchSystem.Destroyed -= OnDestroyed;
     }
+
 }

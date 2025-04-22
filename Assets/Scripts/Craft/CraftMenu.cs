@@ -10,6 +10,8 @@ public class CraftMenu : MonoBehaviour
     [SerializeField] private MainDrawingSign _mainDrawingSign;
     [SerializeField] private TMP_Text _count;
     [SerializeField] private FadeInSign _notEnoughSign;
+    [SerializeField] private CraftButton _craftButton;
+    [SerializeField] private FadeInSign _catnCraftSign;
 
     [Inject] private CraftSystem _craftSystem;
     [Inject] private WorkbenchSystem _workbenchSystem;
@@ -19,7 +21,6 @@ public class CraftMenu : MonoBehaviour
     private void Start()
     {
         //_workbenchSystem.CraftButtonClick += OpenCraftMenu;//todo to state change
-
         _craftSystem.ChangeCount += UpdateCount;
         _machine.ChangeStateAction += StateChanged;
         _craftSystem.Crafted += ResetCraftMenu;
@@ -48,7 +49,7 @@ public class CraftMenu : MonoBehaviour
 
     private void FillSlots()
     {
-       // Debug.Log(_craftSystem.AvailableDrawings.Count);
+        // Debug.Log(_craftSystem.AvailableDrawings.Count);
         if (_craftSystem.AvailableDrawings.Count > _slots.Length)
         {
             Debug.LogWarning("Слотов меньше, чем чертежей!");
@@ -59,7 +60,7 @@ public class CraftMenu : MonoBehaviour
             {
                 slot.FillEmpty();
             }
-            
+
             int i = 0;
             for (; i < _craftSystem.AvailableDrawings.Count; i++)
             {
@@ -78,7 +79,16 @@ public class CraftMenu : MonoBehaviour
 
     public void OnCreate()
     {
-        _craftSystem.CreateDecor();
+        if (_machine.ActiveState is PseudoCraftState)
+        {
+            _catnCraftSign.gameObject.SetActive(true);
+            _catnCraftSign.StartFadeIn();
+
+        }
+        else
+        {
+            _craftSystem.CreateDecor();
+        }
     }
 
     private void UpdateCount()
@@ -86,12 +96,6 @@ public class CraftMenu : MonoBehaviour
         _count.text = _craftSystem.Count.ToString();
         //_notEnoughSign.gameObject.SetActive(false);
     }
-
-    //private void StartFill(Drawing drawing)
-    //{
-    //    _mainDrawingSign.FillSign();
-    //}
-
 
     public void OpenCraftMenu()
     {
@@ -121,13 +125,23 @@ public class CraftMenu : MonoBehaviour
 
     private void StateChanged(IExitableState state)
     {
-        if (!(state is CraftState))
+        if (state is CraftState || state is PseudoCraftState)
         {
-            CloseCraftMenu();
+            OpenCraftMenu();
+
+            if (state is PseudoCraftState)
+            {
+                _craftButton.Deactivate();
+            }
+            else
+            {
+                _craftButton.Activate();
+            }
         }
         else
         {
-            OpenCraftMenu();
+            CloseCraftMenu();
+
         }
     }
 
