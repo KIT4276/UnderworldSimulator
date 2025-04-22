@@ -17,7 +17,8 @@ public class StateMachineInstaller : MonoInstaller
         Container.Bind<DecorationState>().AsSingle().NonLazy();
         Container.Bind<LootState>().AsSingle().NonLazy();
         Container.Bind<InventoryState>().AsSingle().NonLazy();
-        Container.Bind<CraftState>().AsSingle().NonLazy();  
+        Container.Bind<CraftState>().AsSingle().NonLazy();
+        Container.Bind<PseudoCraftState>().AsSingle().NonLazy();
 
         Container
           .BindInterfacesAndSelfTo<StateMachine>()

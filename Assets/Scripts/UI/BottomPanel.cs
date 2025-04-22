@@ -21,4 +21,9 @@ public class BottomPanel : MonoBehaviour
     {
         _transitor.ConditionalToInventoryState();
     }
+
+    public void OpenCraft()
+    {
+        _transitor.ToPseudoCraft();
+    }
 }

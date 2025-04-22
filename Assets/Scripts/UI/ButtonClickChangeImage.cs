@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +9,26 @@ public class ButtonClickChangeImage : MonoBehaviour
     [SerializeField] private Sprite _normImage;
     [SerializeField] private Sprite _pressedImage;
     [SerializeField] private float _delay = 0.25f;
+    [Space]
+    [SerializeField] private Sprite _activeNormSprite;
+    [SerializeField] private Sprite _unactiveNormSprite;
+    [SerializeField] private Sprite _activePressedSprite;
+    [SerializeField] private Sprite _unactivePressedSprite;
 
     public void PressedButtoneChange()
     {
         StartCoroutine(ChangeRoutine());
+    }
+
+    public void Activate()
+    {
+        _normImage = _activeNormSprite;
+        _pressedImage = _activePressedSprite;
+    }
+    public void DeActivate()
+    {
+        _normImage = _unactiveNormSprite;
+        _pressedImage = _unactivePressedSprite;
     }
 
     private IEnumerator ChangeRoutine()
@@ -32,4 +49,5 @@ public class ButtonClickChangeImage : MonoBehaviour
         _image.sprite = _normImage;
         StopAllCoroutines();
     }
+
 }

@@ -43,6 +43,8 @@ public class StateMachine
             .CreateState<InventoryState>(),
             [typeof(CraftState)] = _stateFactory
             .CreateState<CraftState>(),
+            [typeof(PseudoCraftState)] = _stateFactory
+            .CreateState<PseudoCraftState>(),
         };
         Enter<BootstrapState>();
         _isInited = true;
@@ -72,7 +74,7 @@ public class StateMachine
         _activeState = state;
 
         ChangeStateAction?.Invoke( state);
-        //Debug.Log(_activeState);
+       // Debug.Log(_activeState);
         return state;
     }
 
