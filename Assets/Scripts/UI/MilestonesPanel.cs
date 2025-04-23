@@ -6,8 +6,8 @@ using Zenject;
 public class MilestonesPanel : MonoBehaviour
 {
     [SerializeField] private FadeInPanel _fadeInSign;
-    [SerializeField] private TMP_Text _xp;
-    [SerializeField] private TMP_Text _rewardText;
+    //[SerializeField] private TMP_Text _xp;
+    //[SerializeField] private TMP_Text _rewardText;
 
     private MilestoneSystem _milestoneSystem;
     private StateMachine _stateMachine;
@@ -41,8 +41,8 @@ public class MilestonesPanel : MonoBehaviour
     private void ShowPanel()
     {
         _fadeInSign.Show();
-        _rewardText.text =  _milestoneSystem.ReachedMilestone.Reward;
-        _xp.text = _progressSystem.CurrentValue.ToString();
+        //_rewardText.text =  _milestoneSystem.ReachedMilestone.Reward;
+        //_xp.text = _progressSystem.CurrentValue.ToString();
     }
 
     private void OnDestroy()
