@@ -1,5 +1,7 @@
 ﻿using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using Zenject;
 
 [Serializable]
 public class Guest : BaseHandledReward
@@ -7,15 +9,20 @@ public class Guest : BaseHandledReward
     [SerializeField] private GuestsType _type;
     [SerializeField] private string _name;
     [SerializeField] private Sprite _icon;
+    [SerializeField] private Sprite _milestonesIcon;
 
     public GuestsType Type { get => _type; }
     public Sprite Icon { get => _icon; }
+    public Sprite MilestonesIcon { get => _milestonesIcon; }
     public override string Name { get => _name; }
     public Room Room { get; private set; }
 
     public event Action<Room> CheckIn;
     public event Action Evict;
 
+    private GuestsStaticData _guestsStaticData;
+
+   
 
     public string PrefabLink()// remove, make it a simple string
     {

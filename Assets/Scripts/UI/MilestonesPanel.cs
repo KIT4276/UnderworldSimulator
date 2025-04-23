@@ -1,27 +1,34 @@
-using System;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public class MilestonesPanel : MonoBehaviour
 {
     [SerializeField] private FadeInPanel _fadeInSign;
-    [SerializeField] private TMP_Text _xp;
-    [SerializeField] private TMP_Text _rewardText;
+    [SerializeField] private Image _newGuestImage;
+    [SerializeField] private GameObject _newGuestText;
 
     private MilestoneSystem _milestoneSystem;
     private StateMachine _stateMachine;
-    private ProgressSystem _progressSystem;
+    private GuestsSystem _guestsSystem;
+
     private bool _isInit;
+    private Sprite _guestSprite;
 
     [Inject]
-    private void Construct(MilestoneSystem milestoneSystem, StateMachine stateMachine, ProgressSystem progressSystem)
+    private void Construct(MilestoneSystem milestoneSystem, StateMachine stateMachine, GuestsSystem guestsSystem)
     {
         _milestoneSystem = milestoneSystem;
         _stateMachine = stateMachine;
-        _progressSystem = progressSystem;
+        _guestsSystem = guestsSystem;
 
         stateMachine.ChangeStateAction += OnChangeState;
+    }
+
+    private void OnGuestBecameAvailable(BaseHandledReward reward)
+    {
+        _guestSprite = ((Guest)reward).MilestonesIcon;
+        _newGuestImage.sprite = _guestSprite;
     }
 
     public void Ok()
@@ -34,6 +41,11 @@ public class MilestonesPanel : MonoBehaviour
         if (state is GameLoopState && !_isInit)
         {
             _milestoneSystem.Change += ShowPanel;
+
+            foreach (var guest in _guestsSystem.Guests)
+            {
+                guest.BecameAvailable += OnGuestBecameAvailable;
+            }
             _isInit = true;
         }
     }
@@ -41,13 +53,27 @@ public class MilestonesPanel : MonoBehaviour
     private void ShowPanel()
     {
         _fadeInSign.Show();
-        _rewardText.text =  _milestoneSystem.ReachedMilestone.Reward;
-        _xp.text = _progressSystem.CurrentValue.ToString();
+
+        if (_guestSprite == null)
+        {
+            _newGuestImage.gameObject.SetActive(false);
+            _newGuestText.gameObject.SetActive(false);
+        }
+        else
+        {
+            _newGuestImage.sprite = _guestSprite;
+            _guestSprite = null;
+        }
     }
 
     private void OnDestroy()
     {
         _stateMachine.ChangeStateAction -= OnChangeState;
         _milestoneSystem.Change -= ShowPanel;
+
+        foreach (var guest in _guestsSystem.Guests)
+        {
+            guest.BecameAvailable -= OnGuestBecameAvailable;
+        }
     }
 }

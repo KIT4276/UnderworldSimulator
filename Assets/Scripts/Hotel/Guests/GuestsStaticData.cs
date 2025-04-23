@@ -17,12 +17,14 @@ public class GuestsStaticData : ScriptableObject
 public class GuestStaticData
 {
     [SerializeField] private GuestsType _type;
-    [SerializeField] private string _name;
-    [SerializeField] private Sprite _icon;
+    //[SerializeField] private string _name;
+    //[SerializeField] private Sprite _icon;
+    //[SerializeField] private Sprite _milestonesIcon;
 
     public GuestsType Type { get => _type; }
-    public Sprite Icon { get => _icon; }
-    public string Name { get => _name; }
+    //public Sprite Icon { get => _icon; }
+    //public Sprite MilestonesIcon { get => _icon; }
+    //public string Name { get => _name; }
 
     public string PrefabLink()
     {

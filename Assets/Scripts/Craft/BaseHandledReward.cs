@@ -14,12 +14,12 @@ public abstract class BaseHandledReward
 
     public virtual void MakeAvailable()
     {
-        IsAvailable = true;
-        //if (this is Task)
-        //{
-        //    Debug.Log("MakeAvailable " + Name);
-        //}
-        BecameAvailable?.Invoke(this);
+        if (!IsAvailable)
+        {
+            IsAvailable = true;
+            BecameAvailable?.Invoke(this);
+            //Debug.Log("BecameAvailable " + Name);
+        }
     }
 
     public void MakeUnavailable()
