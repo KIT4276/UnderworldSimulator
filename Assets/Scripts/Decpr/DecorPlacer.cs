@@ -10,6 +10,7 @@ public class DecorPlacer : MonoBehaviour
     private DecorHolder _decorHolder;
     private FloorMarker _floor;
     private Animator _animator;
+    public GameObject placementEffectPrefab;
 
     public void Initialize(Decor decor, SpaceDeterminantor spaceDeterminantor, DecorHolder decorHolder)
     {
@@ -96,6 +97,13 @@ public class DecorPlacer : MonoBehaviour
                 if (_animator != null)
                 {
                     _animator.SetTrigger("MakeScale");
+                }
+                if (placementEffectPrefab != null)
+                {
+                    GameObject effectInstance = Instantiate(placementEffectPrefab, _decor.transform.position, Quaternion.identity);
+
+                    // Optionally destroy after duration to prevent clutter
+                    Destroy(effectInstance, 5f); // or use main duration
                 }
             }
         }
