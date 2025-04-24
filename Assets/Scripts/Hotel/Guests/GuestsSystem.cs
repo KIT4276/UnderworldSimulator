@@ -42,7 +42,6 @@ public class GuestsSystem : ISavedProgress
 
     public void SaveProgress(PlayerProgress progress)
     {
-        Debug.Log("SaveProgress");
         progress.Guests = Guests;
     }
 

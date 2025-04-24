@@ -13,6 +13,7 @@ public class EscapeMenu : MonoBehaviour
 
     [Inject] private StatesTransitor _statesTransitor;
     [Inject] private StateMachine _stateMachine;
+    [Inject] private ISaveLoadService _saveLoadService;
 
 
     private void Start()
@@ -73,7 +74,7 @@ public class EscapeMenu : MonoBehaviour
     public void SaveAndGoToBootstrap()
     {
         //TODO save
-
+        _saveLoadService.SaveProgress();
         _stateMachine.Enter<BootstrapState>();
 
     }
@@ -92,6 +93,9 @@ public class EscapeMenu : MonoBehaviour
 
     public void ExitGame()
     {
+        Debug.Log("ExitGame");
+        _saveLoadService.SaveProgress();
+
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
 #endif 

@@ -21,6 +21,10 @@ public class SaveLoadService : ISaveLoadService
         PlayerPrefs.SetString(ProgressKey, _progressService.Progress.ToJson());
     }
 
-    public PlayerProgress LoadProgress() =>
-        PlayerPrefs.GetString(ProgressKey)?.ToDeserialized<PlayerProgress>();
+    public PlayerProgress LoadProgress()
+    {
+        Debug.Log(PlayerPrefs.GetString(ProgressKey)?.ToDeserialized<PlayerProgress>());
+        
+        return PlayerPrefs.GetString(ProgressKey)?.ToDeserialized<PlayerProgress>();
+    }
 }
