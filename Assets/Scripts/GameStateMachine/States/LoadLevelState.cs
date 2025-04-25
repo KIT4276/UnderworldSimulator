@@ -11,12 +11,13 @@ public class LoadLevelState : IPayloadedState<string>
     private readonly GameFactory _gameFactory;
     private readonly IPersistantProgressService _progressService;
     private readonly GuestsSystem _guestsSystem;
+    private readonly InventorySystem _inventorySystem;
 
     //private readonly SpaceDeterminantor _spaceDeterminantor;
     private GameObject _playerObj;
 
     public LoadLevelState(StateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain,
-        GameFactory gameFactory, IPersistantProgressService progressService, GuestsSystem guestsSystem)
+        GameFactory gameFactory, IPersistantProgressService progressService, GuestsSystem guestsSystem, InventorySystem inventorySystem)
     {
         _stateMachine = stateMachine;
         _sceneLoader = sceneLoader;
@@ -24,6 +25,7 @@ public class LoadLevelState : IPayloadedState<string>
         _gameFactory = gameFactory;
         _progressService = progressService;
         _guestsSystem = guestsSystem;
+        _inventorySystem = inventorySystem;
         //_spaceDeterminantor = spaceDeterminantor;
     }
 
@@ -51,7 +53,10 @@ public class LoadLevelState : IPayloadedState<string>
     private void InformProgressReaders()
     {
         foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
+        {
             progressReader.LoadProgress(_progressService.Progress);
+            Debug.Log(progressReader);
+        }
     }
 
     private void InitGameWorld()
@@ -64,6 +69,7 @@ public class LoadLevelState : IPayloadedState<string>
     private void RegisterSystems()
     {
         _gameFactory.Register(_guestsSystem);
+        _gameFactory.Register(_inventorySystem.InventoryHolder);
     }
 
     private void InitSpawners()

@@ -11,6 +11,7 @@ public class InventorySystem : MonoBehaviour
 
     private StateMachine _stateMachine;
     private DecorationSystem _decorationSystem;
+    private InventoryHolder _inventoryHolder;
 
     public event Action Exit;
     public event Action ActivateInventoryEvent;
@@ -21,7 +22,7 @@ public class InventorySystem : MonoBehaviour
 
     public InventorySlot[] InventorySlots { get => _inventorySlots; }
 
-    private InventoryHolder _inventoryHolder;
+    public InventoryHolder InventoryHolder { get => _inventoryHolder; }
 
 
     [Inject]
@@ -29,11 +30,14 @@ public class InventorySystem : MonoBehaviour
     {
         _stateMachine = stateMachine;
         _decorationSystem = decorationSystem;
+
         _decorationSystem.TryToRemoveDecorAction += TryReturnDecorToInventory;
         _warningSign.SetActive(false);
         _stateMachine.ChangeStateAction += StateChanged;
 
         _inventoryHolder = new();
+
+
     }
 
     public void RemoveItems(LootType lootType)
@@ -169,7 +173,7 @@ public class InventorySystem : MonoBehaviour
     public void FillDecorItems()
     {
         if (_inventoryHolder.AllItemsInInventory == null || _inventoryHolder.AllItemsInInventory.Count == 0) return;
-        
+
         foreach (var item in _inventoryHolder.AllItemsInInventory)
         {
             if (item is Decor)
@@ -263,7 +267,7 @@ public class InventorySystem : MonoBehaviour
     }
 }
 
-public class InventoryHolder
+public class InventoryHolder : ISavedProgress
 {
     public List<IBaseItem> AllItemsInInventory { get; private set; }
 
@@ -309,6 +313,49 @@ public class InventoryHolder
         }
 
         return count;
+    }
+
+    public void SaveProgress(PlayerProgress progress)
+    {
+        Debug.Log("SaveProgress");
+        if (progress.InventoryItems != null)
+        {
+            foreach (var inventoryItem in AllItemsInInventory)
+            {
+                if (inventoryItem is Item item)
+                {
+                    progress.InventoryItems.Add(item);
+                }
+            }
+
+        }
+        if (progress.InventoryDecors != null)
+        {
+            foreach (var inventoryItem in AllItemsInInventory)
+            {
+                if (inventoryItem is Decor decor)
+                {
+                    progress.InventoryDecors.Add(decor);
+                }
+            }
+        }
+    }
+
+    public void LoadProgress(PlayerProgress progress)
+    {
+        Debug.Log("LoadProgress");
+        if (progress != null)
+        {
+            foreach (var item in progress.InventoryItems)
+            {
+                AllItemsInInventory.Add(item);// item = null ?!
+                Debug.Log(item.LootType);
+            }
+            foreach (var decor in progress.InventoryDecors)
+            {
+                AllItemsInInventory.Add(decor);
+            }
+        }
     }
 }
 

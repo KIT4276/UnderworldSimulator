@@ -31,13 +31,11 @@ public class LoadProgressState : IState
 
     private void LoadProgressOrInitNew()
     {
-        Debug.Log("LoadProgressOrInitNew");
         _progressService.Progress = _saveLoadService.LoadProgress() ?? NewProgress();
     }
 
     private PlayerProgress NewProgress()
     {
-        Debug.Log("NewProgress");
         var progress = new PlayerProgress(initialLevel: Main, _guestsStaticData);
         return progress;
     }

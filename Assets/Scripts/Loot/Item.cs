@@ -20,6 +20,4 @@ public class Item : IBaseItem
     public string GetHint() => _materialsData.GetMaterialsHint(_type);
 
     public Sprite GetIcon() => _materialsData.GetMaterialsIcon(_type);
-
-   
 }
