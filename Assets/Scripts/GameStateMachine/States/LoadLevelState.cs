@@ -55,7 +55,6 @@ public class LoadLevelState : IPayloadedState<string>
         foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
         {
             progressReader.LoadProgress(_progressService.Progress);
-            Debug.Log(progressReader);
         }
     }
 

@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(DecorView), (typeof(DecorRotator)))]
 [RequireComponent(typeof(DecorDrag), (typeof(DecorPlacer)))]
+
+[Serializable]
 public class Decor : MonoBehaviour, IBaseItem
 {
     [SerializeField] protected DecorType _decorType;

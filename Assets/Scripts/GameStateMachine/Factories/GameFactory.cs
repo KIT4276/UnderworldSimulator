@@ -64,7 +64,6 @@ public class GameFactory : IService
 
     public void CleanUp()
     {
-        Debug.Log("CleanUp");
         ProgressReaders.Clear();
         ProgressWriters.Clear();
     }
@@ -93,7 +92,6 @@ public class GameFactory : IService
 
     public void Register(ISavedProgressReader progressReader)
     {
-        Debug.Log("Register " + progressReader);
         if (progressReader is ISavedProgress progressWriter)
         {
             ProgressWriters.Add(progressWriter);

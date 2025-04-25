@@ -6,7 +6,7 @@ public class Item : IBaseItem
 {
     [SerializeField] protected LootType _type;
 
-    private MaterialsData _materialsData;
+    [SerializeField, HideInInspector]  private MaterialsData _materialsData;
 
     public LootType LootType { get => _type; }
 

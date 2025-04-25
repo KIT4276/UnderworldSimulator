@@ -26,7 +26,7 @@ public class InventorySystem : MonoBehaviour
 
 
     [Inject]
-    public void Construct(DecorationSystem decorationSystem, StateMachine stateMachine)
+    public void Construct(DecorationSystem decorationSystem, StateMachine stateMachine, MaterialsData materialsData)
     {
         _stateMachine = stateMachine;
         _decorationSystem = decorationSystem;
@@ -35,9 +35,15 @@ public class InventorySystem : MonoBehaviour
         _warningSign.SetActive(false);
         _stateMachine.ChangeStateAction += StateChanged;
 
-        _inventoryHolder = new();
+        _inventoryHolder = new(materialsData);
 
+        _inventoryHolder.LoasSave += UpdateSlots;
+    }
 
+    private void UpdateSlots()
+    {
+        FillDecorItems();
+        FillCraftItems();
     }
 
     public void RemoveItems(LootType lootType)
@@ -70,6 +76,7 @@ public class InventorySystem : MonoBehaviour
 
     public void ActivateInventory()
     {
+        Debug.Log("ActivateInventory");
         foreach (var slot in _inventorySlots)
         {
             slot.Initialize();
@@ -189,10 +196,10 @@ public class InventorySystem : MonoBehaviour
 
         foreach (var item in _inventoryHolder.AllItemsInInventory)
         {
-            if (item is CraftItem)
-            {
+            //if (item is CraftItem)
+            //{
                 FindPlaceForItem(item);
-            }
+            //}
         }
     }
 
@@ -250,6 +257,7 @@ public class InventorySystem : MonoBehaviour
     private void OnDestroy()
     {
         _decorationSystem.TryToRemoveDecorAction -= TryReturnDecorToInventory;
+        _inventoryHolder.Change -= UpdateSlots;
     }
 
 
@@ -269,9 +277,18 @@ public class InventorySystem : MonoBehaviour
 
 public class InventoryHolder : ISavedProgress
 {
+
     public List<IBaseItem> AllItemsInInventory { get; private set; }
 
     public event Action Change;
+    public event Action LoasSave;
+
+    private MaterialsData _materialsData;
+
+    public InventoryHolder(MaterialsData materialsData)
+    {
+        _materialsData = materialsData;
+    }
 
     public void Add(IBaseItem item)
     {
@@ -301,11 +318,11 @@ public class InventoryHolder : ISavedProgress
 
         int count = 0;
 
-        foreach (IBaseItem item in AllItemsInInventory)
+        foreach (IBaseItem baseItem in AllItemsInInventory)
         {
-            if (item is Item)
+            if (baseItem is Item item)
             {
-                if (((Item)item).LootType == material)
+                if (item.LootType == material)
                 {
                     count++;
                 }
@@ -317,13 +334,15 @@ public class InventoryHolder : ISavedProgress
 
     public void SaveProgress(PlayerProgress progress)
     {
-        Debug.Log("SaveProgress");
+        //Debug.Log("SaveProgress");
         if (progress.InventoryItems != null)
         {
+
             foreach (var inventoryItem in AllItemsInInventory)
             {
                 if (inventoryItem is Item item)
                 {
+
                     progress.InventoryItems.Add(item);
                 }
             }
@@ -343,19 +362,22 @@ public class InventoryHolder : ISavedProgress
 
     public void LoadProgress(PlayerProgress progress)
     {
-        Debug.Log("LoadProgress");
+        if (AllItemsInInventory == null)
+            AllItemsInInventory = new();
+
         if (progress != null)
         {
             foreach (var item in progress.InventoryItems)
             {
-                AllItemsInInventory.Add(item);// item = null ?!
-                Debug.Log(item.LootType);
+                AllItemsInInventory.Add(item);
+                item.Init(_materialsData);
             }
             foreach (var decor in progress.InventoryDecors)
             {
                 AllItemsInInventory.Add(decor);
             }
         }
+        LoasSave?.Invoke();
     }
 }
 
