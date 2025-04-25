@@ -38,8 +38,10 @@ public class GameFactory : IService
         PlayerGameObject = InstantiateRegistered(AssetPath.HeroPath, at.transform.position);
         //HeroMove = PlayerGameObject.GetComponent<HeroMove>();
         //HeroMove.Init(_stateMachine);
-        PlayerGameObject.GetComponent<Hero>().Initialize(_stateMachine, _container, _staticData);
+        var hero = PlayerGameObject.GetComponent<Hero>();
+        hero.Initialize(_stateMachine, _container, _staticData);
         InitCamera();
+        Register(hero);
         //_container.Bind<HeroMove>().AsSingle();
 
         _container.Bind<PlayerInput>().FromInstance(PlayerGameObject.GetComponent<PlayerInput>()).AsSingle().NonLazy();

@@ -73,7 +73,6 @@ public class EscapeMenu : MonoBehaviour
 
     public void SaveAndGoToBootstrap()
     {
-        //TODO save
         _saveLoadService.SaveProgress();
         _stateMachine.Enter<BootstrapState>();
 
