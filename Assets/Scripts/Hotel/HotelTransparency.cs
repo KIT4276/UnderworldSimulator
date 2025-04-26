@@ -62,12 +62,14 @@ public class HotelTransparency : MonoBehaviour
     private void ApplyAlpha(float alpha)
     {
         _currentAlpha = alpha;
-
-        foreach (var tilemap in _tilemaps)
+        if (_tilemaps != null && _tilemaps.Length != 0)
         {
-            var color = tilemap.color;
-            color.a = alpha;
-            tilemap.color = color;
+            foreach (var tilemap in _tilemaps)
+            {
+                var color = tilemap.color;
+                color.a = alpha;
+                tilemap.color = color;
+            }
         }
 
         foreach (var renderer in _spriteRenderers)
