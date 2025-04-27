@@ -132,7 +132,7 @@ public class InventorySystem : MonoBehaviour
 
     public void TryReturnDecorToInventory(Decor decor)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
     {
-        Debug.Log("TryReturnDecorToInventory");
+        //Debug.Log("TryReturnDecorToInventory");
         
         bool isPlaced = false;
 
@@ -187,7 +187,7 @@ public class InventorySystem : MonoBehaviour
         {
             if (item is Decor)
             {
-                Debug.Log("FillDecorItems");
+                //Debug.Log("FillDecorItems");
                 FindPlaceForItem(item);
             }
         }
@@ -222,7 +222,7 @@ public class InventorySystem : MonoBehaviour
     private void ReturnDecorToInventory(Decor decor, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
                                                            //для лута создать свой метод
     {
-        Debug.Log("ReturnDecorToInventory");
+        //Debug.Log("ReturnDecorToInventory");
         _inventorySlots[i].SetItem(decor);
         _decorationSystem.ReturtDecorToInventory(decor);
         _inventoryHolder.Add(decor); 
@@ -272,7 +272,7 @@ public class InventorySystem : MonoBehaviour
         {
             if (!slot.IsOccupied || (slot.IsOccupied && slot.Items[0].GetIcon() == item.GetIcon()))// костылище пока что
             {
-                Debug.Log("FindPlaceForItem");
+                //Debug.Log("FindPlaceForItem");
                 slot.SetItem(item);
                 return true;
             }
@@ -301,7 +301,7 @@ public class InventoryHolder : ISavedProgress
         if (AllItemsInInventory == null)
             AllItemsInInventory = new();
 
-        Debug.Log("Add AllItemsInInventory");
+        //Debug.Log("Add AllItemsInInventory");
         AllItemsInInventory.Add(item);
 
         Change?.Invoke();
