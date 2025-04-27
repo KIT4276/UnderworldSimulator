@@ -11,6 +11,7 @@ public class InventorySystem : MonoBehaviour
 
     private StateMachine _stateMachine;
     private DecorationSystem _decorationSystem;
+    private DecorHolder _decorHolder;
     private InventoryHolder _inventoryHolder;
 
     public event Action Exit;
@@ -26,10 +27,11 @@ public class InventorySystem : MonoBehaviour
 
 
     [Inject]
-    public void Construct(DecorationSystem decorationSystem, StateMachine stateMachine, MaterialsData materialsData)
+    public void Construct(DecorationSystem decorationSystem, StateMachine stateMachine, MaterialsData materialsData, DecorHolder decorHolder)
     {
         _stateMachine = stateMachine;
         _decorationSystem = decorationSystem;
+        _decorHolder = decorHolder;
 
         _decorationSystem.TryToRemoveDecorAction += TryReturnDecorToInventory;
         _warningSign.SetActive(false);
@@ -38,8 +40,16 @@ public class InventorySystem : MonoBehaviour
         _inventoryHolder = new(materialsData);
 
         _inventoryHolder.LoasSave += UpdateSlots;
+        _decorHolder.InstallDecor += RemoveDecor;
     }
 
+    private void RemoveDecor(Decor decor)
+    {
+        _inventoryHolder.RemoveDecor(decor);
+        ClearSlots();
+        FillCraftItems();
+        FillDecorItems();
+    }
 
     private void UpdateSlots()
     {
@@ -257,7 +267,8 @@ public class InventorySystem : MonoBehaviour
     private void OnDestroy()
     {
         _decorationSystem.TryToRemoveDecorAction -= TryReturnDecorToInventory;
-        _inventoryHolder.Change -= UpdateSlots;
+        //_inventoryHolder.Change -= UpdateSlots;
+        _decorHolder.InstallDecor -= RemoveDecor;
     }
 
 
@@ -303,11 +314,24 @@ public class InventoryHolder : ISavedProgress
         Change?.Invoke();
     }
 
+    public void RemoveDecor(Decor decor)
+    {
+        for(var i = 0;  i < AllItemsInInventory.Count; i++) 
+        
+        {
+            if (AllItemsInInventory[i] is Decor decorInInvent)
+            {
+                if(decorInInvent.DecorType == decor.DecorType)
+                {
+                    Remove(AllItemsInInventory[i]);
+                }
+            }
+        }
+    }
+
     private void Remove(IBaseItem item)
     {
-        if (AllItemsInInventory == null)
-            AllItemsInInventory = new();
-
+            
         AllItemsInInventory.Remove(item);
 
         Change?.Invoke();
@@ -404,8 +428,6 @@ public class InventoryHolder : ISavedProgress
             }
         }
         LoasSave?.Invoke();
-
-        Debug.Log("LoadProgress " + AllItemsInInventory.Count);
     }
 }
 
