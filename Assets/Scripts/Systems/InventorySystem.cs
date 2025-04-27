@@ -40,6 +40,7 @@ public class InventorySystem : MonoBehaviour
         _inventoryHolder.LoasSave += UpdateSlots;
     }
 
+
     private void UpdateSlots()
     {
         FillDecorItems();
@@ -48,17 +49,12 @@ public class InventorySystem : MonoBehaviour
 
     public void RemoveItems(LootType lootType)
     {
-        foreach (var slot in _inventorySlots)
-        {
-            if (slot.IsOccupied &&
-                slot.GetLastItems() is CraftItem &&
-                ((CraftItem)slot.GetLastItems()).LootType == lootType)
-            {
-                var item = slot.TakeLastItem();
-                _inventoryHolder.Remove(item);
-                break;
-            }
-        }
+        Debug.Log("RemoveItems");
+
+        _inventoryHolder.RemoveByType(lootType);
+        ClearSlots();
+        FillCraftItems();
+        FillDecorItems();
     }
 
     public void OnExit()
@@ -76,7 +72,7 @@ public class InventorySystem : MonoBehaviour
 
     public void ActivateInventory()
     {
-       // Debug.Log("ActivateInventory");
+        // Debug.Log("ActivateInventory");
         foreach (var slot in _inventorySlots)
         {
             slot.Initialize();
@@ -133,7 +129,7 @@ public class InventorySystem : MonoBehaviour
     public void TryReturnDecorToInventory(Decor decor)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
     {
         //Debug.Log("TryReturnDecorToInventory");
-        
+
         bool isPlaced = false;
 
         for (int i = 0; i < _inventorySlots.Length; i++)
@@ -225,7 +221,7 @@ public class InventorySystem : MonoBehaviour
         //Debug.Log("ReturnDecorToInventory");
         _inventorySlots[i].SetItem(decor);
         _decorationSystem.ReturtDecorToInventory(decor);
-        _inventoryHolder.Add(decor); 
+        _inventoryHolder.Add(decor);
         ChangeDecorSlots?.Invoke();
 
     }
@@ -267,7 +263,7 @@ public class InventorySystem : MonoBehaviour
 
     private bool FindPlaceForItem(IBaseItem item)
     {
-        
+
         foreach (var slot in InventorySlots)
         {
             if (!slot.IsOccupied || (slot.IsOccupied && slot.Items[0].GetIcon() == item.GetIcon()))// костылище пока что
@@ -301,13 +297,13 @@ public class InventoryHolder : ISavedProgress
         if (AllItemsInInventory == null)
             AllItemsInInventory = new();
 
-        //Debug.Log("Add AllItemsInInventory");
+        Debug.Log("Add AllItemsInInventory");
         AllItemsInInventory.Add(item);
 
         Change?.Invoke();
     }
 
-    public void Remove(IBaseItem item)
+    private void Remove(IBaseItem item)
     {
         if (AllItemsInInventory == null)
             AllItemsInInventory = new();
@@ -315,6 +311,30 @@ public class InventoryHolder : ISavedProgress
         AllItemsInInventory.Remove(item);
 
         Change?.Invoke();
+    }
+
+    public void RemoveByType(LootType lootType)
+    {
+        if (AllItemsInInventory == null)
+            AllItemsInInventory = new();
+
+        // foreach (var item in AllItemsInInventory)
+        for (var i = 0; i < AllItemsInInventory.Count; i++)
+        {
+            if (AllItemsInInventory[i] != null && AllItemsInInventory[i] is Item mat)
+            {
+                if (mat.LootType == lootType)
+                {
+                    Remove(mat);
+                }
+            }
+        }
+        Debug.Log(AllItemsInInventory.Count);
+        if(AllItemsInInventory.Count == 1)
+        {
+            Debug.Log(AllItemsInInventory[0]);
+        }
+        
     }
 
     public int CalculateMaterial(LootType material)
@@ -384,6 +404,8 @@ public class InventoryHolder : ISavedProgress
             }
         }
         LoasSave?.Invoke();
+
+        Debug.Log("LoadProgress " + AllItemsInInventory.Count);
     }
 }
 

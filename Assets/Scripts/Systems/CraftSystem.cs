@@ -18,7 +18,7 @@ public class CraftSystem
     public event Action DrawingAdded;
     public event Action NotEnoughMaterials;
 
-    private List<CraftItem> _availableMaterials = new();
+    private List<Item> _availableMaterials = new();
 
     public CraftSystem(InventorySystem inventorySystem, DrawingData drawingDatas)
     {
@@ -86,8 +86,6 @@ public class CraftSystem
         {
             for (int i = 0; i < Count; i++)
             {
-                // var decor = _decoratorFactory.SpawnDecor(_activeDrawing.Decor);// 
-
                 _inventorySystem.TryReturnDecorToInventory(ActiveDrawing.Decor); // temporary solution!
 
                 foreach (var mat in ActiveDrawing.DrawingComponents)
@@ -104,6 +102,7 @@ public class CraftSystem
             NotEnoughMaterials?.Invoke();
         }
 
+
         Count = 1;
         Crafted?.Invoke();
         // Debug.Log("Crafted");
@@ -115,15 +114,17 @@ public class CraftSystem
 
         foreach (var mat in ActiveDrawing.DrawingComponents)
         {
-            if (mat.Count * Count > TakeMaterials(mat.Material))
+            if (mat.Count * Count > TakeMaterialsCount(mat.Material))
             {
+                Debug.Log("false");
                 return false;
             }
         }
+        Debug.Log("true");
         return true;
     }
 
-    private int TakeMaterials(LootType type)
+    private int TakeMaterialsCount(LootType type)
     {
         int i = 0;
         foreach (var mat in _availableMaterials)
@@ -141,16 +142,26 @@ public class CraftSystem
     {
         _availableMaterials.Clear();
 
-        foreach (var slot in _inventorySystem.InventorySlots)
+        foreach(var item in _inventorySystem.InventoryHolder.AllItemsInInventory)
         {
-            if (slot.IsOccupied)
+            if(item is Item mat)
             {
-                foreach (var item in slot.Items)
-                {
-                    if (item is CraftItem)
-                        _availableMaterials.Add((CraftItem)item);
-                }
+                _availableMaterials.Add(mat);
             }
         }
+
+        Debug.Log(_availableMaterials.Count);
+
+        //foreach (var slot in _inventorySystem.InventorySlots)
+        //{
+        //    if (slot.IsOccupied)
+        //    {
+        //        foreach (var item in slot.Items)
+        //        {
+        //            if (item is CraftItem)
+        //                _availableMaterials.Add((CraftItem)item);
+        //        }
+        //    }
+        //}
     }
 }
