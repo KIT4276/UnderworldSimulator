@@ -132,14 +132,16 @@ public class InventorySystem : MonoBehaviour
 
     public void TryReturnDecorToInventory(Decor decor)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
     {
+        Debug.Log("TryReturnDecorToInventory");
+        
         bool isPlaced = false;
 
         for (int i = 0; i < _inventorySlots.Length; i++)
         {
             if (_inventorySlots[i].IsOccupied)
             {
-                if (_inventorySlots[i].GetLastItems() is Decor
-                    && ((Decor)_inventorySlots[i].GetLastItems()).DecorType == decor.DecorType)
+                if (_inventorySlots[i].GetLastItems() is Decor inventDecor
+                    && /*((Decor)_inventorySlots[i].GetLastItems())*/inventDecor.DecorType == decor.DecorType)
                 {
                     ReturnDecorToInventory(decor, i);
 
@@ -185,6 +187,7 @@ public class InventorySystem : MonoBehaviour
         {
             if (item is Decor)
             {
+                Debug.Log("FillDecorItems");
                 FindPlaceForItem(item);
             }
         }
@@ -196,10 +199,10 @@ public class InventorySystem : MonoBehaviour
 
         foreach (var item in _inventoryHolder.AllItemsInInventory)
         {
-            //if (item is CraftItem)
-            //{
+            if (item is Item)
+            {
                 FindPlaceForItem(item);
-            //}
+            }
         }
     }
 
@@ -219,9 +222,10 @@ public class InventorySystem : MonoBehaviour
     private void ReturnDecorToInventory(Decor decor, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
                                                            //для лута создать свой метод
     {
+        Debug.Log("ReturnDecorToInventory");
         _inventorySlots[i].SetItem(decor);
         _decorationSystem.ReturtDecorToInventory(decor);
-        _inventoryHolder.Add(decor);
+        _inventoryHolder.Add(decor); 
         ChangeDecorSlots?.Invoke();
 
     }
@@ -263,10 +267,12 @@ public class InventorySystem : MonoBehaviour
 
     private bool FindPlaceForItem(IBaseItem item)
     {
+        
         foreach (var slot in InventorySlots)
         {
             if (!slot.IsOccupied || (slot.IsOccupied && slot.Items[0].GetIcon() == item.GetIcon()))// костылище пока что
             {
+                Debug.Log("FindPlaceForItem");
                 slot.SetItem(item);
                 return true;
             }
@@ -295,7 +301,7 @@ public class InventoryHolder : ISavedProgress
         if (AllItemsInInventory == null)
             AllItemsInInventory = new();
 
-
+        Debug.Log("Add AllItemsInInventory");
         AllItemsInInventory.Add(item);
 
         Change?.Invoke();

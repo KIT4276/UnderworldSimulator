@@ -65,7 +65,10 @@ public class InventorySlot : MonoBehaviour
     {
         if (Items == null)
             Initialize();
-
+        if (item is Decor)
+        {
+            Debug.Log("Set Decor");
+        }
         IsOccupied = true;
         _icon = item.GetIcon();
         Items.Add(item);
