@@ -92,7 +92,7 @@ public class EscapeMenu : MonoBehaviour
 
     public void ExitGame()
     {
-        Debug.Log("ExitGame");
+        //Debug.Log("ExitGame");
         _saveLoadService.SaveProgress();
 
 #if UNITY_EDITOR

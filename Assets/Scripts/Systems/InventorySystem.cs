@@ -76,7 +76,7 @@ public class InventorySystem : MonoBehaviour
 
     public void ActivateInventory()
     {
-        Debug.Log("ActivateInventory");
+       // Debug.Log("ActivateInventory");
         foreach (var slot in _inventorySlots)
         {
             slot.Initialize();

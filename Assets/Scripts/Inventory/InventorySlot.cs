@@ -32,6 +32,7 @@ public class InventorySlot : MonoBehaviour
         {
             Items = new List<IBaseItem>();
         }
+
         SettingParameters();
         InitializedAction?.Invoke();
     }
