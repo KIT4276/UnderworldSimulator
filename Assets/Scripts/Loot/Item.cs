@@ -6,7 +6,7 @@ public class Item : IBaseItem
 {
     [SerializeField] protected LootType _type;
 
-    private MaterialsData _materialsData;
+    [SerializeField, HideInInspector]  private MaterialsData _materialsData;
 
     public LootType LootType { get => _type; }
 
@@ -20,6 +20,4 @@ public class Item : IBaseItem
     public string GetHint() => _materialsData.GetMaterialsHint(_type);
 
     public Sprite GetIcon() => _materialsData.GetMaterialsIcon(_type);
-
-   
 }

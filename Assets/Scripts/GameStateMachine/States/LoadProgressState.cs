@@ -1,4 +1,7 @@
-﻿public class LoadProgressState : IState
+﻿
+using UnityEngine;
+
+public class LoadProgressState : IState
 {
     private const string Main = "Main";
 
@@ -26,8 +29,10 @@
 
     public void Exit() { }
 
-    private void LoadProgressOrInitNew() =>
+    private void LoadProgressOrInitNew()
+    {
         _progressService.Progress = _saveLoadService.LoadProgress() ?? NewProgress();
+    }
 
     private PlayerProgress NewProgress()
     {

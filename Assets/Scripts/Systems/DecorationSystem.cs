@@ -40,6 +40,7 @@ public class DecorationSystem
     {
       ////  Debug.Log("InstanriateDecor");
         _decorHolder.AddInstalledDecor(decor);
+        
     }
 
     public void BanActions()
