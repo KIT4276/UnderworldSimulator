@@ -2,13 +2,13 @@
 using Zenject;
 
 public class Hero : MonoBehaviour
-    {
+{
 
     [SerializeField] private HeroMove _heroMove;
     [SerializeField] private HeroAnimator _animator;
-   // [SerializeField] private PlayerInput _playerInput;
+    // [SerializeField] private PlayerInput _playerInput;
 
-   // public HeroMove HeroMove { get => _heroMove; }
+    // public HeroMove HeroMove { get => _heroMove; }
 
     public void Immobilize()
     {
@@ -21,7 +21,7 @@ public class Hero : MonoBehaviour
         _animator.Initialize(stateMachine, staticData);
         container.Bind<HeroMove>().AsSingle();
 
-       // container.Bind<PlayerInput>().FromInstance(_playerInput).AsSingle().NonLazy();
+        // container.Bind<PlayerInput>().FromInstance(_playerInput).AsSingle().NonLazy();
     }
 
     public void OnLoot()

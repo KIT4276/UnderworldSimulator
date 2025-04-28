@@ -19,8 +19,8 @@ public class StartMenu : MonoBehaviour
 
     private void Start()
     {
-        if(SceneManager.GetActiveScene().name != "Initial") return;
-        
+        if (SceneManager.GetActiveScene().name != "Initial") return;
+
         EscapeAboutTheAuthors();
         _panelNewGame.SetActive(false);
         _panelExit.SetActive(false);
@@ -28,6 +28,7 @@ public class StartMenu : MonoBehaviour
         _panelSettings.SetActive(false);
 
         _escapeAction.action.started += OnEscape;
+        AudioReciever.Instance.StartMenu();
     }
 
     private void OnEscape(InputAction.CallbackContext context)
