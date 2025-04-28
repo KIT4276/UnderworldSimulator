@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class GuestObject : MonoBehaviour
 {
+    [SerializeField] private GameObject[] _body;
+    [SerializeField] private GameObject _footprints;
+    
     private StateMachine _stateMachine;
 
     public Guest Guest { get; private set; }
@@ -21,11 +24,22 @@ public class GuestObject : MonoBehaviour
     {
         if (state is DecorationState)
         {
-            gameObject.SetActive(false);
+            foreach(var obj in _body)
+            {
+                obj.SetActive(false);
+            }
+            _footprints.SetActive(true);
+
+            //gameObject.SetActive(false);
         }
         else
         {
-            gameObject.SetActive(true);
+            _footprints.SetActive(false);
+            foreach (var obj in _body)
+            {
+                obj.SetActive(true);
+            }
+            // gameObject.SetActive(true);
         }
     }
 
