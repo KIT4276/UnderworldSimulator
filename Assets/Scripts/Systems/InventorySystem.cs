@@ -59,7 +59,7 @@ public class InventorySystem : MonoBehaviour
 
     public void RemoveItems(LootType lootType)
     {
-        Debug.Log("RemoveItems");
+       // Debug.Log("RemoveItems");
 
         _inventoryHolder.RemoveByType(lootType);
         ClearSlots();
@@ -353,11 +353,11 @@ public class InventoryHolder : ISavedProgress
                 }
             }
         }
-        Debug.Log(AllItemsInInventory.Count);
-        if(AllItemsInInventory.Count == 1)
-        {
-            Debug.Log(AllItemsInInventory[0]);
-        }
+       // Debug.Log(AllItemsInInventory.Count);
+        //if(AllItemsInInventory.Count == 1)
+        //{
+        //    Debug.Log(AllItemsInInventory[0]);
+        //}
         
     }
 
