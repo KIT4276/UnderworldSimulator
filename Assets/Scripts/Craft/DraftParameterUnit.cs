@@ -26,7 +26,7 @@ public class DraftParameterUnit : MonoBehaviour
         _icon.gameObject.SetActive(true);
         _icon.sprite = _parameterData.FindParamByType(roomParameter.ParameterType).Icon; //roomParameter.Icon;
         _count.gameObject.SetActive(true);
-        _count.text = "+ " + roomParameter.Value.ToString();
+        _count.text = "+" + roomParameter.Value.ToString();
     }
     public virtual void FillEmpty()
     {

@@ -46,7 +46,7 @@ public class DecorHolder : ISavedProgress
         ActiveDecor = null;
         InstalledDecor.Add(decor);
         //_inventorySystem.InventoryHolder.Remove(decor);
-        Debug.Log("AddInstalledDecor");
+       // Debug.Log("AddInstalledDecor");
         InstallDecor?.Invoke(decor);
     }
 

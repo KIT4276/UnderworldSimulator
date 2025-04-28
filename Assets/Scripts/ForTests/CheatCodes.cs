@@ -130,11 +130,15 @@ public class CheatCodes
 
     private void AddAllDecor(InputAction.CallbackContext context)
     {
-
-        for (int i = 0; i < _inventory.InventorySlots.Length; i++)
+        foreach (var decor in _decors)
         {
-            if (i < _decors.Length)
-                _inventory.InventorySlots[i].SetItem(_decors[i]);
+            _inventory.TryReturnDecorToInventory(decor);
         }
+
+        //for (int i = 0; i < _inventory.InventorySlots.Length; i++)
+        //{
+        //    if (i < _decors.Length)
+        //        _inventory.InventorySlots[i].SetItem(_decors[i]);
+        //}
     }
 }
