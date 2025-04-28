@@ -1,12 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class DecorHolder : ISavedProgress
 {
     public List<Decor> InstalledDecor { get; private set; }
     public Decor ActiveDecor { get; private set; }
 
-    public DecorHolder()
+    public event Action<Decor> InstallDecor;
+
+   // private InventorySystem _inventorySystem;
+
+    public DecorHolder(/*InventorySystem inventorySystem*/)
     {
+        //_inventorySystem = inventorySystem;
         InstalledDecor = new List<Decor>();
     }
 
@@ -38,6 +45,9 @@ public class DecorHolder : ISavedProgress
     {
         ActiveDecor = null;
         InstalledDecor.Add(decor);
+        //_inventorySystem.InventoryHolder.Remove(decor);
+        Debug.Log("AddInstalledDecor");
+        InstallDecor?.Invoke(decor);
     }
 
     public void DeActiveDecor()

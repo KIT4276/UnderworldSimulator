@@ -85,7 +85,7 @@ public class CraftMenu : MonoBehaviour
             _catnCraftSign.StartFadeIn();
 
         }
-        else
+        else if(_machine.ActiveState is CraftState)
         {
             _craftSystem.CreateDecor();
         }

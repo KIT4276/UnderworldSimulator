@@ -16,11 +16,16 @@ public class SaveLoadService : ISaveLoadService
     public void SaveProgress()
     {
         foreach (ISavedProgress progressWriter in _gameFactory.ProgressWriters)
+        {
             progressWriter.SaveProgress(_progressService.Progress);
+          // Debug.Log(progressWriter);
+        }
 
         PlayerPrefs.SetString(ProgressKey, _progressService.Progress.ToJson());
     }
 
-    public PlayerProgress LoadProgress() =>
-        PlayerPrefs.GetString(ProgressKey)?.ToDeserialized<PlayerProgress>();
+    public PlayerProgress LoadProgress()
+    {
+        return PlayerPrefs.GetString(ProgressKey)?.ToDeserialized<PlayerProgress>();
+    }
 }
