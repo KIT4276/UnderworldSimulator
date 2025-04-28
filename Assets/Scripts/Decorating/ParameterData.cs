@@ -29,8 +29,10 @@ public class Parameter
     [SerializeField] private string _name;
     [SerializeField] private RoomParameterType _parameterType;
     [SerializeField] private Sprite _icon;
+    [SerializeField] private Sprite _iconForRoomMenu;
 
     public string Name { get { return _name; } }
     public RoomParameterType ParameterType { get { return _parameterType; } }
     public Sprite Icon { get { return _icon; } }
+    public Sprite IconForRoomMenu { get { return _iconForRoomMenu; } }
 }

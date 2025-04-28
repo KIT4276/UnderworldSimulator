@@ -6,28 +6,33 @@ using Zenject;
 
 public class ParameterSlot : MonoBehaviour
 {
-    [SerializeField] private Image _image;
-    [SerializeField] private TMP_Text _paramName;
-    [SerializeField] private TMP_Text _paramValue;
-    [Space]
+   // [SerializeField] private SpriteRenderer _taskSlot;
+    [SerializeField] private Image _icon;
+    [SerializeField] private GameObject _star;
+    [SerializeField] private GameObject _progressBar;
     [SerializeField] private Image _bar;
+    [Space]
+    [SerializeField] private TMP_Text _name;
+    [SerializeField] private TMP_Text _description;
+    [SerializeField] private TMP_Text _score;
+    [SerializeField] private TMP_Text _reward;
 
     private GuestsSystem _guestsSystem;
-    //private ProgressSystem _progressSystem;
     private TasksHandler _tasksHandler;
     private RoomsSystem _roomsSystem;
-    private ParameterData _parameterData;
+   // private ParameterData _parameterData;
+    private DrawingData _drawingData;
     private Task _task;
 
     [Inject]
-    private void Construct(GuestsSystem guestsSystem, /*ProgressSystem progressSystem,*/ TasksHandler tasksHandler,
-        RoomsSystem roomsSystem, ParameterData parameterData)
+    private void Construct(GuestsSystem guestsSystem, TasksHandler tasksHandler,
+        RoomsSystem roomsSystem,/* ParameterData parameterData,*/ DrawingData drawingData)
     {
         _guestsSystem = guestsSystem;
-        //_progressSystem = progressSystem;
         _tasksHandler = tasksHandler;
         _roomsSystem = roomsSystem;
-        _parameterData = parameterData;
+        //_parameterData = parameterData;
+        _drawingData = drawingData;
 
         tasksHandler.UpdateTask += OnUpdate;
         guestsSystem.GuestsChanged += UpdateSlot;
@@ -50,20 +55,21 @@ public class ParameterSlot : MonoBehaviour
 
         if (task != _task || room.Guest == null) return;
 
-        if (task is ParameterTask)
+        if (task is ParameterTask parameterTask)
         {
             float currentValue = 0;
             foreach (var param in room.SetOfParameters.Parameters)
             {
-                if (param.ParameterType == ((ParameterTask)task).ParameterType)
+                if (param.ParameterType == parameterTask.ParameterType)
                 {
                     currentValue = param.Value;
                 }
             }
-            var v = currentValue / ((ParameterTask)task).Value;
+            _score.text = currentValue + "/" + parameterTask.Value;
+            var v = currentValue / parameterTask.Value;
             _bar.fillAmount = v;
         }
-        else if (task is SpecificTask)
+        else if (task is SpecificTask specificTask)
         {
 
             //TODO
@@ -71,7 +77,7 @@ public class ParameterSlot : MonoBehaviour
             {
                 foreach (var decor in room.InstalledDecor)
                 {
-                    if (((SpecificTask)task).DecorType != decor.DecorType)
+                    if (specificTask.DecorType != decor.DecorType)
                     {
                         _bar.fillAmount = 0;
                         //Debug.Log("UnDone");
@@ -80,7 +86,7 @@ public class ParameterSlot : MonoBehaviour
 
                 foreach (var decor in room.InstalledDecor)
                 {
-                    if (((SpecificTask)task).DecorType == decor.DecorType)
+                    if (specificTask.DecorType == decor.DecorType)
                     {
                         _bar.fillAmount = 1;
                         //Debug.Log("Done");
@@ -94,27 +100,41 @@ public class ParameterSlot : MonoBehaviour
     {
         _task = task;
         // Debug.Log("0");
-        _image.gameObject.SetActive(true);
-        _image.sprite = _guestsSystem.FindGuestByType(task.GuestsType).Icon;
+        _progressBar.SetActive(true);
+        _bar.gameObject.SetActive(true);
+        _star.gameObject.SetActive(true);
+        _icon.gameObject.SetActive(true);
 
-        if (task is ParameterTask)
+
+        if (task is ParameterTask parameterTask)
         {
+            _icon.sprite = parameterTask.Parameter.IconForRoomMenu;
+            _name.text = parameterTask.Name;
+            _description.text = parameterTask.Description;
+            _reward.text = "+" + parameterTask.XP;
             //Debug.Log("1");
-            _paramName.text = _parameterData.FindParamByType(((ParameterTask)task).ParameterType).Name;
-            _paramValue.text = ((ParameterTask)task).Value.ToString();
         }
-        else if(task is SpecificTask specificTask)
+        else if (task is SpecificTask specificTask)
         {
-            _paramName.text = specificTask.Name;
-            _paramValue.text = string.Empty;
+            foreach(var dr in _drawingData.Drawings)
+            {
+                if (dr.Decor.DecorType == specificTask.DecorType)
+                {
+                    _icon.sprite = dr.Icon;
+                    break;
+                }
+            }
+            
+            _name.text = specificTask.Name;
+            _description.text = specificTask.Description;
         }
-        else
-        {
-            //Debug.Log("2");
-            _paramName.text = string.Empty;
-            _paramValue.text = ((SpecificTask)task).DecorType.ToString();
-            //TODO
-        }
+        //else
+        //{
+        //    //Debug.Log("2");
+        //    _paramName.text = string.Empty;
+        //    _paramValue.text = ((SpecificTask)task).DecorType.ToString();
+        //    //TODO
+        //}
 
         if (!CheckIfGuestHasRoom(task))
         {
@@ -156,10 +176,15 @@ public class ParameterSlot : MonoBehaviour
     {
         //Debug.Log("FillEmpty");
         _task = null;
-        _image.gameObject.SetActive(false);
 
-        _paramName.text = string.Empty;
-        _paramValue.text = string.Empty;
+        _progressBar.SetActive(false);
+        _bar.gameObject.SetActive(false);
+        _star.gameObject.SetActive(false);
+        _icon.gameObject.SetActive(false);
+
+        _name.text = string.Empty;
+        _description.text = string.Empty;
+
         _bar.fillAmount = 0;
     }
 
