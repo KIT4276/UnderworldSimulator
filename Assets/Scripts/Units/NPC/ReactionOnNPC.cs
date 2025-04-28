@@ -11,6 +11,11 @@ public class ReactionOnNPC : MonoBehaviour
     private HeroReaction _hero;
     protected bool _isActive;
 
+    private void Start()
+    {
+        _sign.SetActive(false);
+    }
+
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<HeroReaction>(out var hero))

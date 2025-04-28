@@ -103,6 +103,11 @@ public class ParameterSlot : MonoBehaviour
             _paramName.text = _parameterData.FindParamByType(((ParameterTask)task).ParameterType).Name;
             _paramValue.text = ((ParameterTask)task).Value.ToString();
         }
+        else if(task is SpecificTask specificTask)
+        {
+            _paramName.text = specificTask.Name;
+            _paramValue.text = string.Empty;
+        }
         else
         {
             //Debug.Log("2");
