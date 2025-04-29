@@ -8,15 +8,15 @@ public class RoomMenu : MonoBehaviour
 {
     [SerializeField] private TMP_Text _name;
     [SerializeField] private Image _guestsIcon;
-    [SerializeField] private TMP_Text _guest;
+    [SerializeField] private Sprite _emptyGuestImage;
     [Space]
-    [SerializeField] private TMP_Text _nameOfParameter_1;
+    [SerializeField] private Image _iconOfParameter_1;
     [SerializeField] private TMP_Text _parameter_1;
     [Space]
-    [SerializeField] private TMP_Text _nameOfParameter_2;
+    [SerializeField] private Image _iconOfParameter_2;
     [SerializeField] private TMP_Text _parameter_2;
     [Space]
-    [SerializeField] private TMP_Text _nameOfParameter_3;
+    [SerializeField] private Image _iconOfParameter_3;
     [SerializeField] private TMP_Text _parameter_3;
     [Space]
     [SerializeField] private GuestMenu _guestMenu;
@@ -87,23 +87,22 @@ public class RoomMenu : MonoBehaviour
 
         if (room.Guest == null)
         {
-            _guest.text = string.Empty;
-            _guestsIcon.gameObject.SetActive(false);
+            //_guestsIcon.gameObject.SetActive(false);
+            _guestsIcon.sprite = _emptyGuestImage;
         }
         else
         {
-            _guest.text = room.Guest.Name;
-            _guestsIcon.gameObject.SetActive(true);
+            //_guestsIcon.gameObject.SetActive(true);
             _guestsIcon.sprite = room.Guest.Icon;
         }
 
-        _nameOfParameter_1.text =_parameterData.FindParamByType(room.SetOfParameters.Parameters[0].ParameterType).Name;
+        _iconOfParameter_1.sprite =_parameterData.FindParamByType(room.SetOfParameters.Parameters[0].ParameterType).Icon;
         _parameter_1.text = room.SetOfParameters.Parameters[0].Value.ToString();
 
-        _nameOfParameter_2.text = _parameterData.FindParamByType(room.SetOfParameters.Parameters[1].ParameterType).Name;
+        _iconOfParameter_2.sprite = _parameterData.FindParamByType(room.SetOfParameters.Parameters[1].ParameterType).Icon;
         _parameter_2.text = room.SetOfParameters.Parameters[1].Value.ToString();
 
-        _nameOfParameter_3.text = _parameterData.FindParamByType(room.SetOfParameters.Parameters[2].ParameterType).Name;
+        _iconOfParameter_3.sprite = _parameterData.FindParamByType(room.SetOfParameters.Parameters[2].ParameterType).Icon;
         _parameter_3.text = room.SetOfParameters.Parameters[2].Value.ToString();
 
         Decor[] decors = new Decor[room.InstalledDecor.Count]  ;

@@ -29,16 +29,12 @@ public class ParameterTask : Task
 {
     [SerializeField] private RoomParameterType _parameterType;
     [SerializeField] private int _value;
+    [SerializeField] private ParameterData _parameterData;
 
     public RoomParameterType ParameterType { get => _parameterType; }
     public int Value { get => _value; }
-    public Parameter Parameter { get; private set; }
 
-    [Inject]
-    private void Construect(ParameterData parameterData)
-    {
-        Parameter = parameterData.FindParamByType(_parameterType);
-    }
+    public Parameter Parameter { get => _parameterData.FindParamByType(_parameterType); }
 }
 
 [Serializable]
