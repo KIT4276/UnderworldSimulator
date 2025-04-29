@@ -10,7 +10,6 @@ public class WorkbenchSystem : MonoBehaviour
     [SerializeField] private GameObject _warningSign;
     [SerializeField] private GameObject _bottomRoomsPanel;
     [SerializeField] private GameObject _roomRatingPanel;
-    [SerializeField] private GuestMenu _guestMenu;
     [SerializeField]private RoomMenu _roomMenu;
     private RoomsSystem _roomsSystem;
     private DecorHolder _decorHolder;
@@ -37,7 +36,7 @@ public class WorkbenchSystem : MonoBehaviour
         _warningSign.SetActive(false);
         //_roomRatingPanel.SetActive(false);
         //_bottomRoomsPanel.SetActive(false);
-        _guestMenu.gameObject.SetActive(false);
+        //_guestMenu.gameObject.SetActive(false);
 
         foreach (var button in buttonsClick)
         {

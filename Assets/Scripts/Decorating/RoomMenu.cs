@@ -1,6 +1,7 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Zenject;
 
@@ -26,6 +27,8 @@ public class RoomMenu : MonoBehaviour
     [SerializeField] private RoomButton[] _roomButtons;
     [Space]
     [SerializeField] private DecorInRoom _decorInRoom;
+    [Space]
+    [SerializeField] private GameObject _allGuests;
     
 
     private StateMachine _machine;
@@ -48,6 +51,7 @@ public class RoomMenu : MonoBehaviour
     private void Awake()
     {
         UpdateParams(_roomsSystem.SelectedRoom);
+        //_allGuests.SetActive(false);
     }
 
     private void FillButtons()
@@ -70,14 +74,16 @@ public class RoomMenu : MonoBehaviour
 
     public void GoToCheckInGuest()
     {
-        _guestMenu.gameObject.SetActive(true);
+        //_guestMenu.gameObject.SetActive(true);
+        //_guestMenu.Open();
+        //this.gameObject.SetActive(false);
+        //_allGuests.SetActive(true);
         _guestMenu.Open();
-        this.gameObject.SetActive(false);
     }
 
     public void BackToRooms()
     {
-        _guestMenu.gameObject.SetActive(false);
+        //_guestMenu.gameObject.SetActive(false);
     }
 
     public void UpdateParams(Room room)
