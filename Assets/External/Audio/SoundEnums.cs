@@ -4,6 +4,7 @@ public enum ChannelEnum
 	Music = 0,
 	SFX = 1,
 	Ambience = 2,
+	UI = 3,
 }
 
 public enum SoundEnum
@@ -19,4 +20,6 @@ public enum SoundEnum
 	Crow = 7,
 	Owl = 8,
 	Woodpecker = 9,
+	General_Click = 10,
+	Room_Choose = 11,
 }

@@ -18,6 +18,7 @@ public class ButtonClickChangeImage : MonoBehaviour
     public void PressedButtoneChange()
     {
         StartCoroutine(ChangeRoutine());
+        AudioManager.Instance.Play(SoundEnum.General_Click);
     }
 
     public void Activate()
@@ -40,7 +41,6 @@ public class ButtonClickChangeImage : MonoBehaviour
 
     public void RestartView()
     {
-       
         _image.sprite = _normImage;
     }
 

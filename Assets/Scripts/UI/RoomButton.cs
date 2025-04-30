@@ -9,7 +9,7 @@ public class RoomButton : MonoBehaviour
     [SerializeField] private TMP_Text _name;//or number
     [SerializeField] private Image _icon;
     [SerializeField] private Image _gustIcon;
-    
+
 
     private Room _room;
 
@@ -23,7 +23,7 @@ public class RoomButton : MonoBehaviour
 
     public void FillButton(Room room)
     {
-       // Debug.Log("FillButton");
+        // Debug.Log("FillButton");
         _room = room;
         _name.text = room.ID.ToString();
         _icon.sprite = room.Icon;
@@ -51,7 +51,8 @@ public class RoomButton : MonoBehaviour
     public void RoomSelectedButtonDown()
     {
         _system.OnRoomSelected(_room);
-        
+        AudioManager.Instance.Play(SoundEnum.Room_Choose);
+
     }
 
     private void OnDestroy()
