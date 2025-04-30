@@ -1,86 +1,63 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
 public class GuestCard : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _name;
     [SerializeField] private Image _icon;
-    //[SerializeField] private Image _roomIcon;
-    [SerializeField] private TMP_Text _roomName;
     [Space]
-    [SerializeField] private GameObject _lock;
     [SerializeField] private RoomMenu _roomMenu;
+    [SerializeField] private GuestMenu _guestMenu;
+    [Space]
+    [SerializeField] private Sprite _lockSprite;
+    [SerializeField] private Sprite _evictSprite;
 
     [Inject] private RoomsSystem _roomsSystem;
 
     private Guest _guest;
 
+    private bool _isEvict;
+
     public void FillCard(Guest guest)
     {
-        _lock.SetActive(false);
         _guest = guest;
-        _name.text = guest.Name;
         _icon.sprite = guest.Icon;
-
-        if (guest.Room == null)
-        {
-            //_roomIcon.gameObject.SetActive(false);
-            _roomName.text = string.Empty;
-        }
-        else
-        {
-            //_roomIcon.gameObject.SetActive(true);
-            _roomName.text = guest.Room.Name;
-           // _roomIcon.sprite = guest.Room.Icon;
-        }
-
-        //TODO Icon and Name of guest
-
+        var color = _icon.color;
+        color.a = 1;
+        _isEvict = false;
     }
 
     public void CheckInGuest()
     {
-        //_guest.CheckInGuest(_roomsSystem.SelectedRoom);
+        if (_guest != null)
+        {
+            _roomsSystem.TryToCheckInGuest(_guest);
+        }
+        else if(_isEvict)
+        {
+            _guest = null;
+            _roomsSystem.EvictGuest();
+        }
+        else { return; }
 
-        //TODO
-        _roomsSystem.TryToCheckInGuest(_guest);
-
-        _roomMenu.gameObject.SetActive(true);
-        _roomMenu.BackToRooms();
-        //
+        _guestMenu.Back();
     }
 
-    public void EvictGuest()
+    public void FillCardUnAvailable()
     {
-        _guest.EvictGuest();
+        _icon.sprite = _lockSprite;
+        var color = _icon.color;
+        color.a = 1;
+        _isEvict = false;
+
     }
 
-    public void FillCardEmpty()
+    public void FillCardEvict()
     {
-        _lock.SetActive(true);
+        _icon.sprite = _evictSprite;
+        var color = _icon.color;
+        color.a = 1;
+        _isEvict = true;
     }
 }
-
-//[Serializable]
-//public class ParamsCard
-//{
-//    [SerializeField] private TMP_Text _paramName;
-//    [SerializeField] private TMP_Text _paramValue;
-
-//    //TODO Icon??
-
-//    public void FillCard(RoomParameter parameter)
-//    {
-//        _paramName.text = RoomParameterNames.Names[parameter.ParameterType];
-//        _paramValue.text = parameter.Value.ToString();
-//    }
-
-//    public void FillCardEmpty()
-//    {
-//        _paramName.text = string.Empty;
-//        _paramValue.text = string.Empty;
-//    }
-//}

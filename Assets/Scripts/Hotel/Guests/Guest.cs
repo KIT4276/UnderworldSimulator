@@ -10,10 +10,12 @@ public class Guest : BaseHandledReward
     [SerializeField] private string _name;
     [SerializeField] private Sprite _icon;
     [SerializeField] private Sprite _milestonesIcon;
+    [SerializeField] private Sprite _roomsChooseIcon;
 
     public GuestsType Type { get => _type; }
     public Sprite Icon { get => _icon; }
     public Sprite MilestonesIcon { get => _milestonesIcon; }
+    public Sprite RoomsChooseIcon { get => _roomsChooseIcon; }
     public override string Name { get => _name; }
     public Room Room { get; private set; }
 

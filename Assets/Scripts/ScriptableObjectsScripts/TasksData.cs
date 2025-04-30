@@ -6,6 +6,7 @@ public class TasksData : ScriptableObject
 {
     [SerializeField] private ParameterTask[] _parameterTask;
     [SerializeField] private SpecificTask[] _specificTasks;
+    
 
     //public Task[] Tasks { get => _tasks; }
     //public SpecificTask[] SpecificTasks { get => _specificTasks; }

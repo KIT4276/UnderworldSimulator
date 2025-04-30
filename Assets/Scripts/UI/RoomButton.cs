@@ -40,7 +40,7 @@ public class RoomButton : MonoBehaviour
         if (_room.Guest != null)
         {
             _gustIcon.gameObject.SetActive(true);
-            _gustIcon.sprite = _room.Guest.Icon;
+            _gustIcon.sprite = _room.Guest.RoomsChooseIcon;
         }
         else
         {

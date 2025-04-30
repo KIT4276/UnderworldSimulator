@@ -1,31 +1,44 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
 public class GuestMenu : MonoBehaviour
 {
-    [SerializeField] private RoomMenu _roomRating;
+    [SerializeField] private RoomMenu _roomMenu;
+    [SerializeField] private GameObject _allCards;
     [SerializeField] private GuestCard[] _guestCard;
 
     [Inject] private GuestsSystem _guestsSystem;
-    [Inject] private StateMachine _stateMachine;
+    [Inject] private RoomsSystem _roomsSystem;
+    [Inject] private GuestsHandler _guestsHandler;
 
     private void Start()
     {
+        foreach(var guest in _guestsHandler.All)
+        {
+            ((Guest) guest).CheckIn += OnCheckIn;
+            ((Guest)guest).Evict += OnGuestsChanged;
+        }
+        _guestsHandler.AvailableUpdate += OnGuestsChanged;
         _guestsSystem.GuestsChanged += OnGuestsChanged;
-        _stateMachine.ChangeStateAction += OnChangeState;
+        _roomsSystem.RoomSelected += OnRoomSelected;
+        _allCards.SetActive(false);
     }
 
-    private void OnChangeState(IExitableState state)
+    private void OnRoomSelected(Room room)
     {
-        if (state is GameLoopState)
-        {
-            this.gameObject.SetActive(false);
-        }
+        FillCards();
+    }
+
+    private void OnCheckIn(Room room)
+    {
+        FillCards();
     }
 
     public void Open()
     {
+        _allCards.SetActive(true);
         FillCards();
     }
 
@@ -36,35 +49,61 @@ public class GuestMenu : MonoBehaviour
 
     private void FillCards()
     {
+        var guests = _guestsSystem.Guests;
+        var selectedRoom = _roomsSystem.SelectedRoom;
+
+        var filteredGuests = guests
+            .Where(guest => guest.Room != selectedRoom)
+            .ToList();
+
+        var sortedGuests = filteredGuests
+            .OrderByDescending(guest => _guestsHandler.AvailableList.Contains(guest)) // сначала доступные
+            .ToList();
+
+        int guestCount = sortedGuests.Count;
+        int cardCount = _guestCard.Length;
+
+        bool showEvictCard = guestCount < cardCount;
+
         int i = 0;
-        for (; i < _guestsSystem.Guests.Count; i++)
+
+        for (; i < Math.Min(guestCount, cardCount); i++)
         {
-            if (_guestsSystem.Guests[i].IsAvailable)
-            {
-                _guestCard[i].FillCard(_guestsSystem.Guests[i]);
-            }
+            var guest = sortedGuests[i];
+
+            if (_guestsHandler.AvailableList.Contains(guest))
+                _guestCard[i].FillCard(guest);
             else
-                _guestCard[i].FillCardEmpty();
+                _guestCard[i].FillCardUnAvailable();
         }
 
-        if (_guestCard.Length > _guestsSystem.Guests.Count)
+        if (showEvictCard && i < cardCount)
         {
-            for (; i < _guestCard.Length; i++)
-            {
-                _guestCard[i].FillCardEmpty();
-            }
+            _guestCard[i].FillCardEvict();
+            i++;
+        }
+
+        for (; i < cardCount; i++)
+        {
+            _guestCard[i].FillCardEvict();
         }
     }
 
     public void Back()
     {
-        _roomRating.gameObject.SetActive(true);
-        this.gameObject.SetActive(false);
+        _allCards.SetActive(false);
     }
 
     private void OnDestroy()
     {
+        foreach (var guest in _guestsHandler.All)
+        {
+            ((Guest)guest).CheckIn -= OnCheckIn;
+            ((Guest)guest).Evict -= OnGuestsChanged;
+        }
+
+        _guestsHandler.AvailableUpdate -= OnGuestsChanged;
         _guestsSystem.GuestsChanged -= OnGuestsChanged;
-        _stateMachine.ChangeStateAction -= OnChangeState;
+        _roomsSystem.RoomSelected -= OnRoomSelected;
     }
 }

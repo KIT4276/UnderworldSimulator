@@ -308,7 +308,7 @@ public class InventoryHolder : ISavedProgress
         if (AllItemsInInventory == null)
             AllItemsInInventory = new();
 
-        Debug.Log("Add AllItemsInInventory");
+        //Debug.Log("Add AllItemsInInventory");
         AllItemsInInventory.Add(item);
 
         Change?.Invoke();

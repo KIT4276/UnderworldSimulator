@@ -55,11 +55,17 @@ public class RoomsSystem
 
     public void TryToCheckInGuest(Guest guest)
     {
+        EvictGuest();
+        guest.CheckInGuest(SelectedRoom);
+    }
+
+    public void EvictGuest()
+    {
         if (SelectedRoom.Guest != null)
         {
             SelectedRoom.Guest.EvictGuest();
         }
-        guest.CheckInGuest(SelectedRoom);
+
     }
 
     private IEnumerator FindCamera()
