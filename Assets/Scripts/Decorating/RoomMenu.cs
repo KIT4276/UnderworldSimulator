@@ -9,6 +9,7 @@ public class RoomMenu : MonoBehaviour
     [SerializeField] private TMP_Text _name;
     [SerializeField] private Image _guestsIcon;
     [SerializeField] private Sprite _emptyGuestImage;
+    [SerializeField] private Image _roomIcon;
     [Space]
     [SerializeField] private Image _iconOfParameter_1;
     [SerializeField] private TMP_Text _parameter_1;
@@ -78,6 +79,7 @@ public class RoomMenu : MonoBehaviour
     {
         _roomRatingPanel.SetActive(true);
         _name.text = room.Name;
+        _roomIcon.sprite = room.Icon;
 
         if (room.Guest == null)
         {
