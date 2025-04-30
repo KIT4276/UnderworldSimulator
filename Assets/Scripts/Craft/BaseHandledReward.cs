@@ -18,16 +18,16 @@ public abstract class BaseHandledReward
         {
             IsAvailable = true;
             BecameAvailable?.Invoke(this);
-            //Debug.Log("BecameAvailable " + Name);
+
+            //if (this is Guest)
+            //{
+            //    Debug.Log("BecameAvailable " + Name);
+            //}
         }
     }
 
     public void MakeUnavailable()
     {
-        if (this is Guest)
-        {
-            Debug.Log("Unavailable " + Name);
-        }
         IsAvailable = false;
     }
 }

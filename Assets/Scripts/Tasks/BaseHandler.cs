@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,6 +24,10 @@ public abstract class BaseHandler
                 AvailableUpdate?.Invoke();
             }
         }
+        if (this is GuestsHandler)
+        {
+            Debug.Log("UpdateAvailable " + AvailableList.Count);
+        }
     }
 
 
@@ -37,12 +40,6 @@ public abstract class BaseHandler
         //Debug.Log(_all.Length);
         foreach (var item in _all)
         {
-            //if (this is GuestsHandler)
-            //{
-            //    Debug.Log(item.Name);
-            //    Debug.Log(item.MilestonesIndex);
-            //    Debug.Log(_milestoneSystem.CurrentMilestonesIndex() - 1);
-            //}
 
             if (item.MilestonesIndex <= _milestoneSystem.CurrentMilestonesIndex() - 1)
             {

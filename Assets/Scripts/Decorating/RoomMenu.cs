@@ -1,7 +1,6 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Zenject;
 
@@ -51,7 +50,6 @@ public class RoomMenu : MonoBehaviour
     private void Awake()
     {
         UpdateParams(_roomsSystem.SelectedRoom);
-        //_allGuests.SetActive(false);
     }
 
     private void FillButtons()
@@ -64,7 +62,6 @@ public class RoomMenu : MonoBehaviour
 
     private void OnChangeState(IExitableState state  )
     {
-
         if (state is GameLoopState || state is  CraftState)
         {
             _roomRatingPanel.SetActive(false);
@@ -74,16 +71,7 @@ public class RoomMenu : MonoBehaviour
 
     public void GoToCheckInGuest()
     {
-        //_guestMenu.gameObject.SetActive(true);
-        //_guestMenu.Open();
-        //this.gameObject.SetActive(false);
-        //_allGuests.SetActive(true);
         _guestMenu.Open();
-    }
-
-    public void BackToRooms()
-    {
-        //_guestMenu.gameObject.SetActive(false);
     }
 
     public void UpdateParams(Room room)
@@ -93,12 +81,10 @@ public class RoomMenu : MonoBehaviour
 
         if (room.Guest == null)
         {
-            //_guestsIcon.gameObject.SetActive(false);
             _guestsIcon.sprite = _emptyGuestImage;
         }
         else
         {
-            //_guestsIcon.gameObject.SetActive(true);
             _guestsIcon.sprite = room.Guest.Icon;
         }
 
