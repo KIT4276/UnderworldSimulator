@@ -24,10 +24,10 @@ public abstract class BaseHandler
                 AvailableUpdate?.Invoke();
             }
         }
-        if (this is GuestsHandler)
-        {
-            Debug.Log("UpdateAvailable " + AvailableList.Count);
-        }
+        //if (this is GuestsHandler)
+        //{
+        //    Debug.Log("UpdateAvailable " + AvailableList.Count);
+        //}
     }
 
 
