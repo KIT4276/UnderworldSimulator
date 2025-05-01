@@ -1,74 +1,152 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using Zenject;
 
 public class MapController : MonoBehaviour
 {
-    [SerializeField] private InputActionAsset inputActionAsset; // Reference to the InputActionAsset
-    [SerializeField] private GameObject mapPanel; // Reference to the map UI GameObject
+    
+    [Header("Input System References")]
+    [SerializeField] private InputActionAsset inputActionAsset;
+    [SerializeField] private GameObject mapPanel;
 
-    private bool isMapVisible = false; // Track visibility state of the map
+    [Header("Map Components")]
+    [SerializeField] private RectTransform mapImage;
+    [SerializeField] private RectTransform heroIcon;
+    private Transform playerTransform;
 
-    private InputAction toggleMapAction; // Action to toggle the map
-    private InputActionMap playerActionMap; // Reference to the Player action map
-    private InputActionMap uiActionMap; // Reference to the UI action map
+    [Header("World Bounds")]
+    [SerializeField] private Vector2 worldMin = new Vector2(-50, -50);
+    [SerializeField] private Vector2 worldMax = new Vector2(50, 50);
+
+    private bool isMapVisible = false;
+    private StateMachine stateMachine;
+
+
+    private InputAction toggleMapAction;
+    private InputActionMap playerActionMap;
+    private InputActionMap uiActionMap;
+    private InputActionMap helpActionMap;
+
+    [Inject]
+    public void Construct(StateMachine stateMachine)
+    {
+        this.stateMachine = stateMachine;
+        stateMachine.ChangeStateAction += OnStateChange;
+    }
 
     private void Awake()
-    {
-        if (mapPanel != null)
-        {
-            mapPanel.SetActive(false); // Start with the map hidden
-        }
+    {        
+        playerActionMap = inputActionAsset.FindActionMap("Player");
+        uiActionMap = inputActionAsset.FindActionMap("UI");
+        helpActionMap = inputActionAsset.FindActionMap("Help");
 
-        // Find the Player action map
-        playerActionMap = inputActionAsset.FindActionMap("Player"); // Use the correct action map name
-
-        // Find the UI action map
-        uiActionMap = inputActionAsset.FindActionMap("UI"); // Use the correct action map name
-
-        // Find the ToggleMap action in the separate Map Controls action map
         var mapControlsActionMap = inputActionAsset.FindActionMap("Map");
-        toggleMapAction = mapControlsActionMap.FindAction("ToggleMap"); // Use the correct action name
+        toggleMapAction = mapControlsActionMap.FindAction("ToggleMap");
     }
 
     private void OnEnable()
     {
-        toggleMapAction.performed += OnToggleMap; // Subscribe to the toggle map action
-        toggleMapAction.Enable(); // Enable the toggle map action
+        toggleMapAction.performed += OnToggleMap;
+        toggleMapAction.Enable();
     }
 
     private void OnDisable()
     {
-        toggleMapAction.performed -= OnToggleMap; // Unsubscribe from the toggle map action
-        toggleMapAction.Disable(); // Disable the toggle map action
+        toggleMapAction.performed -= OnToggleMap;
+        toggleMapAction.Disable();
     }
 
-    // This method handles toggling the map
-    public void OnToggleMap(InputAction.CallbackContext context)
+    private void OnStateChange(IExitableState newState)
     {
-        if (context.performed)
+        // Check if the state is GameLoopState
+        if (newState is GameLoopState)
         {
-            ToggleMap(); // Call the method to toggle the map
+            // GameLoopState has been entered, initialize the player and map
+            InitializePlayerAndMap();
+
+            // Unsubscribe from the event as we no longer need to listen for state changes
+            stateMachine.ChangeStateAction -= OnStateChange;
         }
     }
 
-    // Method to toggle the map's visibility
+    private void InitializePlayerAndMap()
+    {
+        // Now that we are in the GameLoopState, find the player and initialize the map
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        if (playerObject != null)
+        {
+            playerTransform = playerObject.transform;
+            // Initialize map logic or UI setup here if needed
+            if (mapPanel != null)
+            {
+                mapPanel.SetActive(false);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Player object not found!");
+        }
+    }
+
+    private void OnToggleMap(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            ToggleMap();
+        }
+    }
+
     private void ToggleMap()
     {
-        isMapVisible = !isMapVisible; // Toggle visibility
+        isMapVisible = !isMapVisible;
         if (mapPanel != null)
         {
-            mapPanel.SetActive(isMapVisible); // Show/hide map
+            mapPanel.SetActive(isMapVisible);
         }
 
         if (isMapVisible)
         {
-            playerActionMap.Disable(); // Disable the Player action map when the map is visible
-            uiActionMap.Disable(); // Disable the UI action map when the map is visible
+            UpdateHeroIconPosition();
+            playerActionMap.Disable();
+            uiActionMap.Disable();
+            helpActionMap.Disable();
         }
         else
         {
-            playerActionMap.Enable(); // Enable the Player action map when the map is hidden
-            uiActionMap.Enable(); // Enable the UI action map when the map is hidden
+            playerActionMap.Enable();
+            uiActionMap.Enable();
+            helpActionMap.Enable();
         }
     }
+
+    // This method maps the player's world position to the map image and moves the icon
+    private void UpdateHeroIconPosition()
+    {
+        if (playerTransform != null)
+        {
+            Vector3 playerPos = playerTransform.position;
+
+            // Normalize player position (0 to 1 range)
+            float normalizedX = Mathf.InverseLerp(worldMin.x, worldMax.x, playerPos.x);
+            float normalizedY = Mathf.InverseLerp(worldMin.y, worldMax.y, playerPos.y); // Use Y for top-down
+
+            // Get the size of the map image
+            Vector2 mapSize = mapImage.rect.size;
+
+            // Calculate local position for HeroIcon
+            float mapPosX = (normalizedX - 0.5f) * mapSize.x;
+            float mapPosY = (normalizedY - 0.5f) * mapSize.y;
+
+            // Apply to HeroIcon
+            heroIcon.anchoredPosition = new Vector2(mapPosX, mapPosY);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (stateMachine != null)
+            stateMachine.ChangeStateAction -= OnStateChange;
+    }
+
 }
