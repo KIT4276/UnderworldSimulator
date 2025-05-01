@@ -24,7 +24,7 @@ public class DraftParameterUnit : MonoBehaviour
         }
         
         _icon.gameObject.SetActive(true);
-        _icon.sprite = _parameterData.FindParamByType(roomParameter.ParameterType).Icon; //roomParameter.Icon;
+        _icon.sprite = _parameterData.FindParamByType(roomParameter.ParameterType).IconForDrawings; //roomParameter.Icon;
         _count.gameObject.SetActive(true);
         _count.text = "+" + roomParameter.Value.ToString();
     }

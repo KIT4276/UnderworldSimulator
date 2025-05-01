@@ -108,7 +108,7 @@ public class ParameterSlot : MonoBehaviour
 
         if (task is ParameterTask parameterTask)
         {
-            _icon.sprite = parameterTask.Parameter.Icon;
+            _icon.sprite = parameterTask.Parameter.IconForTasks;
             _name.text = parameterTask.Name;
             _description.text = parameterTask.Description;
             _reward.text = "+" + parameterTask.XP;
