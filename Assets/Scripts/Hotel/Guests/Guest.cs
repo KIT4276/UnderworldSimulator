@@ -8,14 +8,20 @@ public class Guest : BaseHandledReward
 {
     [SerializeField] private GuestsType _type;
     [SerializeField] private string _name;
-    [SerializeField] private Sprite _icon;
+    [SerializeField] private Sprite _iconMain;
+    [Space]
     [SerializeField] private Sprite _milestonesIcon;
-    [SerializeField] private Sprite _roomsChooseIcon;
+    [SerializeField] private Sprite _iconRoomeChoose;
+    [SerializeField] private Sprite _checkInIconBig;
+    [SerializeField] private Sprite _checkInIconSmall;
 
     public GuestsType Type { get => _type; }
-    public Sprite Icon { get => _icon; }
+    public Sprite IconMain { get => _iconMain; }
+
+    public Sprite IconRoomeChoose { get => _iconRoomeChoose; }
     public Sprite MilestonesIcon { get => _milestonesIcon; }
-    public Sprite RoomsChooseIcon { get => _roomsChooseIcon; }
+    public Sprite CheckInIconBig { get => _checkInIconBig; }
+    public Sprite CheckInIconSmall { get => _checkInIconSmall; }
     public override string Name { get => _name; }
     public Room Room { get; private set; }
 

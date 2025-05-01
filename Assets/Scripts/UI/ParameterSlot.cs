@@ -6,7 +6,8 @@ using Zenject;
 
 public class ParameterSlot : MonoBehaviour
 {
-   // [SerializeField] private SpriteRenderer _taskSlot;
+    // [SerializeField] private SpriteRenderer _taskSlot;
+   /* [SerializeField]*/ private Image _main;
     [SerializeField] private Image _icon;
     [SerializeField] private GameObject _star;
     [SerializeField] private GameObject _progressBar;
@@ -38,7 +39,10 @@ public class ParameterSlot : MonoBehaviour
         guestsSystem.GuestsChanged += UpdateSlot;
         roomsSystem.RoomsParamsChanged += OnRoomsParamsChanged;
         roomsSystem.RoomSelected += OnRoomsParamsChanged;
+
+        _main = GetComponent<Image>();
     }
+
 
     private void OnRoomsParamsChanged(Room room)
     {
@@ -100,6 +104,11 @@ public class ParameterSlot : MonoBehaviour
     {
         _task = task;
         // Debug.Log("0");
+
+        var color = _main.color;
+        color.a = 1f;
+        _main.color = color;
+
         _progressBar.SetActive(true);
         _bar.gameObject.SetActive(true);
         _star.gameObject.SetActive(true);
@@ -108,7 +117,7 @@ public class ParameterSlot : MonoBehaviour
 
         if (task is ParameterTask parameterTask)
         {
-            _icon.sprite = parameterTask.Parameter.Icon;
+            _icon.sprite = parameterTask.Parameter.IconForTasks;
             _name.text = parameterTask.Name;
             _description.text = parameterTask.Description;
             _reward.text = "+" + parameterTask.XP;
@@ -176,7 +185,7 @@ public class ParameterSlot : MonoBehaviour
     {
         //Debug.Log("FillEmpty");
         _task = null;
-
+        
         _progressBar.SetActive(false);
         _bar.gameObject.SetActive(false);
         _star.gameObject.SetActive(false);
@@ -184,8 +193,14 @@ public class ParameterSlot : MonoBehaviour
 
         _name.text = string.Empty;
         _description.text = string.Empty;
+        _reward.text = string.Empty;
+        _score.text = string.Empty;
 
         _bar.fillAmount = 0;
+
+        var color = _main.color;
+        color.a = 0.2f;
+        _main.color = color;
     }
 
     private void OnDestroy()

@@ -87,16 +87,16 @@ public class RoomMenu : MonoBehaviour
         }
         else
         {
-            _guestsIcon.sprite = room.Guest.Icon;
+            _guestsIcon.sprite = room.Guest.CheckInIconBig;
         }
 
-        _iconOfParameter_1.sprite =_parameterData.FindParamByType(room.SetOfParameters.Parameters[0].ParameterType).Icon;
+        _iconOfParameter_1.sprite =_parameterData.FindParamByType(room.SetOfParameters.Parameters[0].ParameterType).RoomMenuIcons;
         _parameter_1.text = room.SetOfParameters.Parameters[0].Value.ToString();
 
-        _iconOfParameter_2.sprite = _parameterData.FindParamByType(room.SetOfParameters.Parameters[1].ParameterType).Icon;
+        _iconOfParameter_2.sprite = _parameterData.FindParamByType(room.SetOfParameters.Parameters[1].ParameterType).RoomMenuIcons;
         _parameter_2.text = room.SetOfParameters.Parameters[1].Value.ToString();
 
-        _iconOfParameter_3.sprite = _parameterData.FindParamByType(room.SetOfParameters.Parameters[2].ParameterType).Icon;
+        _iconOfParameter_3.sprite = _parameterData.FindParamByType(room.SetOfParameters.Parameters[2].ParameterType).RoomMenuIcons;
         _parameter_3.text = room.SetOfParameters.Parameters[2].Value.ToString();
 
         Decor[] decors = new Decor[room.InstalledDecor.Count]  ;

@@ -342,7 +342,6 @@ public class InventoryHolder : ISavedProgress
         if (AllItemsInInventory == null)
             AllItemsInInventory = new();
 
-        // foreach (var item in AllItemsInInventory)
         for (var i = 0; i < AllItemsInInventory.Count; i++)
         {
             if (AllItemsInInventory[i] != null && AllItemsInInventory[i] is Item mat)
@@ -350,15 +349,10 @@ public class InventoryHolder : ISavedProgress
                 if (mat.LootType == lootType)
                 {
                     Remove(mat);
+                    break;
                 }
             }
         }
-       // Debug.Log(AllItemsInInventory.Count);
-        //if(AllItemsInInventory.Count == 1)
-        //{
-        //    Debug.Log(AllItemsInInventory[0]);
-        //}
-        
     }
 
     public int CalculateMaterial(LootType material)

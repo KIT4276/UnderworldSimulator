@@ -92,6 +92,7 @@ public class CraftSystem
                 {
                     for (int j = 0; j < mat.Count; j++)
                     {
+                        Debug.Log("RemoveItems");
                         _inventorySystem.RemoveItems(mat.Material);
                     }
                 }
@@ -116,11 +117,11 @@ public class CraftSystem
         {
             if (mat.Count * Count > TakeMaterialsCount(mat.Material))
             {
-                Debug.Log("false");
+                //Debug.Log("false");
                 return false;
             }
         }
-        Debug.Log("true");
+        //Debug.Log("true");
         return true;
     }
 
@@ -150,7 +151,7 @@ public class CraftSystem
             }
         }
 
-        Debug.Log(_availableMaterials.Count);
+        //Debug.Log(_availableMaterials.Count);
 
         //foreach (var slot in _inventorySystem.InventorySlots)
         //{

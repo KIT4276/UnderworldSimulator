@@ -20,13 +20,13 @@ public class DecorSlot : MonoBehaviour
         _image.gameObject.SetActive(true);
         _image.sprite = decor.GetIcon();
 
-        _paramIcon_1.sprite = parameterData.FindParamByType(decor.Parameters.Parameters[0].ParameterType).Icon;
+        _paramIcon_1.sprite = parameterData.FindParamByType(decor.Parameters.Parameters[0].ParameterType).DecorParamIcon;
         _paramValue_1.text = decor.Parameters.Parameters[0].Value.ToString();
 
-        _paramIcon_2.sprite = parameterData.FindParamByType(decor.Parameters.Parameters[1].ParameterType).Icon;
+        _paramIcon_2.sprite = parameterData.FindParamByType(decor.Parameters.Parameters[1].ParameterType).DecorParamIcon;
         _paramValue_2.text = decor.Parameters.Parameters[1].Value.ToString();
 
-        _paramIcon_3.sprite = parameterData.FindParamByType(decor.Parameters.Parameters[2].ParameterType).Icon;
+        _paramIcon_3.sprite = parameterData.FindParamByType(decor.Parameters.Parameters[2].ParameterType).DecorParamIcon;
         _paramValue_3.text = decor.Parameters.Parameters[2].Value.ToString();
     }
 
