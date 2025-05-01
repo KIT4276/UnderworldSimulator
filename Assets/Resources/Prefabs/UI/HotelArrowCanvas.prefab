@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3439233675183998352}
   - component: {fileID: 6060973945629197993}
   - component: {fileID: 1551467322985867178}
-  - component: {fileID: 6386293504453749928}
+  - component: {fileID: 5760602418592301053}
   m_Layer: 5
   m_Name: HotelArrow
   m_TagString: Untagged
@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: 200}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 25, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6060973945629197993
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6386293504453749928
+--- !u!114 &5760602418592301053
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,11 +85,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3865401288144164279}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5136f83f8640b9743a661bf25db433a3, type: 3}
+  m_Script: {fileID: 11500000, guid: bc623e8d8a84fea46b524f7245215d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hideDistance: 5
-  screenPadding: 50
+  hideDistance: 8
+  orbitRadius: 400
 --- !u!1 &7999015765130747801
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +150,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_TargetDisplay: 0
 --- !u!114 &8097792094714242712
 MonoBehaviour:
