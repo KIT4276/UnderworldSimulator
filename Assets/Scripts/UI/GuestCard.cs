@@ -22,7 +22,7 @@ public class GuestCard : MonoBehaviour
     public void FillCard(Guest guest)
     {
         _guest = guest;
-        _icon.sprite = guest.Icon;
+        _icon.sprite = guest.CheckInIconSmall;
         var color = _icon.color;
         color.a = 1;
         _isEvict = false;

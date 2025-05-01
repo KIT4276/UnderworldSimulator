@@ -87,7 +87,7 @@ public class RoomMenu : MonoBehaviour
         }
         else
         {
-            _guestsIcon.sprite = room.Guest.Icon;
+            _guestsIcon.sprite = room.Guest.CheckInIconBig;
         }
 
         _iconOfParameter_1.sprite =_parameterData.FindParamByType(room.SetOfParameters.Parameters[0].ParameterType).Icon;
