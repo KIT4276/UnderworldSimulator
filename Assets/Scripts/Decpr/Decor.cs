@@ -38,6 +38,7 @@ public class Decor : MonoBehaviour, IBaseItem
     public Collider2D CurrentClickableCollider { get; private set; }
     public Collider2D CurrentOccupiedZone { get; private set; }
     public int ID { get; private set; }
+    public string Name { get; private set; }
 
     public event Action DecorPlacedAction;
     public event Action Clicked;
@@ -53,7 +54,7 @@ public class Decor : MonoBehaviour, IBaseItem
     protected Vector3 _lastPosition;
 
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
-        SpaceDeterminantor spaceDeterminantor, int id, DecorHolder decorHolder, StateMachine stateMachine)
+        SpaceDeterminantor spaceDeterminantor, int id, DecorHolder decorHolder, StateMachine stateMachine, string name)
     {
         if (ID == 0)
             ID = id;
@@ -63,6 +64,7 @@ public class Decor : MonoBehaviour, IBaseItem
         _decorationSystem = decorationSystem;
         _stateMachine = stateMachine;
         _currentRotationState = RotationState.Front;
+        Name = name;
 
         InitComponents(staticData, spaceDeterminantor, decorHolder);
 

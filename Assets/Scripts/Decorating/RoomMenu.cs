@@ -102,7 +102,7 @@ public class RoomMenu : MonoBehaviour
         Decor[] decors = new Decor[room.InstalledDecor.Count]  ;
         room.InstalledDecor.CopyTo(decors);
 
-        _decorInRoom.Fill(decors, _parameterData);
+        _decorInRoom.Fill(decors, _parameterData, _roomsSystem);
     }
 
     private void OnDestroy()
