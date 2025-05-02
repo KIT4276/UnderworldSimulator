@@ -51,7 +51,7 @@ public class RoomButton : MonoBehaviour
     public void RoomSelectedButtonDown()
     {
         _system.OnRoomSelected(_room);
-        AudioManager.Instance.Play(SoundEnum.Room_Choose);
+        AudioReciever.Instance.PlayUIRoomClick();
 
     }
 

@@ -84,6 +84,8 @@ public class Decor : MonoBehaviour, IBaseItem
 
         IsDragging = false;
         IsInside = false;
+
+        AudioReciever.Instance.PlayUIBackClick();
     }
 
 
@@ -130,6 +132,7 @@ public class Decor : MonoBehaviour, IBaseItem
         _decorationSystem.InstanriateDecor(this);
         DecorPlacedAction?.Invoke();
         AllowActions();
+        AudioReciever.Instance.PlayUIFurniturePlace();
 
         //foreach (var param in _parameters.Parameters)
         //{
@@ -153,6 +156,8 @@ public class Decor : MonoBehaviour, IBaseItem
     {
         if (!_canPlace || !_isCanDecorate) return;
         Clicked?.Invoke();
+        AudioReciever.Instance.PlayUIFurnitureClick(); // TODO: Bug when clicking at any space on the screen in "placing furniture mode" is producing multiple OnClick events,
+        //  but I don't even have a furniture in my hand and just clicking at rooms and empty spaces
     }
 
     protected void GoToLastPosition()
@@ -167,6 +172,7 @@ public class Decor : MonoBehaviour, IBaseItem
         if (!IsDragging || !_isCanDecorate) return;
 
         Rotated?.Invoke(_currentRotationState);
+        AudioReciever.Instance.PlayUIFurnitureRotate();
     }
 
     protected bool CheckCamera()

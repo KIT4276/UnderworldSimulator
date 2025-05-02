@@ -22,6 +22,7 @@ public class CraftSlot : MonoBehaviour
         if (_drawing == null) return;
 
         DrawingSelected?.Invoke(_drawing);
+        AudioReciever.Instance.PlayUIGeneralClick();
     }
 
     public void FillDrawingData(Drawing drawing, ParameterData parameterData)

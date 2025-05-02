@@ -22,4 +22,8 @@ public enum SoundEnum
 	Woodpecker = 9,
 	General_Click = 10,
 	Room_Choose = 11,
+	General_Hover = 12,
+	Furniture_Rotate = 13,
+	Furniture_Click = 14,
+	Furniture_Place = 15,
 }

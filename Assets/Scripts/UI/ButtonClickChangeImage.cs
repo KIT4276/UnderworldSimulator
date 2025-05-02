@@ -18,7 +18,7 @@ public class ButtonClickChangeImage : MonoBehaviour
     public void PressedButtoneChange()
     {
         StartCoroutine(ChangeRoutine());
-        AudioManager.Instance.Play(SoundEnum.General_Click);
+        AudioReciever.Instance.PlayUIGeneralClick();
     }
 
     public void Activate()
