@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 public class OverDecorSlot : MonoBehaviour
 {
-
-
     [SerializeField] private Image _iconOfParam;
     [SerializeField] private TMP_Text _nameOfParam;
     [SerializeField] private TMP_Text _paramValue;
     [Space]
     [SerializeField] private GameObject _decorSlotPrefab;
+    [SerializeField] private Transform _conteinr;
 
     private List<DecorSlot> _decorSlots = new();
 
@@ -87,8 +86,12 @@ public class OverDecorSlot : MonoBehaviour
 
     private DecorSlot SpawnSlot()
     {
-        var obj = Instantiate(_decorSlotPrefab, this.gameObject.transform);
+        var obj = Instantiate(_decorSlotPrefab, _conteinr);
         obj.SetActive(true);
+
+        int index = this.transform.GetSiblingIndex();
+        obj.transform.SetSiblingIndex(index +1);
+
         var slot = obj.GetComponent<DecorSlot>();
         _decorSlots.Add(slot);
         return slot;
@@ -104,8 +107,9 @@ public class OverDecorSlot : MonoBehaviour
             }
             else
             {
-                Destroy(_decorSlots[j].gameObject);
-                _decorSlots.RemoveAt(j);
+                //Destroy(_decorSlots[j].gameObject);
+                //_decorSlots.RemoveAt(j);
+                _decorSlots[j].gameObject.SetActive(false);
             }
         }
     }
