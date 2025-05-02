@@ -2,30 +2,14 @@
 
 public class DecorInRoom : MonoBehaviour
 {
-    [SerializeField] private DecorSlot[] _decorSlots;
+    [SerializeField] private OverDecorSlot[] _overDecorSlots;
 
-    public void Fill(Decor[] decors, ParameterData parameterData)
+    public void Fill(Decor[] decors, ParameterData parameterData, RoomsSystem roomsSystem)
     {
-        int i = 0;
-
-        for (; i < decors.Length; i++)
+        for (var i = 0; i < parameterData.Parameters.Length; i++)
         {
-            if (i < _decorSlots.Length)
-            {
-                _decorSlots[i].FillSlot(decors[i], parameterData);
-            }
-            else
-            {
-                Debug.Log(" Не хватает слотов в DecorInRoom");
-            }
-        }
-
-        if(decors.Length< _decorSlots.Length)
-        {
-            for (; i < _decorSlots.Length; i++)
-            {
-                _decorSlots[i].FillEmpty();
-            }
+            Parameter param = parameterData.Parameters[i];
+            _overDecorSlots[i].Fill(decors, parameterData, param, roomsSystem);
         }
     }
 }
