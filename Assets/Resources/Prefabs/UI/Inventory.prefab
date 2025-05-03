@@ -22402,6 +22402,8 @@ GameObject:
   - component: {fileID: 4385664758730827898}
   - component: {fileID: 2864875923783270907}
   - component: {fileID: 2922213532490354279}
+  - component: {fileID: 8078657756659993994}
+  - component: {fileID: 6688197621376088974}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -22601,6 +22603,42 @@ MonoBehaviour:
   - {fileID: 2861050646288709448}
   - {fileID: 8215532630559268606}
   - {fileID: 2774322875683849733}
+--- !u!114 &8078657756659993994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6468375244988312855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ce39cbb4a0912449cdfd55b2840b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _craftLoot: {fileID: 6688197621376088974}
+  _inventorySystem: {fileID: 1097122670451873}
+--- !u!114 &6688197621376088974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6468375244988312855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2463b7aa82e9c34bb39f980ec32af45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nane: 
+  _craftLootSettings:
+  - _count: 2
+    _loot:
+      _type: 0
+      _materialsData: {fileID: 0}
+  - _count: 2
+    _loot:
+      _type: 9
+      _materialsData: {fileID: 0}
 --- !u!1 &6542854950808412445
 GameObject:
   m_ObjectHideFlags: 0

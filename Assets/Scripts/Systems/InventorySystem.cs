@@ -24,14 +24,17 @@ public class InventorySystem : MonoBehaviour
     public InventorySlot[] InventorySlots { get => _inventorySlots; }
 
     public InventoryHolder InventoryHolder { get => _inventoryHolder; }
+    public MaterialsData MaterialsData { get; private set; }
 
 
     [Inject]
-    public void Construct(DecorationSystem decorationSystem, StateMachine stateMachine, MaterialsData materialsData, DecorHolder decorHolder)
+    public void Construct(DecorationSystem decorationSystem, StateMachine stateMachine, MaterialsData materialsData, 
+        DecorHolder decorHolder)
     {
         _stateMachine = stateMachine;
         _decorationSystem = decorationSystem;
         _decorHolder = decorHolder;
+        MaterialsData = materialsData;
 
         _decorationSystem.TryToRemoveDecorAction += TryReturnDecorToInventory;
         _warningSign.SetActive(false);
@@ -41,6 +44,7 @@ public class InventorySystem : MonoBehaviour
 
         _inventoryHolder.LoasSave += UpdateSlots;
         _decorHolder.InstallDecor += RemoveDecor;
+
     }
 
     private void RemoveDecor(Decor decor)
@@ -93,6 +97,8 @@ public class InventorySystem : MonoBehaviour
 
     public void TryReturnLootToInventory(Item loot) /// ¬нимательно! —юда обращаемс€ только чтобы вернуть лут
     {
+        Debug.Log("TryReturnLootToInventory");
+        
         if (_inventorySlots.Length == 0)
         {
             Debug.LogWarning("The links to the slots have disappeared!");
