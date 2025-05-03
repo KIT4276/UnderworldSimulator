@@ -73,7 +73,7 @@ public class MapController : MonoBehaviour
     private void InitializePlayerAndMap()
     {
         // Now that we are in the GameLoopState, find the player and initialize the map
-        GameObject playerObject = GameObject.FindWithTag("Player");
+        GameObject playerObject = GameObject.FindWithTag("Hero");
         if (playerObject != null)
         {
             playerTransform = playerObject.transform;
