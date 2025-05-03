@@ -24,7 +24,10 @@ public class Hint : MonoBehaviour
 
         if (item is Decor decor)
         {
-            _elementType.text = _decorText;
+            if (_elementType != null)
+            {
+                _elementType.text = _decorText;
+            }
 
             foreach (var slot in _paramsSlots)
             {
@@ -54,11 +57,16 @@ public class Hint : MonoBehaviour
         }
         else
         {
-            _elementType.text = _materialText;
-
-            foreach (var p in _paramsSlots)
+            if (_elementType != null)
             {
-                p.gameObject.SetActive(false);
+                _elementType.text = _materialText;
+            }
+            if (_paramsSlots != null && _paramsSlots.Length != 0)
+            {
+                foreach (var p in _paramsSlots)
+                {
+                    p.gameObject.SetActive(false);
+                }
             }
         }
 
