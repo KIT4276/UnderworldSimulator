@@ -17,12 +17,14 @@ public class InventoryClickHandler : MonoBehaviour
         }
         else if (_slot.GetLastItems() is Item)
         {
-            //Debug.Log($"{_slot.GetLastItems()} Тут происходят какие-то действия с лутом " );
+            //Debug.Log($"{_slot.GetLastItems()} пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ " );
             Debug.Log(_slot.Items.Count);
         }
         else
         {
-            Debug.Log($"{_slot.GetLastItems()} Ни лут, ни декор!");
+            Debug.Log($"{_slot.GetLastItems()} пїЅпїЅ пїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ!");
         }
+
+        AudioReciever.Instance.PlayUIFurnitureClick();
     }
 }

@@ -52,7 +52,7 @@ public class CraftMenu : MonoBehaviour
         // Debug.Log(_craftSystem.AvailableDrawings.Count);
         if (_craftSystem.AvailableDrawings.Count > _slots.Length)
         {
-            Debug.LogWarning("Слотов меньше, чем чертежей!");
+            Debug.LogWarning("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
         }
         else
         {
@@ -89,6 +89,7 @@ public class CraftMenu : MonoBehaviour
         {
             _craftSystem.CreateDecor();
         }
+        AudioReciever.Instance.PlayUIGeneralClick();
     }
 
     private void UpdateCount()
@@ -121,6 +122,7 @@ public class CraftMenu : MonoBehaviour
     {
         _craftSystem.OnChangeCount(count);
         UpdateCount();
+        AudioReciever.Instance.PlayUIGeneralClick();
     }
 
     private void StateChanged(IExitableState state)

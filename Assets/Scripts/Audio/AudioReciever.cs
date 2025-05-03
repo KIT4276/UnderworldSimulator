@@ -1,0 +1,103 @@
+using UnityEngine;
+using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
+
+public class AudioReciever : MonoBehaviour
+{
+    public static AudioReciever Instance;
+    public FloorMaterial FloorMaterial;
+    [SerializeField] private float _timeToBirdSing;
+    private float _timeToBirdSingBase;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+    private void Start()
+    {
+        _timeToBirdSingBase = _timeToBirdSing;
+    }
+    private void Update()
+    {
+        _timeToBirdSing -= Time.deltaTime;
+        if (_timeToBirdSing <= 0)
+        {
+            int randomNumber = Random.Range(0, 5);
+            if (randomNumber >= 0 && randomNumber < 3) AudioManager.Instance.Play(SoundEnum.Crow);
+            if (randomNumber == 3) AudioManager.Instance.Play(SoundEnum.Woodpecker);
+            if (randomNumber >= 4) AudioManager.Instance.Play(SoundEnum.Owl);
+
+            _timeToBirdSing = _timeToBirdSingBase + Random.Range(_timeToBirdSingBase * 0.8f, _timeToBirdSingBase * 1.2f);
+        }
+    }
+
+    public void StartGameplay()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            if (AudioManager.Instance.IsPlaying(SoundEnum.Menu) == true) AudioManager.Instance.Stop(SoundEnum.Menu, 2);
+            if (AudioManager.Instance.IsPlaying(SoundEnum.Gameplay) == false) AudioManager.Instance.Play(SoundEnum.Gameplay, 2, true);
+        }
+    }
+
+    public void StartMenu()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            if (AudioManager.Instance.IsPlaying(SoundEnum.Gameplay) == true) AudioManager.Instance.Stop(SoundEnum.Gameplay, 2);
+            if (AudioManager.Instance.IsPlaying(SoundEnum.Menu) == false) AudioManager.Instance.Play(SoundEnum.Menu, 2, true);
+            AudioManager.Instance.Play(SoundEnum.Wind, 2, true);
+        }
+    }
+
+    public void PlayFootstep()
+    {
+        if (FloorMaterial == FloorMaterial.Leaves) AudioManager.Instance.Play(SoundEnum.Footstep_Leaves);
+        if (FloorMaterial == FloorMaterial.Rocks) AudioManager.Instance.Play(SoundEnum.Footstep_Rocks);
+        if (FloorMaterial == FloorMaterial.Dirt) AudioManager.Instance.Play(SoundEnum.Footstep_Dirt);
+        if (FloorMaterial == FloorMaterial.Wood) AudioManager.Instance.Play(SoundEnum.Footstep_Wood);
+    }
+    public void PlayUIGeneralClick()
+    {
+        AudioManager.Instance.Play(SoundEnum.General_Click);
+    }
+    public void PlayUIGeneralHover()
+    {
+        AudioManager.Instance.Play(SoundEnum.General_Hover);
+    }
+    public void PlayUIRoomClick()
+    {
+        AudioManager.Instance.Play(SoundEnum.Room_Choose);
+    }
+    public void PlayUIBackClick()
+    {
+        AudioManager.Instance.Play(SoundEnum.Room_Choose);
+    }
+    public void PlayUIFurnitureClick()
+    {
+        AudioManager.Instance.Play(SoundEnum.Furniture_Click);
+    }
+    public void PlayUIFurnitureRotate()
+    {
+        AudioManager.Instance.Play(SoundEnum.Furniture_Rotate);
+    }
+    public void PlayUIFurniturePlace()
+    {
+        AudioManager.Instance.Play(SoundEnum.Furniture_Place);
+    }
+    public void PlaySearchOrganic()
+    {
+        AudioManager.Instance.Play(SoundEnum.Search_Organic);
+    }
+    public void PlaySearchObject()
+    {
+        AudioManager.Instance.Play(SoundEnum.Search_Object);
+    }
+}

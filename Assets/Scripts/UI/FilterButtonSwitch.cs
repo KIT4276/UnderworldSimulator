@@ -14,10 +14,12 @@ public class FilterButtonSwitch : MonoBehaviour
 
     public void Switch(FilterType filterType)
     {
-        foreach(var button in _buttons)
+        foreach (var button in _buttons)
         {
             button.Activate(button.FilterType == filterType);
         }
+
+        AudioReciever.Instance.PlayUIGeneralClick();
     }
 
 }

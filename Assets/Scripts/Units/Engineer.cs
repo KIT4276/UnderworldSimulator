@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Zenject;
 
 public class Engineer : InteractableObstacle
@@ -8,6 +9,7 @@ public class Engineer : InteractableObstacle
     private void Start()
     {
         _gameLoopState.GameLoopStateEnter += ConditionalActivate;
+        AudioReciever.Instance.StartGameplay();
     }
 
     private void ConditionalActivate()
