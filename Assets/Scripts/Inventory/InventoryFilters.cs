@@ -6,11 +6,37 @@ public class InventoryFilters : MonoBehaviour
     [Space]
     [SerializeField] private InventorySystem _inventorySystem;
 
+    private FilterType _filterType;
+
 
     private void Start()
     {
         _inventorySystem.ActivateInventoryEvent += OnActivateInventory;
+    }
+
+    private void Awake()
+    {
         _filterButtonSwitch.Switch(FilterType.NoFilter);
+        _filterType = FilterType.NoFilter;
+    }
+
+    public void UpdateFiltres()
+    {
+        switch (_filterType)
+        {
+            case FilterType.NoFilter:
+                OnNoFilter();
+                break;
+            case FilterType.Decor:
+                OnDecorFilter();
+                break;
+            case FilterType.Craft:
+                OnCraftFilter();    
+                break;
+            default:
+                OnNoFilter();
+                break;
+        }
     }
 
 
@@ -21,6 +47,7 @@ public class InventoryFilters : MonoBehaviour
         _inventorySystem.FillCraftItems();
 
         _filterButtonSwitch.Switch(FilterType.NoFilter);
+        _filterType = FilterType.NoFilter;
     }
 
     public void OnDecorFilter()
@@ -28,6 +55,7 @@ public class InventoryFilters : MonoBehaviour
         _inventorySystem.ClearSlots();
         _inventorySystem.FillDecorItems();
         _filterButtonSwitch.Switch(FilterType.Decor);
+        _filterType = FilterType.Decor;
     }
 
     public void OnCraftFilter()
@@ -35,6 +63,7 @@ public class InventoryFilters : MonoBehaviour
         _inventorySystem.ClearSlots();
         _inventorySystem.FillCraftItems();
         _filterButtonSwitch.Switch(FilterType.Craft);
+        _filterType = FilterType.Craft;
     }
 
 

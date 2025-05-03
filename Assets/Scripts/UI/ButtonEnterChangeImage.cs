@@ -11,6 +11,12 @@ public class ButtonEnterChangeImage : MonoBehaviour, IPointerEnterHandler, IPoin
 
     [SerializeField] private bool _isOccupied;
 
+    private void Awake()
+    {
+        if (_isOccupied)
+            _image.sprite = _normImage;
+    }
+
     public void Activate()
     {
         _image.sprite = _normImage;
@@ -31,6 +37,12 @@ public class ButtonEnterChangeImage : MonoBehaviour, IPointerEnterHandler, IPoin
     }
 
     public void OnPointerExit(PointerEventData eventData)
+    {
+        if (_isOccupied)
+            _image.sprite = _normImage;
+    }
+
+    private void OnDisable()
     {
         if (_isOccupied)
             _image.sprite = _normImage;

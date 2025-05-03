@@ -18,17 +18,19 @@ public class Room
     public Guest Guest { get; private set; }
     public Transform GuestsPoint { get; private set; }
 
+    private StateMachine _stateMacine;
 
     public event Action CheckIn;
     public event Action Evicted;
 
     public Room(string name, ClickHandler clickHandler, 
-        Sprite icon, int id, RoomsSystem roomsSystem, Transform guestsPoint)
+        Sprite icon, int id, RoomsSystem roomsSystem, Transform guestsPoint, StateMachine stateMachine)
     {
         InstalledDecor = new();
 
         Name = name;
         GuestsPoint = guestsPoint;
+        _stateMacine = stateMachine;
 
         SetOfParameters = new();
         _clickHandler = clickHandler;
@@ -56,6 +58,7 @@ public class Room
 
     private void OnRoomSelected()
     {
+        if(!(_stateMacine.ActiveState is GameLoopState))
         _roomsSystem.OnRoomSelected(this);
     }
 

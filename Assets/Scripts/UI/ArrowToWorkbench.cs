@@ -23,7 +23,7 @@ public class ArrowToWorkbench : MonoBehaviour
         // Get player
         if (player == null)
         {
-            GameObject playerObj = GameObject.FindWithTag("Player");
+            GameObject playerObj = GameObject.FindWithTag("Hero");
             if (playerObj != null) player = playerObj.transform;
             else return;
         }
