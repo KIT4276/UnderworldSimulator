@@ -1,11 +1,9 @@
-using System;
 using TMPro;
 using UnityEngine;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class Hint : MonoBehaviour
 {
-    [SerializeField] private string _materialText = "Материал";
+    [SerializeField] private string _materialText = "Ресурс";
     [SerializeField] private string _decorText = "Декор";
     [Space]
     [SerializeField] private TMP_Text _hintText;
@@ -16,9 +14,9 @@ public class Hint : MonoBehaviour
     [Space]
     [SerializeField] private float _indentX = 30;
     [SerializeField] private float _indentY = 20;
-    [SerializeField] private float _textPadding = 10; // Отступы по ширине 
-    [SerializeField] private TextMeshProUGUI _nameTmp;
-    [SerializeField] private RectTransform _nameRectTransform;
+    //[SerializeField] private float _textPadding = 10; // Отступы по ширине 
+    //[SerializeField] private TextMeshProUGUI _nameTmp;
+    //[SerializeField] private RectTransform _nameRectTransform;
 
     public void AddText(IBaseItem item, ParameterData parameterData)
     {
@@ -64,19 +62,19 @@ public class Hint : MonoBehaviour
             }
         }
 
-        UpdateNameSize();
+        //UpdateNameSize();
     }
 
-    private void UpdateNameSize()
-    {
-        if (_nameTmp.text == null) return;
+    //private void UpdateNameSize()
+    //{
+    //    if (_nameTmp.text == null) return;
 
-        _nameTmp.ForceMeshUpdate(); // Обновление текста
-        float preferredWidth = _nameTmp.GetPreferredValues().x;
+    //    _nameTmp.ForceMeshUpdate(); // Обновление текста
+    //    float preferredWidth = _nameTmp.GetPreferredValues().x;
 
-        // Оставляем текущую высоту, меняем только ширину
-        _nameRectTransform.sizeDelta = new Vector2(preferredWidth + _textPadding, _nameRectTransform.sizeDelta.y);
-    }
+    //    // Оставляем текущую высоту, меняем только ширину
+    //    _nameRectTransform.sizeDelta = new Vector2(preferredWidth + _textPadding, _nameRectTransform.sizeDelta.y);
+    //}
 
     public void AddIntent(Vector3 position)
     {

@@ -97,8 +97,6 @@ public class InventorySystem : MonoBehaviour
 
     public void TryReturnLootToInventory(Item loot) /// ¬нимательно! —юда обращаемс€ только чтобы вернуть лут
     {
-        Debug.Log("TryReturnLootToInventory");
-        
         if (_inventorySlots.Length == 0)
         {
             Debug.LogWarning("The links to the slots have disappeared!");
