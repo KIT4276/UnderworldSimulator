@@ -26,32 +26,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &-4587332972265025413
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Lava_animation_Loop
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c3eaf060e994a624a983008fa8f57c78, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1101 &-3163747956154259073
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -146,9 +120,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 3403515209070638870}
     m_Position: {x: 260.6667, y: 170.00002, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -4587332972265025413}
-    m_Position: {x: 295.6667, y: 235.00002, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -3163747956154259073}
