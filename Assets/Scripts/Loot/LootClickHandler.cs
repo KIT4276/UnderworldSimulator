@@ -39,6 +39,8 @@ public class LootClickHandler : MonoBehaviour
             // Debug.Log(_lootSlot.Loots.Count);
             _lootSystem.AllIsTacen();
         }
+
+        AudioReciever.Instance.PlayUIFurnitureClick();
     }
 
     public void OnTakeAllClick()
@@ -48,6 +50,8 @@ public class LootClickHandler : MonoBehaviour
             _lootSystem.TakeLootToInventory(_lootSlot.TakeLastItem());
         }
         _lootSystem.AllIsTacen();
+
+        AudioReciever.Instance.PlayUIFurnitureClick();
     }
 
     private void OnDestroy()

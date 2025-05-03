@@ -92,4 +92,12 @@ public class AudioReciever : MonoBehaviour
     {
         AudioManager.Instance.Play(SoundEnum.Furniture_Place);
     }
+    public void PlaySearchOrganic()
+    {
+        AudioManager.Instance.Play(SoundEnum.Search_Organic);
+    }
+    public void PlaySearchObject()
+    {
+        AudioManager.Instance.Play(SoundEnum.Search_Object);
+    }
 }
