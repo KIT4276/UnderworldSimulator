@@ -16,6 +16,7 @@ public class FloorMarker : MonoBehaviour
     // [SerializeField] private SetOfRoomParameters _setOfParameters;
 
     private RoomsSystem _roomsSystem;
+    private StateMachine _stateMachine;
 
     public PolygonCollider2D Collider { get => _collider; }
 
@@ -24,14 +25,15 @@ public class FloorMarker : MonoBehaviour
     public int ID { get => _id; }
 
     [Inject]
-    private void Construct(RoomsSystem roomsSystem)
+    private void Construct(RoomsSystem roomsSystem, StateMachine stateMachine)
     {
         _roomsSystem = roomsSystem;
+        _stateMachine = stateMachine;
     }
 
     public void Init()
     {
-        Room = new(_name, /*_setOfParameters, */_clickHandler, _icon, ID, _roomsSystem, _guestsPoint);
+        Room = new(_name, /*_setOfParameters, */_clickHandler, _icon, ID, _roomsSystem, _guestsPoint, _stateMachine);
     }
 
     public void AddDecor(Decor decor)
