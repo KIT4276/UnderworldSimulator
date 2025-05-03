@@ -8,6 +8,7 @@ public class InventorySystem : MonoBehaviour
 {
     [SerializeField] private InventorySlot[] _inventorySlots;
     [SerializeField] private GameObject _warningSign;
+    [SerializeField] private InventoryFilters _inventoryFilters;
 
     private StateMachine _stateMachine;
     private DecorationSystem _decorationSystem;
@@ -50,9 +51,11 @@ public class InventorySystem : MonoBehaviour
     private void RemoveDecor(Decor decor)
     {
         _inventoryHolder.RemoveDecor(decor);
-        ClearSlots();
-        FillCraftItems();
-        FillDecorItems();
+        //ClearSlots();
+        //FillCraftItems();
+        //FillDecorItems();
+
+        _inventoryFilters.UpdateFiltres();
     }
 
     private void UpdateSlots()
@@ -66,9 +69,11 @@ public class InventorySystem : MonoBehaviour
        // Debug.Log("RemoveItems");
 
         _inventoryHolder.RemoveByType(lootType);
-        ClearSlots();
-        FillCraftItems();
-        FillDecorItems();
+        //ClearSlots();
+        //FillCraftItems();
+        //FillDecorItems();
+
+        _inventoryFilters.UpdateFiltres();
     }
 
     public void OnExit()
@@ -238,6 +243,8 @@ public class InventorySystem : MonoBehaviour
         _inventoryHolder.Add(decor);
         ChangeDecorSlots?.Invoke();
 
+        _inventoryFilters.UpdateFiltres();
+
     }
 
     private void ReturnLootToInventory(Item loot, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть лут.
@@ -253,6 +260,8 @@ public class InventorySystem : MonoBehaviour
             ChangeQuestsItemSlots?.Invoke();
         }
         _inventoryHolder.Add(loot);
+
+        _inventoryFilters.UpdateFiltres();
     }
 
     private IEnumerator HideSign()
