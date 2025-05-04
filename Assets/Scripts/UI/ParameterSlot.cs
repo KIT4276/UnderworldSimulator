@@ -6,8 +6,7 @@ using Zenject;
 
 public class ParameterSlot : MonoBehaviour
 {
-    // [SerializeField] private SpriteRenderer _taskSlot;
-   /* [SerializeField]*/ private Image _main;
+    private Image _main;
     [SerializeField] private Image _icon;
     [SerializeField] private GameObject _star;
     [SerializeField] private GameObject _progressBar;
@@ -21,18 +20,16 @@ public class ParameterSlot : MonoBehaviour
     private GuestsSystem _guestsSystem;
     private TasksHandler _tasksHandler;
     private RoomsSystem _roomsSystem;
-   // private ParameterData _parameterData;
     private DrawingData _drawingData;
     private Task _task;
 
     [Inject]
     private void Construct(GuestsSystem guestsSystem, TasksHandler tasksHandler,
-        RoomsSystem roomsSystem,/* ParameterData parameterData,*/ DrawingData drawingData)
+        RoomsSystem roomsSystem, DrawingData drawingData)
     {
         _guestsSystem = guestsSystem;
         _tasksHandler = tasksHandler;
         _roomsSystem = roomsSystem;
-        //_parameterData = parameterData;
         _drawingData = drawingData;
 
         tasksHandler.UpdateTask += OnUpdate;
@@ -75,8 +72,6 @@ public class ParameterSlot : MonoBehaviour
         }
         else if (task is SpecificTask specificTask)
         {
-
-            //TODO
             if (task.GuestsType == room.Guest.Type)
             {
                 foreach (var decor in room.InstalledDecor)
@@ -84,7 +79,6 @@ public class ParameterSlot : MonoBehaviour
                     if (specificTask.DecorType != decor.DecorType)
                     {
                         _bar.fillAmount = 0;
-                        //Debug.Log("UnDone");
                     }
                 }
 
@@ -93,7 +87,6 @@ public class ParameterSlot : MonoBehaviour
                     if (specificTask.DecorType == decor.DecorType)
                     {
                         _bar.fillAmount = 1;
-                        //Debug.Log("Done");
                     }
                 }
             }
@@ -103,7 +96,6 @@ public class ParameterSlot : MonoBehaviour
     public void FillSlot(Task task)
     {
         _task = task;
-        // Debug.Log("0");
 
         var color = _main.color;
         color.a = 1f;
@@ -121,11 +113,10 @@ public class ParameterSlot : MonoBehaviour
             _name.text = parameterTask.Name;
             _description.text = parameterTask.Description;
             _reward.text = "+" + parameterTask.XP;
-            //Debug.Log("1");
         }
         else if (task is SpecificTask specificTask)
         {
-            foreach(var dr in _drawingData.Drawings)
+            foreach (var dr in _drawingData.Drawings)
             {
                 if (dr.Decor.DecorType == specificTask.DecorType)
                 {
@@ -133,17 +124,11 @@ public class ParameterSlot : MonoBehaviour
                     break;
                 }
             }
-            
+
             _name.text = specificTask.Name;
             _description.text = specificTask.Description;
+            _reward.text = "+" + specificTask.XP;
         }
-        //else
-        //{
-        //    //Debug.Log("2");
-        //    _paramName.text = string.Empty;
-        //    _paramValue.text = ((SpecificTask)task).DecorType.ToString();
-        //    //TODO
-        //}
 
         if (!CheckIfGuestHasRoom(task))
         {
@@ -183,9 +168,8 @@ public class ParameterSlot : MonoBehaviour
 
     public void FillEmpty()
     {
-        //Debug.Log("FillEmpty");
         _task = null;
-        
+
         _progressBar.SetActive(false);
         _bar.gameObject.SetActive(false);
         _star.gameObject.SetActive(false);
