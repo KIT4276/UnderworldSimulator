@@ -17,6 +17,8 @@ public class CraftSlot : MonoBehaviour
 
     public event Action<Drawing> DrawingSelected;
 
+    public Drawing Drawing { get => _drawing; }
+
     public void OnDrawingSelected()
     {
         if (_drawing == null) return;
