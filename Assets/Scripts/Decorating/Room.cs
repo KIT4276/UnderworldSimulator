@@ -58,7 +58,7 @@ public class Room
 
     private void OnRoomSelected()
     {
-        if(!(_stateMacine.ActiveState is GameLoopState))
+        if(!(_stateMacine.ActiveState is GameLoopState) && !(_stateMacine.ActiveState is CraftState))
         _roomsSystem.OnRoomSelected(this);
     }
 
