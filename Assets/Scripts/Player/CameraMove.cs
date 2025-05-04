@@ -157,7 +157,8 @@ public class CameraMove : BaseMovable
             (state is CraftState && _stateMachine.PredioslyState is DecorationState) ||
             (state is DecorationState && _stateMachine.PredioslyState is CraftState) ||
             (state is WorkbenchState && _stateMachine.PredioslyState is CraftState) ||
-            (state is CraftState && _stateMachine.PredioslyState is WorkbenchState))
+            (state is CraftState && _stateMachine.PredioslyState is WorkbenchState)||
+            (state == _stateMachine.PredioslyState))
         {
 
             return;

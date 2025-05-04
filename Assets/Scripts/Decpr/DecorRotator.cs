@@ -30,7 +30,9 @@ public class DecorRotator : MonoBehaviour
 
     private void OnRotate(RotationState predioslyRotationState)
     {
+        
         var newRotationState = (RotationState)(((int)predioslyRotationState + 1) % 4);
+        Debug.Log(newRotationState);
         _decor.SetRotationState(newRotationState);
         UpdateImpassableZone(newRotationState);
         UpdateColliders(newRotationState);
@@ -57,10 +59,20 @@ public class DecorRotator : MonoBehaviour
     {
 
 
-        if (newRotationState == RotationState.Front || newRotationState == RotationState.Back || _sideClickableCollider == null)
+        if (newRotationState == RotationState.Front || newRotationState == RotationState.Back
+            || _sideClickableCollider == null)
+        {
+
+            _sideClickableCollider.gameObject.SetActive(false);
+            _frontClickableCollider.gameObject.SetActive(true);
             return _frontClickableCollider;
+        }
         else
+        {
+            _frontClickableCollider.gameObject.SetActive(false);
+            _sideClickableCollider.gameObject.SetActive(true);
             return _sideClickableCollider;
+        }
     }
 
     private void UpdateColliders(RotationState rotationState)

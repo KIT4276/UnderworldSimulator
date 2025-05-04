@@ -18,6 +18,8 @@ public class CraftSystem
     public event Action DrawingAdded;
     public event Action NotEnoughMaterials;
 
+    public event Action<Drawing> DrawingSelected;
+
     private List<Item> _availableMaterials = new();
 
     public CraftSystem(InventorySystem inventorySystem, DrawingData drawingDatas)
@@ -47,6 +49,7 @@ public class CraftSystem
         if (AvailableDrawings.Count == 0)
         {
             ActiveDrawing = (Drawing)reward;
+            DrawingSelected?.Invoke(ActiveDrawing);
         }
         if (!AvailableDrawings.Contains(reward))
             AvailableDrawings.Add((Drawing)reward);
@@ -63,6 +66,7 @@ public class CraftSystem
     public void SelectDrawing(Drawing drawing)
     {
         ActiveDrawing = drawing;
+        DrawingSelected?.Invoke(ActiveDrawing);
         Count = 1;
         ChangeCount?.Invoke();
         // Debug.Log("SelectDrawing");
@@ -92,7 +96,7 @@ public class CraftSystem
                 {
                     for (int j = 0; j < mat.Count; j++)
                     {
-                        Debug.Log("RemoveItems");
+                      //  Debug.Log("RemoveItems");
                         _inventorySystem.RemoveItems(mat.Material);
                     }
                 }
@@ -150,19 +154,5 @@ public class CraftSystem
                 _availableMaterials.Add(mat);
             }
         }
-
-        //Debug.Log(_availableMaterials.Count);
-
-        //foreach (var slot in _inventorySystem.InventorySlots)
-        //{
-        //    if (slot.IsOccupied)
-        //    {
-        //        foreach (var item in slot.Items)
-        //        {
-        //            if (item is CraftItem)
-        //                _availableMaterials.Add((CraftItem)item);
-        //        }
-        //    }
-        //}
     }
 }

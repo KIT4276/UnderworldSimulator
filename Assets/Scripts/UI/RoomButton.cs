@@ -9,17 +9,15 @@ public class RoomButton : MonoBehaviour
     [SerializeField] private TMP_Text _name;//or number
     [SerializeField] private Image _icon;
     [SerializeField] private Image _gustIcon;
-
-
-    private Room _room;
+    [Space]
+    [SerializeField] private Image _backingButtons;
+    [SerializeField] private Sprite _seletedSprite;
+    [SerializeField] private Sprite _unSeletedSprite;
 
     [Inject] private RoomsSystem _system;
-    private bool _inited;
 
-    private void Awake()
-    {
-        //_name.gameObject.SetActive(true);   
-    }
+    private Room _room;
+    private bool _inited;
 
     public void FillButton(Room room)
     {
@@ -33,6 +31,22 @@ public class RoomButton : MonoBehaviour
         _room.CheckIn += CheckGuest;
         _room.Evicted += CheckGuest;
         _inited = true;
+
+        _system.RoomSelected += OnRoomSelected;
+
+        OnRoomSelected(_system.SelectedRoom);
+    }
+
+    private void OnRoomSelected(Room room)
+    {
+        if(room!= null && room == _room)
+        {
+            _backingButtons.sprite = _seletedSprite;
+        }
+        else
+        {
+            _backingButtons.sprite = _unSeletedSprite;
+        }
     }
 
     private void CheckGuest()
