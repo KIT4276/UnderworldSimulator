@@ -11,8 +11,9 @@ public class ClickHandler : MonoBehaviour
     [SerializeField] private Collider2D _collider;
     [SerializeField] public EventSystem _eventSystem;
 
-     private GraphicRaycaster[] _raycasters;
+    private GraphicRaycaster[] _raycasters;
     private Camera _camera;
+
 
     public event Action ClickAction;
 
@@ -21,19 +22,17 @@ public class ClickHandler : MonoBehaviour
         _click.action.performed += OnClick;
     }
 
-    private void OnClick(InputAction.CallbackContext context)
+    public void OnClick(InputAction.CallbackContext context)
     {
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
 
-        if (_raycasters == null || _raycasters.Length == 0)
-        {
-            _raycasters = FindObjectsByType<GraphicRaycaster>(FindObjectsSortMode.None);
-        }
+       
 
         if (IsPointerOverUI(mouseScreenPos)) return;
 
         CheckCamera();
         if (_camera == null) return;
+
 
         Ray ray = _camera.ScreenPointToRay(mouseScreenPos);
         RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity, LayerMask.GetMask("Floor"));
@@ -50,16 +49,20 @@ public class ClickHandler : MonoBehaviour
 
     private bool IsPointerOverUI(Vector2 screenPosition)
     {
+        _raycasters = FindObjectsByType<GraphicRaycaster>(FindObjectsSortMode.None);
+
         PointerEventData eventData = new(_eventSystem);
         eventData.position = screenPosition;
 
-        List<RaycastResult> results = new ();
+        List<RaycastResult> results = new();
 
         foreach (var raycaster in _raycasters)
         {
             raycaster.Raycast(eventData, results);
             if (results.Count > 0)
+            {
                 return true;
+            }
         }
 
         return false;
@@ -67,7 +70,7 @@ public class ClickHandler : MonoBehaviour
 
     private void CheckCamera()
     {
-       if(_camera == null)
+        if (_camera == null)
             _camera = Camera.main;
     }
 
@@ -80,4 +83,5 @@ public class ClickHandler : MonoBehaviour
     {
         _click.action.performed -= OnClick;
     }
+
 }
