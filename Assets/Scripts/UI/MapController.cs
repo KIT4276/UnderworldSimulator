@@ -27,6 +27,7 @@ public class MapController : MonoBehaviour
     private InputActionMap playerActionMap;
     private InputActionMap uiActionMap;
     private InputActionMap helpActionMap;
+    private InputAction closeMapAction;
 
     [Inject]
     public void Construct(StateMachine stateMachine)
@@ -43,6 +44,7 @@ public class MapController : MonoBehaviour
 
         var mapControlsActionMap = inputActionAsset.FindActionMap("Map");
         toggleMapAction = mapControlsActionMap.FindAction("ToggleMap");
+        closeMapAction = mapControlsActionMap.FindAction("CloseMap");
     }
 
     private void OnEnable()
@@ -55,6 +57,17 @@ public class MapController : MonoBehaviour
     {
         toggleMapAction.performed -= OnToggleMap;
         toggleMapAction.Disable();
+
+        closeMapAction.performed -= OnCloseMap;
+        closeMapAction.Disable();
+    }
+
+    private void OnCloseMap(InputAction.CallbackContext context)
+    {
+        if (context.performed && isMapVisible)
+        {
+            ToggleMap(); // Закрываем карту
+        }
     }
 
     private void OnStateChange(IExitableState newState)
@@ -97,7 +110,7 @@ public class MapController : MonoBehaviour
         }
     }
 
-    private void ToggleMap()
+    public void ToggleMap()
     {
         isMapVisible = !isMapVisible;
         if (mapPanel != null)
@@ -111,12 +124,18 @@ public class MapController : MonoBehaviour
             playerActionMap.Disable();
             uiActionMap.Disable();
             helpActionMap.Disable();
+
+            closeMapAction.performed += OnCloseMap;
+            closeMapAction.Enable();
         }
         else
         {
             playerActionMap.Enable();
             uiActionMap.Enable();
             helpActionMap.Enable();
+
+            closeMapAction.performed -= OnCloseMap;
+            closeMapAction.Disable();
         }
     }
 

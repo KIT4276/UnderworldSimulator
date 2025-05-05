@@ -13,6 +13,8 @@ public class HelpController : MonoBehaviour
     private InputActionMap uiActionMap; // Reference to the UI action map
     private InputActionMap gamemapActionMap;
 
+    private InputAction closeHelpAction;
+
     private void Awake()
     {
         if (helpPanel != null)
@@ -31,6 +33,8 @@ public class HelpController : MonoBehaviour
         // Find the ToggleHelp action in the separate Map Controls action map
         var helpActionMap = inputActionAsset.FindActionMap("Help");
         toggleHelpAction = helpActionMap.FindAction("ToggleHelp"); // Use the correct action name
+
+        closeHelpAction = helpActionMap.FindAction("CloseHelp");
     }
 
     private void OnEnable()
@@ -43,6 +47,9 @@ public class HelpController : MonoBehaviour
     {
         toggleHelpAction.performed -= OnToggleHelp; // Unsubscribe from the toggle map action
         toggleHelpAction.Disable(); // Disable the toggle map action
+
+        closeHelpAction.performed -= OnCloseHelp; 
+        closeHelpAction.Disable();
     }
 
     // This method handles toggling the map
@@ -54,8 +61,16 @@ public class HelpController : MonoBehaviour
         }
     }
 
+    private void OnCloseHelp(InputAction.CallbackContext context)
+    {
+        if (context.performed && isHelpVisible)
+        {
+            ToggleHelp();
+        }
+    }
+
     // Method to toggle the map's visibility
-    private void ToggleHelp()
+    public void ToggleHelp()
     {
         isHelpVisible = !isHelpVisible; // Toggle visibility
         if (helpPanel != null)
@@ -68,12 +83,18 @@ public class HelpController : MonoBehaviour
             playerActionMap.Disable(); // Disable the Player action map when the map is visible
             uiActionMap.Disable(); // Disable the UI action map when the map is visible
             gamemapActionMap.Disable();
+
+            closeHelpAction.performed += OnCloseHelp;
+            closeHelpAction.Enable();
         }
         else
         {
             playerActionMap.Enable(); // Enable the Player action map when the map is hidden
             uiActionMap.Enable(); // Enable the UI action map when the map is hidden
             gamemapActionMap.Enable();
+
+            closeHelpAction.performed -= OnCloseHelp;
+            closeHelpAction.Disable();
         }
     }
 }
