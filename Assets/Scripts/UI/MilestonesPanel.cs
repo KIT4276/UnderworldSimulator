@@ -7,6 +7,11 @@ public class MilestonesPanel : MonoBehaviour
     [SerializeField] private FadeInPanel _fadeInSign;
     [SerializeField] private Image _newGuestImage;
     [SerializeField] private GameObject _newGuestText;
+    [SerializeField] private GameObject _victoryEffectPrefab;
+
+    [SerializeField] private RectTransform _panelTransform;
+
+    private GameObject _activeEffectInstance;
 
     private MilestoneSystem _milestoneSystem;
     private StateMachine _stateMachine;
@@ -53,6 +58,21 @@ public class MilestonesPanel : MonoBehaviour
     private void ShowPanel()
     {
         _fadeInSign.Show();
+
+        // Convert UI position to world space behind UI
+        Vector3 screenPos = RectTransformUtility.WorldToScreenPoint(null, _panelTransform.position);
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 5f)); // Z = behind UI
+
+        // Clean up previous effect if needed
+        if (_activeEffectInstance != null)
+            Destroy(_activeEffectInstance);
+        
+        // Instantiate the prefab and position it
+        if (_victoryEffectPrefab != null)
+        {
+            _activeEffectInstance = Instantiate(_victoryEffectPrefab, worldPos, Quaternion.identity);
+            Destroy(_activeEffectInstance, 2f);
+        }
 
         if (_guestSprite == null)
         {
