@@ -51,6 +51,8 @@ public class GameplayInstaller : MonoInstaller
         Container.Bind<RewardsHandler>().FromNew().AsSingle().NonLazy();
 
         Container.Bind<WallsSystem>().FromNew().AsSingle().NonLazy();
+
+        Container.Bind<DecorClickHandler>().FromNew().AsSingle().NonLazy();
     }
 
     private void InstallScriptableObjects()

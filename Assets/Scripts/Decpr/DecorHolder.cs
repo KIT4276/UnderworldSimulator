@@ -46,7 +46,8 @@ public class DecorHolder : ISavedProgress
         ActiveDecor = null;
         InstalledDecor.Add(decor);
         //_inventorySystem.InventoryHolder.Remove(decor);
-       // Debug.Log("AddInstalledDecor");
+        // Debug.Log("AddInstalledDecor");
+        Sort();
         InstallDecor?.Invoke(decor);
     }
 
@@ -54,7 +55,7 @@ public class DecorHolder : ISavedProgress
     {
         if (InstalledDecor.Contains(ActiveDecor))
             InstalledDecor.Remove(ActiveDecor);
-
+        Sort();
         ActiveDecor = null;
     }
 
@@ -73,5 +74,12 @@ public class DecorHolder : ISavedProgress
         {
             //todo instantiate all decor on level
         }
+    }
+
+    private void Sort()
+    {
+        // InstalledDecor[0].gameObject.transform.position.y
+
+        InstalledDecor.Sort((a, b) => a.gameObject.transform.position.y.CompareTo(b.gameObject.transform.position.y));
     }
 }
