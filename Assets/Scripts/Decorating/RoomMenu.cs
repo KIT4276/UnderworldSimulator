@@ -61,13 +61,19 @@ public class RoomMenu : MonoBehaviour
         }
     }
 
-    private void OnChangeState(IExitableState state  )
+    private void OnChangeState(IExitableState state)
     {
-        if (state is GameLoopState || state is  CraftState)
+        if (state is GameLoopState || state is  CraftState || state is  MilestoneState)
         {
-            _roomRatingPanel.SetActive(false);
-            _bottomRoomsPanel.SetActive(false);
+            CloseRoomPanel();
         }
+
+    }
+
+    public void CloseRoomPanel()
+    {
+        _roomRatingPanel.SetActive(false);
+        _bottomRoomsPanel.SetActive(false);
     }
 
     public void GoToCheckInGuest()
@@ -77,6 +83,8 @@ public class RoomMenu : MonoBehaviour
 
     public void UpdateParams(Room room)
     {
+        if (_machine.ActiveState is MilestoneState) return;
+
         _roomRatingPanel.SetActive(true);
         _name.text = room.Name;
         _roomIcon.sprite = room.Icon;

@@ -54,6 +54,7 @@ public class MilestoneSystem : IProgressSystem
 {
     private readonly ProgressSystem _progressSystem;
     private readonly MilestonesData _milestonesData;
+    private readonly StateMachine _stateMachine;
 
     public Milestone ReachedMilestone { get; private set; }
     public Milestone CurrentMilestone { get; private set; }
@@ -62,11 +63,11 @@ public class MilestoneSystem : IProgressSystem
 
     public event Action Change;
 
-    public MilestoneSystem(ProgressSystem progressSystem, MilestonesData milestones)
+    public MilestoneSystem(ProgressSystem progressSystem, MilestonesData milestones, StateMachine stateMachine)
     {
         _progressSystem = progressSystem;
         _milestonesData = milestones;
-
+        _stateMachine = stateMachine;
         CurrentMilestone = _milestonesData.Milestones[0];
         _progressSystem.Change += OnProgressChange;
     }
@@ -87,6 +88,7 @@ public class MilestoneSystem : IProgressSystem
             {
                 ReachedMilestone = _milestonesData.Milestones[i-1];
                 CurrentMilestone = _milestonesData.Milestones[i];
+                _stateMachine.Enter<MilestoneState>();
                 Change?.Invoke();
             }
         }
