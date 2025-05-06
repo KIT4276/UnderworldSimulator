@@ -39,6 +39,7 @@ public class Decor : MonoBehaviour, IBaseItem
     public Collider2D CurrentOccupiedZone { get; private set; }
     public int ID { get; private set; }
     public string Name { get; private set; }
+    public bool CanPickUp { get; private set; }
 
     public event Action DecorPlacedAction;
     public event Action Clicked;
@@ -158,10 +159,10 @@ public class Decor : MonoBehaviour, IBaseItem
 
     protected void OnClick(InputAction.CallbackContext context)
     {
-        if (!_canPlace || !_isCanDecorate) return;
-        Clicked?.Invoke();
-        AudioReciever.Instance.PlayUIFurnitureClick(); // TODO: Bug when clicking at any space on the screen in "placing furniture mode" is producing multiple OnClick events,
-        //  but I don't even have a furniture in my hand and just clicking at rooms and empty spaces
+            if (!_canPlace || !_isCanDecorate) return;
+            Clicked?.Invoke();
+            AudioReciever.Instance.PlayUIFurnitureClick(); // TODO: Bug when clicking at any space on the screen in "placing furniture mode" is producing multiple OnClick events,
+                                                           //  but I don't even have a furniture in my hand and just clicking at rooms and empty spaces
     }
 
     protected void GoToLastPosition()
@@ -261,5 +262,15 @@ public class Decor : MonoBehaviour, IBaseItem
         {
             _decorationSystem.TryToRemoveDecor(this);
         }
+    }
+
+    public void BanOnPick()
+    {
+        CanPickUp = false;
+    }
+
+    public void AllowOnPick()
+    {
+        CanPickUp = true;
     }
 }

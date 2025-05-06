@@ -21,8 +21,15 @@ public class DecorationSystem
 
     public bool ActivateDecorIfCan(Decor decor)
     {
-        _decorHolder.SetActiveDecor(decor);
-        return true;
+        if (decor.CanPickUp)
+        {
+            _decorHolder.SetActiveDecor(decor);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void SpawnDecorIfCan(Decor decorPrefab)
