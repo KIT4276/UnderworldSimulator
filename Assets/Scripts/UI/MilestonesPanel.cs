@@ -39,6 +39,8 @@ public class MilestonesPanel : MonoBehaviour
     public void Ok()
     {
         _fadeInSign.Hide();
+
+        _stateMachine.EnterPredioslyState();
     }
 
     private void OnChangeState(IExitableState state)

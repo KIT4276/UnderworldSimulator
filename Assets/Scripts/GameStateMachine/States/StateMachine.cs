@@ -11,7 +11,7 @@ public class StateMachine
     private IExitableState _activeState;
     private bool _isInited;
 
-    public IExitableState ActiveState {  get => _activeState; } 
+    public IExitableState ActiveState { get => _activeState; }
     public IExitableState PredioslyState { get; private set; }
 
     public StateMachine(StateFactory stateFactory) =>
@@ -36,7 +36,7 @@ public class StateMachine
             [typeof(WorkbenchState)] = _stateFactory
             .CreateState<WorkbenchState>(),
             [typeof(DecorationState)] = _stateFactory
-            .CreateState < DecorationState>(),
+            .CreateState<DecorationState>(),
             [typeof(LootState)] = _stateFactory
             .CreateState<LootState>(),
             [typeof(InventoryState)] = _stateFactory
@@ -45,9 +45,32 @@ public class StateMachine
             .CreateState<CraftState>(),
             [typeof(PseudoCraftState)] = _stateFactory
             .CreateState<PseudoCraftState>(),
+            [typeof(MilestoneState)] = _stateFactory
+            .CreateState<MilestoneState>(),
         };
         Enter<BootstrapState>();
         _isInited = true;
+    }
+
+    public void EnterPredioslyState()
+    {
+        //Debug.Log("было " + _activeState);
+        //Debug.Log("предыдущее " + PredioslyState);
+        //IExitableState newState = PredioslyState;
+        //if (_activeState != null)
+        //{
+        //    //PredioslyState = _activeState;
+        //    _activeState.Exit();
+        //    Debug.Log("вышли из  " + _activeState);
+        //}
+        //_activeState = newState;
+
+        //if (_activeState is IState state)
+        //{
+        //    //state.Enter();
+            Enter<WorkbenchState>();
+        //    Debug.Log("зашли в  " + _activeState);
+        //}
     }
 
     public void Enter<TState>() where TState : class, IState
@@ -73,8 +96,8 @@ public class StateMachine
         TState state = GetState<TState>();
         _activeState = state;
 
-        ChangeStateAction?.Invoke( state);
-       // Debug.Log(_activeState);
+        ChangeStateAction?.Invoke(state);
+         Debug.Log("_activeState " + _activeState);
         return state;
     }
 

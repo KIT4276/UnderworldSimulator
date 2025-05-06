@@ -3,16 +3,25 @@
 public class LootState : IState
 {
 
-    public LootState ()
-    {
-    }
-
     public void Enter()
     {
     }
 
     public void Exit()
     {
+    }
+}
+
+public class MilestoneState : IState
+{
+    public void Enter()
+    {
+       
+    }
+
+    public void Exit()
+    {
+       
     }
 }
 

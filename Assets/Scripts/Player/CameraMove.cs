@@ -132,7 +132,10 @@ public class CameraMove : BaseMovable
 
     private void OnChangeState(IExitableState state)
     {
-        if(state is GameLoopState || state is DecorationState || state is WorkbenchState)
+        if (state is MilestoneState) return;
+
+
+        if (state is GameLoopState || state is DecorationState || state is WorkbenchState)
         {
             _canZoom = true;
         }
