@@ -11,7 +11,7 @@ public class NPCPeriodicAnimations : MonoBehaviour
     [SerializeField] protected float _fadeInTime = 0.5f;
 
     protected string _idle = "stand";
-    protected string _move = "idel_animation";
+    protected string _move = "idle_animation";
 
     private Coroutine _coroutine;
 
@@ -36,6 +36,7 @@ public class NPCPeriodicAnimations : MonoBehaviour
         yield return new WaitForSeconds(RandomTime());
 
         _armatureComponent.AddDBEventListener(EventObject.COMPLETE, OnMoveAnimationComplete);
+        Debug.Log("AnimateMove");
 
         AnimateMove();
     }
