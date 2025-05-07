@@ -17,7 +17,7 @@ public class ProgressBarSwitch : MonoBehaviour
 
     private void OnChangeState(IExitableState state)
     {
-        if (state is DecorationState)
+        if (state is DecorationState || state is WorkbenchState || state is CraftState)
         {
             _progressBar.SetActive(true);
         }
