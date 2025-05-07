@@ -4,7 +4,7 @@ public class MonkeyPeriodicAnimations : NPCPeriodicAnimations
 {
     [SerializeField] private int _repetitsNumber = 5;
 
-    private readonly string[] _moves = new string[] { "idel_animation_01", "idel_animation_02" };
+    private readonly string[] _moves = new string[] { "idle_animation_01", "idle_animation_02" };
 
     protected override void AnimateMove()
     {
