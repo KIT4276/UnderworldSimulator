@@ -126,7 +126,7 @@ public class DecorPlacer : MonoBehaviour
 
         foreach (var hit in hits)
         {
-            if (hit.collider == _decor.CurrentClickableCollider || hit.collider.transform.IsChildOf(transform))
+            if (hit.collider == _decor.CurrentClickableCollider)
             {
                 return true;
             }
