@@ -100,7 +100,7 @@ public class WorkbenchSystem : MonoBehaviour
 
     private void ActivateInventory()
     {
-        Debug.Log("ActivateInventory");
+        //Debug.Log("ActivateInventory");
         _inventory.gameObject.SetActive(true);
         _inventory.ActivateInventory();
 

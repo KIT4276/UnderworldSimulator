@@ -36,7 +36,6 @@ public class NPCPeriodicAnimations : MonoBehaviour
         yield return new WaitForSeconds(RandomTime());
 
         _armatureComponent.AddDBEventListener(EventObject.COMPLETE, OnMoveAnimationComplete);
-        Debug.Log("AnimateMove");
 
         AnimateMove();
     }
