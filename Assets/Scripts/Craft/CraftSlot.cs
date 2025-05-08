@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(HighlightActiveDrawing))]
 public class CraftSlot : MonoBehaviour
 {
     [SerializeField] private TMP_Text _name;
