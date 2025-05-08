@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Decor))]
@@ -119,18 +120,26 @@ public class DecorPlacer : MonoBehaviour
 
     protected bool IsMouseOnObject()
     {
-        
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
         Ray ray = _decor.MainCamera.ScreenPointToRay(mouseScreenPos);
         RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity, LayerMask.GetMask("Decor"));
 
-        foreach (var hit in hits)
+        // Sort hits by collider's bottom Y position (min.y), then by sortingOrder for tie-breaking
+        var sortedHits = hits
+            .OrderBy(hit => hit.collider.bounds.min.y) // Sort by collider's bottom Y (closer to the floor is in front)
+            .ThenByDescending(hit => hit.collider.GetComponent<SpriteRenderer>()?.sortingOrder ?? 0) // Tie-break by sorting order
+            .ToArray();
+
+        foreach (var hit in sortedHits)
         {
-            if (hit.collider == _decor.CurrentClickableCollider)
+            Debug.Log(hit.collider.gameObject.name);
+            // Only check the current "decor" object you're interacting with
+            if (hit.collider == _decor.CurrentClickableCollider/* || hit.collider.transform.IsChildOf(transform)*/)
             {
                 return true;
             }
         }
+
         return false;
     }
 
