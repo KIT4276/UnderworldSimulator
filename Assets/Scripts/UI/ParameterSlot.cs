@@ -23,8 +23,8 @@ public class ParameterSlot : MonoBehaviour
     private DrawingData _drawingData;
     private Task _task;
 
-   // [Inject]
-    public  void Construct(GuestsSystem guestsSystem, TasksHandler tasksHandler,
+    // [Inject]
+    public void Construct(GuestsSystem guestsSystem, TasksHandler tasksHandler,
         RoomsSystem roomsSystem, DrawingData drawingData)
     {
         _guestsSystem = guestsSystem;
@@ -68,6 +68,8 @@ public class ParameterSlot : MonoBehaviour
             }
             _score.text = currentValue + "/" + parameterTask.Value;
             var v = currentValue / parameterTask.Value;
+            if (v > 1)
+                v = 1;
             _bar.fillAmount = v;
         }
         else if (task is SpecificTask specificTask)
