@@ -66,7 +66,7 @@ public class MapController : MonoBehaviour
     {
         if (context.performed && isMapVisible)
         {
-            ToggleMap(); // Закрываем карту
+            ToggleMap(); 
         }
     }
 
@@ -139,12 +139,14 @@ public class MapController : MonoBehaviour
         }
     }
 
-    // This method maps the player's world position to the map image and moves the icon
+    
     private void UpdateHeroIconPosition()
     {
         if (playerTransform != null)
         {
             Vector3 playerPos = playerTransform.position;
+
+            //Debug.Log("Player Position: " + playerTransform.position);
 
             // Normalize player position (0 to 1 range)
             float normalizedX = Mathf.InverseLerp(worldMin.x, worldMax.x, playerPos.x);
@@ -160,7 +162,9 @@ public class MapController : MonoBehaviour
             // Apply to HeroIcon
             heroIcon.anchoredPosition = new Vector2(mapPosX, mapPosY);
         }
-    }
+    } 
+
+
 
     private void OnDestroy()
     {
