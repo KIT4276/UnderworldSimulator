@@ -5,7 +5,8 @@ using Zenject;
 
 public class CraftMenu : MonoBehaviour
 {
-    [SerializeField] private CraftSlot[] _slots;
+   /* [SerializeField]*/ private CraftSlot[] _slots;
+    [SerializeField] private CraftSlot _slotsPrefab;
     [SerializeField] private GameObject _menu;
     [SerializeField] private MainDrawingSign _mainDrawingSign;
     [SerializeField] private TMP_Text _count;
@@ -14,23 +15,22 @@ public class CraftMenu : MonoBehaviour
     [SerializeField] private FadeInSign _catnCraftSign;
 
     [Inject] private CraftSystem _craftSystem;
-    [Inject] private WorkbenchSystem _workbenchSystem;
+   // [Inject] private WorkbenchSystem _workbenchSystem;
     [Inject] private StateMachine _machine;
     [Inject] private ParameterData _parameterData;
+
+    private bool _isInited;
 
     private void Start()
     {
         //_workbenchSystem.CraftButtonClick += OpenCraftMenu;//todo to state change
         _craftSystem.ChangeCount += UpdateCount;
-        _machine.ChangeStateAction += StateChanged;
         _craftSystem.Crafted += ResetCraftMenu;
         _craftSystem.DrawingAdded += FillSlots;
         _craftSystem.NotEnoughMaterials += NotEnough;
 
-        foreach (var slot in _slots)
-        {
-            slot.DrawingSelected += ToSelectDrawing;
-        }
+       
+        _machine.ChangeStateAction += StateChanged;
 
         //FillSlots();
 
@@ -38,6 +38,26 @@ public class CraftMenu : MonoBehaviour
         UpdateCount();
         CloseCraftMenu();
         _notEnoughSign.gameObject.SetActive(false);
+    }
+
+    private void CreateSlots()
+    {
+        int count = _craftSystem.DrawingDatas.Drawings.Length;
+        _slots = new CraftSlot[count];
+
+        if (count == 0) return;
+
+        _slots[0] = _slotsPrefab;
+
+        for (int i = 1; i < count; i++)
+        {
+            _slots[i] = Instantiate(_slotsPrefab, _slotsPrefab.transform.parent);
+        }
+
+        foreach (var slot in _slots)
+        {
+            slot.GetComponent<HighlightActiveDrawing>().Construct(_craftSystem);
+        }
     }
 
     private void NotEnough()
@@ -127,6 +147,18 @@ public class CraftMenu : MonoBehaviour
 
     private void StateChanged(IExitableState state)
     {
+        if (!_isInited && state is GameLoopState)
+        {
+            CreateSlots();
+
+            foreach (var slot in _slots)
+            {
+                slot.DrawingSelected += ToSelectDrawing;
+            }
+
+            _isInited = true;
+        }
+        
         if (state is CraftState || state is PseudoCraftState)
         {
             OpenCraftMenu();
@@ -155,13 +187,22 @@ public class CraftMenu : MonoBehaviour
 
     private void OnDestroy()
     {
-        _workbenchSystem.CraftButtonClick -= OpenCraftMenu;
+        //_workbenchSystem.CraftButtonClick -= OpenCraftMenu;
+
         _craftSystem.ChangeCount -= UpdateCount;
         _machine.ChangeStateAction -= StateChanged;
         _craftSystem.Crafted -= ResetCraftMenu;
         _craftSystem.DrawingAdded -= FillSlots;
         _craftSystem.NotEnoughMaterials -= NotEnough;
 
+        if (_isInited)
+        {
+            foreach (var slot in _slots)
+            {
+                slot.DrawingSelected -= ToSelectDrawing;
+            }
+
         _craftSystem.OnDestroy();
+        }
     }
 }

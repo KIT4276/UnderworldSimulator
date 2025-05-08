@@ -14,8 +14,8 @@ public class HighlightActiveDrawing : MonoBehaviour
 
     private CraftSystem _craftSystem;
 
-    [Inject]
-    private void Construct(CraftSystem craftSystem)
+   
+    public void Construct(CraftSystem craftSystem)
     {
         _craftSystem = craftSystem;
 
@@ -25,6 +25,8 @@ public class HighlightActiveDrawing : MonoBehaviour
 
     private void Awake()
     {
+        if (_craftSystem == null) return;
+
         if (_craftSystem.ActiveDrawing != null)
         {
             OnDrawingSelected(_craftSystem.ActiveDrawing);
@@ -48,7 +50,11 @@ public class HighlightActiveDrawing : MonoBehaviour
 
     private void OnDestroy()
     {
-        _buttonImage.color = _unactiveColor;
-        _craftSystem.DrawingSelected -= OnDrawingSelected;
+        if (_craftSystem != null)
+        {
+
+            _craftSystem.DrawingSelected -= OnDrawingSelected;
+        }
+            _buttonImage.color = _unactiveColor;
     }
 }

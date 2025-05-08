@@ -1,22 +1,49 @@
+using DragonBones;
 using System;
 using UnityEngine;
 using Zenject;
 
 public class TaskMenu : MonoBehaviour
 {
-    [SerializeField] private ParameterSlot[] _parametersSlots;
+    [SerializeField]    private ParameterSlot _parametersSlotsPrefab;
+    private ParameterSlot[] _parametersSlots;
 
     private TasksHandler _tasksHandler;
     private bool _isInit;
     private StateMachine _stateMachine;
     private RoomsSystem _roomsSystem;
+    private GuestsSystem _guestsSystem;
+    private DrawingData _drawingData;
 
     [Inject]
-    private void Construct(TasksHandler tasksHandler, StateMachine stateMachine, RoomsSystem roomsSystem)
+    private void Construct(TasksHandler tasksHandler, StateMachine stateMachine, RoomsSystem roomsSystem, 
+        GuestsSystem guestsSystem, DrawingData drawingData)
     {
         _tasksHandler = tasksHandler;
         _stateMachine = stateMachine;
         _roomsSystem = roomsSystem;
+        _guestsSystem = guestsSystem;
+        _drawingData = drawingData;
+
+        Createslots();
+    }
+
+    private void Createslots()
+    {
+        int count = _tasksHandler.All.Length;
+        _parametersSlots = new ParameterSlot[count];
+
+        _parametersSlots[0] = _parametersSlotsPrefab;
+
+        for (int i = 1; i < count; i++)
+        {
+            _parametersSlots[i] = Instantiate(_parametersSlotsPrefab, _parametersSlotsPrefab.transform.parent);
+        }
+
+        foreach(ParameterSlot parameterSlot in _parametersSlots)
+        {
+            parameterSlot.Construct(_guestsSystem, _tasksHandler, _roomsSystem, _drawingData);
+        }
     }
 
     private void Start()

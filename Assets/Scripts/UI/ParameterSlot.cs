@@ -23,8 +23,8 @@ public class ParameterSlot : MonoBehaviour
     private DrawingData _drawingData;
     private Task _task;
 
-    [Inject]
-    private void Construct(GuestsSystem guestsSystem, TasksHandler tasksHandler,
+   // [Inject]
+    public  void Construct(GuestsSystem guestsSystem, TasksHandler tasksHandler,
         RoomsSystem roomsSystem, DrawingData drawingData)
     {
         _guestsSystem = guestsSystem;

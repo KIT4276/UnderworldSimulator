@@ -7,7 +7,8 @@ public class CraftSystem
 {
     //private Drawing _activeDrawing;
     private InventorySystem _inventorySystem;
-    private readonly DrawingData _drawingDatas;
+
+    public DrawingData DrawingDatas { get; private set; }
 
     public Drawing ActiveDrawing { get; private set; }
     public List<Drawing> AvailableDrawings { get; private set; }
@@ -33,12 +34,12 @@ public class CraftSystem
 
         Count = 1;
         _inventorySystem = inventorySystem;
-        _drawingDatas = drawingDatas;
+        DrawingDatas = drawingDatas;
     }
 
     public void OnDestroy()
     {
-        foreach (var draw in _drawingDatas.Drawings)
+        foreach (var draw in DrawingDatas.Drawings)
         {
             draw.MakeUnavailable();
         }
