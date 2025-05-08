@@ -1,11 +1,12 @@
-using DragonBones;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
-public class TaskMenu : MonoBehaviour
+public class TaskMenu : ScrollViewMenuRebootable
 {
     [SerializeField]    private ParameterSlot _parametersSlotsPrefab;
+
     private ParameterSlot[] _parametersSlots;
 
     private TasksHandler _tasksHandler;
@@ -91,6 +92,8 @@ public class TaskMenu : MonoBehaviour
 
     private void Fill()
     {
+        ResetScroll();
+
         foreach (var slot in _parametersSlots)
         {
             slot.FillEmpty();
@@ -111,6 +114,7 @@ public class TaskMenu : MonoBehaviour
             }
         }
     }
+    
 
     private void OnDestroy()
     {
