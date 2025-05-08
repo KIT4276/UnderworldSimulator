@@ -132,7 +132,7 @@ public class DecorPlacer : MonoBehaviour
 
         foreach (var hit in sortedHits)
         {
-            Debug.Log(hit.collider.gameObject.name);
+           // Debug.Log(hit.collider.gameObject.name);
             // Only check the current "decor" object you're interacting with
             if (hit.collider == _decor.CurrentClickableCollider/* || hit.collider.transform.IsChildOf(transform)*/)
             {

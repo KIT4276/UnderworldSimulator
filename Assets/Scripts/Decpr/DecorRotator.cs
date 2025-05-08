@@ -34,7 +34,7 @@ public class DecorRotator : MonoBehaviour
     {
         
         var newRotationState = (RotationState)(((int)predioslyRotationState + 1) % 4);
-        Debug.Log(newRotationState);
+        //Debug.Log(newRotationState);
         _decor.SetRotationState(newRotationState);
         UpdateImpassableZone(newRotationState);
         UpdateColliders(newRotationState);
