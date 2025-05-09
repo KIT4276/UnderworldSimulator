@@ -6,8 +6,6 @@ public class AudioReciever : MonoBehaviour
 {
     public static AudioReciever Instance;
     public FloorMaterial FloorMaterial;
-    [SerializeField] private float _timeToBirdSing;
-    private float _timeToBirdSingBase;
 
     private void Awake()
     {
@@ -19,23 +17,6 @@ public class AudioReciever : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-    }
-    private void Start()
-    {
-        _timeToBirdSingBase = _timeToBirdSing;
-    }
-    private void Update()
-    {
-        _timeToBirdSing -= Time.deltaTime;
-        if (_timeToBirdSing <= 0)
-        {
-            int randomNumber = Random.Range(0, 5);
-            if (randomNumber >= 0 && randomNumber < 3) AudioManager.Instance.Play(SoundEnum.Crow);
-            if (randomNumber == 3) AudioManager.Instance.Play(SoundEnum.Woodpecker);
-            if (randomNumber >= 4) AudioManager.Instance.Play(SoundEnum.Owl);
-
-            _timeToBirdSing = _timeToBirdSingBase + Random.Range(_timeToBirdSingBase * 0.8f, _timeToBirdSingBase * 1.2f);
-        }
     }
 
     public void StartGameplay()
