@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using Zenject;
 
 public class HighlightActiveDrawing : MonoBehaviour
 {
     [SerializeField] private CraftSlot _slot;
     [Space]
-    [SerializeField] private Image _buttonImage;
+    [SerializeField] private ButtonEnterChangeImage _buttonEnterChangeImage;
+    [SerializeField] private CraftMenu _craftMenu;
     [Space]
-    [SerializeField] private Color _activeColor;
-    [SerializeField] private Color _unactiveColor;
+    [SerializeField] private Sprite _selectedNormImage;
+    [SerializeField] private Sprite _selectedHighlightImage;
+    [SerializeField] private Sprite _unselectedNormImage;
+    [SerializeField] private Sprite _unselectedHighlightImage;
 
 
     private CraftSystem _craftSystem;
@@ -20,7 +21,13 @@ public class HighlightActiveDrawing : MonoBehaviour
         _craftSystem = craftSystem;
 
         _craftSystem.DrawingSelected += OnDrawingSelected;
+        _craftMenu.Filled += OnFilled;
+    }
 
+    private void OnFilled()
+    {
+        OnDrawingSelected(_craftSystem.ActiveDrawing);
+        _buttonEnterChangeImage.NormalizeImage();
     }
 
     private void Awake()
@@ -37,24 +44,21 @@ public class HighlightActiveDrawing : MonoBehaviour
     {
         if (_slot.Drawing == drawing)
         {
-            _buttonImage.color = _activeColor;
+            _buttonEnterChangeImage.ChangeImageToSelected(_selectedNormImage, _selectedHighlightImage);
+            _buttonEnterChangeImage.HighlightImage();
         }
         else
         {
-            _buttonImage.color = _unactiveColor;
+            _buttonEnterChangeImage.ChangeImageToSelected(_unselectedNormImage, _unselectedHighlightImage);
+            _buttonEnterChangeImage.NormalizeImage();
         }
-
-        //Debug.Log(_buttonImage.color);
-        //RGBA(0.168, 1.000, 0.000, 1.000)
     }
 
     private void OnDestroy()
     {
         if (_craftSystem != null)
         {
-
             _craftSystem.DrawingSelected -= OnDrawingSelected;
         }
-            _buttonImage.color = _unactiveColor;
     }
 }

@@ -14,10 +14,13 @@ public class CraftMenu : MonoBehaviour
     [SerializeField] private CraftButton _craftButton;
     [SerializeField] private FadeInSign _catnCraftSign;
 
+    public event Action Filled;
+
     [Inject] private CraftSystem _craftSystem;
    // [Inject] private WorkbenchSystem _workbenchSystem;
     [Inject] private StateMachine _machine;
     [Inject] private ParameterData _parameterData;
+    [Inject] private StatesTransitor _stationsTransitor;
 
     private bool _isInited;
 
@@ -87,14 +90,8 @@ public class CraftMenu : MonoBehaviour
                 _slots[i].FillDrawingData(_craftSystem.AvailableDrawings[i], _parameterData);
             }
 
-            //if (_craftSystem.AvailableDrawings.Count < _slots.Length)
-            //{
-            //    for (; i < _slots.Length; i++)
-            //    {
-            //        _slots[i].FillEmpty();
-            //    }
-            //}
         }
+            Filled?.Invoke();
     }
 
     public void OnCreate()
@@ -136,6 +133,11 @@ public class CraftMenu : MonoBehaviour
     public void CloseCraftMenu()
     {
         _menu.SetActive(false);
+    }
+
+    public void Exit()
+    {
+        _stationsTransitor.ToDecorateState();
     }
 
     public void OnChangeCount(int count)

@@ -118,7 +118,7 @@ public class DecorPlacer : MonoBehaviour
         }
     }
 
-    protected bool IsMouseOnObject()
+    public bool IsMouseOnObject()
     {
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
         Ray ray = _decor.MainCamera.ScreenPointToRay(mouseScreenPos);

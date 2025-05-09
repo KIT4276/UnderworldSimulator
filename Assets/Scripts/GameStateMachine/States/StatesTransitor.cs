@@ -137,7 +137,7 @@ public class StatesTransitor
         _stateMachine.Enter<CraftState>();
     }
 
-    private void ToDecorateState()
+    public void ToDecorateState()
     {
         _stateMachine.Enter<DecorationState>();
     }
