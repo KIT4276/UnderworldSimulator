@@ -40,7 +40,7 @@ public class CraftTutorial : MonoBehaviour
     {
         if (newState is CraftState && !tutorialStarted)
         {
-            StartCoroutine(PlayTutorialAnimationWithDelay(0.5f));
+            StartCoroutine(PlayTutorialAnimationWithDelay(0f));
             tutorialStarted = true;
 
             advanceAction.Enable();
