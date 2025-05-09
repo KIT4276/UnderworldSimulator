@@ -20,6 +20,7 @@ public class CraftMenu : MonoBehaviour
    // [Inject] private WorkbenchSystem _workbenchSystem;
     [Inject] private StateMachine _machine;
     [Inject] private ParameterData _parameterData;
+    [Inject] private StatesTransitor _stationsTransitor;
 
     private bool _isInited;
 
@@ -132,6 +133,11 @@ public class CraftMenu : MonoBehaviour
     public void CloseCraftMenu()
     {
         _menu.SetActive(false);
+    }
+
+    public void Exit()
+    {
+        _stationsTransitor.ToDecorateState();
     }
 
     public void OnChangeCount(int count)
