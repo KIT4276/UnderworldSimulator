@@ -31,16 +31,40 @@ public class ButtonEnterChangeImage : MonoBehaviour, IPointerEnterHandler, IPoin
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (_isOccupied)
-            _image.sprite = _highlightImage;
+        HighlightImage();
         AudioReciever.Instance.PlayUIGeneralHover();
     }
 
+
     public void OnPointerExit(PointerEventData eventData)
+    {
+        NormalizeImage();
+    }
+
+    public void ChangeImageToSelected(Sprite normImage, Sprite highlightImage)
+    {
+        _normImage = normImage;
+        _highlightImage = highlightImage;
+    }
+
+    public void ChangeImageToUnselected(Sprite normImage, Sprite highlightImage)
+    {
+        _normImage = normImage;
+        _highlightImage = highlightImage;
+    }
+
+    public void HighlightImage()
+    {
+        if (_isOccupied)
+            _image.sprite = _highlightImage;
+    }
+
+    public void NormalizeImage()
     {
         if (_isOccupied)
             _image.sprite = _normImage;
     }
+
 
     private void OnDisable()
     {

@@ -14,6 +14,8 @@ public class CraftMenu : MonoBehaviour
     [SerializeField] private CraftButton _craftButton;
     [SerializeField] private FadeInSign _catnCraftSign;
 
+    public event Action Filled;
+
     [Inject] private CraftSystem _craftSystem;
    // [Inject] private WorkbenchSystem _workbenchSystem;
     [Inject] private StateMachine _machine;
@@ -87,13 +89,7 @@ public class CraftMenu : MonoBehaviour
                 _slots[i].FillDrawingData(_craftSystem.AvailableDrawings[i], _parameterData);
             }
 
-            //if (_craftSystem.AvailableDrawings.Count < _slots.Length)
-            //{
-            //    for (; i < _slots.Length; i++)
-            //    {
-            //        _slots[i].FillEmpty();
-            //    }
-            //}
+            Filled?.Invoke();
         }
     }
 
