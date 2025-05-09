@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
+using System.Collections;
 
 public class WorkbenchTutorial : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class WorkbenchTutorial : MonoBehaviour
     private void Awake()
     {
         animtut = GetComponent<Animator>();
+        animtut.enabled = false;
 
         // Create input action to listen to Space bar
         advanceAction = new InputAction(type: InputActionType.Button, binding: "<Keyboard>/space");
@@ -38,8 +40,8 @@ public class WorkbenchTutorial : MonoBehaviour
     {
         if (newState is WorkbenchState && !tutorialStarted)
         {
+            StartCoroutine(PlayTutorialAnimationWithDelay(1.5f));
             tutorialStarted = true;
-                tutorialBox.SetActive(true);
 
             advanceAction.Enable();
             skipAction.Enable();
@@ -63,6 +65,15 @@ public class WorkbenchTutorial : MonoBehaviour
     private void SkipTutorial()
     {
         Endtut();  // Skip the tutorial
+    }
+
+    private IEnumerator PlayTutorialAnimationWithDelay(float delay)
+    {   
+        tutorialBox.SetActive(false);
+        yield return new WaitForSecondsRealtime(delay); // Unscaled time, so it works even if game is paused
+        tutorialBox.SetActive(true);
+        animtut.enabled = true;
+        animtut.Play("Default", 0, 0f);
     }
 
     public void Endtut()
