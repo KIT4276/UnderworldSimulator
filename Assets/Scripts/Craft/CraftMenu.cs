@@ -90,8 +90,8 @@ public class CraftMenu : MonoBehaviour
                 _slots[i].FillDrawingData(_craftSystem.AvailableDrawings[i], _parameterData);
             }
 
-            Filled?.Invoke();
         }
+            Filled?.Invoke();
     }
 
     public void OnCreate()
