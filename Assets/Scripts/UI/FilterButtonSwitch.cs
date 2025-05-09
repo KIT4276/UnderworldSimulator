@@ -18,8 +18,6 @@ public class FilterButtonSwitch : MonoBehaviour
         {
             button.Activate(button.FilterType == filterType);
         }
-
-        AudioReciever.Instance.PlayUIGeneralClick();
     }
 
 }

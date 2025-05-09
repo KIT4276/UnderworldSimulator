@@ -57,7 +57,7 @@ public class DecorPlacer : MonoBehaviour
             if (allPointsInside)
             {
                 isInside = true;
-                
+
                 _floor = floor;
                 break;
             }
@@ -113,13 +113,15 @@ public class DecorPlacer : MonoBehaviour
             {
                 _floor.DeleteDecor(_decor);
                 _floor = null;
+
+                AudioReciever.Instance.PlayUIFurnitureClick();
             }
         }
     }
 
     protected bool IsMouseOnObject()
     {
-        
+
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
         Ray ray = _decor.MainCamera.ScreenPointToRay(mouseScreenPos);
         RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity, LayerMask.GetMask("Decor"));

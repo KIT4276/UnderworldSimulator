@@ -94,7 +94,6 @@ public class LootSystem : MonoBehaviour
     private void CloseMenu()
     {
         _menu.SetActive(false);
-        AudioReciever.Instance.PlayUIGeneralClick();
     }
 
     public void TakeLootToInventory(IBaseItem item)
@@ -146,4 +145,9 @@ public class LootSystem : MonoBehaviour
         _stateMachine.ChangeStateAction -= OnChangeState;
     }
 
+
+    public void PlayUICloseMenuSound()
+    {
+        AudioReciever.Instance.PlayUIGeneralClick("CloseMenu");
+    }
 }

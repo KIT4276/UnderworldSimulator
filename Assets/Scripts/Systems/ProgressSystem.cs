@@ -6,7 +6,7 @@ public class ProgressSystem : IProgressSystem
 {
     private float _currentProgress = 0;
     private List<Task> _completedTasks = new();
-    
+
     public float CurrentValue { get => _currentProgress; }
 
 
@@ -17,7 +17,7 @@ public class ProgressSystem : IProgressSystem
         if (_completedTasks.Contains(task))
         {
             _completedTasks.Remove(task);
-           /// Debug.Log("RemoveCompletedTask " + task);
+            /// Debug.Log("RemoveCompletedTask " + task);
             UpdateProgress();
         }
     }
@@ -79,14 +79,14 @@ public class MilestoneSystem : IProgressSystem
 
     private void OnProgressChange()
     {
-        if(_progressSystem.CurrentValue >= CurrentMilestone.ProgressValue)
+        if (_progressSystem.CurrentValue >= CurrentMilestone.ProgressValue)
         {
             GiveReward();
             int i = Array.IndexOf(_milestonesData.Milestones, CurrentMilestone);
             i++;
             if (i < _milestonesData.Milestones.Length)
             {
-                ReachedMilestone = _milestonesData.Milestones[i-1];
+                ReachedMilestone = _milestonesData.Milestones[i - 1];
                 CurrentMilestone = _milestonesData.Milestones[i];
                 _stateMachine.Enter<MilestoneState>();
                 Change?.Invoke();
@@ -96,14 +96,14 @@ public class MilestoneSystem : IProgressSystem
 
     private void GiveReward()
     {
-      //Debug.Log(CurrentMilestone.Reward);
-       
+        //Debug.Log(CurrentMilestone.Reward);
+        AudioManager.Instance.Play(SoundEnum.Milestone_Reached);
     }
 }
 
-public interface  IProgressSystem
+public interface IProgressSystem
 {
-    public float CurrentValue{ get; }
+    public float CurrentValue { get; }
 
     public event Action Change;
 }

@@ -18,7 +18,7 @@ public class ButtonClickChangeImage : MonoBehaviour
     public void PressedButtoneChange()
     {
         StartCoroutine(ChangeRoutine());
-        AudioReciever.Instance.PlayUIGeneralClick();
+        AudioReciever.Instance.PlayUIGeneralClick("PressedButtoneChange");
     }
 
     public void Activate()

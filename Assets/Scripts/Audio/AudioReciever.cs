@@ -64,8 +64,9 @@ public class AudioReciever : MonoBehaviour
         if (FloorMaterial == FloorMaterial.Dirt) AudioManager.Instance.Play(SoundEnum.Footstep_Dirt);
         if (FloorMaterial == FloorMaterial.Wood) AudioManager.Instance.Play(SoundEnum.Footstep_Wood);
     }
-    public void PlayUIGeneralClick()
+    public void PlayUIGeneralClick(string DebugTest)
     {
+        // Debug.Log(DebugTest);
         AudioManager.Instance.Play(SoundEnum.General_Click);
     }
     public void PlayUIGeneralHover()
@@ -99,5 +100,9 @@ public class AudioReciever : MonoBehaviour
     public void PlaySearchObject()
     {
         AudioManager.Instance.Play(SoundEnum.Search_Object);
+    }
+    public void PlayUISettingsClick()
+    {
+        // AudioManager.Instance.Play(SoundEnum.Search_Object);
     }
 }

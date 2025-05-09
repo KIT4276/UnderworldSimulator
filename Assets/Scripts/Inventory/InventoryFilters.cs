@@ -31,7 +31,7 @@ public class InventoryFilters : MonoBehaviour
                 OnDecorFilter();
                 break;
             case FilterType.Craft:
-                OnCraftFilter();    
+                OnCraftFilter();
                 break;
             default:
                 OnNoFilter();
@@ -76,5 +76,10 @@ public class InventoryFilters : MonoBehaviour
     private void OnDestroy()
     {
         _inventorySystem.ActivateInventoryEvent -= OnActivateInventory;
+    }
+
+    public void PlayUISwitchSound()
+    {
+        AudioReciever.Instance.PlayUIGeneralClick("OnCraftFilter");
     }
 }

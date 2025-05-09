@@ -159,10 +159,8 @@ public class Decor : MonoBehaviour, IBaseItem
 
     protected void OnClick(InputAction.CallbackContext context)
     {
-            if (!_canPlace || !_isCanDecorate) return;
-            Clicked?.Invoke();
-            AudioReciever.Instance.PlayUIFurnitureClick(); // TODO: Bug when clicking at any space on the screen in "placing furniture mode" is producing multiple OnClick events,
-                                                           //  but I don't even have a furniture in my hand and just clicking at rooms and empty spaces
+        if (!_canPlace || !_isCanDecorate) return;
+        Clicked?.Invoke();
     }
 
     protected void GoToLastPosition()
