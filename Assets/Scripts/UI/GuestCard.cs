@@ -34,13 +34,14 @@ public class GuestCard : MonoBehaviour
         {
             _roomsSystem.TryToCheckInGuest(_guest);
         }
-        else if(_isEvict)
+        else if (_isEvict)
         {
             _guest = null;
             _roomsSystem.EvictGuest();
         }
         else { return; }
 
+        AudioReciever.Instance.PlayUIRoomClick();
         _guestMenu.Back();
     }
 

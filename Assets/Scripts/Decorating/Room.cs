@@ -23,7 +23,7 @@ public class Room
     public event Action CheckIn;
     public event Action Evicted;
 
-    public Room(string name, ClickHandler clickHandler, 
+    public Room(string name, ClickHandler clickHandler,
         Sprite icon, int id, RoomsSystem roomsSystem, Transform guestsPoint, StateMachine stateMachine)
     {
         InstalledDecor = new();
@@ -58,8 +58,9 @@ public class Room
 
     private void OnRoomSelected()
     {
-        if(!(_stateMacine.ActiveState is GameLoopState) && !(_stateMacine.ActiveState is CraftState))
-        _roomsSystem.OnRoomSelected(this);
+        if (!(_stateMacine.ActiveState is GameLoopState) && !(_stateMacine.ActiveState is CraftState))
+            _roomsSystem.OnRoomSelected(this);
+        AudioReciever.Instance.PlayUIRoomClick();
     }
 
     public void AddDecor(Decor decor)

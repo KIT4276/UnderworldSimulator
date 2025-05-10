@@ -29,14 +29,14 @@ public class HotelViewSwitch : MonoBehaviour
     {
         _wallsSystem.SwitchUpViewState();
         UpdateImage();
-        AudioReciever.Instance.PlayUIGeneralClick();
+        AudioReciever.Instance.PlayUIGeneralClick("SwitchUpViewState");
     }
 
     public void SwitchDownViewState()
     {
         _wallsSystem.SwitchDownViewState();
         UpdateImage();
-        AudioReciever.Instance.PlayUIGeneralClick();
+        AudioReciever.Instance.PlayUIGeneralClick("SwitchDownViewState");
     }
 
     private void UpdateImage()

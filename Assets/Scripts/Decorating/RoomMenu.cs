@@ -79,6 +79,7 @@ public class RoomMenu : MonoBehaviour
     public void GoToCheckInGuest()
     {
         _guestMenu.Open();
+        AudioReciever.Instance.PlayUIRoomClick();
     }
 
     public void UpdateParams(Room room)

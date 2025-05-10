@@ -13,6 +13,7 @@ public class LootInteract : InteractableObstacle
     [SerializeField] protected GameObject _sprite;
     [SerializeField] private Collider2D _interactableCollider;
     [SerializeField] private GoParticleSystem _goParticleSystem;
+    [SerializeField] private bool _isOrganic;
 
     [Inject] protected LootSystem _lootSystem;
     [Inject] protected PersistantStaticData _staticData;
@@ -61,7 +62,8 @@ public class LootInteract : InteractableObstacle
             _interactionCoroutine = StartCoroutine(InteractionProgress());
         }
 
-        AudioReciever.Instance.PlaySearchOrganic();
+        if (_isOrganic) AudioReciever.Instance.PlaySearchOrganic();
+        else AudioReciever.Instance.PlaySearchObject();
         _lootSystem.CleanAllSlots();
 
         _lootSystem.FillName(_craftLoot.Nane);
