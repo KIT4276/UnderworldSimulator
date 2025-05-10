@@ -53,6 +53,7 @@ public class Decor : MonoBehaviour, IBaseItem
     protected bool _isCanDecorate;
     protected RotationState _currentRotationState;
     protected Vector3 _lastPosition;
+    protected RotationState _lastRotationState;
 
     public void Initialize(PersistantStaticData staticData, DecorationSystem decorationSystem,
         SpaceDeterminantor spaceDeterminantor, int id, DecorHolder decorHolder, StateMachine stateMachine, string name)
@@ -133,6 +134,8 @@ public class Decor : MonoBehaviour, IBaseItem
     public virtual void PlaceObject()
     {
         _lastPosition = transform.position;
+        _lastRotationState = _currentRotationState;
+
         IsDragging = false;
         _decorationSystem.InstanriateDecor(this);
         DecorPlacedAction?.Invoke();
@@ -168,6 +171,8 @@ public class Decor : MonoBehaviour, IBaseItem
     {
         IsDragging = false;
         transform.position = _lastPosition;
+        //_currentRotationState = _lastRotationState;
+        _decorRotator.SetRotation(_lastRotationState);
         PlaceObject();
     }
 
