@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -32,11 +31,11 @@ public class InventorySystem : MonoBehaviour
 
 
     [Inject]
-    public void Construct(DecorationSystem decorationSystem, StateMachine stateMachine, MaterialsData materialsData, 
+    public void Construct(DecorationSystem decorationSystem, StateMachine stateMachine, MaterialsData materialsData,
         DecorHolder decorHolder)
     {
         CreateSlots();
-        
+
         _stateMachine = stateMachine;
         _decorationSystem = decorationSystem;
         _decorHolder = decorHolder;
@@ -46,7 +45,7 @@ public class InventorySystem : MonoBehaviour
         _warningSign.SetActive(false);
         _stateMachine.ChangeStateAction += StateChanged;
 
-        _inventoryHolder = new(materialsData);
+        _inventoryHolder = new(materialsData, this);
 
         _inventoryHolder.LoasSave += UpdateSlots;
         _decorHolder.InstallDecor += RemoveDecor;
@@ -63,6 +62,11 @@ public class InventorySystem : MonoBehaviour
             _inventorySlots[i] = Instantiate(_inventorySlotsPrefab, _inventorySlotsPrefab.transform.parent);
         }
 
+        foreach(var slot in _inventorySlots)
+        {
+            slot.GetComponent<InventoryClickHandler>().Construct(_stateMachine, _decorationSystem);
+        }
+
     }
 
     private void RemoveDecor(Decor decor)
@@ -75,20 +79,25 @@ public class InventorySystem : MonoBehaviour
         _inventoryFilters.UpdateFiltres();
     }
 
-    private void UpdateSlots()
+    public void UpdateSlots()
     {
+        ClearSlots();
+        
         FillDecorItems();
         FillCraftItems();
+
+        OnDecorSlots();
+        OnCraftSlots();
     }
 
     public void RemoveItems(LootType lootType)
     {
-       // Debug.Log("RemoveItems");
+        // Debug.Log("RemoveItems");
 
         _inventoryHolder.RemoveByType(lootType);
-        //ClearSlots();
-        //FillCraftItems();
-        //FillDecorItems();
+        ClearSlots();
+        FillCraftItems();
+        FillDecorItems();
 
         _inventoryFilters.UpdateFiltres();
     }
@@ -225,6 +234,47 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
+    public void OffAllOccupiedSlots()
+    {
+        foreach (var slot in _inventorySlots)
+        {
+            if (slot.IsOccupied)
+            {
+                slot.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void OnDecorSlots()
+    {
+        foreach (var slot in _inventorySlots)
+        {
+            if (slot.IsOccupied)
+            {
+                if (slot.Items.Count > 0 && slot.Items[0] is Decor)
+                {
+                    slot.gameObject.SetActive(true);
+                    slot.GetComponent<InventoryClickHandler>().Construct(_stateMachine, _decorationSystem);
+                }
+            }
+        }
+    }
+
+    public  void OnCraftSlots()
+    {
+        foreach (var slot in _inventorySlots)
+        {
+            if (slot.IsOccupied)
+            {
+                if (slot.Items.Count > 0 && slot.Items[0] is Item)
+                {
+                    slot.gameObject.SetActive(true);
+                    slot.GetComponent<InventoryClickHandler>().Construct(_stateMachine, _decorationSystem);
+                }
+            }
+        }
+    }
+
     public void FillCraftItems()
     {
         if (_inventoryHolder.AllItemsInInventory == null || _inventoryHolder.AllItemsInInventory.Count == 0) return;
@@ -316,142 +366,6 @@ public class InventorySystem : MonoBehaviour
         }
         return false;
     }
-}
 
-public class InventoryHolder : ISavedProgress
-{
-
-    public List<IBaseItem> AllItemsInInventory { get; private set; }
-
-    public event Action Change;
-    public event Action LoasSave;
-
-    private MaterialsData _materialsData;
-
-    public InventoryHolder(MaterialsData materialsData)
-    {
-        _materialsData = materialsData;
-    }
-
-    public void Add(IBaseItem item)
-    {
-        if (AllItemsInInventory == null)
-            AllItemsInInventory = new();
-
-        //Debug.Log("Add AllItemsInInventory");
-        AllItemsInInventory.Add(item);
-
-        Change?.Invoke();
-    }
-
-    public void RemoveDecor(Decor decor)
-    {
-        for(var i = 0;  i < AllItemsInInventory.Count; i++) 
-        
-        {
-            if (AllItemsInInventory[i] is Decor decorInInvent)
-            {
-                if(decorInInvent.DecorType == decor.DecorType)
-                {
-                    Remove(AllItemsInInventory[i]);
-                }
-            }
-        }
-    }
-
-    private void Remove(IBaseItem item)
-    {
-            
-        AllItemsInInventory.Remove(item);
-
-        Change?.Invoke();
-    }
-
-    public void RemoveByType(LootType lootType)
-    {
-        if (AllItemsInInventory == null)
-            AllItemsInInventory = new();
-
-        for (var i = 0; i < AllItemsInInventory.Count; i++)
-        {
-            if (AllItemsInInventory[i] != null && AllItemsInInventory[i] is Item mat)
-            {
-                if (mat.LootType == lootType)
-                {
-                    Remove(mat);
-                    break;
-                }
-            }
-        }
-    }
-
-    public int CalculateMaterial(LootType material)
-    {
-        if (AllItemsInInventory == null)
-            AllItemsInInventory = new();
-
-        int count = 0;
-
-        foreach (IBaseItem baseItem in AllItemsInInventory)
-        {
-            if (baseItem is Item item)
-            {
-                if (item.LootType == material)
-                {
-                    count++;
-                }
-            }
-        }
-
-        return count;
-    }
-
-    public void SaveProgress(PlayerProgress progress)
-    {
-        //Debug.Log("SaveProgress");
-        if (progress.InventoryItems != null)
-        {
-
-            foreach (var inventoryItem in AllItemsInInventory)
-            {
-                if (inventoryItem is Item item)
-                {
-
-                    progress.InventoryItems.Add(item);
-                }
-            }
-
-        }
-        if (progress.InventoryDecors != null)
-        {
-            foreach (var inventoryItem in AllItemsInInventory)
-            {
-                if (inventoryItem is Decor decor)
-                {
-                    progress.InventoryDecors.Add(decor);
-                }
-            }
-        }
-    }
-
-    public void LoadProgress(PlayerProgress progress)
-    {
-        if (AllItemsInInventory == null)
-            AllItemsInInventory = new();
-
-        if (progress != null)
-        {
-            foreach (var item in progress.InventoryItems)
-            {
-                AllItemsInInventory.Add(item);
-                item.Init(_materialsData);
-            }
-            foreach (var decor in progress.InventoryDecors)
-            {
-                AllItemsInInventory.Add(decor);
-            }
-        }
-        LoasSave?.Invoke();
-    }
 }
 
