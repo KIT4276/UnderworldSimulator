@@ -76,7 +76,7 @@ public class InventorySystem : MonoBehaviour
         //FillCraftItems();
         //FillDecorItems();
 
-        _inventoryFilters.UpdateFiltres();
+        //_inventoryFilters.UpdateFiltres();
     }
 
     public void UpdateSlots()
@@ -99,7 +99,7 @@ public class InventorySystem : MonoBehaviour
         FillCraftItems();
         FillDecorItems();
 
-        _inventoryFilters.UpdateFiltres();
+        //_inventoryFilters.UpdateFiltres();
     }
 
     public void OnExit()
@@ -310,7 +310,7 @@ public class InventorySystem : MonoBehaviour
         _inventoryHolder.Add(decor);
         ChangeDecorSlots?.Invoke();
 
-        _inventoryFilters.UpdateFiltres();
+        //_inventoryFilters.UpdateFiltres();
 
     }
 
@@ -328,7 +328,7 @@ public class InventorySystem : MonoBehaviour
         }
         _inventoryHolder.Add(loot);
 
-        _inventoryFilters.UpdateFiltres();
+        //_inventoryFilters.UpdateFiltres();
     }
 
     private IEnumerator HideSign()
