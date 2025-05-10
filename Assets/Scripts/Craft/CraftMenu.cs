@@ -102,11 +102,11 @@ public class CraftMenu : MonoBehaviour
             _catnCraftSign.StartFadeIn();
 
         }
-        else if(_machine.ActiveState is CraftState)
+        else if (_machine.ActiveState is CraftState)
         {
             _craftSystem.CreateDecor();
         }
-        AudioReciever.Instance.PlayUIGeneralClick();
+        AudioReciever.Instance.PlayUIGeneralClick("OnCreate");
     }
 
     private void UpdateCount()
@@ -144,7 +144,7 @@ public class CraftMenu : MonoBehaviour
     {
         _craftSystem.OnChangeCount(count);
         UpdateCount();
-        AudioReciever.Instance.PlayUIGeneralClick();
+        AudioReciever.Instance.PlayUIGeneralClick("OnChangeCount");
     }
 
     private void StateChanged(IExitableState state)

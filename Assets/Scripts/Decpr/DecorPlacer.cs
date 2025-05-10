@@ -58,7 +58,7 @@ public class DecorPlacer : MonoBehaviour
             if (allPointsInside)
             {
                 isInside = true;
-                
+
                 _floor = floor;
                 break;
             }
@@ -114,6 +114,8 @@ public class DecorPlacer : MonoBehaviour
             {
                 _floor.DeleteDecor(_decor);
                 _floor = null;
+
+                AudioReciever.Instance.PlayUIFurnitureClick();
             }
         }
     }

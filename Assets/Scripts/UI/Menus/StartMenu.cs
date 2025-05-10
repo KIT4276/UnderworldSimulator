@@ -45,10 +45,12 @@ public class StartMenu : MonoBehaviour
     {
         _buttons.SetActive(false);
         _panelNewGame.SetActive(true);
+        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     public void StartNewGame()
     {
+        AudioReciever.Instance.PlayUISettingsClick();
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
         ContinueGame();
@@ -58,12 +60,14 @@ public class StartMenu : MonoBehaviour
     {
         _panelNewGame.SetActive(false);
         _buttons.SetActive(true);
+        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     public void ContinueGame()
     {
         //TODO load PlayerPrefs
 
+        AudioReciever.Instance.PlayUISettingsClick();
         OnStarted?.Invoke();
     }
 
@@ -71,24 +75,28 @@ public class StartMenu : MonoBehaviour
     {
         _buttons.SetActive(false);
         _panelSettings.SetActive(true);
+        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     public void EscapeSettings()
     {
         _panelSettings.SetActive(false);
         _buttons.SetActive(true);
+        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     public void ExitPressed()
     {
         _buttons.SetActive(false);
         _panelExit.SetActive(true);
+        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     public void EscapeExit()
     {
         _panelExit.SetActive(false);
         _buttons.SetActive(true);
+        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     public void Exit()
@@ -103,12 +111,14 @@ public class StartMenu : MonoBehaviour
     {
         _buttons.SetActive(false);
         _menuAuthors.SetActive(true);
+        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     public void EscapeAboutTheAuthors()
     {
         _buttons.SetActive(true);
         _menuAuthors.SetActive(false);
+        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     private void OnDestroy()

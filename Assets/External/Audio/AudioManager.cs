@@ -202,6 +202,7 @@ public class AudioManager : MonoBehaviour
         {
             var soundClip = clip;
             source.clip = soundClip.AudioClip;
+            source.playOnAwake = false;
             source.volume = soundClip.Volume * GetExponentialVolume(MasterVolume) * GetExponentialVolume(ChannelVolumeDictionary[_channelDictionary[sound]]);
             source.pitch = sound.HasPitchVariation ? Random.Range(1 - sound.PitchVariation, 1 + sound.PitchVariation) : 1;
             source.outputAudioMixerGroup = sound.MixerGroup;

@@ -90,4 +90,9 @@ public class InventoryFilters : MonoBehaviour
     {
         _inventorySystem.ActivateInventoryEvent -= OnActivateInventory;
     }
+
+    public void PlayUISwitchSound()
+    {
+        AudioReciever.Instance.PlayUIGeneralClick("OnCraftFilter");
+    }
 }

@@ -44,12 +44,16 @@ public class EscapeMenu : MonoBehaviour
         _panel.SetActive(false);
         _buttons.SetActive(false);
         _settingsPanel.SetActive(false);
+
+        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     public void Settings()
     {
         _settingsPanel.SetActive(true);
         _buttons.SetActive(false);
+
+        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     public void EscapeSettings()
@@ -60,8 +64,10 @@ public class EscapeMenu : MonoBehaviour
 
     public void GoToMain()
     {
-        _goToMainPanel.SetActive(true) ;
+        _goToMainPanel.SetActive(true);
         _buttons.SetActive(false);
+
+        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     public void EscapeGoToMain()
@@ -93,6 +99,7 @@ public class EscapeMenu : MonoBehaviour
     public void ExitGame()
     {
         //Debug.Log("ExitGame");
+        AudioReciever.Instance.PlayUISettingsClick();
         _saveLoadService.SaveProgress();
 
 #if UNITY_EDITOR
