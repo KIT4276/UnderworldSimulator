@@ -873,6 +873,7 @@ MonoBehaviour:
   _sprite: {fileID: 799008452145263904}
   _interactableCollider: {fileID: 9134201524283182813}
   _goParticleSystem: {fileID: 7292633968396984221}
+  _isOrganic: 1
 --- !u!61 &9134201524283182813
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -936,9 +937,11 @@ MonoBehaviour:
   - _count: 1
     _loot:
       _type: 2
+      _materialsData: {fileID: 0}
   - _count: 1
     _loot:
       _type: 3
+      _materialsData: {fileID: 0}
 --- !u!114 &7127928439886535232
 MonoBehaviour:
   m_ObjectHideFlags: 0

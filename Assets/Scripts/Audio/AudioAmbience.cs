@@ -29,7 +29,7 @@ public class AudioAmbience : MonoBehaviour
             if (randomNumber == 3) AudioManager.Instance.Play(SoundEnum.Woodpecker, _birdAudioSource);
             if (randomNumber >= 4) AudioManager.Instance.Play(SoundEnum.Owl, _birdAudioSource);
 
-            _timeToBirdSing = _timeToBirdSingBase + Random.Range(_timeToBirdSingBase * 0.8f, _timeToBirdSingBase * 1.2f);
+            _timeToBirdSing = Random.Range(_timeToBirdSingBase * 0.6f, _timeToBirdSingBase * 1.3f);
         }
     }
 }

@@ -13,7 +13,7 @@ public class AudioAnimationListener : MonoBehaviour
 
     void OnFrameEvent(string type, EventObject eventObject)
     {
-        Debug.Log("Frame event triggered: " + eventObject.name);
+        // Debug.Log("Frame event triggered: " + eventObject.name);
 
         // if (eventObject.name == "footstep_right" || eventObject.name == "footstep_left" || eventObject.name == "footstep_side_front"
         // || eventObject.name == "footstep_side_back" || eventObject.name == "footstep_back_left" || eventObject.name == "footstep_back_right")

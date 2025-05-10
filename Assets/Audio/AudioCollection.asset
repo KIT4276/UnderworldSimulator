@@ -69,8 +69,6 @@ MonoBehaviour:
         Volume: 0.2
       - AudioClip: {fileID: 8300000, guid: 2af0f5e3d0d04b74bbca6c1c32625424, type: 3}
         Volume: 0.2
-      - AudioClip: {fileID: 8300000, guid: 409185b490a4f1241bce3c3dafd26df2, type: 3}
-        Volume: 0.2
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
@@ -112,8 +110,6 @@ MonoBehaviour:
       - AudioClip: {fileID: 8300000, guid: 83f4cf1f5a2f9c84c88866eb2fc0fef2, type: 3}
         Volume: 0.5
       - AudioClip: {fileID: 8300000, guid: 2a17ef881e1f05144a7eef6828f4841f, type: 3}
-        Volume: 0.5
-      - AudioClip: {fileID: 8300000, guid: d7ac7fd3e1f05d540948c54f58cf6a93, type: 3}
         Volume: 0.5
       - AudioClip: {fileID: 8300000, guid: ee8f996776ad2204fa6b112462a0e308, type: 3}
         Volume: 0.5
@@ -159,6 +155,24 @@ MonoBehaviour:
       HasPitchVariation: 0
       PitchVariation: 0
       Enum: 8
+    - Name: Bush
+      Clips:
+      - AudioClip: {fileID: 8300000, guid: b17c5384ccda72d4bbc30d5db865a4a9, type: 3}
+        Volume: 0.2
+      - AudioClip: {fileID: 8300000, guid: b12a3236c6159984eb1da1228505df70, type: 3}
+        Volume: 0.2
+      - AudioClip: {fileID: 8300000, guid: 7c924156b4539c041ab086c599b6dcec, type: 3}
+        Volume: 0.2
+      - AudioClip: {fileID: 8300000, guid: 289e7e3aa979ae14daac9bcde11b4c18, type: 3}
+        Volume: 0.2
+      - AudioClip: {fileID: 8300000, guid: b1d9ab54755717b46a394e62ff8e2228, type: 3}
+        Volume: 0.2
+      - AudioClip: {fileID: 8300000, guid: b6d61998303387b4e9e0b58ed109b1bf, type: 3}
+        Volume: 0.2
+      MixerGroup: {fileID: 0}
+      HasPitchVariation: 0
+      PitchVariation: 0
+      Enum: 9
     Enum: 1
     EditorColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   - Name: Ambience
@@ -170,7 +184,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 9
+      Enum: 10
     - Name: Crow
       Clips:
       - AudioClip: {fileID: 8300000, guid: 04f4ecb9ef432a44fa6d78b818fa6c17, type: 3}
@@ -194,7 +208,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 10
+      Enum: 11
     - Name: Owl
       Clips:
       - AudioClip: {fileID: 8300000, guid: 3818fd2b638071445b7066af0003bca1, type: 3}
@@ -206,7 +220,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 11
+      Enum: 12
     - Name: Woodpecker
       Clips:
       - AudioClip: {fileID: 8300000, guid: eb0f7ca9f3ae4e74e8b149c1e48f8b92, type: 3}
@@ -214,7 +228,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 12
+      Enum: 13
     Enum: 2
     EditorColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   - Name: UI
@@ -248,7 +262,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 13
+      Enum: 14
     - Name: Room_Choose
       Clips:
       - AudioClip: {fileID: 8300000, guid: 5c8d5925a616eb543821bba1c35daed2, type: 3}
@@ -258,7 +272,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 14
+      Enum: 15
     - Name: General_Hover
       Clips:
       - AudioClip: {fileID: 8300000, guid: 5afa90a7050f45945bfda1227ccf31c1, type: 3}
@@ -268,7 +282,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 1
       PitchVariation: 0.05
-      Enum: 15
+      Enum: 16
     - Name: Furniture_Rotate
       Clips:
       - AudioClip: {fileID: 8300000, guid: 0225bebbb800c6841a797b20323c0490, type: 3}
@@ -280,7 +294,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 16
+      Enum: 17
     - Name: Furniture_Click
       Clips:
       - AudioClip: {fileID: 8300000, guid: daca697c6f961e94b9cc31034b406a12, type: 3}
@@ -298,7 +312,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 17
+      Enum: 18
     - Name: Furniture_Place
       Clips:
       - AudioClip: {fileID: 8300000, guid: 097e48b89a585e74eb3f6346c0327dd3, type: 3}
@@ -310,7 +324,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 18
+      Enum: 19
     Enum: 3
     EditorColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   - Name: NPC
@@ -318,11 +332,11 @@ MonoBehaviour:
     - Name: NPC_Wolf_Action
       Clips:
       - AudioClip: {fileID: 8300000, guid: 3968fd74885371549a3a98061e9b5187, type: 3}
-        Volume: 0.5
+        Volume: 0.3
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 19
+      Enum: 20
     - Name: NPC_Bull_Action
       Clips:
       - AudioClip: {fileID: 8300000, guid: 22ee682cfee9cb04ca2309e848dd5259, type: 3}
@@ -330,7 +344,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 20
+      Enum: 21
     - Name: Bear_Start
       Clips:
       - AudioClip: {fileID: 8300000, guid: 35028b46174935440baee38e1fc82267, type: 3}
@@ -338,7 +352,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 21
+      Enum: 22
     - Name: Bear_Finish
       Clips:
       - AudioClip: {fileID: 8300000, guid: 79cede5a05b72e949a9f8dd5192b12f6, type: 3}
@@ -346,7 +360,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 22
+      Enum: 23
     - Name: NPC_Bunny_Action
       Clips:
       - AudioClip: {fileID: 8300000, guid: 241aad4478a6b484eb3dc66bdf825271, type: 3}
@@ -354,7 +368,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 23
+      Enum: 24
     - Name: Monkey_Step
       Clips:
       - AudioClip: {fileID: 8300000, guid: 2d3d8d338026dc24ea82bf546ce71673, type: 3}
@@ -368,7 +382,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 24
+      Enum: 25
     - Name: Bear_Sustain
       Clips:
       - AudioClip: {fileID: 8300000, guid: 22994acffedb0f24bb9243d2cfebab9e, type: 3}
@@ -378,7 +392,7 @@ MonoBehaviour:
       MixerGroup: {fileID: 0}
       HasPitchVariation: 0
       PitchVariation: 0
-      Enum: 25
+      Enum: 26
     Enum: 4
     EditorColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   EnumsAssigned: 1
