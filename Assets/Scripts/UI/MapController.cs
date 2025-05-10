@@ -5,7 +5,7 @@ using Zenject;
 
 public class MapController : MonoBehaviour
 {
-    
+
     [Header("Input System References")]
     [SerializeField] private InputActionAsset inputActionAsset;
     [SerializeField] private GameObject mapPanel;
@@ -18,6 +18,16 @@ public class MapController : MonoBehaviour
     [Header("World Bounds")]
     [SerializeField] private Vector2 worldMin = new Vector2(-50, -50);
     [SerializeField] private Vector2 worldMax = new Vector2(50, 50);
+
+    [Header("MiniMap Components")]
+    [SerializeField] private RectTransform mapMiniImage;
+    [SerializeField] private RectTransform heroMiniIcon;
+    private Transform playerMiniTransform;
+    [SerializeField] private GameObject _miniMap;
+
+    [Header("Minimap World Bounds")]
+    [SerializeField] private Vector2 worldMiniMin = new Vector2();
+    [SerializeField] private Vector2 worldMiniMax = new Vector2();
 
     private bool isMapVisible = false;
     private StateMachine stateMachine;
@@ -37,7 +47,7 @@ public class MapController : MonoBehaviour
     }
 
     private void Awake()
-    {        
+    {
         playerActionMap = inputActionAsset.FindActionMap("Player");
         uiActionMap = inputActionAsset.FindActionMap("UI");
         helpActionMap = inputActionAsset.FindActionMap("Help");
@@ -66,7 +76,7 @@ public class MapController : MonoBehaviour
     {
         if (context.performed && isMapVisible)
         {
-            ToggleMap(); // Закрываем карту
+            ToggleMap(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         }
     }
 
@@ -168,4 +178,39 @@ public class MapController : MonoBehaviour
             stateMachine.ChangeStateAction -= OnStateChange;
     }
 
+    private void UpdatetHeroIconMinimapPosition()
+    {
+        Vector3 playerMiniPos;
+        if (playerTransform != null) playerMiniPos = playerTransform.position;
+        else playerMiniPos = new Vector3(0, 0, 0);
+
+        // Normalize player position (0 to 1 range)
+        float normalizedX = Mathf.InverseLerp(worldMin.x, worldMiniMax.x, playerMiniPos.x);
+        float normalizedY = Mathf.InverseLerp(worldMin.y, worldMiniMax.y, playerMiniPos.y); // Use Y for top-down
+
+        // Get the size of the map image
+        Vector2 mapMiniSize = mapMiniImage.rect.size;
+
+        // Calculate local position for HeroIcon
+        float mapMiniPosX = (normalizedX - 0.5f) * mapMiniSize.x;
+        float mapMiniPosY = (normalizedY - 0.5f) * mapMiniSize.y;
+
+        // Apply to HeroIcon
+        heroMiniIcon.anchoredPosition = new Vector2(mapMiniPosX, mapMiniPosY);
+    }
+    private void Update()
+    {
+        UpdatetHeroIconMinimapPosition();
+    }
+    public void ToggleMinimap()
+    {
+        if (isMapVisible)
+        {
+            _miniMap.SetActive(true);
+        }
+        else
+        {
+            _miniMap.SetActive(false);
+        }
+    }
 }
