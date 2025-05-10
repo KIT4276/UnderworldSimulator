@@ -6,7 +6,8 @@ using Zenject;
 
 public class InventorySystem : MonoBehaviour
 {
-    [SerializeField] private InventorySlot[] _inventorySlots;
+    [SerializeField] private InventorySlot _inventorySlotsPrefab;
+    [SerializeField] private int _slotsCount;
     [SerializeField] private GameObject _warningSign;
     [SerializeField] private InventoryFilters _inventoryFilters;
 
@@ -14,6 +15,8 @@ public class InventorySystem : MonoBehaviour
     private DecorationSystem _decorationSystem;
     private DecorHolder _decorHolder;
     private InventoryHolder _inventoryHolder;
+
+    private InventorySlot[] _inventorySlots;
 
     public event Action Exit;
     public event Action ActivateInventoryEvent;
@@ -32,6 +35,8 @@ public class InventorySystem : MonoBehaviour
     public void Construct(DecorationSystem decorationSystem, StateMachine stateMachine, MaterialsData materialsData, 
         DecorHolder decorHolder)
     {
+        CreateSlots();
+        
         _stateMachine = stateMachine;
         _decorationSystem = decorationSystem;
         _decorHolder = decorHolder;
@@ -45,6 +50,18 @@ public class InventorySystem : MonoBehaviour
 
         _inventoryHolder.LoasSave += UpdateSlots;
         _decorHolder.InstallDecor += RemoveDecor;
+
+    }
+
+    private void CreateSlots()
+    {
+        _inventorySlots = new InventorySlot[_slotsCount];
+        _inventorySlots[0] = _inventorySlotsPrefab;
+
+        for (int i = 1; i < _slotsCount; i++)
+        {
+            _inventorySlots[i] = Instantiate(_inventorySlotsPrefab, _inventorySlotsPrefab.transform.parent);
+        }
 
     }
 

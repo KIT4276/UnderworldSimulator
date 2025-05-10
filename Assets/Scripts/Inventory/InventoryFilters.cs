@@ -22,21 +22,21 @@ public class InventoryFilters : MonoBehaviour
 
     public void UpdateFiltres()
     {
-        switch (_filterType)
-        {
-            case FilterType.NoFilter:
-                OnNoFilter();
-                break;
-            case FilterType.Decor:
-                OnDecorFilter();
-                break;
-            case FilterType.Craft:
-                OnCraftFilter();    
-                break;
-            default:
-                OnNoFilter();
-                break;
-        }
+        //switch (_filterType)
+        //{
+        //    case FilterType.NoFilter:
+        //        OnNoFilter();
+        //        break;
+        //    case FilterType.Decor:
+        //        OnDecorFilter();
+        //        break;
+        //    case FilterType.Craft:
+        //        OnCraftFilter();    
+        //        break;
+        //    default:
+        //        OnNoFilter();
+        //        break;
+        //}
     }
 
 
