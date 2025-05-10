@@ -667,6 +667,7 @@ MonoBehaviour:
   _sprite: {fileID: 2480209730187628267}
   _interactableCollider: {fileID: 1385222412739061805}
   _goParticleSystem: {fileID: 7790635017373061583}
+  _isOrganic: 1
 --- !u!61 &1385222412739061805
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -725,10 +726,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2463b7aa82e9c34bb39f980ec32af45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _nane: 
   _craftLootSettings:
   - _count: 3
     _loot:
       _type: 5
+      _materialsData: {fileID: 0}
 --- !u!114 &7966951058316128249
 MonoBehaviour:
   m_ObjectHideFlags: 0
