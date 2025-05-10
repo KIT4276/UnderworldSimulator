@@ -30,6 +30,14 @@ public class DecorRotator : MonoBehaviour
 
     }
 
+    public void SetRotation(RotationState rotationState)
+    {
+        _decor.SetRotationState(rotationState);
+        UpdateImpassableZone(rotationState);
+        UpdateColliders(rotationState);
+        _decor.SetCurrentClickableCollider(UpdateClickableColliders(rotationState));
+    }
+
     private void OnRotate(RotationState predioslyRotationState)
     {
         
