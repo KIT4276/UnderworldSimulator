@@ -9,7 +9,7 @@ public class StartMenu : MonoBehaviour
 {
     [SerializeField] private GameObject _buttons;
     [SerializeField] private GameObject _menuAuthors;
-    [SerializeField] private GameObject _panelNewGame;
+   // [SerializeField] private GameObject _panelNewGame;
     [SerializeField] private GameObject _panelExit;
     [SerializeField] private GameObject _panelSettings;
     [Space]
@@ -22,7 +22,7 @@ public class StartMenu : MonoBehaviour
         if (SceneManager.GetActiveScene().name != "Initial") return;
 
         EscapeAboutTheAuthors();
-        _panelNewGame.SetActive(false);
+        //_panelNewGame.SetActive(false);
         _panelExit.SetActive(false);
         _menuAuthors.SetActive(false);
         _panelSettings.SetActive(false);
@@ -33,7 +33,7 @@ public class StartMenu : MonoBehaviour
 
     private void OnEscape(InputAction.CallbackContext context)
     {
-        _panelNewGame.SetActive(false);
+       // _panelNewGame.SetActive(false);
         _panelExit.SetActive(false);
         _menuAuthors.SetActive(false);
         _panelSettings.SetActive(false);
@@ -41,12 +41,12 @@ public class StartMenu : MonoBehaviour
         _buttons.SetActive(true);
     }
 
-    public void StartNewGamePressed()
-    {
-        _buttons.SetActive(false);
-        _panelNewGame.SetActive(true);
-        AudioReciever.Instance.PlayUISettingsClick();
-    }
+    //public void StartNewGamePressed()
+    //{
+    //    _buttons.SetActive(false);
+    //    _panelNewGame.SetActive(true);
+    //    AudioReciever.Instance.PlayUISettingsClick();
+    //}
 
     public void StartNewGame()
     {
@@ -58,7 +58,7 @@ public class StartMenu : MonoBehaviour
 
     public void EscapeStartNewGame()
     {
-        _panelNewGame.SetActive(false);
+       // _panelNewGame.SetActive(false);
         _buttons.SetActive(true);
         AudioReciever.Instance.PlayUISettingsClick();
     }
