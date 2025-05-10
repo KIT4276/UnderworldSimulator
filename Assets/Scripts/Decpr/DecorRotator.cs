@@ -21,6 +21,7 @@ public class DecorRotator : MonoBehaviour
         UpdateImpassableZone(currentRotationState);
         UpdateClickableColliders(currentRotationState);
         _decor.Rotated += OnRotate;
+        _decor.SetCurrentClickableCollider(UpdateClickableColliders(RotationState.Front));
     }
 
     public void OnRemoved()
@@ -33,7 +34,7 @@ public class DecorRotator : MonoBehaviour
     {
         
         var newRotationState = (RotationState)(((int)predioslyRotationState + 1) % 4);
-        Debug.Log(newRotationState);
+        //Debug.Log(newRotationState);
         _decor.SetRotationState(newRotationState);
         UpdateImpassableZone(newRotationState);
         UpdateColliders(newRotationState);

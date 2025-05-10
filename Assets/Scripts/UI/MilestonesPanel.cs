@@ -6,10 +6,10 @@ public class MilestonesPanel : MonoBehaviour
 {
     [SerializeField] private FadeInPanel _fadeInSign;
     [SerializeField] private Image _newGuestImage;
-    [SerializeField] private GameObject _newGuestText;
     [SerializeField] private GameObject _victoryEffectPrefab;
+    [SerializeField] private GameObject _newGuest;
 
-    [SerializeField] private RectTransform _panelTransform;
+   [SerializeField] private RectTransform _panelTransform;
 
     private GameObject _activeEffectInstance;
 
@@ -28,12 +28,6 @@ public class MilestonesPanel : MonoBehaviour
         _guestsSystem = guestsSystem;
 
         stateMachine.ChangeStateAction += OnChangeState;
-    }
-
-    private void OnGuestBecameAvailable(BaseHandledReward reward)
-    {
-        _guestSprite = ((Guest)reward).MilestonesIcon;
-        _newGuestImage.sprite = _guestSprite;
     }
 
     public void Ok()
@@ -57,6 +51,13 @@ public class MilestonesPanel : MonoBehaviour
         }
     }
 
+    private void OnGuestBecameAvailable(BaseHandledReward reward)
+    {
+        
+        _guestSprite = ((Guest)reward).MilestonesIcon;
+        _newGuestImage.sprite = _guestSprite;
+    }
+
     private void ShowPanel()
     {
         _fadeInSign.Show();
@@ -78,11 +79,11 @@ public class MilestonesPanel : MonoBehaviour
 
         if (_guestSprite == null)
         {
-            _newGuestImage.gameObject.SetActive(false);
-            _newGuestText.gameObject.SetActive(false);
+            _newGuest.SetActive(false);
         }
         else
         {
+            _newGuest.SetActive(true);
             _newGuestImage.sprite = _guestSprite;
             _guestSprite = null;
         }

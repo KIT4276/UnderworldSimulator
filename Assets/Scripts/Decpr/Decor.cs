@@ -161,6 +161,7 @@ public class Decor : MonoBehaviour, IBaseItem
     {
         if (!_canPlace || !_isCanDecorate) return;
         Clicked?.Invoke();
+        AudioReciever.Instance.PlayUIFurnitureClick();
     }
 
     protected void GoToLastPosition()
@@ -229,14 +230,7 @@ public class Decor : MonoBehaviour, IBaseItem
             _isCanDecorate = true;
             _canPlace = true;
         }
-        //else if (state is CraftState)
-        //{
-        //    if (IsDragging)
-        //    {
-        //        Debug.Log("TryToRemoveDecor");
-        //        _decorationSystem.TryToRemoveDecor(this);
-        //    }
-        //}
+
         else
         {
             _isCanDecorate = false;
@@ -250,15 +244,25 @@ public class Decor : MonoBehaviour, IBaseItem
 
     protected void GetRidOfDecor()
     {
-        if (!IsDragging) return;
-
-        if (_stateMachine.ActiveState is WorkbenchState)
+        if (!IsDragging)
         {
-            GoToLastPosition();
+            if (_decorPlacer.IsMouseOnObject())
+            {
+                _decorationSystem.TryToRemoveDecor(this);
+                return;
+            }
         }
-        else if (_stateMachine.ActiveState is DecorationState)
+        else
         {
-            _decorationSystem.TryToRemoveDecor(this);
+
+            if (_stateMachine.ActiveState is WorkbenchState)
+            {
+                GoToLastPosition();
+            }
+            else if (_stateMachine.ActiveState is DecorationState)
+            {
+                _decorationSystem.TryToRemoveDecor(this);
+            }
         }
     }
 

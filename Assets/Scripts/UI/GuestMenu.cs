@@ -13,6 +13,7 @@ public class GuestMenu : MonoBehaviour
     [Inject] private RoomsSystem _roomsSystem;
     [Inject] private GuestsHandler _guestsHandler;
 
+
     private void Start()
     {
         foreach(var guest in _guestsHandler.All)
@@ -38,8 +39,16 @@ public class GuestMenu : MonoBehaviour
 
     public void Open()
     {
-        _allCards.SetActive(true);
-        FillCards();
+        if (_allCards.activeInHierarchy)
+        {
+            Back();
+        }
+        else
+        {
+
+            _allCards.SetActive(true);
+            FillCards();
+        }
     }
 
     private void OnGuestsChanged()
@@ -91,7 +100,9 @@ public class GuestMenu : MonoBehaviour
 
     public void Back()
     {
-        _allCards.SetActive(false);
+       
+            _allCards.SetActive(false);
+        
     }
 
     private void OnDestroy()
