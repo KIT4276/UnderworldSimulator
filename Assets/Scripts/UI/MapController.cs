@@ -202,15 +202,15 @@ public class MapController : MonoBehaviour
     {
         UpdatetHeroIconMinimapPosition();
     }
-    public void ToggleMinimap()
-    {
-        if (isMapVisible)
-        {
-            _miniMap.SetActive(true);
-        }
-        else
-        {
-            _miniMap.SetActive(false);
-        }
-    }
+    // public void ToggleMinimap()
+    // {
+    //     if (isMapVisible)
+    //     {
+    //         _miniMap.SetActive(true);
+    //     }
+    //     else
+    //     {
+    //         _miniMap.SetActive(false);
+    //     }
+    // }
 }

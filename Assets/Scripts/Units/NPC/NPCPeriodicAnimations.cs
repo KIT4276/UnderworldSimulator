@@ -18,7 +18,7 @@ public class NPCPeriodicAnimations : MonoBehaviour
     private void Awake()
     {
         StartPeriodicMove();
-       // Debug.Log("Awake");
+        // Debug.Log("Awake");
     }
 
     protected void StartPeriodicMove()
