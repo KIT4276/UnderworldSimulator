@@ -253,14 +253,17 @@ public class Decor : MonoBehaviour, IBaseItem
                 return;
             }
         }
+        else
+        {
 
-        if (_stateMachine.ActiveState is WorkbenchState)
-        {
-            GoToLastPosition();
-        }
-        else if (_stateMachine.ActiveState is DecorationState)
-        {
-            _decorationSystem.TryToRemoveDecor(this);
+            if (_stateMachine.ActiveState is WorkbenchState)
+            {
+                GoToLastPosition();
+            }
+            else if (_stateMachine.ActiveState is DecorationState)
+            {
+                _decorationSystem.TryToRemoveDecor(this);
+            }
         }
     }
 

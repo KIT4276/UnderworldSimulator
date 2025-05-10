@@ -31,7 +31,7 @@ public class InventoryFilters : MonoBehaviour
                 OnDecorFilter();
                 break;
             case FilterType.Craft:
-                OnCraftFilter();    
+                OnCraftFilter();
                 break;
             default:
                 OnNoFilter();
@@ -42,9 +42,14 @@ public class InventoryFilters : MonoBehaviour
 
     public void OnNoFilter()
     {
-        _inventorySystem.ClearSlots();
-        _inventorySystem.FillDecorItems();
-        _inventorySystem.FillCraftItems();
+        //_inventorySystem.ClearSlots();
+        //_inventorySystem.FillDecorItems();
+        //_inventorySystem.FillCraftItems();
+
+        _inventorySystem.OffAllOccupiedSlots();
+
+        _inventorySystem.OnDecorSlots();
+        _inventorySystem.OnCraftSlots();
 
         _filterButtonSwitch.Switch(FilterType.NoFilter);
         _filterType = FilterType.NoFilter;
@@ -52,16 +57,24 @@ public class InventoryFilters : MonoBehaviour
 
     public void OnDecorFilter()
     {
-        _inventorySystem.ClearSlots();
-        _inventorySystem.FillDecorItems();
+        //_inventorySystem.ClearSlots();
+        //_inventorySystem.FillDecorItems();
+
+        _inventorySystem.OffAllOccupiedSlots();
+        _inventorySystem.OnDecorSlots();
+
         _filterButtonSwitch.Switch(FilterType.Decor);
         _filterType = FilterType.Decor;
     }
 
     public void OnCraftFilter()
     {
-        _inventorySystem.ClearSlots();
-        _inventorySystem.FillCraftItems();
+        //_inventorySystem.ClearSlots();
+        //_inventorySystem.FillCraftItems();
+
+        _inventorySystem.OffAllOccupiedSlots();
+        _inventorySystem.OnCraftSlots();
+
         _filterButtonSwitch.Switch(FilterType.Craft);
         _filterType = FilterType.Craft;
     }
