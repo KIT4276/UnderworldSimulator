@@ -5,19 +5,24 @@
     private readonly StateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
     private readonly LoadingCurtain _curtain;
+    private readonly BlackCurtain _blackCurtain;
     private readonly GameFactory _gameFactory;
 
-    public BootstrapState(StateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain,
+    public BootstrapState(StateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, BlackCurtain blackCurtain,
         GameFactory gameFactory)
     {
         _stateMachine = stateMachine;
         _sceneLoader = sceneLoader;
         _curtain = curtain;
+        _blackCurtain = blackCurtain;
         _gameFactory = gameFactory;
     }
 
-    public void Enter() =>
+    public void Enter()
+    {
+        _blackCurtain.SpeedHide();
         _sceneLoader.Load(Initial, onLoaded: EnterLoadLevel);
+    }
 
     public void Exit() { }
 

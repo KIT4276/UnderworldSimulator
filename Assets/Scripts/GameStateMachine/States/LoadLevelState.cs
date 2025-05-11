@@ -7,7 +7,7 @@ public class LoadLevelState : IPayloadedState<string>
 
     private readonly StateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
-    private readonly LoadingCurtain _curtain;
+    private readonly BlackCurtain _curtain;
     private readonly GameFactory _gameFactory;
     private readonly IPersistantProgressService _progressService;
     private readonly GuestsSystem _guestsSystem;
@@ -16,12 +16,12 @@ public class LoadLevelState : IPayloadedState<string>
     //private readonly SpaceDeterminantor _spaceDeterminantor;
     private GameObject _playerObj;
 
-    public LoadLevelState(StateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain,
+    public LoadLevelState(StateMachine stateMachine, SceneLoader sceneLoader, BlackCurtain curtain,
         GameFactory gameFactory, IPersistantProgressService progressService, GuestsSystem guestsSystem, InventorySystem inventorySystem)
     {
         _stateMachine = stateMachine;
         _sceneLoader = sceneLoader;
-        _curtain = curtain;
+       _curtain = curtain;
         _gameFactory = gameFactory;
         _progressService = progressService;
         _guestsSystem = guestsSystem;
@@ -39,7 +39,7 @@ public class LoadLevelState : IPayloadedState<string>
     public void Exit()
     {
         //_spaceDeterminantor.StartFind();
-        _curtain.Hide();
+       _curtain.Hide();
     }
 
     private void OnLoaded()
