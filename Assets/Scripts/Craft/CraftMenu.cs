@@ -137,7 +137,15 @@ public class CraftMenu : MonoBehaviour
 
     public void Exit()
     {
-        _stationsTransitor.ToDecorateState();
+        if (_machine.ActiveState is CraftState)
+        {
+
+            _stationsTransitor.ToDecorateState();
+        }
+        else if( _machine.ActiveState is PseudoCraftState)
+        {
+            _stationsTransitor.ToGameLoopState();
+        }
     }
 
     public void OnChangeCount(int count)

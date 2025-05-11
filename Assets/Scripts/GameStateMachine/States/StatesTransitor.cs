@@ -147,7 +147,7 @@ public class StatesTransitor
         _stateMachine.Enter<WorkbenchState>();
     }
 
-    private void ToGameLoopState()
+    public void ToGameLoopState()
     {
         _stateMachine.Enter<GameLoopState>();
     }
