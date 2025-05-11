@@ -32,7 +32,6 @@ public class VideoEndTrigger : MonoBehaviour
 
     private void OnContinue(InputAction.CallbackContext context)
     {
-        Debug.Log("stop");
         
         ////_videoPlayer.Stop();
         Continue();
