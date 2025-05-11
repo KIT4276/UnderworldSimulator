@@ -59,6 +59,7 @@ public class StartTutorial : MonoBehaviour
             int currentStep = animtut.GetInteger("Change");
             animtut.SetInteger("Change", currentStep + 1);
         }
+        AudioManager.Instance.Play(SoundEnum.General_Click);
     }
 
     private void SkipTutorial()
@@ -67,7 +68,7 @@ public class StartTutorial : MonoBehaviour
     }
 
     private IEnumerator PlayTutorialAnimationWithDelay(float delay)
-    {   
+    {
         tutorialBox.SetActive(false);
         yield return new WaitForSecondsRealtime(delay); // Unscaled time, so it works even if game is paused
         tutorialBox.SetActive(true);
@@ -77,6 +78,8 @@ public class StartTutorial : MonoBehaviour
 
     public void Endtut()
     {
+        AudioManager.Instance.Play(SoundEnum.General_Click);
+
         animtut.enabled = false;
         //tutorialBox.SetActive(false);
         advanceAction.Disable();

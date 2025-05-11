@@ -117,7 +117,7 @@ public class AudioReciever : MonoBehaviour
     }
     public void PlayUISettingsClick()
     {
-        // AudioManager.Instance.Play(SoundEnum.Search_Object);
+        AudioManager.Instance.Play(SoundEnum.General_Click);
     }
     public void PlayMilestoneReached()
     {

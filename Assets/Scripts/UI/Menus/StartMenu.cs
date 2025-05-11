@@ -9,7 +9,7 @@ public class StartMenu : MonoBehaviour
 {
     [SerializeField] private GameObject _buttons;
     [SerializeField] private GameObject _menuAuthors;
-   // [SerializeField] private GameObject _panelNewGame;
+    // [SerializeField] private GameObject _panelNewGame;
     [SerializeField] private GameObject _panelExit;
     [SerializeField] private GameObject _panelSettings;
     [Space]
@@ -33,7 +33,7 @@ public class StartMenu : MonoBehaviour
 
     private void OnEscape(InputAction.CallbackContext context)
     {
-       // _panelNewGame.SetActive(false);
+        // _panelNewGame.SetActive(false);
         _panelExit.SetActive(false);
         _menuAuthors.SetActive(false);
         _panelSettings.SetActive(false);
@@ -58,7 +58,7 @@ public class StartMenu : MonoBehaviour
 
     public void EscapeStartNewGame()
     {
-       // _panelNewGame.SetActive(false);
+        // _panelNewGame.SetActive(false);
         _buttons.SetActive(true);
         AudioReciever.Instance.PlayUISettingsClick();
     }
@@ -67,7 +67,6 @@ public class StartMenu : MonoBehaviour
     {
         //TODO load PlayerPrefs
 
-        AudioReciever.Instance.PlayUISettingsClick();
         OnStarted?.Invoke();
     }
 
@@ -82,7 +81,6 @@ public class StartMenu : MonoBehaviour
     {
         _panelSettings.SetActive(false);
         _buttons.SetActive(true);
-        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     public void ExitPressed()
@@ -96,7 +94,6 @@ public class StartMenu : MonoBehaviour
     {
         _panelExit.SetActive(false);
         _buttons.SetActive(true);
-        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     public void Exit()
@@ -118,7 +115,6 @@ public class StartMenu : MonoBehaviour
     {
         _buttons.SetActive(true);
         _menuAuthors.SetActive(false);
-        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     private void OnDestroy()
