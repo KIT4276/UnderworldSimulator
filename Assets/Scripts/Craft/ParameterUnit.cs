@@ -8,8 +8,20 @@ public class ParameterUnit : DraftParameterUnit
 
     public override void Fill(RoomParameter roomParameter, ParameterData parameterData)
     {
-        base.Fill(roomParameter, parameterData);
-        _name.gameObject.SetActive(true);
+        //base.Fill(roomParameter, parameterData);
+
+        if (_parameterData == null)
+        {
+            _parameterData = parameterData;
+        }
+
+        _icon.gameObject.SetActive(true);
+        _icon.sprite = _parameterData.FindParamByType(roomParameter.ParameterType).IconForCraft; //roomParameter.Icon;
+        _count.gameObject.SetActive(true);
+        _count.text = "+" + roomParameter.Value.ToString();
+    
+
+    _name.gameObject.SetActive(true);
         _name.text = _parameterData.FindParamByType(roomParameter.ParameterType).Name; //roomParameter.Name.ToString();
         //Debug.Log(roomParameter._parameterData);
     }
