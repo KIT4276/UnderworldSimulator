@@ -7,14 +7,15 @@ public class IntroState : IState
     private readonly SceneLoader _sceneLoader;
     private readonly LoadingCurtain _curtain;
 
-    public IntroState( SceneLoader sceneLoader, LoadingCurtain curtain)
+    public IntroState(SceneLoader sceneLoader, LoadingCurtain curtain)
     {
         _sceneLoader = sceneLoader;
         _curtain = curtain;
     }
-    
+
     public void Enter()
     {
+        AudioManager.Instance.Stop(SoundEnum.Menu, 1);
         _sceneLoader.Load(IntroScene, OnLoaded);
     }
 
@@ -28,4 +29,3 @@ public class IntroState : IState
     }
 }
 
-    

@@ -31,6 +31,7 @@ public class MapController : MonoBehaviour
 
     private bool isMapVisible = false;
     private StateMachine stateMachine;
+    private bool _isInitialized = false;
 
 
     private InputAction toggleMapAction;
@@ -83,14 +84,15 @@ public class MapController : MonoBehaviour
     private void OnStateChange(IExitableState newState)
     {
         // Check if the state is GameLoopState
-        if (newState is GameLoopState)
+        if (newState is GameLoopState && !_isInitialized)
         {
             // GameLoopState has been entered, initialize the player and map
             InitializePlayerAndMap();
-
-            // Unsubscribe from the event as we no longer need to listen for state changes
-            stateMachine.ChangeStateAction -= OnStateChange;
+            _isInitialized = true;
         }
+
+        if (newState is PseudoCraftState || newState is WorkbenchState || newState is CraftState || newState is DecorationState) ToggleMinimap(false);
+        if (newState is GameLoopState) ToggleMinimap(true);
     }
 
     private void InitializePlayerAndMap()
@@ -202,15 +204,8 @@ public class MapController : MonoBehaviour
     {
         UpdatetHeroIconMinimapPosition();
     }
-    // public void ToggleMinimap()
-    // {
-    //     if (isMapVisible)
-    //     {
-    //         _miniMap.SetActive(true);
-    //     }
-    //     else
-    //     {
-    //         _miniMap.SetActive(false);
-    //     }
-    // }
+    public void ToggleMinimap(bool status)
+    {
+        _miniMap.SetActive(status);
+    }
 }

@@ -17,6 +17,7 @@ public class OpeningTheDoor : MonoBehaviour
         {
             _open.SetActive(true);
             _close.SetActive(false);
+            AudioManager.Instance.Play(SoundEnum.Door_Open);
         }
     }
 
@@ -26,6 +27,7 @@ public class OpeningTheDoor : MonoBehaviour
         {
             _close.SetActive(true);
             _open.SetActive(false);
+            AudioManager.Instance.Play(SoundEnum.Door_Close);
         }
     }
 }

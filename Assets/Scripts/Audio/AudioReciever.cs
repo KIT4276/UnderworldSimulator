@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using Zenject;
 
 public class AudioReciever : MonoBehaviour
 {
     public static AudioReciever Instance;
     public FloorMaterial FloorMaterial;
+    private StateMachine stateMachine;
 
     private void Awake()
     {
@@ -18,6 +21,32 @@ public class AudioReciever : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
+    [Inject]
+    public void Construct(StateMachine stateMachine)
+    {
+        this.stateMachine = stateMachine;
+        stateMachine.ChangeStateAction += OnStateChange;
+    }
+    private void OnEnable()
+    {
+
+        stateMachine.ChangeStateAction += OnStateChange;
+    }
+    private void OnDisable()
+    {
+
+        stateMachine.ChangeStateAction -= OnStateChange;
+    }
+
+    private void OnStateChange(IExitableState newState)
+    {
+        if (newState is GameLoopState)
+        {
+        }
+
+        //WorkbenchState
+        //PseudoCraftState
+    }
 
     public void StartGameplay()
     {
@@ -25,6 +54,7 @@ public class AudioReciever : MonoBehaviour
         {
             if (AudioManager.Instance.IsPlaying(SoundEnum.Menu) == true) AudioManager.Instance.Stop(SoundEnum.Menu, 2);
             if (AudioManager.Instance.IsPlaying(SoundEnum.Gameplay) == false) AudioManager.Instance.Play(SoundEnum.Gameplay, 2, true);
+            AudioManager.Instance.Play(SoundEnum.Wind, 2, true);
         }
     }
 
@@ -34,7 +64,6 @@ public class AudioReciever : MonoBehaviour
         {
             if (AudioManager.Instance.IsPlaying(SoundEnum.Gameplay) == true) AudioManager.Instance.Stop(SoundEnum.Gameplay, 2);
             if (AudioManager.Instance.IsPlaying(SoundEnum.Menu) == false) AudioManager.Instance.Play(SoundEnum.Menu, 2, true);
-            AudioManager.Instance.Play(SoundEnum.Wind, 2, true);
         }
     }
 
@@ -85,5 +114,38 @@ public class AudioReciever : MonoBehaviour
     public void PlayUISettingsClick()
     {
         // AudioManager.Instance.Play(SoundEnum.Search_Object);
+    }
+    public void PlayMilestoneReached()
+    {
+        StartCoroutine(MilestoneReached());
+    }
+    private IEnumerator MilestoneReached()
+    {
+        AudioManager.Instance.Play(SoundEnum.Milestone_Reached);
+
+        float duration = 2f;
+        float elapsed = 0f;
+        float value = AudioManager.Instance.GetChannelVolume(ChannelEnum.Music);
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            value = Mathf.Lerp(1f, 0f, elapsed / duration);
+            AudioManager.Instance.SetChannelVolume(ChannelEnum.Music, value);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1.5f);
+
+        duration = 2f;
+        elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            value = Mathf.Lerp(0f, 1f, elapsed / duration);
+            AudioManager.Instance.SetChannelVolume(ChannelEnum.Music, value);
+            yield return null;
+        }
     }
 }

@@ -56,22 +56,22 @@ public class StateMachine
 
     public void EnterPredioslyState()
     {
-        //Debug.Log("было " + _activeState);
-        //Debug.Log("предыдущее " + PredioslyState);
+        //Debug.Log("пїЅпїЅпїЅпїЅ " + _activeState);
+        //Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ " + PredioslyState);
         //IExitableState newState = PredioslyState;
         //if (_activeState != null)
         //{
         //    //PredioslyState = _activeState;
         //    _activeState.Exit();
-        //    Debug.Log("вышли из  " + _activeState);
+        //    Debug.Log("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ  " + _activeState);
         //}
         //_activeState = newState;
 
         //if (_activeState is IState state)
         //{
         //    //state.Enter();
-            Enter<WorkbenchState>();
-        //    Debug.Log("зашли в  " + _activeState);
+        Enter<WorkbenchState>();
+        //    Debug.Log("пїЅпїЅпїЅпїЅпїЅ пїЅ  " + _activeState);
         //}
     }
 
