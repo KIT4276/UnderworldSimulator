@@ -42,27 +42,31 @@ public class AudioReciever : MonoBehaviour
     {
         if (newState is GameLoopState)
         {
+            if (AudioManager.Instance.IsPlaying(SoundEnum.Menu) == true) AudioManager.Instance.Stop(SoundEnum.Menu, 2);
+            if (AudioManager.Instance.IsPlaying(SoundEnum.Gameplay) == false) AudioManager.Instance.Play(SoundEnum.Gameplay, 2, true);
+            if (AudioManager.Instance.IsPlaying(SoundEnum.Wind) == false) AudioManager.Instance.Play(SoundEnum.Wind, 2, true);
         }
 
         //WorkbenchState
         //PseudoCraftState
     }
 
-    public void StartGameplay()
-    {
-        if (SceneManager.GetActiveScene().buildIndex == 1)
-        {
-            if (AudioManager.Instance.IsPlaying(SoundEnum.Menu) == true) AudioManager.Instance.Stop(SoundEnum.Menu, 2);
-            if (AudioManager.Instance.IsPlaying(SoundEnum.Gameplay) == false) AudioManager.Instance.Play(SoundEnum.Gameplay, 2, true);
-            AudioManager.Instance.Play(SoundEnum.Wind, 2, true);
-        }
-    }
+    // public void StartGameplay()
+    // {
+    //     if (SceneManager.GetActiveScene().buildIndex == 1)
+    //     {
+    //         if (AudioManager.Instance.IsPlaying(SoundEnum.Menu) == true) AudioManager.Instance.Stop(SoundEnum.Menu, 2);
+    //         if (AudioManager.Instance.IsPlaying(SoundEnum.Gameplay) == false) AudioManager.Instance.Play(SoundEnum.Gameplay, 2, true);
+    //         AudioManager.Instance.Play(SoundEnum.Wind, 2, true);
+    //     }
+    // }
 
     public void StartMenu()
     {
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             if (AudioManager.Instance.IsPlaying(SoundEnum.Gameplay) == true) AudioManager.Instance.Stop(SoundEnum.Gameplay, 2);
+            if (AudioManager.Instance.IsPlaying(SoundEnum.Wind) == true) AudioManager.Instance.Stop(SoundEnum.Wind, 2);
             if (AudioManager.Instance.IsPlaying(SoundEnum.Menu) == false) AudioManager.Instance.Play(SoundEnum.Menu, 2, true);
         }
     }

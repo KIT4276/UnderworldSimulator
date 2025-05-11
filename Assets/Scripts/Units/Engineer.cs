@@ -9,7 +9,6 @@ public class Engineer : InteractableObstacle
     private void Start()
     {
         _gameLoopState.GameLoopStateEnter += ConditionalActivate;
-        AudioReciever.Instance.StartGameplay();
     }
 
     private void ConditionalActivate()
