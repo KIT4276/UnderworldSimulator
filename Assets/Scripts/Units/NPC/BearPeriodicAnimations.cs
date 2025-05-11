@@ -10,18 +10,32 @@ public class BearPeriodicAnimations : NPCPeriodicAnimations
     private const string Idle = "stand";
     private bool _withBook;
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private int _numberOfSneezes;
-    private int _numberOfSneezesBase;
+    [SerializeField] private float _timeBetweenSneezes;
+    private float _timeBetweenSneezesBase;
+
+    private string _currentIdleState;
 
     private void Start()
     {
-        _numberOfSneezesBase = _numberOfSneezes;
+        _timeBetweenSneezesBase = _timeBetweenSneezes;
     }
 
     protected override IEnumerator PeriodicMove()
     {
         yield return new WaitForSeconds(RandomTime());
         ChangePose();
+    }
+    private void Update()
+    {
+        if (_currentIdleState == IdleWithBook)
+        {
+            _timeBetweenSneezes -= Time.deltaTime;
+            if (_timeBetweenSneezes <= 0)
+            {
+                if (!AudioManager.Instance.IsPlaying(SoundEnum.Bear_Finish) && !AudioManager.Instance.IsPlaying(SoundEnum.Bear_Start)) AudioManager.Instance.Play(SoundEnum.Bear_Sustain, _audioSource);
+                _timeBetweenSneezes = _timeBetweenSneezesBase;
+            }
+        }
     }
 
     private void ChangePose()
@@ -56,6 +70,18 @@ public class BearPeriodicAnimations : NPCPeriodicAnimations
 
     protected override void OnMoveAnimationComplete(string type, EventObject eventObject)
     {
+        // Debug.Log(eventObject.animationState.name);
+
+        if (eventObject.animationState.name == TakeBook)
+        {
+            _currentIdleState = IdleWithBook;
+            _timeBetweenSneezes = _timeBetweenSneezesBase;
+        }
+        else
+        {
+            _currentIdleState = "";
+        }
+
         if (eventObject.animationState.name == _move)
         {
             _armatureComponent.animation.Play(_idle, 0);

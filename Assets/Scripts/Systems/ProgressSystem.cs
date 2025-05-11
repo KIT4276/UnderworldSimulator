@@ -97,7 +97,7 @@ public class MilestoneSystem : IProgressSystem
     private void GiveReward()
     {
         //Debug.Log(CurrentMilestone.Reward);
-        AudioManager.Instance.Play(SoundEnum.Milestone_Reached);
+        AudioReciever.Instance.PlayMilestoneReached();
     }
 }
 

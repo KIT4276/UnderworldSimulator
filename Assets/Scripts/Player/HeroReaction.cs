@@ -20,6 +20,7 @@ public class HeroReaction : MonoBehaviour
     {
         _reactionPanel.SetActive(true);
         _reactionText.text = text;
+        AudioManager.Instance.Play(SoundEnum.Dialogue_Pop);
 
         StartCoroutine(HideReactionRoutine());
     }

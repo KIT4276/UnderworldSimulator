@@ -68,7 +68,7 @@ public class HelpTutorial : MonoBehaviour
     }
 
     private IEnumerator PlayTutorialAnimationWithDelay(float delay)
-    {   
+    {
         tutorialBox.SetActive(false);
         yield return new WaitForSecondsRealtime(delay); // Unscaled time, so it works even if game is paused
         tutorialBox.SetActive(true);
