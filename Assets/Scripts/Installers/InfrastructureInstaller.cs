@@ -7,13 +7,15 @@ using Zenject;
 public class InfrastructureInstaller : MonoInstaller, ICoroutineRunner
 {
     [SerializeField] private GameObject _entryPointPrefab;
-    [SerializeField] private GameObject _curtainPrefab;
+    [SerializeField] private GameObject _curtainPrefab; 
+    [SerializeField] private GameObject _blackCurtainPrefab;
     [SerializeField] private GameObject _playerInputPrefab;
    
 
-    private const string Curtain = "_curtain";
+    private const string Curtain = "Curtain";
     private const string Infrastructure = "Infrastructure";
     private const string EntryPoint = "EntryPoint";
+    private const string BlackCurtainName = "BlackCurtain";
 
     public override void InstallBindings()
     {
@@ -40,6 +42,9 @@ public class InfrastructureInstaller : MonoInstaller, ICoroutineRunner
     {
         Container.BindInterfacesAndSelfTo<LoadingCurtain>().FromComponentInNewPrefab(_curtainPrefab).
             WithGameObjectName(Curtain).UnderTransformGroup(Infrastructure).AsSingle().NonLazy();
+
+        Container.BindInterfacesAndSelfTo<BlackCurtain>().FromComponentInNewPrefab(_blackCurtainPrefab).
+           WithGameObjectName(BlackCurtainName).UnderTransformGroup(Infrastructure).AsSingle().NonLazy();
 
         Container.BindInterfacesAndSelfTo<AssetsProvider>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<PersistantProgressService>().FromNew().AsSingle().NonLazy();

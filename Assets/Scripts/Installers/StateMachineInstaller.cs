@@ -20,6 +20,7 @@ public class StateMachineInstaller : MonoInstaller
         Container.Bind<CraftState>().AsSingle().NonLazy();
         Container.Bind<PseudoCraftState>().AsSingle().NonLazy();
         Container.Bind<MilestoneState>().AsSingle().NonLazy();
+        Container.Bind<IntroState>().AsSingle().NonLazy();
 
         Container
           .BindInterfacesAndSelfTo<StateMachine>()

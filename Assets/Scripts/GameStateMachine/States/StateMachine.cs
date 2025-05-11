@@ -47,6 +47,8 @@ public class StateMachine
             .CreateState<PseudoCraftState>(),
             [typeof(MilestoneState)] = _stateFactory
             .CreateState<MilestoneState>(),
+            [typeof(IntroState)] = _stateFactory
+            .CreateState<IntroState>(),
         };
         Enter<BootstrapState>();
         _isInited = true;

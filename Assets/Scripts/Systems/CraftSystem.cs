@@ -32,6 +32,14 @@ public class CraftSystem
             draw.BecameAvailable += OnBecameAvailable;
         }
 
+        foreach(var draw in drawingDatas.Drawings)
+        {
+            if (draw.IsAvailable)
+            {
+                OnBecameAvailable(draw);
+            }
+        }
+
         Count = 1;
         _inventorySystem = inventorySystem;
         DrawingDatas = drawingDatas;
