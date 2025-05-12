@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -120,6 +121,13 @@ public class DecorPlacer : MonoBehaviour
         }
     }
 
+
+    public void RemoveHard()
+    {
+        _floor.DeleteDecor(_decor);
+        _floor = null;
+    }
+
     public bool IsMouseOnObject()
     {
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
@@ -149,4 +157,5 @@ public class DecorPlacer : MonoBehaviour
     {
         _decor.Clicked -= OnClicked;
     }
+
 }

@@ -36,6 +36,8 @@ public class RoomsSystem
         {
             Rooms.Add(floor.Room);
             FloorMarkers.Add(floor.Room, floor);
+
+
         }
 
         OnRoomSelected(_spaceDeterminantor.FloorMarkers[0].Room);
