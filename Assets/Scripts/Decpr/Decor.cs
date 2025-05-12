@@ -254,6 +254,7 @@ public class Decor : MonoBehaviour, IBaseItem
             if (_decorPlacer.IsMouseOnObject())
             {
                 _decorationSystem.TryToRemoveDecor(this);
+                _decorPlacer.RemoveHard();
                 return;
             }
         }
@@ -267,6 +268,7 @@ public class Decor : MonoBehaviour, IBaseItem
             else if (_stateMachine.ActiveState is DecorationState)
             {
                 _decorationSystem.TryToRemoveDecor(this);
+                _decorPlacer.RemoveHard();
             }
         }
     }
