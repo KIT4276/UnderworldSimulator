@@ -10,7 +10,7 @@ public class WorkbenchSystem : MonoBehaviour
     [SerializeField] private GameObject _warningSign;
     [SerializeField] private GameObject _bottomRoomsPanel;
     [SerializeField] private GameObject _roomRatingPanel;
-    [SerializeField]private RoomMenu _roomMenu;
+    [SerializeField] private RoomMenu _roomMenu;
     private RoomsSystem _roomsSystem;
     private DecorHolder _decorHolder;
     private StateMachine _stateMachine;
@@ -23,11 +23,11 @@ public class WorkbenchSystem : MonoBehaviour
     public event Action Destroyed;
 
     [Inject]
-    public void Construct(StateMachine stateMachine, InventorySystem inventory, DecorationSystem decorationSystem, 
+    public void Construct(StateMachine stateMachine, InventorySystem inventory, DecorationSystem decorationSystem,
         DecorHolder decorHolder, RoomsSystem roomsSystem)
     {
         _roomsSystem = roomsSystem;
-         _decorHolder = decorHolder;
+        _decorHolder = decorHolder;
         _stateMachine = stateMachine;
         _inventory = inventory;
         _decorationSystem = decorationSystem;
@@ -116,10 +116,11 @@ public class WorkbenchSystem : MonoBehaviour
     }
 
     private void ActivateWorkbench()
-    {
+    {   
         _workbenchPanel.SetActive(true);
         _roomRatingPanel.gameObject.SetActive(true);
         _bottomRoomsPanel.gameObject.SetActive(true);
+        AudioManager.Instance.Play(SoundEnum.Craftb_open);
 
         foreach (var button in buttonsClick)
         {
