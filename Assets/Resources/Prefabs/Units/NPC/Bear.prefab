@@ -54,6 +54,7 @@ MonoBehaviour:
   - {fileID: 4561362343177497867}
   - {fileID: 8320426888022768463}
   _footprints: {fileID: 5818238140562560753}
+  _periodicAnimations: {fileID: 4273184406294900113}
 --- !u!70 &6616945924338141745
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -711,15 +712,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6571288748714202139, guid: bd45ebde8b715f44ca8f115a2983581c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.0000004
+      value: 1.0000002
       objectReference: {fileID: 0}
     - target: {fileID: 6571288748714202139, guid: bd45ebde8b715f44ca8f115a2983581c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.4049424
+      value: 1.3180362
       objectReference: {fileID: 0}
     - target: {fileID: 6571288748714202139, guid: bd45ebde8b715f44ca8f115a2983581c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.6154234
+      value: 2.5474246
       objectReference: {fileID: 0}
     - target: {fileID: 6571288748714202139, guid: bd45ebde8b715f44ca8f115a2983581c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -727,11 +728,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6571288748714202139, guid: bd45ebde8b715f44ca8f115a2983581c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.70295095
+      value: 0.6642155
       objectReference: {fileID: 0}
     - target: {fileID: 6571288748714202139, guid: bd45ebde8b715f44ca8f115a2983581c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.7112383
+      value: -0.7475411
       objectReference: {fileID: 0}
     - target: {fileID: 6799631359619784127, guid: bd45ebde8b715f44ca8f115a2983581c, type: 3}
       propertyPath: m_IsActive
@@ -957,8 +958,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _armatureComponent: {fileID: 7940299245583092664}
-  _minTime: 20
-  _maxTime: 40
+  _minTime: 15
+  _maxTime: 60
   _fadeInTime: 0.5
   _audioSource: {fileID: 8467218525415775605}
   _timeBetweenSneezes: 9
