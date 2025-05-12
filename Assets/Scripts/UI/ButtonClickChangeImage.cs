@@ -14,11 +14,12 @@ public class ButtonClickChangeImage : MonoBehaviour
     [SerializeField] private Sprite _unactiveNormSprite;
     [SerializeField] private Sprite _activePressedSprite;
     [SerializeField] private Sprite _unactivePressedSprite;
+    [SerializeField] private SoundEnum _sound = SoundEnum.None;
 
     public void PressedButtoneChange()
     {
         StartCoroutine(ChangeRoutine());
-        AudioReciever.Instance.PlayUIGeneralClick("PressedButtoneChange");
+        if (_sound != SoundEnum.None) AudioManager.Instance.Play(_sound);
     }
 
     public void Activate()

@@ -10,6 +10,7 @@ public class ButtonEnterChangeImage : MonoBehaviour, IPointerEnterHandler, IPoin
     [SerializeField] private Sprite _highlightImage;
 
     [SerializeField] private bool _isOccupied;
+    [SerializeField] private SoundEnum _sound = SoundEnum.None;
 
     private void Awake()
     {
@@ -32,7 +33,7 @@ public class ButtonEnterChangeImage : MonoBehaviour, IPointerEnterHandler, IPoin
     public void OnPointerEnter(PointerEventData eventData)
     {
         HighlightImage();
-        AudioReciever.Instance.PlayUIGeneralHover();
+        if (_sound != SoundEnum.None) AudioManager.Instance.Play(_sound);
     }
 
 

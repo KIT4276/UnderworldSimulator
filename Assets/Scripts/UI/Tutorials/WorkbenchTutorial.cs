@@ -57,6 +57,7 @@ public class WorkbenchTutorial : MonoBehaviour
     {
         if (tutorialBox.activeSelf)
         {
+            AudioManager.Instance.Play(SoundEnum.Tutorial_paper);
             int currentStep = animtut.GetInteger("Change2");
             animtut.SetInteger("Change2", currentStep + 1);
         }
@@ -68,12 +69,13 @@ public class WorkbenchTutorial : MonoBehaviour
     }
 
     private IEnumerator PlayTutorialAnimationWithDelay(float delay)
-    {   
+    {
         tutorialBox.SetActive(false);
         yield return new WaitForSecondsRealtime(delay); // Unscaled time, so it works even if game is paused
         tutorialBox.SetActive(true);
         animtut.enabled = true;
         animtut.Play("Default", 0, 0f);
+        AudioManager.Instance.Play(SoundEnum.Tutorial_paper);
     }
 
     public void Endtut()
