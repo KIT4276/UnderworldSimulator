@@ -5,7 +5,8 @@ public class GuestObject : MonoBehaviour
 {
     [SerializeField] private GameObject[] _body;
     [SerializeField] private GameObject _footprints;
-    
+    [SerializeField] private NPCPeriodicAnimations _periodicAnimations;
+
     private StateMachine _stateMachine;
 
     public Guest Guest { get; private set; }
@@ -39,6 +40,7 @@ public class GuestObject : MonoBehaviour
             {
                 obj.SetActive(true);
             }
+                _periodicAnimations.StartPeriodicMove();
             // gameObject.SetActive(true);
         }
     }

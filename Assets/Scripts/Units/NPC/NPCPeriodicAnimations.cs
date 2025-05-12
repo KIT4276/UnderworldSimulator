@@ -21,8 +21,11 @@ public class NPCPeriodicAnimations : MonoBehaviour
         // Debug.Log("Awake");
     }
 
-    protected void StartPeriodicMove()
+    public void StartPeriodicMove()
     {
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+
         if (!gameObject.activeInHierarchy) return;
 
         if (_coroutine != null)
@@ -34,7 +37,7 @@ public class NPCPeriodicAnimations : MonoBehaviour
     protected virtual IEnumerator PeriodicMove()
     {
         yield return new WaitForSeconds(RandomTime());
-
+        Debug.Log("[PeriodicMove] " + this.name);
         _armatureComponent.AddDBEventListener(EventObject.COMPLETE, OnMoveAnimationComplete);
 
         AnimateMove();
