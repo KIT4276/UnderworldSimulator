@@ -26,7 +26,7 @@ public class MapController : MonoBehaviour
     [SerializeField] private GameObject _miniMap;
 
     [Header("Minimap World Bounds")]
-    [SerializeField] private Vector2 worldMiniMin = new Vector2();
+    // [SerializeField] private Vector2 worldMiniMin = new Vector2();
     [SerializeField] private Vector2 worldMiniMax = new Vector2();
 
     private bool isMapVisible = false;

@@ -40,7 +40,7 @@ public class LootClickHandler : MonoBehaviour
             _lootSystem.AllIsTacen();
         }
 
-        AudioReciever.Instance.PlayUIFurnitureClick();
+        AudioManager.Instance.Play(SoundEnum.Inventory_Add);
     }
 
     public void OnTakeAllClick()
@@ -50,8 +50,6 @@ public class LootClickHandler : MonoBehaviour
             _lootSystem.TakeLootToInventory(_lootSlot.TakeLastItem());
         }
         _lootSystem.AllIsTacen();
-
-        AudioReciever.Instance.PlayUIFurnitureClick();
     }
 
     private void OnDestroy()

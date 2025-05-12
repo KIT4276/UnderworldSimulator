@@ -5,7 +5,8 @@ using Zenject;
 
 public class CraftMenu : MonoBehaviour
 {
-   /* [SerializeField]*/ private CraftSlot[] _slots;
+    /* [SerializeField]*/
+    private CraftSlot[] _slots;
     [SerializeField] private CraftSlot _slotsPrefab;
     [SerializeField] private GameObject _menu;
     [SerializeField] private MainDrawingSign _mainDrawingSign;
@@ -17,7 +18,7 @@ public class CraftMenu : MonoBehaviour
     public event Action Filled;
 
     [Inject] private CraftSystem _craftSystem;
-   // [Inject] private WorkbenchSystem _workbenchSystem;
+    // [Inject] private WorkbenchSystem _workbenchSystem;
     [Inject] private StateMachine _machine;
     [Inject] private ParameterData _parameterData;
     [Inject] private StatesTransitor _stationsTransitor;
@@ -32,7 +33,7 @@ public class CraftMenu : MonoBehaviour
         _craftSystem.DrawingAdded += FillSlots;
         _craftSystem.NotEnoughMaterials += NotEnough;
 
-       
+
         _machine.ChangeStateAction += StateChanged;
 
         //FillSlots();
@@ -91,7 +92,7 @@ public class CraftMenu : MonoBehaviour
             }
 
         }
-            Filled?.Invoke();
+        Filled?.Invoke();
     }
 
     public void OnCreate()
@@ -106,7 +107,8 @@ public class CraftMenu : MonoBehaviour
         {
             _craftSystem.CreateDecor();
         }
-        AudioReciever.Instance.PlayUIGeneralClick("OnCreate");
+        AudioManager.Instance.Play(SoundEnum.Craftb_craft_click);
+
     }
 
     private void UpdateCount()
@@ -142,7 +144,7 @@ public class CraftMenu : MonoBehaviour
 
             _stationsTransitor.ToDecorateState();
         }
-        else if( _machine.ActiveState is PseudoCraftState)
+        else if (_machine.ActiveState is PseudoCraftState)
         {
             _stationsTransitor.ToGameLoopState();
         }
@@ -152,7 +154,7 @@ public class CraftMenu : MonoBehaviour
     {
         _craftSystem.OnChangeCount(count);
         UpdateCount();
-        AudioReciever.Instance.PlayUIGeneralClick("OnChangeCount");
+        AudioReciever.Instance.PlayUIFurnitureClick();
     }
 
     private void StateChanged(IExitableState state)
@@ -168,7 +170,7 @@ public class CraftMenu : MonoBehaviour
 
             _isInited = true;
         }
-        
+
         if (state is CraftState || state is PseudoCraftState)
         {
             OpenCraftMenu();
@@ -212,7 +214,7 @@ public class CraftMenu : MonoBehaviour
                 slot.DrawingSelected -= ToSelectDrawing;
             }
 
-        _craftSystem.OnDestroy();
+            _craftSystem.OnDestroy();
         }
     }
 }
