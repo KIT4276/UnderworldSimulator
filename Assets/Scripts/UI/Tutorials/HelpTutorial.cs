@@ -57,6 +57,7 @@ public class HelpTutorial : MonoBehaviour
     {
         if (tutorialBox.activeSelf)
         {
+            AudioManager.Instance.Play(SoundEnum.Tutorial_paper);
             int currentStep = animtut.GetInteger("Change5");
             animtut.SetInteger("Change5", currentStep + 1);
         }
@@ -74,6 +75,7 @@ public class HelpTutorial : MonoBehaviour
         tutorialBox.SetActive(true);
         animtut.enabled = true;
         animtut.Play("Default", 0, 0f);
+        AudioManager.Instance.Play(SoundEnum.Tutorial_paper);
     }
 
     public void Endtut()
