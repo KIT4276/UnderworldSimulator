@@ -1,5 +1,3 @@
-using System;
-using System.Diagnostics;
 using Zenject;
 
 public class Engineer : InteractableObstacle
@@ -9,6 +7,21 @@ public class Engineer : InteractableObstacle
     private void Start()
     {
         _gameLoopState.GameLoopStateEnter += ConditionalActivate;
+        if(_machine != null)
+        {
+            _machine.ChangeStateAction += OnStateChange;
+        }
+    }
+
+    private void OnStateChange(IExitableState state)
+    {
+       if(state is InventoryState )
+        {
+            if (_isInTrigger)
+            {
+                Activate();
+            }
+        }
     }
 
     private void ConditionalActivate()
@@ -19,11 +32,12 @@ public class Engineer : InteractableObstacle
 
     protected override void Interac()
     {
-        if (_machine.ActiveState != _gameLoopState)
-            return;
+        if (_machine.ActiveState is GameLoopState || _machine.ActiveState is InventoryState)
+        {
 
-        _sign.SetActive(false);
-        _machine.Enter<WorkbenchState>();
+            _sign.SetActive(false);
+            _machine.Enter<WorkbenchState>();
+        }
 
     }
 

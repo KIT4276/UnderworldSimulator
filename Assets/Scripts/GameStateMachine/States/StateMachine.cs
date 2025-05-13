@@ -99,7 +99,7 @@ public class StateMachine
         _activeState = state;
 
         ChangeStateAction?.Invoke(state);
-        // Debug.Log("_activeState " + _activeState);
+         Debug.Log("_activeState " + _activeState);
         return state;
     }
 
