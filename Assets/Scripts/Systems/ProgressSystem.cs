@@ -62,6 +62,7 @@ public class MilestoneSystem : IProgressSystem
     public float CurrentValue { get => CurrentMilestone.ProgressValue; }
 
     public event Action Change;
+    public event Action TheEnd;
 
     public MilestoneSystem(ProgressSystem progressSystem, MilestonesData milestones, StateMachine stateMachine)
     {
@@ -90,6 +91,20 @@ public class MilestoneSystem : IProgressSystem
                 CurrentMilestone = _milestonesData.Milestones[i];
                 _stateMachine.Enter<MilestoneState>();
                 Change?.Invoke();
+            }
+
+            if(i == _milestonesData.Milestones.Length - 1)
+            {
+                Debug.LogWarning("mmmmmmmm?");
+                TheEnd?.Invoke();
+
+            }
+
+            if(i == _milestonesData.Milestones.Length)
+            {
+                ReachedMilestone = _milestonesData.Milestones[i - 1];
+                //_stateMachine.Enter<MilestoneState>();
+                //Change?.Invoke();
             }
         }
     }

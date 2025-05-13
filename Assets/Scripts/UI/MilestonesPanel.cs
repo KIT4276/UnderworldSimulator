@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -8,6 +9,8 @@ public class MilestonesPanel : MonoBehaviour
     [SerializeField] private Image _newGuestImage;
     [SerializeField] private GameObject _victoryEffectPrefab;
     [SerializeField] private GameObject _newGuest;
+    [SerializeField]
+    private GameObject[] _hidedInTheEnd;
 
    [SerializeField] private RectTransform _panelTransform;
 
@@ -28,6 +31,16 @@ public class MilestonesPanel : MonoBehaviour
         _guestsSystem = guestsSystem;
 
         stateMachine.ChangeStateAction += OnChangeState;
+        _milestoneSystem.TheEnd += OnEnd;
+    }
+
+    private void OnEnd()
+    {
+        foreach(var r in _hidedInTheEnd)
+        {
+            if(r != null) 
+            r.SetActive(false);
+        }
     }
 
     public void Ok()
