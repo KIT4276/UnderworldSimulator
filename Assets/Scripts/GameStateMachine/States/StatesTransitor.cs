@@ -43,12 +43,10 @@ public class StatesTransitor
         {
             if (_stateMachine.ActiveState is CraftState)
             {
-                Debug.Log("ToDecorateState");
                 ToDecorateState();
             }
             else if(_stateMachine.ActiveState is DecorationState)
             {
-                Debug.Log("ConditionalToCraftState");
                 ConditionalToCraftState();
             }
         }
