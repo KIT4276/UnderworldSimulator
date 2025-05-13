@@ -18,6 +18,8 @@ public class InteractableObstacle : MonoBehaviour
     public event Action Interact;
     public event Action LeftTheArea;
 
+    protected bool _isInTrigger= false;
+
     protected void Awake()
     {
         _sign.SetActive(false);
@@ -35,7 +37,7 @@ public class InteractableObstacle : MonoBehaviour
             _hero = hero;
             _playerInput.onActionTriggered += OnPlayerInputActionTriggered;
             Activate();
-          
+            _isInTrigger = true;
         }
     }
     protected void OnTriggerExit2D(Collider2D collision)
@@ -44,6 +46,7 @@ public class InteractableObstacle : MonoBehaviour
         {
             _hero = hero;
             DeActivate();
+            _isInTrigger = false;
         }
     }
 
