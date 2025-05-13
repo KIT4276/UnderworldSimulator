@@ -1,9 +1,11 @@
+using System;
 using UnityEngine.InputSystem;
 
 public class CheatCodes
 {
     private readonly InputActionReference[] _tests;
     private readonly InputActionReference[] _mat_tests;
+    private readonly InputActionReference _allMatTests;
     private readonly Decor[] _decors;
     private readonly CraftLootSettings[] _craftLootSettings;
     private readonly MaterialsData _materialsData;
@@ -17,7 +19,8 @@ public class CheatCodes
 
         InputActionReference[] tests,
         InputActionReference[] mat_tests,
-        CraftLootSettings[] craftLootSettings, Decor[] decors)
+        CraftLootSettings[] craftLootSettings, Decor[] decors,
+        InputActionReference allMatTests)
     {
 
         _craftLootSettings = craftLootSettings;
@@ -27,6 +30,7 @@ public class CheatCodes
         _decors = decors;
         _materialsData = materialsData;
 
+        _allMatTests = allMatTests;
         _tests = tests;
         _mat_tests = mat_tests;
 
@@ -35,15 +39,27 @@ public class CheatCodes
 
     private void Subscribe()
     {
-        _tests[0].action.started += AddAllDecor;
+        //_tests[0].action.started += AddAllDecor;
         _tests[1].action.started += AddAllDrawings;
         _tests[2].action.started += AddAllGuests;
 
+        _allMatTests.action.started += AddAllMat;
 
 
         for(int i = 0;  i < _mat_tests.Length; i++)
         {
             _mat_tests[i].action.started += AddMaterial;
+        }
+    }
+
+    private void AddAllMat(InputAction.CallbackContext context)
+    {
+        for (int i = 0; i < 99; i++)
+        {
+            foreach (var sett in _craftLootSettings)
+            {
+                AddMaterials(sett.Loot);
+            }
         }
     }
 

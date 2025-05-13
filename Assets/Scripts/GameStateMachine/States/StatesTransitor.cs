@@ -188,6 +188,7 @@ public class StatesTransitor
         _lootSystem.OpenMenuAction -= ToLootState;
         _lootSystem.CloseMenuAction -= ToGameLoopState;
         _workbenchSystem.Destroyed -= OnDestroyed;
+        _playerInput.actions["Tab"].performed -= OnTab;
     }
 
 }
