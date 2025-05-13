@@ -8,6 +8,7 @@ public class GuestMenu : MonoBehaviour
     [SerializeField] private RoomMenu _roomMenu;
     [SerializeField] private GameObject _allCards;
     [SerializeField] private GuestCard[] _guestCard;
+    [SerializeField] private GameObject _notifier;
 
     [Inject] private GuestsSystem _guestsSystem;
     [Inject] private RoomsSystem _roomsSystem;
@@ -16,9 +17,9 @@ public class GuestMenu : MonoBehaviour
 
     private void Start()
     {
-        foreach(var guest in _guestsHandler.All)
+        foreach (var guest in _guestsHandler.All)
         {
-            ((Guest) guest).CheckIn += OnCheckIn;
+            ((Guest)guest).CheckIn += OnCheckIn;
             ((Guest)guest).Evict += OnGuestsChanged;
         }
         _guestsHandler.AvailableUpdate += OnGuestsChanged;
@@ -30,11 +31,13 @@ public class GuestMenu : MonoBehaviour
     private void OnRoomSelected(Room room)
     {
         FillCards();
+        UpdateNotifier();
     }
 
     private void OnCheckIn(Room room)
     {
         FillCards();
+        UpdateNotifier();
     }
 
     public void Open()
@@ -49,11 +52,46 @@ public class GuestMenu : MonoBehaviour
             _allCards.SetActive(true);
             FillCards();
         }
+        UpdateNotifier();
     }
 
     private void OnGuestsChanged()
     {
+        UpdateNotifier();
         FillCards();
+    }
+
+    private void UpdateNotifier()
+    {
+        if (_roomsSystem.SelectedRoom != null)
+        {
+            if (_roomsSystem.SelectedRoom.Guest == null && IsExistsUnCheckedInGuest())
+            {
+                _notifier.SetActive(true);
+
+            }
+            else
+            {
+                _notifier.SetActive(false);
+            }
+        }
+    }
+
+    private bool IsExistsUnCheckedInGuest()
+    {
+        bool isExist = false;
+        if (_guestsHandler.AvailableList != null && _guestsHandler.AvailableList.Count > 0)
+        {
+            foreach (var reward in _guestsHandler.AvailableList)
+            {
+                if (reward is Guest guest && guest.Room == null)
+                {
+                    isExist = true;
+                    break;
+                }
+            }
+        }
+        return isExist;
     }
 
     private void FillCards()
@@ -100,9 +138,9 @@ public class GuestMenu : MonoBehaviour
 
     public void Back()
     {
-       
-            _allCards.SetActive(false);
-        
+
+        _allCards.SetActive(false);
+
     }
 
     private void OnDestroy()

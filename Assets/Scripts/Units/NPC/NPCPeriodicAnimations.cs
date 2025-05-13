@@ -37,7 +37,7 @@ public class NPCPeriodicAnimations : MonoBehaviour
     protected virtual IEnumerator PeriodicMove()
     {
         yield return new WaitForSeconds(RandomTime());
-        Debug.Log("[PeriodicMove] " + this.name);
+      //  Debug.Log("[PeriodicMove] " + this.name);
         _armatureComponent.AddDBEventListener(EventObject.COMPLETE, OnMoveAnimationComplete);
 
         AnimateMove();

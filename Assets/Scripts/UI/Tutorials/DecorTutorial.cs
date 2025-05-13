@@ -12,13 +12,15 @@ public class DecorTutorial : MonoBehaviour
 
     private Animator animtut;
     private StateMachine stateMachine;
+    private InventorySystem _inventorySystem;
     private InputAction advanceAction;
     private bool tutorialStarted = false;
 
     [Inject]
-    public void Construct(StateMachine stateMachine)
+    public void Construct(StateMachine stateMachine, InventorySystem inventorySystem)
     {
         this.stateMachine = stateMachine;
+        _inventorySystem = inventorySystem;
         stateMachine.ChangeStateAction += OnStateChange;
     }
 
@@ -38,8 +40,11 @@ public class DecorTutorial : MonoBehaviour
 
     private void OnStateChange(IExitableState newState)
     {
-        if (newState is DecorationState && !tutorialStarted)
+        
+        if (newState is DecorationState && !tutorialStarted && _inventorySystem.InventoryHolder.IsHaveDecor())
         {
+            Debug.Log("[OnStateChange] IsHaveDecor");
+            
             StartCoroutine(PlayTutorialAnimationWithDelay(0f));
             tutorialStarted = true;
 
