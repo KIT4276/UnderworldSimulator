@@ -59,4 +59,6 @@ public enum SoundEnum
 	NPC_Bunny_Action = 45,
 	Monkey_Step = 46,
 	Bear_Sustain = 47,
+	hotel_ui_milestone_add = 48,
+	hotel_ui_milestone_remove = 49,
 }

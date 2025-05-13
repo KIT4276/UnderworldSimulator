@@ -148,6 +148,6 @@ public class LootSystem : MonoBehaviour
 
     public void PlayUICloseMenuSound()
     {
-        AudioReciever.Instance.PlayUIGeneralClick("CloseMenu");
+        AudioManager.Instance.Play(SoundEnum.General_Click);
     }
 }

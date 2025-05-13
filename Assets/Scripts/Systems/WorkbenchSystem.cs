@@ -64,6 +64,7 @@ public class WorkbenchSystem : MonoBehaviour
 
     public void OnExitWorkbench()
     {
+        AudioManager.Instance.Play(SoundEnum.General_Click);
         Exit?.Invoke();
     }
 
@@ -93,16 +94,16 @@ public class WorkbenchSystem : MonoBehaviour
             case WorkbenchState:
                 DeActivateInventory();
                 ActivateWorkbench();
-                
 
-                if (_stateMachine.PredioslyState!= null && _stateMachine.PredioslyState is MilestoneState)
+
+                if (_stateMachine.PredioslyState != null && _stateMachine.PredioslyState is MilestoneState)
                 {
                     _roomMenu.gameObject.SetActive(true);
                     _roomRatingPanel.SetActive(true);
 
                 }
                 break;
-                
+
 
         }
 

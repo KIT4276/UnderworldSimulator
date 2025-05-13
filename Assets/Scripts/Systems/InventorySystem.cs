@@ -104,6 +104,7 @@ public class InventorySystem : MonoBehaviour
 
     public void OnExit()
     {
+        AudioManager.Instance.Play(SoundEnum.General_Click);
         Exit?.Invoke();
     }
 
@@ -126,7 +127,7 @@ public class InventorySystem : MonoBehaviour
         ActivateInventoryEvent?.Invoke();
     }
 
-    public void TryReturnLootToInventory(Item loot) /// Внимательно! Сюда обращаемся только чтобы вернуть лут
+    public void TryReturnLootToInventory(Item loot) /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
     {
         if (_inventorySlots.Length == 0)
         {
@@ -164,14 +165,14 @@ public class InventorySystem : MonoBehaviour
 
         if (!isPlaced)
         {
-            Debug.Log(" не нашлось место для декора");
+            Debug.Log(" пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
             StopAllCoroutines();
             _warningSign.SetActive(true);
             StartCoroutine(HideSign());
         }
     }
 
-    public void TryReturnDecorToInventory(Decor decor)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
+    public void TryReturnDecorToInventory(Decor decor)//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
     {
         //Debug.Log("TryReturnDecorToInventory");
 
@@ -207,7 +208,7 @@ public class InventorySystem : MonoBehaviour
 
         if (!isPlaced)
         {
-            Debug.Log(" не нашлось место для декора");
+            Debug.Log(" пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
             StopAllCoroutines();
             _warningSign.SetActive(true);
             StartCoroutine(HideSign());
@@ -301,8 +302,8 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    private void ReturnDecorToInventory(Decor decor, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть декор.
-                                                           //для лута создать свой метод
+    private void ReturnDecorToInventory(Decor decor, int i)//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
+                                                           //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     {
         //Debug.Log("ReturnDecorToInventory");
         _inventorySlots[i].SetItem(decor);
@@ -314,7 +315,7 @@ public class InventorySystem : MonoBehaviour
 
     }
 
-    private void ReturnLootToInventory(Item loot, int i)//внимательно! сюда обращаемся, ТОЛЬКО если нужно вернуть лут.
+    private void ReturnLootToInventory(Item loot, int i)//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ.
     {
         _inventorySlots[i].SetItem(loot);
 
@@ -357,7 +358,7 @@ public class InventorySystem : MonoBehaviour
 
         foreach (var slot in InventorySlots)
         {
-            if (!slot.IsOccupied || (slot.IsOccupied && slot.Items[0].GetIcon() == item.GetIcon()))// костылище пока что
+            if (!slot.IsOccupied || (slot.IsOccupied && slot.Items[0].GetIcon() == item.GetIcon()))// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
             {
                 //Debug.Log("FindPlaceForItem");
                 slot.SetItem(item);

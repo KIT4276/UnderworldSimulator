@@ -90,8 +90,6 @@ public class Decor : MonoBehaviour, IBaseItem
 
         IsDragging = false;
         IsInside = false;
-
-        AudioManager.Instance.Play(SoundEnum.Decor_Return);
     }
 
 
@@ -252,6 +250,7 @@ public class Decor : MonoBehaviour, IBaseItem
         {
             if (_decorPlacer.IsMouseOnObject())
             {
+                AudioManager.Instance.Play(SoundEnum.Decor_Return);
                 _decorationSystem.TryToRemoveDecor(this);
                 _decorPlacer.RemoveHard();
                 return;
@@ -262,10 +261,12 @@ public class Decor : MonoBehaviour, IBaseItem
 
             if (_stateMachine.ActiveState is WorkbenchState)
             {
+                AudioManager.Instance.Play(SoundEnum.Decor_Return);
                 GoToLastPosition();
             }
             else if (_stateMachine.ActiveState is DecorationState)
             {
+                AudioManager.Instance.Play(SoundEnum.Decor_Return);
                 _decorationSystem.TryToRemoveDecor(this);
                 _decorPlacer.RemoveHard();
             }
