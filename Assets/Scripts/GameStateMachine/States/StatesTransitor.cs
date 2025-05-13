@@ -25,6 +25,7 @@ public class StatesTransitor
 
         playerInput.actions["Escape"].performed += OnEscape;
         playerInput.actions["Inventory"].performed += OnInventory;
+        playerInput.actions["Tab"].performed += OnTab;
         _workbenchSystem.InventoryButtonClick += ToDecorateState;
         _workbenchSystem.CraftButtonClick += ConditionalToCraftState;
 
@@ -34,6 +35,23 @@ public class StatesTransitor
         _lootSystem.CloseMenuAction += ToGameLoopState;
 
         _workbenchSystem.Destroyed += OnDestroyed;
+    }
+
+    private void OnTab(InputAction.CallbackContext context)
+    {
+        if(_stateMachine.ActiveState!= null)
+        {
+            if (_stateMachine.ActiveState is CraftState)
+            {
+                Debug.Log("ToDecorateState");
+                ToDecorateState();
+            }
+            else if(_stateMachine.ActiveState is DecorationState)
+            {
+                Debug.Log("ConditionalToCraftState");
+                ConditionalToCraftState();
+            }
+        }
     }
 
     public void ConditionalToInventoryState()
