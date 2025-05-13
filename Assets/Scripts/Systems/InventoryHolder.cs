@@ -18,6 +18,23 @@ public class InventoryHolder : ISavedProgress
         _inventorySystem = inventorySystem;
     }
 
+    public bool IsHaveDecor()
+    {
+        bool hasDecor = false;
+        if (AllItemsInInventory != null && AllItemsInInventory.Count > 0)
+        {
+            foreach (var item in AllItemsInInventory)
+            {
+                if (item is Decor)
+                {
+                    hasDecor = true;
+                    break;
+                }
+            }
+        }
+        return hasDecor;
+    }
+
     public void Add(IBaseItem item)
     {
         if (AllItemsInInventory == null)
@@ -31,12 +48,12 @@ public class InventoryHolder : ISavedProgress
 
     public void RemoveDecor(Decor decor)
     {
-        for(var i = 0;  i < AllItemsInInventory.Count; i++) 
-        
+        for (var i = 0; i < AllItemsInInventory.Count; i++)
+
         {
             if (AllItemsInInventory[i] is Decor decorInInvent)
             {
-                if(decorInInvent.DecorType == decor.DecorType)
+                if (decorInInvent.DecorType == decor.DecorType)
                 {
                     Remove(AllItemsInInventory[i]);
                 }
