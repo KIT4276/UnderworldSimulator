@@ -93,7 +93,15 @@ public class WorkbenchSystem : MonoBehaviour
             case WorkbenchState:
                 DeActivateInventory();
                 ActivateWorkbench();
+                //Debug.Log("PredioslyState " +_stateMachine.PredioslyState);
+                if (_stateMachine.PredioslyState is MilestoneState)
+                {
+                    _roomMenu.gameObject.SetActive(true);
+                    _roomRatingPanel.SetActive(true);
+
+                }
                 break;
+
         }
 
     }
@@ -116,7 +124,7 @@ public class WorkbenchSystem : MonoBehaviour
     }
 
     private void ActivateWorkbench()
-    {   
+    {
         _workbenchPanel.SetActive(true);
         _roomRatingPanel.gameObject.SetActive(true);
         _bottomRoomsPanel.gameObject.SetActive(true);

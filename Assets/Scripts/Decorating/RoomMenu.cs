@@ -29,7 +29,8 @@ public class RoomMenu : MonoBehaviour
     [SerializeField] private DecorInRoom _decorInRoom;
     [Space]
     [SerializeField] private GameObject _allGuests;
-    
+    [SerializeField] private SwapUIITabs _swapUIITabs;
+
 
     private StateMachine _machine;
     private RoomsSystem _roomsSystem;
@@ -51,6 +52,7 @@ public class RoomMenu : MonoBehaviour
     private void Awake()
     {
         UpdateParams(_roomsSystem.SelectedRoom);
+        _swapUIITabs.SwapToTasks();
     }
 
     private void FillButtons()
@@ -67,7 +69,11 @@ public class RoomMenu : MonoBehaviour
         {
             CloseRoomPanel();
         }
-
+        if(state is WorkbenchState && _machine.PredioslyState is MilestoneState)
+        {
+            UpdateParams(_roomsSystem.SelectedRoom);
+            _swapUIITabs.SwapToTasks();
+        }
     }
 
     public void CloseRoomPanel()
