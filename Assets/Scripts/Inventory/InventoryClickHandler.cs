@@ -24,6 +24,8 @@ public class InventoryClickHandler : MonoBehaviour
             //Debug.Log(_stateMachine);
             //Debug.Log(_stateMachine.ActiveState);
 
+            if (_slot == null || _stateMachine == null || _decorationSystem == null) return;
+
             if (_slot.IsOccupied && _stateMachine.ActiveState is DecorationState)
                 _decorationSystem.SpawnDecorIfCan((Decor)_slot.TakeLastItem());
         }
