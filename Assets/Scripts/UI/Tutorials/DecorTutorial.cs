@@ -43,7 +43,6 @@ public class DecorTutorial : MonoBehaviour
         
         if (newState is DecorationState && !tutorialStarted && _inventorySystem.InventoryHolder.IsHaveDecor())
         {
-            Debug.Log("[OnStateChange] IsHaveDecor");
             
             StartCoroutine(PlayTutorialAnimationWithDelay(0f));
             tutorialStarted = true;
