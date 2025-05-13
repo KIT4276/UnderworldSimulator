@@ -89,18 +89,19 @@ public class MilestoneSystem : IProgressSystem
             {
                 ReachedMilestone = _milestonesData.Milestones[i - 1];
                 CurrentMilestone = _milestonesData.Milestones[i];
+                AudioReciever.Instance.PlayMilestoneReached();
                 _stateMachine.Enter<MilestoneState>();
                 Change?.Invoke();
             }
 
-            if(i == _milestonesData.Milestones.Length - 1)
+            if (i == _milestonesData.Milestones.Length - 1)
             {
                 Debug.LogWarning("mmmmmmmm?");
                 TheEnd?.Invoke();
 
             }
 
-            if(i == _milestonesData.Milestones.Length)
+            if (i == _milestonesData.Milestones.Length)
             {
                 ReachedMilestone = _milestonesData.Milestones[i - 1];
                 //_stateMachine.Enter<MilestoneState>();
@@ -112,7 +113,6 @@ public class MilestoneSystem : IProgressSystem
     private void GiveReward()
     {
         //Debug.Log(CurrentMilestone.Reward);
-        AudioReciever.Instance.PlayMilestoneReached();
     }
 }
 
