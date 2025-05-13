@@ -130,7 +130,6 @@ public class WorkbenchSystem : MonoBehaviour
         _workbenchPanel.SetActive(true);
         _roomRatingPanel.gameObject.SetActive(true);
         _bottomRoomsPanel.gameObject.SetActive(true);
-        AudioManager.Instance.Play(SoundEnum.Craftb_open);
 
         foreach (var button in buttonsClick)
         {

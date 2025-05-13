@@ -39,6 +39,7 @@ public class Engineer : InteractableObstacle
             _machine.Enter<WorkbenchState>();
         }
 
+        AudioManager.Instance.Play(SoundEnum.Craftb_open);
     }
 
     private void OnDestroy()

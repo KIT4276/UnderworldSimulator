@@ -45,6 +45,7 @@ public class AudioReciever : MonoBehaviour
             if (AudioManager.Instance.IsPlaying(SoundEnum.Menu) == true) AudioManager.Instance.Stop(SoundEnum.Menu, 2);
             if (AudioManager.Instance.IsPlaying(SoundEnum.Gameplay) == false) AudioManager.Instance.Play(SoundEnum.Gameplay, 2, true);
             if (AudioManager.Instance.IsPlaying(SoundEnum.Wind) == false) AudioManager.Instance.Play(SoundEnum.Wind, 2, true);
+            if (AudioManager.Instance.IsPlaying(SoundEnum.Cloud_3D) == false) AudioManager.Instance.Play(SoundEnum.Cloud_3D, 2, true);
         }
 
         //WorkbenchState
@@ -67,6 +68,7 @@ public class AudioReciever : MonoBehaviour
         {
             if (AudioManager.Instance.IsPlaying(SoundEnum.Gameplay) == true) AudioManager.Instance.Stop(SoundEnum.Gameplay, 2);
             if (AudioManager.Instance.IsPlaying(SoundEnum.Wind) == true) AudioManager.Instance.Stop(SoundEnum.Wind, 2);
+            if (AudioManager.Instance.IsPlaying(SoundEnum.Cloud_3D) == true) AudioManager.Instance.Stop(SoundEnum.Cloud_3D, 2);
             if (AudioManager.Instance.IsPlaying(SoundEnum.Menu) == false) AudioManager.Instance.Play(SoundEnum.Menu, 2, true);
         }
     }
@@ -109,11 +111,11 @@ public class AudioReciever : MonoBehaviour
     }
     public void PlaySearchOrganic()
     {
-        AudioManager.Instance.Play(SoundEnum.Search_Organic);
+        if (!AudioManager.Instance.IsPlaying(SoundEnum.Search_Organic)) AudioManager.Instance.Play(SoundEnum.Search_Organic);
     }
     public void PlaySearchObject()
     {
-        AudioManager.Instance.Play(SoundEnum.Search_Object);
+        if (!AudioManager.Instance.IsPlaying(SoundEnum.Search_Object)) AudioManager.Instance.Play(SoundEnum.Search_Object);
     }
     public void PlayUISettingsClick()
     {
