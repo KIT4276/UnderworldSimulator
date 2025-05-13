@@ -20,6 +20,7 @@ public class LootClickHandler : MonoBehaviour
 
     private void OnEPressed(InputAction.CallbackContext context)
     {
+        Debug.Log("OnEPressed");
         if (_stateMachine.ActiveState is LootState)
         {
             OnTakeAllClick();
@@ -28,6 +29,7 @@ public class LootClickHandler : MonoBehaviour
 
     public void OntakeClick()
     {
+        Debug.Log("OntakeClick");
         IBaseItem takenLoot = _lootSlot.TakeLastItem();
         _lootSystem.TakeLootToInventory(takenLoot);
 
@@ -45,11 +47,15 @@ public class LootClickHandler : MonoBehaviour
 
     public void OnTakeAllClick()
     {
+
+        Debug.Log("OnTakeAllClick");
         while (_lootSlot.Loots.Count > 0)
         {
             _lootSystem.TakeLootToInventory(_lootSlot.TakeLastItem());
         }
         _lootSystem.AllIsTacen();
+
+        if (!AudioManager.Instance.IsPlaying(SoundEnum.Inventory_Add)) AudioManager.Instance.Play(SoundEnum.Inventory_Add);
     }
 
     private void OnDestroy()

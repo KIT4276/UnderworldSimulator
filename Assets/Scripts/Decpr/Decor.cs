@@ -91,7 +91,7 @@ public class Decor : MonoBehaviour, IBaseItem
         IsDragging = false;
         IsInside = false;
 
-        AudioReciever.Instance.PlayUIBackClick();
+        AudioManager.Instance.Play(SoundEnum.Decor_Return);
     }
 
 
@@ -140,7 +140,7 @@ public class Decor : MonoBehaviour, IBaseItem
         _decorationSystem.InstanriateDecor(this);
         DecorPlacedAction?.Invoke();
         AllowActions();
-        AudioReciever.Instance.PlayUIFurniturePlace();
+        AudioManager.Instance.Play(SoundEnum.Decor_Place);
 
         //foreach (var param in _parameters.Parameters)
         //{
@@ -164,7 +164,6 @@ public class Decor : MonoBehaviour, IBaseItem
     {
         if (!_canPlace || !_isCanDecorate) return;
         Clicked?.Invoke();
-        AudioReciever.Instance.PlayUIFurnitureClick();
     }
 
     protected void GoToLastPosition()
@@ -181,7 +180,7 @@ public class Decor : MonoBehaviour, IBaseItem
         if (!IsDragging || !_isCanDecorate) return;
 
         Rotated?.Invoke(_currentRotationState);
-        AudioReciever.Instance.PlayUIFurnitureRotate();
+        AudioManager.Instance.Play(SoundEnum.Decor_Rotate);
     }
 
     protected bool CheckCamera()
