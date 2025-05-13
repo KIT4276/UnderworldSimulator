@@ -8,16 +8,16 @@ public class ProgressBarSwitch : MonoBehaviour
 
     private StateMachine _stateMachine;
     private MilestoneSystem _milestoneSystem;
-    private MilestonesData _milestonesData;
+   // private MilestonesData _milestonesData;
 
     private bool _disposed = false;
 
     [Inject]
-    private void Construct(StateMachine stateMachine, MilestoneSystem milestoneSystem, MilestonesData milestonesData)
+    private void Construct(StateMachine stateMachine, MilestoneSystem milestoneSystem/*, MilestonesData milestonesData*/)
     {
         _stateMachine = stateMachine;
         _milestoneSystem = milestoneSystem;
-        _milestonesData = milestonesData;
+        //_milestonesData = milestonesData;
         _stateMachine.ChangeStateAction += OnChangeState;
         _milestoneSystem.TheEnd += OnTheEnd;
     }

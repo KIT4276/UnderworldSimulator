@@ -124,8 +124,11 @@ public class DecorPlacer : MonoBehaviour
 
     public void RemoveHard()
     {
-        _floor.DeleteDecor(_decor);
-        _floor = null;
+        if (_floor != null)
+        {
+            _floor.DeleteDecor(_decor);
+            _floor = null;
+        }
     }
 
     public bool IsMouseOnObject()
