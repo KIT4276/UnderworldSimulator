@@ -39,13 +39,13 @@ public class StatesTransitor
 
     private void OnTab(InputAction.CallbackContext context)
     {
-        if(_stateMachine.ActiveState!= null)
+        if (_stateMachine.ActiveState != null)
         {
             if (_stateMachine.ActiveState is CraftState)
             {
                 ToDecorateState();
             }
-            else if(_stateMachine.ActiveState is DecorationState)
+            else if (_stateMachine.ActiveState is DecorationState)
             {
                 ConditionalToCraftState();
             }
@@ -72,26 +72,33 @@ public class StatesTransitor
         switch (_stateMachine.ActiveState)
         {
             case DecorationState:
+                AudioManager.Instance.Play(SoundEnum.General_Click);
                 ConditionalToWorkbenchState();
                 //ToWorkbenchState();
                 break;
             case WorkbenchState:
                 //ToGameLoopState();
+                AudioManager.Instance.Play(SoundEnum.General_Click);
                 ConditionalToGameLoopState();
                 break;
             case InventoryState:
+                AudioManager.Instance.Play(SoundEnum.General_Click);
                 ToGameLoopState();
                 break;
             case LootState:
+                AudioManager.Instance.Play(SoundEnum.General_Click);
                 ToGameLoopState();
                 break;
             case CraftState:
+                AudioManager.Instance.Play(SoundEnum.General_Click);
                 ToWorkbenchState();
                 break;
             case GameLoopState:
+                AudioManager.Instance.Play(SoundEnum.General_Click);
                 EscapeGame?.Invoke();
                 break;
             case PseudoCraftState:
+                AudioManager.Instance.Play(SoundEnum.General_Click);
                 ToGameLoopState();
                 break;
         }

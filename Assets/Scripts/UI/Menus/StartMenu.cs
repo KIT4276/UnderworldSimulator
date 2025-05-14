@@ -33,6 +33,7 @@ public class StartMenu : MonoBehaviour
 
     private void OnEscape(InputAction.CallbackContext context)
     {
+        AudioReciever.Instance.PlayUISettingsClick();
         // _panelNewGame.SetActive(false);
         _panelExit.SetActive(false);
         _menuAuthors.SetActive(false);
@@ -81,6 +82,7 @@ public class StartMenu : MonoBehaviour
     {
         _panelSettings.SetActive(false);
         _buttons.SetActive(true);
+        AudioReciever.Instance.PlayUISettingsClick();
     }
 
     public void ExitPressed()

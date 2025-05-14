@@ -64,7 +64,6 @@ public class WorkbenchSystem : MonoBehaviour
 
     public void OnExitWorkbench()
     {
-        AudioManager.Instance.Play(SoundEnum.General_Click);
         Exit?.Invoke();
     }
 

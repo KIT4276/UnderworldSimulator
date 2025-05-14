@@ -9,6 +9,7 @@ public class AudioAnimationListener : MonoBehaviour
     void Start()
     {
         armatureComponent.AddDBEventListener(EventObject.FRAME_EVENT, OnFrameEvent);
+        armatureComponent.AddDBEventListener(EventObject.COMPLETE, OnMoveAnimationComplete);
     }
 
     void OnFrameEvent(string type, EventObject eventObject)
@@ -29,7 +30,17 @@ public class AudioAnimationListener : MonoBehaviour
         if (eventObject.name == "start_id_bear_01" && _audioSource != null) AudioManager.Instance.Play(SoundEnum.Bear_Start, _audioSource);
         if (eventObject.name == "start_id_bear_02" && _audioSource != null) AudioManager.Instance.Play(SoundEnum.Bear_Finish, _audioSource);
         if (eventObject.name == "start_id_rabbit" && _audioSource != null) AudioManager.Instance.Play(SoundEnum.NPC_Bunny_Action, _audioSource);
-        // if (eventObject.name == "start_id_monkey_01" && _audioSource != null) AudioManager.Instance.Play(SoundEnum.Monkey_Step, _audioSource);
+        if (eventObject.name == "01_start_id_monkey" && _audioSource != null) if (!AudioManager.Instance.IsPlaying(SoundEnum.hotel_npc_monkey_scream)) AudioManager.Instance.Play(SoundEnum.hotel_npc_monkey_scream, _audioSource, 0, true);
         if (eventObject.name == "02_start_id_monkey" && _audioSource != null) AudioManager.Instance.Play(SoundEnum.Monkey_Step, _audioSource);
+    }
+
+    protected void OnMoveAnimationComplete(string type, EventObject eventObject)
+    {
+        // Debug.Log(eventObject.animationState.name);
+
+        if (eventObject.animationState.name == "idle_animation_01")
+        {
+            AudioManager.Instance.Stop(SoundEnum.hotel_npc_monkey_scream, 1.5f);
+        }
     }
 }

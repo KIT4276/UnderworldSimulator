@@ -61,4 +61,5 @@ public enum SoundEnum
 	Bear_Sustain = 47,
 	hotel_ui_milestone_add = 48,
 	hotel_ui_milestone_remove = 49,
+	hotel_npc_monkey_scream = 50,
 }

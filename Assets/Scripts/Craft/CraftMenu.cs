@@ -139,7 +139,6 @@ public class CraftMenu : MonoBehaviour
 
     public void Exit()
     {
-        AudioManager.Instance.Play(SoundEnum.General_Click);
 
         if (_machine.ActiveState is CraftState)
         {
