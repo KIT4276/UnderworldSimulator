@@ -56,6 +56,7 @@ public class GuestCard : MonoBehaviour
 
     public void FillCardEvict()
     {
+        _guest = null;
         _icon.sprite = _evictSprite;
         var color = _icon.color;
         color.a = 1;
