@@ -52,6 +52,7 @@ public class LootClickHandler : MonoBehaviour
         _lootSystem.AllIsTacen();
 
         if (!AudioManager.Instance.IsPlaying(SoundEnum.Inventory_Add)) AudioManager.Instance.Play(SoundEnum.Inventory_Add);
+        if (!AudioManager.Instance.IsPlaying(SoundEnum.Decor_Return)) AudioManager.Instance.Play(SoundEnum.Decor_Return);
     }
 
     private void OnDestroy()

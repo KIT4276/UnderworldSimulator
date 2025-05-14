@@ -40,7 +40,7 @@ public class AudioAnimationListener : MonoBehaviour
 
         if (eventObject.animationState.name == "idle_animation_01")
         {
-            AudioManager.Instance.Stop(SoundEnum.hotel_npc_monkey_scream, 1.5f);
+            AudioManager.Instance.Stop(SoundEnum.hotel_npc_monkey_scream, 0.75f);
         }
     }
 }
