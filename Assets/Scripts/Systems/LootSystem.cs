@@ -150,4 +150,8 @@ public class LootSystem : MonoBehaviour
     {
         AudioManager.Instance.Play(SoundEnum.General_Click);
     }
+    public void PlayLootSound()
+    {
+        AudioManager.Instance.Play(SoundEnum.Inventory_Add);
+    }
 }

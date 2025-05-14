@@ -7205,6 +7205,7 @@ GameObject:
   - component: {fileID: 67589827771814656}
   - component: {fileID: 677124114319453561}
   - component: {fileID: 6893263552867032715}
+  - component: {fileID: 5032928527582660281}
   m_Layer: 5
   m_Name: OkButton
   m_TagString: Untagged
@@ -7325,6 +7326,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5032928527582660281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5714539694369570132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8af05e310018b04fb435cfc94780c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5813625057742272340
 GameObject:
   m_ObjectHideFlags: 0
@@ -11593,6 +11606,10 @@ PrefabInstance:
     - target: {fileID: 5390824518416888472, guid: dcff42a7ddec353488bd94d4e44fa57f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5414767714701565164, guid: dcff42a7ddec353488bd94d4e44fa57f, type: 3}
+      propertyPath: m_Size
+      value: 0.08606265
       objectReference: {fileID: 0}
     - target: {fileID: 5419799900276017266, guid: dcff42a7ddec353488bd94d4e44fa57f, type: 3}
       propertyPath: m_AnchorMax.y

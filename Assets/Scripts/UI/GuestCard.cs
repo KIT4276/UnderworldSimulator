@@ -30,18 +30,20 @@ public class GuestCard : MonoBehaviour
 
     public void CheckInGuest()
     {
+        AudioReciever.Instance.PlayUIRoomClick();
         if (_guest != null)
         {
+            AudioManager.Instance.Play(SoundEnum.Walls_low);
             _roomsSystem.TryToCheckInGuest(_guest);
         }
         else if (_isEvict)
         {
             _guest = null;
+            AudioManager.Instance.Play(SoundEnum.Decor_Return);
             _roomsSystem.EvictGuest();
         }
         else { return; }
 
-        AudioReciever.Instance.PlayUIRoomClick();
         _guestMenu.Back();
     }
 
