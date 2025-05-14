@@ -41,7 +41,7 @@ public class CheatCodes
     {
         //_tests[0].action.started += AddAllDecor;
         _tests[1].action.started += AddAllDrawings;
-        _tests[2].action.started += AddAllGuests;
+        //_tests[2].action.started += AddAllGuests;
 
         _allMatTests.action.started += AddAllMat;
 
