@@ -8,7 +8,7 @@ public class EscapeMenu : MonoBehaviour
     [SerializeField] private GameObject _panel;
     [SerializeField] private GameObject _settingsPanel;
     [SerializeField] private GameObject _buttons;
-    [SerializeField] private GameObject _goToMainPanel;
+   // [SerializeField] private GameObject _goToMainPanel;
     [SerializeField] private GameObject _exitGamePanel;
 
     [Inject] private StatesTransitor _statesTransitor;
@@ -21,7 +21,7 @@ public class EscapeMenu : MonoBehaviour
         _panel.SetActive(false);
         _buttons.SetActive(false);
         _settingsPanel.SetActive(false);
-        _goToMainPanel.SetActive(false);
+        //_goToMainPanel.SetActive(false);
         _exitGamePanel.SetActive(false);
         _statesTransitor.EscapeGame += OnEscape;
     }
@@ -65,7 +65,7 @@ public class EscapeMenu : MonoBehaviour
 
     public void GoToMain()
     {
-        _goToMainPanel.SetActive(true);
+       // _goToMainPanel.SetActive(true);
         _buttons.SetActive(false);
 
         AudioReciever.Instance.PlayUISettingsClick();
@@ -73,7 +73,7 @@ public class EscapeMenu : MonoBehaviour
 
     public void EscapeGoToMain()
     {
-        _goToMainPanel.SetActive(false);
+       // _goToMainPanel.SetActive(false);
         _buttons.SetActive(true);
 
         AudioReciever.Instance.PlayUISettingsClick();

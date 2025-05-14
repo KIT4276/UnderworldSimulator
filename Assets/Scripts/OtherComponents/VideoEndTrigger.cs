@@ -13,6 +13,8 @@ public class VideoEndTrigger : MonoBehaviour
     private StateMachine _stateMachine;
     private IPersistantProgressService _progressService;
 
+    private bool _isEnd = false;
+
     [Inject]
     private void Construct(StateMachine stateMachine, IPersistantProgressService progressService)
     {
@@ -44,7 +46,12 @@ public class VideoEndTrigger : MonoBehaviour
 
     void Continue()
     {
-        _stateMachine.Enter<LoadLevelState, string>(_progressService.Progress.WorldData.PositionOnLevel.Level);
+        if (!_isEnd)
+        {
+            _isEnd = true;
+            _stateMachine.Enter<LoadLevelState, string>(_progressService.Progress.WorldData.PositionOnLevel.Level);
+
+        }
     }
 
     private void OnDestroy()
