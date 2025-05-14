@@ -24,7 +24,6 @@ public class ProgressBarSwitch : MonoBehaviour
 
     private void OnTheEnd()
     {
-            Debug.Log("last Milestone");
         _disposed = true;
             //_progressBar.SetActive(false);
     }

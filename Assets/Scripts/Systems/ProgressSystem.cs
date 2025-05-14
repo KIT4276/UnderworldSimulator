@@ -96,7 +96,8 @@ public class MilestoneSystem : IProgressSystem
 
             if (i == _milestonesData.Milestones.Length - 1)
             {
-                Debug.LogWarning("mmmmmmmm?");
+                ReachedMilestone = _milestonesData.Milestones[i - 1];
+                AudioReciever.Instance.PlayMilestoneReached();
                 TheEnd?.Invoke();
 
             }

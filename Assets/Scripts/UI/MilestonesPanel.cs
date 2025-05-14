@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -9,10 +10,10 @@ public class MilestonesPanel : MonoBehaviour
     [SerializeField] private Image _newGuestImage;
     [SerializeField] private GameObject _victoryEffectPrefab;
     [SerializeField] private GameObject _newGuest;
-    [SerializeField]
-    private GameObject[] _hidedInTheEnd;
+    [SerializeField] private GameObject[] _hidedInTheEnd;
+    [SerializeField] private GameObject _win;
 
-   [SerializeField] private RectTransform _panelTransform;
+    [SerializeField] private RectTransform _panelTransform;
 
     private GameObject _activeEffectInstance;
 
@@ -34,13 +35,19 @@ public class MilestonesPanel : MonoBehaviour
         _milestoneSystem.TheEnd += OnEnd;
     }
 
+    private void Awake()
+    {
+        _win.SetActive(false);
+    }
+
     private void OnEnd()
     {
-        foreach(var r in _hidedInTheEnd)
+        foreach (var r in _hidedInTheEnd)
         {
-            if(r != null) 
-            r.SetActive(false);
+            if (r != null)
+                r.SetActive(false);
         }
+        _win.SetActive(true);
     }
 
     public void Ok()
@@ -54,6 +61,7 @@ public class MilestonesPanel : MonoBehaviour
     {
         if (state is GameLoopState && !_isInit)
         {
+            
             _milestoneSystem.Change += ShowPanel;
 
             foreach (var guest in _guestsSystem.Guests)
@@ -66,7 +74,7 @@ public class MilestonesPanel : MonoBehaviour
 
     private void OnGuestBecameAvailable(BaseHandledReward reward)
     {
-        
+
         _guestSprite = ((Guest)reward).MilestonesIcon;
         _newGuestImage.sprite = _guestSprite;
     }
@@ -82,7 +90,7 @@ public class MilestonesPanel : MonoBehaviour
         // Clean up previous effect if needed
         if (_activeEffectInstance != null)
             Destroy(_activeEffectInstance);
-        
+
         // Instantiate the prefab and position it
         if (_victoryEffectPrefab != null)
         {
@@ -106,6 +114,7 @@ public class MilestonesPanel : MonoBehaviour
     {
         _stateMachine.ChangeStateAction -= OnChangeState;
         _milestoneSystem.Change -= ShowPanel;
+        _milestoneSystem.TheEnd -= OnEnd;
 
         foreach (var guest in _guestsSystem.Guests)
         {
