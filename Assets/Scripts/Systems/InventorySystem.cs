@@ -62,7 +62,7 @@ public class InventorySystem : MonoBehaviour
             _inventorySlots[i] = Instantiate(_inventorySlotsPrefab, _inventorySlotsPrefab.transform.parent);
         }
 
-        foreach(var slot in _inventorySlots)
+        foreach (var slot in _inventorySlots)
         {
             slot.GetComponent<InventoryClickHandler>().Construct(_stateMachine, _decorationSystem, _decorHolder);
         }
@@ -82,7 +82,7 @@ public class InventorySystem : MonoBehaviour
     public void UpdateSlots()
     {
         ClearSlots();
-        
+
         FillDecorItems();
         FillCraftItems();
 
@@ -104,7 +104,6 @@ public class InventorySystem : MonoBehaviour
 
     public void OnExit()
     {
-        AudioManager.Instance.Play(SoundEnum.General_Click);
         Exit?.Invoke();
     }
 
@@ -261,7 +260,7 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public  void OnCraftSlots()
+    public void OnCraftSlots()
     {
         foreach (var slot in _inventorySlots)
         {
