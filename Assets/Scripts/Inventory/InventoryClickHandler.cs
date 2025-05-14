@@ -7,12 +7,13 @@ public class InventoryClickHandler : MonoBehaviour
 
     [Inject] private DecorationSystem _decorationSystem;
     [Inject] private StateMachine _stateMachine;
+    [Inject]  private DecorHolder _decorHolder;
 
-   
-    public void Construct(StateMachine stateMachine, DecorationSystem decorationSystem)
+    public void Construct(StateMachine stateMachine, DecorationSystem decorationSystem, DecorHolder decorHolder)
     {
         _decorationSystem = decorationSystem;
         _stateMachine = stateMachine;
+        _decorHolder = decorHolder;
     }
 
     public void OnButtonClick()
@@ -24,7 +25,7 @@ public class InventoryClickHandler : MonoBehaviour
             //Debug.Log(_stateMachine);
             //Debug.Log(_stateMachine.ActiveState);
 
-            if (_slot == null || _stateMachine == null || _decorationSystem == null) return;
+            if (_slot == null || _stateMachine == null || _decorationSystem == null|| _decorHolder == null || _decorHolder.ActiveDecor != null) return;
 
             if (_slot.IsOccupied && _stateMachine.ActiveState is DecorationState)
                 _decorationSystem.SpawnDecorIfCan((Decor)_slot.TakeLastItem());

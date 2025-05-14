@@ -64,7 +64,7 @@ public class InventorySystem : MonoBehaviour
 
         foreach(var slot in _inventorySlots)
         {
-            slot.GetComponent<InventoryClickHandler>().Construct(_stateMachine, _decorationSystem);
+            slot.GetComponent<InventoryClickHandler>().Construct(_stateMachine, _decorationSystem, _decorHolder);
         }
 
     }
@@ -255,7 +255,7 @@ public class InventorySystem : MonoBehaviour
                 if (slot.Items.Count > 0 && slot.Items[0] is Decor)
                 {
                     slot.gameObject.SetActive(true);
-                    slot.GetComponent<InventoryClickHandler>().Construct(_stateMachine, _decorationSystem);
+                    slot.GetComponent<InventoryClickHandler>().Construct(_stateMachine, _decorationSystem, _decorHolder);
                 }
             }
         }
@@ -270,7 +270,7 @@ public class InventorySystem : MonoBehaviour
                 if (slot.Items.Count > 0 && slot.Items[0] is Item)
                 {
                     slot.gameObject.SetActive(true);
-                    slot.GetComponent<InventoryClickHandler>().Construct(_stateMachine, _decorationSystem);
+                    slot.GetComponent<InventoryClickHandler>().Construct(_stateMachine, _decorationSystem, _decorHolder);
                 }
             }
         }
