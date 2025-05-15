@@ -241,6 +241,7 @@ public class Decor : MonoBehaviour, IBaseItem
 
     protected void OnCancel(InputAction.CallbackContext context)
     {
+        if(_stateMachine.ActiveState is DecorationState || _stateMachine.ActiveState is WorkbenchState) 
         GetRidOfDecor();
     }
 
