@@ -17,6 +17,8 @@ public class LootMiniGameModel
 
     public bool IsInsideTarget { get; private set; }
 
+    public Action<int> EndMiniGame;
+
     public void StartMiniGame(RectTransform carriage, RectTransform area, RectTransform targetArea, float speed, LootMiniGameUI lootMiniGameUI, MiniGameStage[] miniGameStages)
     {
         IsInsideTarget = false;
@@ -53,8 +55,14 @@ public class LootMiniGameModel
         }
         else
         {
-            //TODO
-            Debug.Log("Все стадии завершены");
+            int i = 0;
+            foreach (var stage in _miniGameStages)
+            {
+                if (stage.CurrentState == StageState.Passed)
+                    i++;
+            }
+            //_compositeLoot.DoLoot(i);
+            EndMiniGame?.Invoke(i);
         }
     }
 

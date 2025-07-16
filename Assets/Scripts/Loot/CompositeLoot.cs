@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class CompositeLoot : MonoBehaviour 
 {
@@ -14,6 +15,7 @@ public class CompositeLoot : MonoBehaviour
 
         _lootInteract.Interacted += OpenMiniGame;
     }
+
 
     private void OpenMiniGame()
     {

@@ -1474,6 +1474,7 @@ MonoBehaviour:
   _sprite: {fileID: 1202346369097242179}
   _interactableCollider: {fileID: 2441257902777066172}
   _goParticleSystem: {fileID: 3546103158733874141}
+  _miniGameUI: {fileID: 2005865511993493519}
   _isOrganic: 0
 --- !u!61 &2441257902777066172
 BoxCollider2D:
@@ -1543,6 +1544,14 @@ MonoBehaviour:
     _loot:
       _type: 6
       _materialsData: {fileID: 0}
+  - _count: 2
+    _loot:
+      _type: 3
+      _materialsData: {fileID: 0}
+  - _count: 2
+    _loot:
+      _type: 9
+      _materialsData: {fileID: 0}
 --- !u!114 &4432661666805600811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1584,6 +1593,7 @@ MonoBehaviour:
   _miniGameCanvas: {fileID: 6139054694278897283}
   _compositeLoot: {fileID: -2871333924752464305}
   _targetArea: {fileID: 7649726128108618700}
+  _lootInteract: {fileID: 1121015432029204622}
   _carriage: {fileID: 4787508993657713081}
   _area: {fileID: 7865799027465612508}
   _speed: 250

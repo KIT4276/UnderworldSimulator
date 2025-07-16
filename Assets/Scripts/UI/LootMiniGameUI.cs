@@ -7,6 +7,7 @@ public class LootMiniGameUI : MonoBehaviour
     [SerializeField] private GameObject _miniGameCanvas;
     [SerializeField] private CompositeLoot _compositeLoot;
     [SerializeField] private TargetAreaMiniGame _targetArea;
+    [SerializeField] private LootInteract _lootInteract;
     [Space]
     [SerializeField] private RectTransform _carriage;
     [SerializeField] private RectTransform _area;
@@ -21,11 +22,20 @@ public class LootMiniGameUI : MonoBehaviour
     public event Action Stoped;
     public event Action Started;
 
+    public MiniGameStage[] MiniGameStages {  get => _miniGameStages; } 
+
     private void Start()
     {
         _targetArea.gameObject.SetActive(false);
         _miniGameCanvas.SetActive(false);
         _compositeLoot.MiniGameOpen += OpenMiniGame;
+        _lootMiniGameModel.EndMiniGame += OnMiniGameEnd;
+    }
+
+    private void OnMiniGameEnd(int count)
+    {
+        _miniGameCanvas.SetActive(false);
+        _lootInteract.DoLoot(count);
     }
 
     public void StartOrStopMimGame()

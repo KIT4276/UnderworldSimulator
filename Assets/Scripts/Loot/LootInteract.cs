@@ -1,19 +1,16 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 public class LootInteract : InteractableObstacle
 {
     [SerializeField] protected float _respawnTime = 3;
-   // [SerializeField] protected GameObject _progressBar;
-    //[SerializeField] protected Image _bar;
     [SerializeField] protected CraftLoot _craftLoot;
-    // [SerializeField] protected QuestsLoot _questsLoot;
     [SerializeField] protected GameObject _sprite;
     [SerializeField] private Collider2D _interactableCollider;
     [SerializeField] private GoParticleSystem _goParticleSystem;
+    [SerializeField] private LootMiniGameUI _miniGameUI;
     [SerializeField] private bool _isOrganic;
 
     private bool _isComposite = false;
@@ -24,21 +21,8 @@ public class LootInteract : InteractableObstacle
     [Inject] protected PersistantStaticData _staticData;
     [Inject] protected StateMachine _machine;
 
-    //protected Coroutine _interactionCoroutine;
-
-    protected void Start()
-    {
-        Restart();
-    }
-
     public void SetComposite() =>
         _isComposite = true;
-
-    public virtual void Restart()
-    {
-        //_bar.fillAmount = 0;
-       // _progressBar.SetActive(false);
-    }
 
     public virtual void Despawn()
     {
@@ -53,7 +37,6 @@ public class LootInteract : InteractableObstacle
         yield return new WaitForSeconds(_respawnTime);
         _sprite.SetActive(true);
         _interactableCollider.enabled = true;
-        Restart();
         _craftLoot.Restart();
     }
 
@@ -61,70 +44,60 @@ public class LootInteract : InteractableObstacle
     {
         if (_machine.ActiveState is LootState) return;
 
-        //_progressBar.SetActive(true);
-
-
-        //if (_interactionCoroutine == null)
-        //{
         _hero.GetHero.OnLoot();
-        //_interactionCoroutine = StartCoroutine(InteractionProgress());
-        // }
+
         if (!_isComposite)
         {
             DoLoot();
-
         }
         else
         {
             Interacted?.Invoke();
         }
-
     }
 
-    public void DoLoot()
+    private void DoLoot()
     {
-
-        OpenMenu();
-
-        if (_isOrganic) AudioReciever.Instance.PlaySearchOrganic();
-        else AudioReciever.Instance.PlaySearchObject();
-        _lootSystem.CleanAllSlots();
-
-        _lootSystem.FillName(_craftLoot.Nane);
+        StartFillLoot();
         foreach (var lootSetting in _craftLoot.LootSettings)
         {
             FillLoot(lootSetting);
         }
     }
 
+    public void DoLoot(int count)
+    {
+        StartFillLoot();
+
+        double result = (double)count * _craftLoot.LootSettings.Length / _miniGameUI.MiniGameStages.Length;
+        int maxI = (int)Math.Round(result);
+        if (maxI < 1) maxI = 1;
+
+        for (var i = 0; i< maxI; i++)
+        {
+            FillLoot(_craftLoot.LootSettings[i]);
+        }
+    }
+
+    private void StartFillLoot()
+    {
+        OpenMenu();
+
+        if (_isOrganic) AudioReciever.Instance.PlaySearchOrganic();
+        else AudioReciever.Instance.PlaySearchObject();
+
+        _lootSystem.CleanAllSlots();
+
+        _lootSystem.FillName(_craftLoot.Nane);
+    }
+
     protected virtual void FillLoot(LootSettings lootSetting)
     {
-
         _lootSystem.FillSlot(lootSetting.Loot, ((CraftLootSettings)lootSetting).CurrentCount, this, _craftLoot);
     }
 
-    //protected IEnumerator InteractionProgress()
-    //{
-    //    _hero.GetHero.Immobilize();
-
-    //    float elapsedTime = 0f;
-    //   // _bar.fillAmount = 0f;
-
-    //    while (elapsedTime < _staticData.LootInteractTime)
-    //    {
-    //        elapsedTime += Time.deltaTime;
-    //      //  _bar.fillAmount = Mathf.Clamp01(elapsedTime / _staticData.LootInteractTime);
-    //        yield return null;
-    //    }
-
-    //    OpenMenu();
-    //    _interactionCoroutine = null;
-    //}
-
     protected void OpenMenu()
     {
-        // _bar.fillAmount = 1f;
         _lootSystem.OpenMenu();
-       // _progressBar.SetActive(false);
     }
 }
