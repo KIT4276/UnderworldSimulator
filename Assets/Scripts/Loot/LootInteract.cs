@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,8 +7,8 @@ using Zenject;
 public class LootInteract : InteractableObstacle
 {
     [SerializeField] protected float _respawnTime = 3;
-    [SerializeField] protected GameObject _progressBar;
-    [SerializeField] protected Image _bar;
+   // [SerializeField] protected GameObject _progressBar;
+    //[SerializeField] protected Image _bar;
     [SerializeField] protected CraftLoot _craftLoot;
     // [SerializeField] protected QuestsLoot _questsLoot;
     [SerializeField] protected GameObject _sprite;
@@ -15,21 +16,28 @@ public class LootInteract : InteractableObstacle
     [SerializeField] private GoParticleSystem _goParticleSystem;
     [SerializeField] private bool _isOrganic;
 
+    private bool _isComposite = false;
+
+    public Action Interacted;
+
     [Inject] protected LootSystem _lootSystem;
     [Inject] protected PersistantStaticData _staticData;
     [Inject] protected StateMachine _machine;
 
-    protected Coroutine _interactionCoroutine;
+    //protected Coroutine _interactionCoroutine;
 
     protected void Start()
     {
         Restart();
     }
 
+    public void SetComposite() =>
+        _isComposite = true;
+
     public virtual void Restart()
     {
-        _bar.fillAmount = 0;
-        _progressBar.SetActive(false);
+        //_bar.fillAmount = 0;
+       // _progressBar.SetActive(false);
     }
 
     public virtual void Despawn()
@@ -53,14 +61,30 @@ public class LootInteract : InteractableObstacle
     {
         if (_machine.ActiveState is LootState) return;
 
-        _progressBar.SetActive(true);
+        //_progressBar.SetActive(true);
 
 
-        if (_interactionCoroutine == null)
+        //if (_interactionCoroutine == null)
+        //{
+        _hero.GetHero.OnLoot();
+        //_interactionCoroutine = StartCoroutine(InteractionProgress());
+        // }
+        if (!_isComposite)
         {
-            _hero.GetHero.OnLoot();
-            _interactionCoroutine = StartCoroutine(InteractionProgress());
+            DoLoot();
+
         }
+        else
+        {
+            Interacted?.Invoke();
+        }
+
+    }
+
+    public void DoLoot()
+    {
+
+        OpenMenu();
 
         if (_isOrganic) AudioReciever.Instance.PlaySearchOrganic();
         else AudioReciever.Instance.PlaySearchObject();
@@ -79,28 +103,28 @@ public class LootInteract : InteractableObstacle
         _lootSystem.FillSlot(lootSetting.Loot, ((CraftLootSettings)lootSetting).CurrentCount, this, _craftLoot);
     }
 
-    protected IEnumerator InteractionProgress()
-    {
-        _hero.GetHero.Immobilize();
+    //protected IEnumerator InteractionProgress()
+    //{
+    //    _hero.GetHero.Immobilize();
 
-        float elapsedTime = 0f;
-        _bar.fillAmount = 0f;
+    //    float elapsedTime = 0f;
+    //   // _bar.fillAmount = 0f;
 
-        while (elapsedTime < _staticData.LootInteractTime)
-        {
-            elapsedTime += Time.deltaTime;
-            _bar.fillAmount = Mathf.Clamp01(elapsedTime / _staticData.LootInteractTime);
-            yield return null;
-        }
+    //    while (elapsedTime < _staticData.LootInteractTime)
+    //    {
+    //        elapsedTime += Time.deltaTime;
+    //      //  _bar.fillAmount = Mathf.Clamp01(elapsedTime / _staticData.LootInteractTime);
+    //        yield return null;
+    //    }
 
-        OpenMenu();
-        _interactionCoroutine = null;
-    }
+    //    OpenMenu();
+    //    _interactionCoroutine = null;
+    //}
 
     protected void OpenMenu()
     {
-        _bar.fillAmount = 1f;
+        // _bar.fillAmount = 1f;
         _lootSystem.OpenMenu();
-        _progressBar.SetActive(false);
+       // _progressBar.SetActive(false);
     }
 }

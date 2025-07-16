@@ -53,6 +53,8 @@ public class GameplayInstaller : MonoInstaller
         Container.Bind<WallsSystem>().FromNew().AsSingle().NonLazy();
 
         Container.Bind<DecorClickHandler>().FromNew().AsSingle().NonLazy();
+
+        Container.Bind<LootMiniGameModel>().AsSingle();
     }
 
     private void InstallScriptableObjects()
