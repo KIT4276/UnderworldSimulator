@@ -14,6 +14,7 @@ public class LootMiniGameUI : MonoBehaviour
     [SerializeField] private float _speed;
     [Space]
     [SerializeField] private MiniGameStage[] _miniGameStages;
+    [SerializeField] private Vector2 _startCarriagePosition;
 
     private bool _running = false;
 
@@ -30,6 +31,7 @@ public class LootMiniGameUI : MonoBehaviour
         _miniGameCanvas.SetActive(false);
         _compositeLoot.MiniGameOpen += OpenMiniGame;
         _lootMiniGameModel.EndMiniGame += OnMiniGameEnd;
+        _lootMiniGameModel.Init(_carriage);
     }
 
     private void OnMiniGameEnd(int count)
@@ -52,6 +54,7 @@ public class LootMiniGameUI : MonoBehaviour
 
     private void OpenMiniGame()
     {
+        _running = false;
         _miniGameCanvas.SetActive(true);
         _lootMiniGameModel.StartMiniGame(_carriage, _area, _targetArea.GetComponent<RectTransform>(), _speed, this, _miniGameStages);
     }
@@ -82,5 +85,6 @@ public class LootMiniGameUI : MonoBehaviour
     private void OnDisable()
     {
         _compositeLoot.MiniGameOpen -= OpenMiniGame;
+        _lootMiniGameModel.EndMiniGame -= OnMiniGameEnd;
     }
 }

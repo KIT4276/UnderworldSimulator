@@ -19,6 +19,11 @@ public class LootMiniGameModel
 
     public Action<int> EndMiniGame;
 
+    public void Init(RectTransform carriage)
+    {
+        _startPosition = carriage.transform.position;
+    }
+
     public void StartMiniGame(RectTransform carriage, RectTransform area, RectTransform targetArea, float speed, LootMiniGameUI lootMiniGameUI, MiniGameStage[] miniGameStages)
     {
         IsInsideTarget = false;
@@ -28,10 +33,15 @@ public class LootMiniGameModel
         _targetArea = targetArea;
         _speed = speed;
         _miniGameStages = miniGameStages;
-        _startPosition = carriage.transform.position;
+        
+        carriage.transform.position = _startPosition;
+        foreach(var miniGameStage in _miniGameStages)
+        {
+            miniGameStage.SetStageState(StageState.Passive);
+        }
 
         lootMiniGameUI.Started += StartStage;
-        lootMiniGameUI.Stoped += StopStartStage;
+        lootMiniGameUI.Stoped += StopStage;
 
         CalculateBounds();
     }
@@ -61,12 +71,11 @@ public class LootMiniGameModel
                 if (stage.CurrentState == StageState.Passed)
                     i++;
             }
-            //_compositeLoot.DoLoot(i);
             EndMiniGame?.Invoke(i);
         }
     }
 
-    private void StopStartStage()
+    private void StopStage()
     {
         if (_miniGameStages == null || _miniGameStages.Length == 0)
             return;
