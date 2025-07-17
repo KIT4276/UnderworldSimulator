@@ -123,8 +123,8 @@ public class StartTutorial : MonoBehaviour
 
     private void OnDestroy()
     {
-        advanceAction.Dispose();
-        skipAction.Dispose();
+        advanceAction?.Dispose();
+        skipAction?.Dispose();
         stateMachine.ChangeStateAction -= OnStateChange;
     }
 }

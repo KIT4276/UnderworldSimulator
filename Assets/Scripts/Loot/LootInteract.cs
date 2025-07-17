@@ -67,6 +67,11 @@ public class LootInteract : InteractableObstacle
 
     public void DoLoot(int count)
     {
+        if (count == 0)
+        {
+            _lootSystem.OffInteractiveObject();
+            return;
+        }
         StartFillLoot();
 
         double result = (double)count * _craftLoot.LootSettings.Length / _miniGameUI.MiniGameStages.Length;
