@@ -15,7 +15,9 @@ public class StartMenu : MonoBehaviour
     [Space]
     [SerializeField] private InputActionReference _escapeAction;
 
-    public event Action OnStarted;
+    public event Action<bool> OnStarted;
+
+    private bool _isTesting = false;
 
     private void Start()
     {
@@ -51,10 +53,8 @@ public class StartMenu : MonoBehaviour
 
     public void StartNewGame()
     {
-        AudioReciever.Instance.PlayUISettingsClick();
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.Save();
-        ContinueGame();
+        _isTesting = false;
+        StartGame();
     }
 
     public void EscapeStartNewGame()
@@ -64,11 +64,17 @@ public class StartMenu : MonoBehaviour
         AudioReciever.Instance.PlayUISettingsClick();
     }
 
+    public void StartTests()
+    {
+        _isTesting = true;
+        StartGame();
+    }
+
     public void ContinueGame()
     {
         //TODO load PlayerPrefs
 
-        OnStarted?.Invoke();
+        OnStarted?.Invoke(_isTesting);
     }
 
     public void OpenSettings()
@@ -117,6 +123,14 @@ public class StartMenu : MonoBehaviour
     {
         _buttons.SetActive(true);
         _menuAuthors.SetActive(false);
+    }
+
+    private void StartGame()
+    {
+        AudioReciever.Instance.PlayUISettingsClick();
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        ContinueGame();
     }
 
     private void OnDestroy()

@@ -39,6 +39,7 @@ public class LoadLevelState : IPayloadedState<string>
     public void Exit()
     {
         //_spaceDeterminantor.StartFind();
+       // Debug.Log("Exit LoadLevelState");
        _curtain.Hide();
     }
 

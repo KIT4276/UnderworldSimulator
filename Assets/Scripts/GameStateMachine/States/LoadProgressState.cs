@@ -24,8 +24,12 @@ public class LoadProgressState : IState
     public void Enter()
     {
         LoadProgressOrInitNew();
-        //_gameStateMachine.Enter<LoadLevelState, string>(_progressService.Progress.WorldData.PositionOnLevel.Level);
-        _gameStateMachine.Enter<IntroState>();
+
+        if (_gameStateMachine.IsTests)
+            //_gameStateMachine.Enter<LoadLevelState>();
+            _gameStateMachine.Enter<LoadLevelState, string>(_progressService.Progress.WorldData.PositionOnLevel.Level);
+        else
+            _gameStateMachine.Enter<IntroState>();
     }
 
     public void Exit() { }

@@ -11,6 +11,8 @@ public class StateMachine
     private IExitableState _activeState;
     private bool _isInited;
 
+    public bool IsTests {  get; private set; }  
+
     public IExitableState ActiveState { get => _activeState; }
     public IExitableState PredioslyState { get; private set; }
 
@@ -105,4 +107,9 @@ public class StateMachine
 
     public TState GetState<TState>() where TState : class, IExitableState =>
          _states[typeof(TState)] as TState;
+
+    public void AddIsTests(bool isTests)
+    {
+        IsTests = isTests;
+    }
 }

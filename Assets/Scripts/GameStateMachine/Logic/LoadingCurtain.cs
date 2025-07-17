@@ -9,12 +9,17 @@ public class LoadingCurtain : MonoBehaviour
 
     public virtual void Show()
     {
+      //  Debug.Log("Show");
         gameObject.SetActive(true);
         _curtain.alpha = 1;
     }
 
-    public void Hide() =>
+
+    public void Hide()
+    {
+       // Debug.Log("Hide");
         StartCoroutine(DoFadeIn());
+    }
 
     protected IEnumerator DoFadeIn()
     {
@@ -31,6 +36,7 @@ public class LoadingCurtain : MonoBehaviour
 
     protected virtual void OffGameObject()
     {
+       // Debug.Log("OffGameObject");
         gameObject.SetActive(false);
     }
 }

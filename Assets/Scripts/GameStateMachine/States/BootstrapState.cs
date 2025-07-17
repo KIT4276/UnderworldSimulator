@@ -35,8 +35,9 @@
     private void InstallStartMenu() =>
         _gameFactory.CreateStartMenu().OnStarted += ContinueLoad;
 
-    private void ContinueLoad()
+    private void ContinueLoad(bool isTests)
     {
+        _stateMachine.AddIsTests(isTests);
         _curtain.Show();
         _stateMachine.Enter<LoadProgressState>();
     }

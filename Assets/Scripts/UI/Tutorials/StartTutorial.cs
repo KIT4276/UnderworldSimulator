@@ -24,6 +24,8 @@ public class StartTutorial : MonoBehaviour
 
     private void Awake()
     {
+        if (stateMachine.IsTests) return;
+
         animtut = GetComponent<Animator>();
         animtut.enabled = false;
 
@@ -38,6 +40,8 @@ public class StartTutorial : MonoBehaviour
 
     private void OnStateChange(IExitableState newState)
     {
+        if (stateMachine.IsTests) return;
+        
         if (newState is GameLoopState && !tutorialStarted)
         {
             StartCoroutine(PlayTutorialAnimationWithDelay(0.6f));
