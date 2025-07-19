@@ -14,7 +14,6 @@ public class LootMiniGameUI : MonoBehaviour
     [SerializeField] private float _speed;
     [Space]
     [SerializeField] private MiniGameStage[] _miniGameStages;
-    [SerializeField] private Vector2 _startCarriagePosition;
 
     private bool _running = false;
 
@@ -42,36 +41,37 @@ public class LootMiniGameUI : MonoBehaviour
 
     public void StartOrStopMimGame()
     {
-        if (_running)
+        if (!_running)
         {
-            StopMimiGame();
+            StartFirstTime();
         }
         else
         {
-            StartMimiGame();
+            TriggerNextStage();
         }
+    }
+
+    private void StartFirstTime()
+    {
+        _running = true;
+        _miniGameCanvas.SetActive(true);
+        _targetArea.gameObject.SetActive(true);
+        _targetArea.RandomizeCarriagePosition();
+        _lootMiniGameModel.StartMiniGame(_carriage, _area, _targetArea, _speed, this, _miniGameStages);
+        Started?.Invoke();
+    }
+
+    private void TriggerNextStage()
+    {
+        _lootMiniGameModel.EvaluateStage();
+        Started?.Invoke();
     }
 
     private void OpenMiniGame()
     {
         _running = false;
         _miniGameCanvas.SetActive(true);
-        _lootMiniGameModel.StartMiniGame(_carriage, _area, _targetArea.GetComponent<RectTransform>(), _speed, this, _miniGameStages);
-    }
-
-    private void StartMimiGame()
-    {
-        _running = true;
-        _targetArea.gameObject.SetActive(true);
-        _targetArea.RandomizeCarriagePosition();
-        Started?.Invoke();
-    }
-
-    private void StopMimiGame()
-    {
-        _running = false;
-        _targetArea.gameObject.SetActive(false);
-        Stoped?.Invoke();
+        _lootMiniGameModel.StartMiniGame(_carriage, _area, _targetArea, _speed, this, _miniGameStages);
     }
 
     private void Update()

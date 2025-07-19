@@ -6,7 +6,7 @@ public class LootMiniGameModel
 {
     private RectTransform _carriage;
     private RectTransform _movementArea;
-    private RectTransform _targetArea;
+    private TargetAreaMiniGame _targetArea;
     private float _speed;
 
     private float direction = 1f;
@@ -27,7 +27,7 @@ public class LootMiniGameModel
         _startPosition = carriage.transform.position;
     }
 
-    public void StartMiniGame(RectTransform carriage, RectTransform area, RectTransform targetArea, float speed, LootMiniGameUI lootMiniGameUI, MiniGameStage[] miniGameStages)
+    public void StartMiniGame(RectTransform carriage, RectTransform area, TargetAreaMiniGame targetArea, float speed, LootMiniGameUI lootMiniGameUI, MiniGameStage[] miniGameStages)
     {
         _isGameCompleted = false;
         IsInsideTarget = false;
@@ -41,15 +41,50 @@ public class LootMiniGameModel
 
         carriage.transform.position = _startPosition;
 
-        // Полный сброс всех этапов
         ResetAllStages();
 
-        // Отписываемся и подписываемся заново
         UnsubscribeEvents();
         _lootMiniGameUI.Started += StartStage;
-        _lootMiniGameUI.Stoped += StopStage;
+        _lootMiniGameUI.Stoped += HandleStageStop;
 
         CalculateBounds();
+    }
+
+    public void EvaluateStage()
+    {
+        if (_isGameCompleted) return;
+
+        if (_miniGameStages == null || _miniGameStages.Length == 0)
+            return;
+
+        int activeIndex = -1;
+        for (int i = 0; i < _miniGameStages.Length; i++)
+        {
+            if (_miniGameStages[i] != null && _miniGameStages[i].CurrentState == StageState.Active)
+            {
+                activeIndex = i;
+                break;
+            }
+        }
+
+        if (activeIndex == -1) return;
+
+        if (IsInsideTarget)
+            _miniGameStages[activeIndex].SetStageState(StageState.Passed);
+        else
+            _miniGameStages[activeIndex].SetStageState(StageState.Failed);
+
+        if (_miniGameStages.All(s => s != null &&
+            (s.CurrentState == StageState.Passed || s.CurrentState == StageState.Failed)))
+        {
+            CompleteGame();
+        }
+    }
+
+    private void HandleStageStop()
+    {
+        if (_isGameCompleted) return;
+
     }
 
     private void ResetAllStages()
@@ -68,12 +103,13 @@ public class LootMiniGameModel
 
     private void StartStage()
     {
-        if (_isGameCompleted) return; // Игра уже завершена - ничего не делаем
+        if (_isGameCompleted) return;
+
+        _targetArea.RandomizeCarriagePosition();
 
         if (_miniGameStages == null || _miniGameStages.Length == 0)
             return;
 
-        // Если есть активный этап - ничего не делаем
         if (_miniGameStages.Any(s => s != null && s.CurrentState == StageState.Active))
             return;
 
@@ -127,7 +163,6 @@ public class LootMiniGameModel
             _miniGameStages[activeIndex].SetStageState(StageState.Failed);
         }
 
-        // Проверяем, все ли этапы завершены
         if (_miniGameStages.All(s => s != null &&
             (s.CurrentState == StageState.Passed || s.CurrentState == StageState.Failed)))
         {
@@ -156,7 +191,7 @@ public class LootMiniGameModel
 
     public void Update()
     {
-        if (_isGameCompleted) return; // Не обновляем, если игра завершена
+        if (_isGameCompleted) return; 
 
         Vector3 position = _carriage.position;
         position.x += direction * _speed * Time.deltaTime;
@@ -181,7 +216,7 @@ public class LootMiniGameModel
     {
         Vector2 carriageCenter = RectTransformUtility.WorldToScreenPoint(null, _carriage.position);
 
-        bool newIsInside = RectTransformUtility.RectangleContainsScreenPoint(_targetArea, carriageCenter, null);
+        bool newIsInside = RectTransformUtility.RectangleContainsScreenPoint(_targetArea.GetComponent<RectTransform>(), carriageCenter, null);
 
         if (newIsInside != IsInsideTarget)
         {
