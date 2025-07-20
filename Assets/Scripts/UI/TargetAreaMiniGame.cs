@@ -27,5 +27,4 @@ public class TargetAreaMiniGame : MonoBehaviour
             Debug.LogError($"Error randomizing carriage position: {e.Message}");
         }
     }
-
 }

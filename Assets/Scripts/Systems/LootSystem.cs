@@ -1,13 +1,10 @@
-using DragonBones;
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
 
 public class LootSystem : MonoBehaviour
 {
-    // [SerializeField] private InputActionReference _escapeAction;
     [SerializeField] private GameObject _menu;
     [SerializeField] private LootSlot[] _slots;
     [SerializeField] private TMP_Text _name;
@@ -71,10 +68,6 @@ public class LootSystem : MonoBehaviour
                 slot.Initialize();
             }
 
-            //foreach (var clickHandler in _clickHandlers)
-            //{
-            //    clickHandler.Init(_craftLoot);
-            //}
             _isInited = true;
         }
         OpenMenuAction?.Invoke();

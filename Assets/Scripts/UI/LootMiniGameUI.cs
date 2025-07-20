@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public class LootMiniGameUI : MonoBehaviour
@@ -15,22 +14,41 @@ public class LootMiniGameUI : MonoBehaviour
     [Space]
     [SerializeField] private MiniGameStage[] _miniGameStages;
 
-    private bool _running = false;
+    private LootMiniGamePresenter _presenter;
 
-    [Inject] private LootMiniGameModel _lootMiniGameModel;
+    public MiniGameStage[] MiniGameStages { get => _miniGameStages; }
 
-    public event Action Stoped;
-    public event Action Started;
+    [Inject]
+    public void Construct(LootMiniGamePresenter presenter)
+    {
+        _presenter = presenter;
 
-    public MiniGameStage[] MiniGameStages {  get => _miniGameStages; } 
+        _presenter.Init(_miniGameCanvas, _targetArea, _carriage, _area, _speed, _miniGameStages);
+    }
 
     private void Start()
     {
         _targetArea.gameObject.SetActive(false);
         _miniGameCanvas.SetActive(false);
+
         _compositeLoot.MiniGameOpen += OpenMiniGame;
-        _lootMiniGameModel.EndMiniGame += OnMiniGameEnd;
-        _lootMiniGameModel.Init(_carriage);
+        _presenter.EndMiniGame += OnMiniGameEnd;
+    }
+
+    private void Update()
+    {
+        _presenter.Update();
+    }
+
+    public void StartOrStopMimGame()
+    {
+        _presenter.StartOrStopMimGame();
+    }
+
+    private void OpenMiniGame()
+    {
+        _miniGameCanvas.SetActive(true);
+        _presenter.OpenMiniGame();
     }
 
     private void OnMiniGameEnd(int count)
@@ -39,52 +57,9 @@ public class LootMiniGameUI : MonoBehaviour
         _lootInteract.DoLoot(count);
     }
 
-    public void StartOrStopMimGame()
-    {
-        if (!_running)
-        {
-            StartFirstTime();
-        }
-        else
-        {
-            TriggerNextStage();
-        }
-    }
-
-    private void StartFirstTime()
-    {
-        _running = true;
-        _miniGameCanvas.SetActive(true);
-        _targetArea.gameObject.SetActive(true);
-        _targetArea.RandomizeCarriagePosition();
-        _lootMiniGameModel.StartMiniGame(_carriage, _area, _targetArea, _speed, this, _miniGameStages);
-        Started?.Invoke();
-    }
-
-    private void TriggerNextStage()
-    {
-        _lootMiniGameModel.EvaluateStage();
-        Started?.Invoke();
-    }
-
-    private void OpenMiniGame()
-    {
-        _running = false;
-        _miniGameCanvas.SetActive(true);
-        _lootMiniGameModel.StartMiniGame(_carriage, _area, _targetArea, _speed, this, _miniGameStages);
-    }
-
-    private void Update()
-    {
-        if (_running)
-        {
-            _lootMiniGameModel.Update();
-        }
-    }
-
     private void OnDisable()
     {
         _compositeLoot.MiniGameOpen -= OpenMiniGame;
-        _lootMiniGameModel.EndMiniGame -= OnMiniGameEnd;
+        _presenter.EndMiniGame -= OnMiniGameEnd;
     }
 }

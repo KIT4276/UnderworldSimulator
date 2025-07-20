@@ -55,6 +55,7 @@ public class GameplayInstaller : MonoInstaller
         Container.Bind<DecorClickHandler>().FromNew().AsSingle().NonLazy();
 
         Container.Bind<LootMiniGameModel>().AsSingle();
+        Container.Bind<LootMiniGamePresenter>().AsSingle();
     }
 
     private void InstallScriptableObjects()

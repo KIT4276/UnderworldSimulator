@@ -13,8 +13,7 @@ public class LootMiniGameModel
     private float leftBound;
     private float rightBound;
     private MiniGameStage[] _miniGameStages;
-    private LootMiniGameUI _lootMiniGameUI;
-    private Vector2 _startPosition;
+    private Vector3 _initialLocalPosition;
 
     public bool IsInsideTarget { get; private set; }
 
@@ -22,12 +21,7 @@ public class LootMiniGameModel
 
     private bool _isGameCompleted = false;
 
-    public void Init(RectTransform carriage)
-    {
-        _startPosition = carriage.transform.position;
-    }
-
-    public void StartMiniGame(RectTransform carriage, RectTransform area, TargetAreaMiniGame targetArea, float speed, LootMiniGameUI lootMiniGameUI, MiniGameStage[] miniGameStages)
+    public void Init(RectTransform carriage, RectTransform area, TargetAreaMiniGame targetArea, float speed, MiniGameStage[] miniGameStages)
     {
         _isGameCompleted = false;
         IsInsideTarget = false;
@@ -37,18 +31,39 @@ public class LootMiniGameModel
         _targetArea = targetArea;
         _speed = speed;
         _miniGameStages = miniGameStages;
-        _lootMiniGameUI = lootMiniGameUI;
 
-        carriage.transform.position = _startPosition;
+        _initialLocalPosition = _carriage.localPosition;
+    }
+
+    public void OpenMiniGame()
+    {
+        _carriage.localPosition = _initialLocalPosition;
+        _targetArea.gameObject.SetActive(false);
+        foreach (var stage in _miniGameStages)
+        {
+            stage.SetStageState(StageState.Passive);
+        }
+    }
+
+    public void StartMiniGame()
+    {
+        _isGameCompleted = false;
+        IsInsideTarget = false;
 
         ResetAllStages();
 
-        UnsubscribeEvents();
-        _lootMiniGameUI.Started += StartStage;
-        _lootMiniGameUI.Stoped += HandleStageStop;
-
         CalculateBounds();
     }
+
+    private void CalculateBounds()
+    {
+        Vector3[] areaCorners = new Vector3[4];
+        _movementArea.GetWorldCorners(areaCorners);
+
+        leftBound = areaCorners[0].x;
+        rightBound = areaCorners[2].x;
+    }
+
 
     public void EvaluateStage()
     {
@@ -81,12 +96,6 @@ public class LootMiniGameModel
         }
     }
 
-    private void HandleStageStop()
-    {
-        if (_isGameCompleted) return;
-
-    }
-
     private void ResetAllStages()
     {
         if (_miniGameStages == null || _miniGameStages.Length == 0)
@@ -101,10 +110,11 @@ public class LootMiniGameModel
         }
     }
 
-    private void StartStage()
+    public void StartStage()
     {
         if (_isGameCompleted) return;
 
+        _targetArea.gameObject.SetActive(true);
         _targetArea.RandomizeCarriagePosition();
 
         if (_miniGameStages == null || _miniGameStages.Length == 0)
@@ -126,13 +136,27 @@ public class LootMiniGameModel
         }
     }
 
-    private void UnsubscribeEvents()
+    public void Update()
     {
-        if (_lootMiniGameUI != null)
+        if (_isGameCompleted) return; 
+
+        Vector3 position = _carriage.position;
+        position.x += direction * _speed * Time.deltaTime;
+
+        if (position.x >= rightBound)
         {
-            _lootMiniGameUI.Started -= StartStage;
-            _lootMiniGameUI.Stoped -= StopStage;
+            position.x = rightBound;
+            direction = -1f;
         }
+        else if (position.x <= leftBound)
+        {
+            position.x = leftBound;
+            direction = 1f;
+        }
+
+        _carriage.position = position;
+
+        CheckInsideTarget();
     }
 
     private void StopStage()
@@ -177,39 +201,6 @@ public class LootMiniGameModel
         _isGameCompleted = true;
         int passedCount = _miniGameStages.Count(s => s != null && s.CurrentState == StageState.Passed);
         EndMiniGame?.Invoke(passedCount);
-        UnsubscribeEvents();
-    }
-
-    private void CalculateBounds()
-    {
-        Vector3[] areaCorners = new Vector3[4];
-        _movementArea.GetWorldCorners(areaCorners);
-
-        leftBound = areaCorners[0].x;
-        rightBound = areaCorners[2].x;
-    }
-
-    public void Update()
-    {
-        if (_isGameCompleted) return; 
-
-        Vector3 position = _carriage.position;
-        position.x += direction * _speed * Time.deltaTime;
-
-        if (position.x >= rightBound)
-        {
-            position.x = rightBound;
-            direction = -1f;
-        }
-        else if (position.x <= leftBound)
-        {
-            position.x = leftBound;
-            direction = 1f;
-        }
-
-        _carriage.position = position;
-
-        CheckInsideTarget();
     }
 
     private void CheckInsideTarget()
@@ -222,10 +213,5 @@ public class LootMiniGameModel
         {
             IsInsideTarget = newIsInside;
         }
-    }
-
-    private void End()
-    {
-        UnsubscribeEvents();
     }
 }
