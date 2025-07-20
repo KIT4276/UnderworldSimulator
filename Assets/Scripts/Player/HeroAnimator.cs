@@ -38,11 +38,11 @@ public class HeroAnimator : MonoBehaviour
 
     private IEnumerator LootRoutine()
     {
-        var predioslyAnimation = _currentArmature.armature.animation.lastAnimationName;
+       // var predioslyAnimation = _currentArmature.armature.animation.lastAnimationName;
         _currentArmature.animation.Play(LootName);
        // Debug.Log(_currentArmature.armature.animation.lastAnimationName);
         yield return new WaitForSeconds(_staticData.LootInteractTime);
-        _currentArmature.animation.Play(predioslyAnimation);
+        _currentArmature.animation.Play(StandName);
        // Debug.Log(_currentArmature.armature.animation.lastAnimationName);
     }
 
