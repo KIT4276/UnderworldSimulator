@@ -5,7 +5,7 @@ public class CompositeLoot : MonoBehaviour
 {
     [SerializeField] private LootInteract _lootInteract;
 
-    public Action MiniGameOpen;
+    public Action Interacted;
 
     private void Awake()
     {
@@ -17,6 +17,6 @@ public class CompositeLoot : MonoBehaviour
 
     private void OpenMiniGame()
     {
-        MiniGameOpen?.Invoke();
+        Interacted?.Invoke();
     }
 }

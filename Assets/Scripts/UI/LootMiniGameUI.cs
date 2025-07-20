@@ -15,6 +15,7 @@ public class LootMiniGameUI : MonoBehaviour
     [SerializeField] private MiniGameStage[] _miniGameStages;
 
     private LootMiniGamePresenter _presenter;
+    private bool _isOpen;
 
     public MiniGameStage[] MiniGameStages { get => _miniGameStages; }
 
@@ -31,7 +32,7 @@ public class LootMiniGameUI : MonoBehaviour
         _targetArea.gameObject.SetActive(false);
         _miniGameCanvas.SetActive(false);
 
-        _compositeLoot.MiniGameOpen += OpenMiniGame;
+        _compositeLoot.Interacted += OnInteracted;
         _presenter.EndMiniGame += OnMiniGameEnd;
     }
 
@@ -45,21 +46,35 @@ public class LootMiniGameUI : MonoBehaviour
         _presenter.StartOrStopMimGame();
     }
 
+    private void OnInteracted()
+    {
+        if (!_isOpen)
+        {
+            OpenMiniGame();
+        }
+        else
+        {
+            StartOrStopMimGame();
+        }
+    }
+
     private void OpenMiniGame()
     {
         _miniGameCanvas.SetActive(true);
         _presenter.OpenMiniGame();
+        _isOpen = true;
     }
 
     private void OnMiniGameEnd(int count)
     {
         _miniGameCanvas.SetActive(false);
         _lootInteract.DoLoot(count);
+        _isOpen = false;
     }
 
     private void OnDisable()
     {
-        _compositeLoot.MiniGameOpen -= OpenMiniGame;
+        _compositeLoot.Interacted -= OnInteracted;
         _presenter.EndMiniGame -= OnMiniGameEnd;
     }
 }
