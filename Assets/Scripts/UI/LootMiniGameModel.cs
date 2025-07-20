@@ -214,4 +214,9 @@ public class LootMiniGameModel
             IsInsideTarget = newIsInside;
         }
     }
+
+    public void OnSpeedChange(float speed)
+    {
+        _speed = speed;
+    }
 }

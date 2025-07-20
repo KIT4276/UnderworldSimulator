@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public class LootMiniGameUI : MonoBehaviour
@@ -13,22 +15,29 @@ public class LootMiniGameUI : MonoBehaviour
     [SerializeField] private float _speed;
     [Space]
     [SerializeField] private MiniGameStage[] _miniGameStages;
+    [SerializeField] private Slider _slider;
+    [SerializeField] private TMP_InputField _inputField;
+    //[SerializeField] private TMP_Text _speedText;
 
     private LootMiniGamePresenter _presenter;
+    private StateMachine _stateMachine;
     private bool _isOpen;
 
     public MiniGameStage[] MiniGameStages { get => _miniGameStages; }
 
     [Inject]
-    public void Construct(LootMiniGamePresenter presenter)
+    public void Construct(LootMiniGamePresenter presenter, StateMachine stateMachine)
     {
         _presenter = presenter;
-
+        _stateMachine = stateMachine;
         _presenter.Init(_miniGameCanvas, _targetArea, _carriage, _area, _speed, _miniGameStages);
     }
 
     private void Start()
     {
+        _slider.value = _speed;
+        _inputField.text = _speed.ToString();
+
         _targetArea.gameObject.SetActive(false);
         _miniGameCanvas.SetActive(false);
 
@@ -46,6 +55,20 @@ public class LootMiniGameUI : MonoBehaviour
         _presenter.StartOrStopMimGame();
     }
 
+    public void OnSpeedChangeSlider()
+    {
+        _speed = _slider.value;
+        _inputField.text = _speed.ToString();
+        _presenter.OnSpeedChange(_speed);
+    }
+
+    public void OnSpeedChangeInputField()
+    {
+        float.TryParse(_inputField.text, out _speed);
+        _slider.value = _speed;
+        _presenter.OnSpeedChange(_speed);
+    }
+
     private void OnInteracted()
     {
         if (!_isOpen)
@@ -61,7 +84,18 @@ public class LootMiniGameUI : MonoBehaviour
     private void OpenMiniGame()
     {
         _miniGameCanvas.SetActive(true);
+        _slider.value = _speed;
+        _inputField.text = _speed.ToString();
         _presenter.OpenMiniGame();
+
+        if(_stateMachine.IsTests)
+        {
+            _slider.gameObject.SetActive(true);
+        }
+        else
+        {
+            _slider.gameObject.SetActive(false);
+        }
         _isOpen = true;
     }
 

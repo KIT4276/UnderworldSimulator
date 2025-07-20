@@ -80,4 +80,10 @@ public class LootMiniGamePresenter
         _model.EvaluateStage();
         _model.StartStage();
     }
+
+    public void OnSpeedChange(float speed)
+    {
+        _speed = speed;
+        _model.OnSpeedChange(speed);
+    }
 }
