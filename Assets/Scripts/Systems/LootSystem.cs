@@ -11,87 +11,89 @@ public class LootSystem : MonoBehaviour
 
 
     [Inject] private InventorySystem _inventorySystem;
-    [Inject] private StateMachine _stateMachine;
-    [Inject] private MaterialsData _materials;
+    //[Inject] private StateMachine _stateMachine;
+    //[Inject] private MaterialsData _materials;
 
     private bool _isInited;
     private LootInteract _interactiveObject;
 
-    public event Action OpenMenuAction;
-    public event Action CloseMenuAction;
+    //public event Action OpenMenuAction;
+    //public event Action CloseMenuAction;
 
     void Start()
     {
         _menu.SetActive(false);
 
-        _stateMachine.ChangeStateAction += OnChangeState;
+       // _stateMachine.ChangeStateAction += OnChangeState;
     }
 
-    public void AllIsTacen()
+    //public void AllIsTacen()
+    //{
+    //    bool isAll = true;
+
+    //    foreach (var slot in _slots)
+    //    {
+    //        if (slot.Loots.Count > 0)
+    //        {
+    //            isAll = false;
+    //            break;
+    //        }
+    //    }
+
+    //    if (isAll)
+    //    {
+    //        OffInteractiveObject();
+    //        OnCloseMenu();
+    //    }
+    //}
+
+    //public void TakeAllLoot()
+    //{
+    //    foreach (var slot in _slots)
+    //    {
+    //        slot.LootClickHandler.OnTakeAllClick();
+    //    }
+    //}
+
+    //public void OpenMenu()
+    //{
+    //    _menu.SetActive(true);
+    //    _inventorySystem.gameObject.SetActive(true);
+    //    _inventorySystem.ActivateInventory();
+
+    //    if (!_isInited)
+    //    {
+    //        foreach (var slot in _slots)
+    //        {
+    //            slot.Initialize();
+    //        }
+
+    //        _isInited = true;
+    //    }
+    //    OpenMenuAction?.Invoke();
+    //}
+
+    //private void OnChangeState(IExitableState state)
+    //{
+    //    if (state is GameLoopState)
+    //        CloseMenu();
+    //}
+
+    //public void OnCloseMenu()
+    //{
+    //    CloseMenuAction?.Invoke();
+    //}
+
+    //private void CloseMenu()
+    //{
+    //    _menu.SetActive(false);
+    //}
+
+    public void TakeLootToInventory(Item item)
     {
-        bool isAll = true;
-
-        foreach (var slot in _slots)
-        {
-            if (slot.Loots.Count > 0)
-            {
-                isAll = false;
-                break;
-            }
-        }
-
-        if (isAll)
-        {
-            OffInteractiveObject();
-            OnCloseMenu();
-        }
-    }
-
-    public void TakeAllLoot()
-    {
-        foreach (var slot in _slots)
-        {
-            slot.LootClickHandler.OnTakeAllClick();
-        }
-    }
-
-    public void OpenMenu()
-    {
-        _menu.SetActive(true);
-        _inventorySystem.gameObject.SetActive(true);
-        _inventorySystem.ActivateInventory();
-
-        if (!_isInited)
-        {
-            foreach (var slot in _slots)
-            {
-                slot.Initialize();
-            }
-
-            _isInited = true;
-        }
-        OpenMenuAction?.Invoke();
-    }
-
-    private void OnChangeState(IExitableState state)
-    {
-        if (state is GameLoopState)
-            CloseMenu();
-    }
-
-    public void OnCloseMenu()
-    {
-        CloseMenuAction?.Invoke();
-    }
-
-    private void CloseMenu()
-    {
-        _menu.SetActive(false);
-    }
-
-    public void TakeLootToInventory(IBaseItem item)
-    {
-        _inventorySystem.TryReturnLootToInventory((Item)item);
+       //_inventorySystem.ActivateInventory();
+        item.Init(_inventorySystem.MaterialsData);
+        _inventorySystem.TryReturnLootToInventory(item);
     }
 
     public void OffInteractiveObject()
@@ -99,52 +101,57 @@ public class LootSystem : MonoBehaviour
         _interactiveObject.Despawn();
     }
 
-    public void CleanAllSlots()
-    {
-        _name.text = string.Empty;
+    //public void CleanAllSlots()
+    //{
+    //    _name.text = string.Empty;
 
-        foreach (var slot in _slots)
-        {
-            slot.ClearSlot();
-        }
+    //    foreach (var slot in _slots)
+    //    {
+    //        slot.ClearSlot();
+    //    }
+    //}
+
+    public void FillInteractiveObject(LootInteract interactiveObject)
+    {
+        _interactiveObject = interactiveObject;
     }
 
-    public void FillSlot(Item loot, int count, LootInteract interactiveObject, CraftLoot craftLoot)
-    {
+    //public void FillSlot(Item loot, int count, LootInteract interactiveObject, CraftLoot craftLoot)
+    //{
 
-        foreach (var slot in _slots)
-        {
-            if (!slot.IsOccupied)
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    slot.LootClickHandler.AddCraftLoot(craftLoot);
-                    loot.Init(_materials);
-                    slot.SetItem(loot);
-                }
-                _interactiveObject = interactiveObject;
-                break;
-            }
-        }
-    }
-    internal void FillName(string name)
-    {
-        _name.text = name;
-    }
-
-
-    private void OnDestroy()
-    {
-        _stateMachine.ChangeStateAction -= OnChangeState;
-    }
+    //    foreach (var slot in _slots)
+    //    {
+    //        if (!slot.IsOccupied)
+    //        {
+    //            for (int i = 0; i < count; i++)
+    //            {
+    //                slot.LootClickHandler.AddCraftLoot(craftLoot);
+    //                loot.Init(_materials);
+    //                slot.SetItem(loot);
+    //            }
+    //            _interactiveObject = interactiveObject;
+    //            break;
+    //        }
+    //    }
+    //}
+    //internal void FillName(string name)
+    //{
+    //    _name.text = name;
+    //}
 
 
-    public void PlayUICloseMenuSound()
-    {
-        AudioManager.Instance.Play(SoundEnum.General_Click);
-    }
-    public void PlayLootSound()
-    {
-        AudioManager.Instance.Play(SoundEnum.Inventory_Add);
-    }
+    //private void OnDestroy()
+    //{
+    //    _stateMachine.ChangeStateAction -= OnChangeState;
+    //}
+
+
+    //public void PlayUICloseMenuSound()
+    //{
+    //    AudioManager.Instance.Play(SoundEnum.General_Click);
+    //}
+    //public void PlayLootSound()
+    //{
+    //    AudioManager.Instance.Play(SoundEnum.Inventory_Add);
+    //}
 }

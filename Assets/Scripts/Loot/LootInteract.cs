@@ -15,7 +15,7 @@ public class LootInteract : InteractableObstacle
 
     private bool _isComposite = false;
 
-    public Action Interacted;
+    public Action InteractedCompositeLoot;
 
     [Inject] protected LootSystem _lootSystem;
     [Inject] protected PersistantStaticData _staticData;
@@ -52,17 +52,21 @@ public class LootInteract : InteractableObstacle
         }
         else
         {
-            Interacted?.Invoke();
+            InteractedCompositeLoot?.Invoke();
         }
     }
 
     private void DoLoot()
     {
-        StartFillLoot();
+        FillLoot();
         foreach (var lootSetting in _craftLoot.LootSettings)
         {
-            FillLoot(lootSetting);
+            for (var i = 0; i < lootSetting.Count; i++)
+            {
+                _lootSystem.TakeLootToInventory(lootSetting.Loot);
+            }
         }
+        _lootSystem.OffInteractiveObject();
     }
 
     public void DoLoot(int count)
@@ -72,37 +76,38 @@ public class LootInteract : InteractableObstacle
             _lootSystem.OffInteractiveObject();
             return;
         }
-        StartFillLoot();
+        FillLoot();
 
         double result = (double)count * _craftLoot.LootSettings.Length / _miniGameUI.MiniGameStages.Length;
         int maxI = (int)Math.Round(result);
         if (maxI < 1) maxI = 1;
 
-        for (var i = 0; i< maxI; i++)
+        for (var i = 0; i < maxI; i++)
         {
-            FillLoot(_craftLoot.LootSettings[i]);
+            for (var j = 0; j < _craftLoot.LootSettings[i].Count; j++)
+                _lootSystem.TakeLootToInventory(_craftLoot.LootSettings[i].Loot);
         }
     }
 
-    private void StartFillLoot()
+    private void FillLoot()
     {
-        OpenMenu();
-
+        // OpenMenu();
+        _lootSystem.FillInteractiveObject(this);
         if (_isOrganic) AudioReciever.Instance.PlaySearchOrganic();
         else AudioReciever.Instance.PlaySearchObject();
 
-        _lootSystem.CleanAllSlots();
+        // _lootSystem.CleanAllSlots();
 
-        _lootSystem.FillName(_craftLoot.Nane);
+        // _lootSystem.FillName(_craftLoot.Nane);
     }
 
-    protected virtual void FillLoot(LootSettings lootSetting)
-    {
-        _lootSystem.FillSlot(lootSetting.Loot, ((CraftLootSettings)lootSetting).CurrentCount, this, _craftLoot);
-    }
+    //protected virtual void FillLoot(LootSettings lootSetting)
+    //{
+    //    _lootSystem.FillSlot(lootSetting.Loot, ((CraftLootSettings)lootSetting).CurrentCount, this, _craftLoot);
+    //}
 
-    protected void OpenMenu()
-    {
-        _lootSystem.OpenMenu();
-    }
+    //protected void OpenMenu()
+    //{
+    //    _lootSystem.OpenMenu();
+    //}
 }

@@ -31,8 +31,8 @@ public class StatesTransitor
 
         _workbenchSystem.Exit += Escape;
         _inventorySystem.Exit += Escape;
-        _lootSystem.OpenMenuAction += ToLootState;
-        _lootSystem.CloseMenuAction += ToGameLoopState;
+        //_lootSystem.OpenMenuAction += ToLootState;
+        //_lootSystem.CloseMenuAction += ToGameLoopState;
 
         _workbenchSystem.Destroyed += OnDestroyed;
     }
@@ -192,8 +192,8 @@ public class StatesTransitor
         _workbenchSystem.InventoryButtonClick -= ToDecorateState;
         _workbenchSystem.Exit -= Escape;
         _inventorySystem.Exit -= Escape;
-        _lootSystem.OpenMenuAction -= ToLootState;
-        _lootSystem.CloseMenuAction -= ToGameLoopState;
+        //_lootSystem.OpenMenuAction -= ToLootState;
+        //_lootSystem.CloseMenuAction -= ToGameLoopState;
         _workbenchSystem.Destroyed -= OnDestroyed;
         _playerInput.actions["Tab"].performed -= OnTab;
     }

@@ -11,7 +11,7 @@ public class CompositeLoot : MonoBehaviour
     {
         _lootInteract.SetComposite();
 
-        _lootInteract.Interacted += OpenMiniGame;
+        _lootInteract.InteractedCompositeLoot += OpenMiniGame;
     }
 
 
