@@ -71,22 +71,22 @@ public class LootInteract : InteractableObstacle
 
     public void DoLoot(int count)
     {
-        if (count == 0)
+        if (count != 0)
         {
-            _lootSystem.OffInteractiveObject();
-            return;
-        }
-        FillLoot();
+            FillLoot();
 
-        double result = (double)count * _craftLoot.LootSettings.Length / _miniGameUI.MiniGameStages.Length;
-        int maxI = (int)Math.Round(result);
-        if (maxI < 1) maxI = 1;
+            double result = (double)count * _craftLoot.LootSettings.Length / _miniGameUI.MiniGameStages.Length;
+            int maxI = (int)Math.Round(result);
+            if (maxI < 1) maxI = 1;
 
-        for (var i = 0; i < maxI; i++)
-        {
-            for (var j = 0; j < _craftLoot.LootSettings[i].Count; j++)
-                _lootSystem.TakeLootToInventory(_craftLoot.LootSettings[i].Loot);
+            for (var i = 0; i < maxI; i++)
+            {
+                for (var j = 0; j < _craftLoot.LootSettings[i].Count; j++)
+                    _lootSystem.TakeLootToInventory(_craftLoot.LootSettings[i].Loot);
+            }
         }
+
+        _lootSystem.OffInteractiveObject();
     }
 
     private void FillLoot()
