@@ -6,9 +6,7 @@ using Zenject;
 public class LootMiniGameUI : MonoBehaviour
 {
     [SerializeField] private GameObject _miniGameCanvas;
-    [SerializeField] private CompositeLoot _compositeLoot;
     [SerializeField] private TargetAreaMiniGame _targetArea;
-    [SerializeField] private LootInteract _lootInteract;
     [Space]
     [SerializeField] private RectTransform _carriage;
     [SerializeField] private RectTransform _area;
@@ -17,7 +15,8 @@ public class LootMiniGameUI : MonoBehaviour
     [SerializeField] private MiniGameStage[] _miniGameStages;
     [SerializeField] private Slider _slider;
     [SerializeField] private TMP_InputField _inputField;
-    //[SerializeField] private TMP_Text _speedText;
+
+    private LootInteract _lootInteract;
 
     private LootMiniGamePresenter _presenter;
     private StateMachine _stateMachine;
@@ -41,7 +40,6 @@ public class LootMiniGameUI : MonoBehaviour
         _targetArea.gameObject.SetActive(false);
         _miniGameCanvas.SetActive(false);
 
-        _compositeLoot.Interacted += OnInteracted;
         _presenter.EndMiniGame += OnMiniGameEnd;
     }
 
@@ -69,10 +67,12 @@ public class LootMiniGameUI : MonoBehaviour
         _presenter.OnSpeedChange(_speed);
     }
 
-    private void OnInteracted()
+    public void OnInteracted(LootInteract lootInteract)
     {
         if (!_isOpen)
         {
+            _lootInteract = lootInteract;
+            
             OpenMiniGame();
         }
         else
@@ -88,7 +88,7 @@ public class LootMiniGameUI : MonoBehaviour
         _inputField.text = _speed.ToString();
         _presenter.OpenMiniGame();
 
-        if(_stateMachine.IsTests)
+        if (_stateMachine.IsTests)
         {
             _slider.gameObject.SetActive(true);
         }
@@ -108,7 +108,6 @@ public class LootMiniGameUI : MonoBehaviour
 
     private void OnDisable()
     {
-        _compositeLoot.Interacted -= OnInteracted;
         _presenter.EndMiniGame -= OnMiniGameEnd;
     }
 }

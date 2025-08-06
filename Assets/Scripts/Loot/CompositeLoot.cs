@@ -1,11 +1,19 @@
 ﻿using System;
 using UnityEngine;
+using Zenject;
 
 public class CompositeLoot : MonoBehaviour 
 {
     [SerializeField] private LootInteract _lootInteract;
 
-    public Action Interacted;
+    private LootMiniGameUI _lootMiniGameUI;
+
+    [Inject]
+    private void Construct(LootMiniGameUI lootMiniGameUI)
+    {
+        
+        _lootMiniGameUI = lootMiniGameUI;
+    }
 
     private void Awake()
     {
@@ -17,6 +25,11 @@ public class CompositeLoot : MonoBehaviour
 
     private void OpenMiniGame()
     {
-        Interacted?.Invoke();
+        _lootMiniGameUI.OnInteracted(_lootInteract);
+    }
+
+    private void OnDisable()
+    {
+        _lootInteract.InteractedCompositeLoot -= OpenMiniGame;
     }
 }

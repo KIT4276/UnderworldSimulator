@@ -15,6 +15,7 @@ public class GameplayInstaller : MonoInstaller
     [SerializeField] private MilestonesData _milestonesData;
     [SerializeField] private TasksData _tasksData;
     [SerializeField] private ParameterData _parametersData;
+    [SerializeField] private LootMiniGameUI _lootMiniGamePrefab;
 
     public override void InstallBindings()
     {
@@ -34,6 +35,7 @@ public class GameplayInstaller : MonoInstaller
 
         Container.Bind<CraftSystem>().FromNew().AsSingle().NonLazy();
         Container.Bind<CraftMenu>().FromComponentInNewPrefab(_craftMenuPrefab).AsSingle().NonLazy();
+        Container.Bind<LootMiniGameUI>().FromComponentInNewPrefab(_lootMiniGamePrefab).AsSingle();
 
         Container.Bind<DrawingsHandler>().FromNew().AsSingle().NonLazy();
         Container.Bind<TasksHandler>().FromNew().AsSingle().NonLazy();

@@ -10,19 +10,21 @@ public class LootInteract : InteractableObstacle
     [SerializeField] protected GameObject _sprite;
     [SerializeField] private Collider2D _interactableCollider;
     [SerializeField] private GoParticleSystem _goParticleSystem;
-    [SerializeField] private LootMiniGameUI _miniGameUI;
     [SerializeField] private bool _isOrganic;
 
     private bool _isComposite = false;
 
     public Action InteractedCompositeLoot;
 
+    [Inject] private LootMiniGameUI _miniGameUI;
     [Inject] protected LootSystem _lootSystem;
     [Inject] protected PersistantStaticData _staticData;
     [Inject] protected StateMachine _machine;
 
-    public void SetComposite() =>
+    public void SetComposite()
+    {
         _isComposite = true;
+    }
 
     public virtual void Despawn()
     {
@@ -91,23 +93,9 @@ public class LootInteract : InteractableObstacle
 
     private void FillLoot()
     {
-        // OpenMenu();
         _lootSystem.FillInteractiveObject(this);
         if (_isOrganic) AudioReciever.Instance.PlaySearchOrganic();
         else AudioReciever.Instance.PlaySearchObject();
-
-        // _lootSystem.CleanAllSlots();
-
-        // _lootSystem.FillName(_craftLoot.Nane);
     }
 
-    //protected virtual void FillLoot(LootSettings lootSetting)
-    //{
-    //    _lootSystem.FillSlot(lootSetting.Loot, ((CraftLootSettings)lootSetting).CurrentCount, this, _craftLoot);
-    //}
-
-    //protected void OpenMenu()
-    //{
-    //    _lootSystem.OpenMenu();
-    //}
 }
